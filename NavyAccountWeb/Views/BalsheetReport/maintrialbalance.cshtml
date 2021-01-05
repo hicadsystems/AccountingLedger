@@ -1,0 +1,55 @@
+﻿@model NavyAccountWeb.ViewModels.AuditViewModel
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="header">
+    <h1 class="header-title">
+        Report
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="Home/Index">main</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Main Trial Balance Report</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Main Trial Balance Report</h5>
+            </div>
+
+
+            <div class="card-body">
+
+                @using (Html.BeginForm("maintrialbalance", "BalsheetReport", FormMethod.Post))
+                {
+                    <div class="row" style="margin-bottom:20px;">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.year, "Period")
+                                @Html.TextBoxFor(x => x.year, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-1" style="position:relative;top:25px;">
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-lg btn-primary" value="Continue" />
+                            </div>
+
+                        </div>
+                    </div>
+
+                }
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,44 @@
+﻿@model IEnumerable<NavyAccountCore.Models.ClaimModel>;
+@{
+    Layout = null;
+
+}
+<!DOCTYPE html>
+<html>
+<body>
+    <h2 style="text-align:center">NIGERIAN NAVY DIRECTORATE OF NON-PUBLIC FUND</h2>
+    <h2 style="text-align:center">NAVIP, DEPENDANT FUND AND WELFARE LOAN PORTFOLIOS</h2>
+
+    <h3></h3>
+    <span>@System.DateTime.Now.Year</span>
+    <span style="float:right;position:relative;top:-25px;"><b>Produced on:</b>@DateTime.Now.ToShortDateString()</span>
+
+
+    <table border="2" cellpadding="2" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <td>Service No:</td>
+                <td> Contributed Amount:</td>
+                <td>Outstanding Loan:</td>
+                <td>Amount Due:</td>
+                <td>Beneficiary</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var a in Model)
+            {
+                <tr>
+                    <td> @a.svcno </td>
+                    <td> @a.amountPaid </td>
+                    <td> @a.amountReceived </td>
+                    <td> @a.AmountDue </td>
+                    <td>@a.Beneficiary</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+     @*}*@
+
+
+</body>
+</html>

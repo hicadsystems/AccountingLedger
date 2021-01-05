@@ -1,0 +1,61 @@
+﻿@model NavyAccountWeb.ViewModels.ReportViewModelQ
+
+@{
+    Layout = null;
+    decimal  sum = 0;
+}
+
+<!DOCTYPE html>
+
+<html>
+<body>
+    <h6 style="text-align:center">RETRICTED</h6>
+    <h2 style="text-align:center">NIGERIAN NAVY DIRECTORATE OF NON-PUBLIC FUND</h2>
+    <h2 style="text-align:center">NAVIP, DEPENDANT FUND AND WELFARE LOAN PORTFOLIOS</h2>
+
+    <h3>Surplus/Deficit Report </h3>
+
+    <span style="float:right;position:relative;top:-25px;"><b>Produced on:</b>@DateTime.Now</span>
+
+
+    <table border="2" cellpadding="2" cellspacing="0" width="80%">
+
+        <tr>
+            <th>Description</th>
+            <th>Amount</th>
+        </tr>
+
+
+        @foreach (var a in Model.p)
+        {
+
+
+            @foreach (var j in Model.q)
+            {
+                if (a.balSheetCode == j.balSheetCode)
+                {
+                    <tr>
+                        <td>@j.description</td>
+                        <td style="text-align:right;">@Math.Round(j.Amount, 2)</td>
+                    </tr>
+
+                }
+            }
+
+            sum += @Math.Round(a.Amount,2);
+            <tr>
+                <td style="font-size:22px;"><b>@a.description </b></td>
+                <td style="text-align:right;font-size:22px;"><b>@Math.Round(a.Amount, 2)</b></td>
+            </tr>
+        }
+        <tr>
+            <td>SURPLUS/(DEFICIT)</td>
+            <td style="text-align:right;font-size:24px;">@Math.Round(sum, 2)</td>
+        </tr>
+    </table>
+    <h6 style="text-align:center">RETRICTED</h6>
+
+
+
+</body>
+</html>

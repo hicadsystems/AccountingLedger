@@ -1,0 +1,60 @@
+﻿@model IEnumerable<NavyAccountWeb.ViewModels.MainActViewModel>
+
+@{
+    ViewBag.Title = "ViewMainAccount";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+  <div class="header">
+        <h1 class="header-title">
+            Main Account
+        </h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/Home/Index">Main</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Main Account</li>
+            </ol>
+        </nav>
+    </div>
+
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Create Main Account</h5>
+                </div>
+                @using (Html.BeginForm("CreateMainAccount", "MainAccount", FormMethod.Post))
+                {
+
+                    @Html.AntiForgeryToken()
+
+                    <main-account-component></main-account-component>
+                }
+
+            </div>
+        </div>
+
+    </div>
+
+                
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Main Account List</h5>
+                    @using (Html.BeginForm("printmainacct", "MainAccount", FormMethod.Get))
+                    {
+                        <div class="col-4">
+                            <div class="form-group">
+                                <input type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Print" />
+                            </div>
+
+                        </div>
+
+                    }
+                </div>
+                        <list-main-account-component></list-main-account-component>
+                    </div>
+                </div>
+            </div>
+       

@@ -1,0 +1,64 @@
+﻿@model NavyAccountCore.Models.LoanRegisterViewModel
+@{
+    ViewData["Title"] = "loanRegisterReport";
+}
+
+<div class="header">
+    <h1 class="header-title">
+        Loan Repayment Generated
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="Home/Index">Main</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Generate Loan Repayment</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Loan Repayment Generated</h5>
+            </div>
+
+            @TempData["message"]
+        <div class="card-body">
+
+
+            @using (Html.BeginForm("printloanregister", "LoanRegister", FormMethod.Get))
+            {
+            <div class="row">
+                <div class="col-md-4">
+                    @Html.DropDownList("Status", new SelectList(@ViewBag.loanstatus, "Id", "Description"), "select options", new { @class = "form-control" })
+
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <input type="date" name="startdate" id="period" class="form-control" placeholder="Start Date" />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <input type="date" name="enddate" id="endperiod" class="form-control" placeholder="End Date" />
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <input type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Print" />
+                    </div>
+
+                </div>
+            </div>
+           }
+
+                
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,34 @@
+﻿@model IEnumerable<NavyAccountCore.Models.ChartofAccountView>
+@{
+    Layout = null;
+
+}
+<!DOCTYPE html>
+<html>
+<body>
+    <h2 style="text-align:center">NIGERIAN NAVY DIRECTORATE OF NON-PUBLIC FUND</h2>
+    <h2 style="text-align:center">NAVIP, DEPENDANT FUND AND WELFARE LOAN PORTFOLIOS</h2>
+    Chart Of Accounts: Produce On @DateTime.Now
+    <table border="2" cellpadding="2" cellspacing="0" width="100%">
+
+        <tr>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Main Account</th>
+            <th>Balance Sheet</th>
+            <th>Sub Type</th>
+
+        </tr>
+        @foreach (var a in Model)
+        {
+            <tr>
+                <td> @a.acctcode </td>
+                <td> @a.description </td>
+                <td> @a.mainAccountCode_desc</td>
+                <td> @a.balSheetCode_desc </td>
+                <td> @a.subtype_desc </td>
+            </tr>
+        }
+    </table>
+</body>
+</html>

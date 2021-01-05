@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="header">
+    <h1 class="header-title">
+        Investment Register--Money Market
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="dashboard-default.html">Main</a></li>
+            <li class="breadcrumb-item"><a href="#">Reference Table</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Investment Register Money Market</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Create Investment Register--Money Market</h5>
+            </div>
+            @using (Html.BeginForm("CreateFinancial", "BalanceSheet", FormMethod.Post))
+            {
+
+                @Html.AntiForgeryToken()
+
+               <create-investment></create-investment>
+            }
+
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="col-md-4" style="margin-left:1000px">
+                    @using (Html.BeginForm("InvestmentMoney", "InvestRegisterMvc", FormMethod.Get))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-group">
+                            <input type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Print" />
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <view-investment></view-investment>
+        </div>
+    </div>
+</div>
+
+
+

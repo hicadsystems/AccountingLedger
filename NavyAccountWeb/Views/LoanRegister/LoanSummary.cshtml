@@ -1,0 +1,54 @@
+﻿
+
+@{ ViewData["Title"] = "Index"; }
+
+<div class="header">
+    <h1 class="header-title">
+        Loan Summary
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="Home/Index">Main</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Loan Summary List/li>
+</ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Loan Summary List</h5>
+            </div>
+
+
+            <div class="card-body">
+
+
+
+                @using (Html.BeginForm("LoanSummary2", "LoanRegister", FormMethod.Post))
+                {
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <input type="text" name="year" class="form-control" />
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                           @* <input type="checkbox" name="check" value="true" /><label>Excel</label>*@
+                        </div>
+                    </div>
+    <div class="row" style="margin-bottom:20px;">
+     
+
+         <div class="col-md-1" style="position:relative;top:25px;">
+            <div class="form-group">
+                <input type="submit" class="btn btn-lg btn-primary" value="Continue" />
+            </div>
+
+        </div>
+    </div>}
+
+            </div>
+        </div>
+    </div>
+</div>

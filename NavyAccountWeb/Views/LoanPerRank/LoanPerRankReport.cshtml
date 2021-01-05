@@ -1,0 +1,100 @@
+﻿@model IEnumerable<NavyAccountCore.Models.LoanReportView>
+
+@{
+    Layout = null;
+
+}
+<!DOCTYPE html>
+<html>
+<body>
+    <h2 style="text-align:center">NIGERIAN NAVY DIRECTORATE OF NON-PUBLIC FUND</h2>
+    <h2 style="text-align:center">NAVIP, DEPENDANT FUND AND WELFARE LOAN PORTFOLIOS</h2>
+
+    <h3>Loan PerRank Report</h3>: Produce On @DateTime.Now
+    <span></span>
+    <span style="float:right;position:relative;top:-25px;"><b>Produced on:</b>@DateTime.Now.ToShortDateString()</span>
+
+
+    <table border="2" cellpadding="4" cellspacing="0" width="100%">
+        @foreach (var a in Model)
+        {
+        <tr>
+            <th>Description</th>
+            <td> @a.loan </td>
+        </tr>
+            <tr>
+                <th>OS</th>
+                <td> @a.amount01 </td>
+            </tr>
+            <tr>
+                <th>SM</th>
+                <td> @a.amount02 </td>
+            </tr>
+            <tr>
+                <th>AB</th>
+                <td> @a.amount03 </td>
+            </tr>
+            <tr>
+                <th>LS</th>
+                <td> @a.amount04 </td>
+            </tr>
+            <tr>
+                <th>PO</th>
+                <td> @a.amount05 </td>
+            </tr>
+            <tr>
+                <th>WO</th>
+                <td> @a.amount06 </td>
+            </tr>
+            <tr>
+                <th>MWO</th>
+                <td> @a.amount07 </td>
+            </tr>
+            <tr>
+                <th>NWO</th>
+                <td> @a.amount08 </td>
+            </tr>
+            <tr>
+                <th>S/Lt</th>
+                <td> @a.amount09 </td>
+            </tr>
+            <tr>
+                <th>Lt</th>
+                <td> @a.amount10 </td>
+            </tr>
+            <tr>
+                <th>Lt/Cdr</th>
+                <td> @a.amount11 </td>
+            </tr>
+            <tr>
+                <th>Cdr</th>
+                <td> @a.amount12 </td>
+            </tr>
+            <tr>
+                <th>Capt</th>
+                <td> @a.amount13 </td>
+            </tr>
+            <tr>
+                <th>Cdre</th>
+                <td> @a.amount14 </td>
+            </tr>
+            <tr>
+
+                <th>R/Adm</th>
+                <td> @a.amount15 </td>
+            </tr>
+            <tr>
+                <th>V/Adm</th>
+                <td> @a.amount16 </td>
+            </tr>
+            <tr>
+                <th>Adm</th>
+                <td> @a.amount17 </td>
+            </tr>
+            
+        }
+    </table>
+
+
+</body>
+</html>

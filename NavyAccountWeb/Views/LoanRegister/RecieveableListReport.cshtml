@@ -1,0 +1,59 @@
+﻿@model IEnumerable<NavyAccountCore.Models.LoanRegisterViewModelRecieveable>
+@using Microsoft.AspNetCore.Http;
+@{
+    Layout = null;
+
+}
+<!DOCTYPE html>
+<html>
+<body style="width:1200px">
+    <h6 style="text-align:center">RETRICTED</h6>
+    <h2 style="text-align:center">STATUS OF  @Model.FirstOrDefault().LoanTypeDesc REPAYMENT FOR BATCH AS AT @DateTime.Now-OFFICERS</h2>
+    Loan Register: Produce On  <h3>Loan Type: Tenure: @Model.FirstOrDefault().Tenure</h3>
+                               <div class="card-body">
+                                   <table border="2" cellpadding="2" cellspacing="0" width="100%">
+                                       <tr>
+                                           <th>S/No</th>
+                                           <th>Rank</th>
+                                           <th>Full Name</th>
+                                           <th>Service No</th>
+                                           <th>Principal</th>
+                                           <th>Interest</th>
+
+                                           <th>Total Loan Amount</th>
+                                           <th>Tenure</th>
+                                           <th>Monthly Deduction</th>
+                                           <th>No of Month Paid</th>
+                                           <th>Total Loan Repayment</th>
+                                           <th>No of Month Outstanding</th>
+                                           <th>Outstanding Repayment</th>
+
+
+                                       </tr>
+
+                                       @foreach (var a in Model.Select((x, i) => new { Data = x, Index = i + 1 }))
+                                       {
+                                           <tr>
+                                               <td> @Html.DisplayFor(modelItem => a.Index)</td>
+                                               <td>@Html.DisplayFor(modelItem => a.Data.Rank)</td>
+                                               <td> @Html.DisplayFor(modelItem => a.Data.Name) </td>
+                                               <td>@Html.DisplayFor(modelItem => a.Data.svcno)</td>
+                                               <td> @Html.DisplayFor(modelItem => a.Data.Amount)</td>
+                                               <td> @Html.DisplayFor(modelItem => a.Data.interstamt)</td>
+
+                                               <td> @Html.DisplayFor(modelItem => a.Data.totalloantamt) </td>
+                                               <td> @Html.DisplayFor(modelItem => a.Data.Tenure) </td>
+                                               <td>@Html.DisplayFor(modelItem => a.Data.monthlydeductions)</td>
+                                               <td> @Html.DisplayFor(modelItem => a.Data.loancount)</td>
+                                               <td> @Html.DisplayFor(modelItem => a.Data.totalloanpay)</td>
+                                               <td> @Html.DisplayFor(modelItem => a.Data.monthoutstanding)</td>
+                                               <td> @Html.DisplayFor(modelItem => a.Data.OutstandingPay)</td>
+
+                                           </tr>
+                                       }
+                                   </table>
+                                   <h6 style="text-align:center">RETRICTED</h6>
+                               </div>
+</body>
+</html>
+

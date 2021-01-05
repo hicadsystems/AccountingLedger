@@ -1,0 +1,41 @@
+﻿@using Microsoft.AspNetCore.Http;
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="header">
+    <h1 class="header-title">
+        Claim Processing
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Home/Index">Main</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Claim Applicaton</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+
+
+            @TempData["message"]
+            <div class="card-header">
+                <h5 class="card-title">Claim Reversal</h5>
+            </div>
+
+            @using (Html.BeginForm("createLoan", "LoanRegister", FormMethod.Post))
+            {
+
+                @Html.AntiForgeryToken()
+
+                <recalculate-claim-component fundcode="@Context.Session.GetString("fundtypecode")"></recalculate-claim-component>
+
+            }
+
+        </div>
+    </div>
+
+</div>
+
+

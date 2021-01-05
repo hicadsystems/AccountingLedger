@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewData["Title"] = "CreatePerson";
+}
+
+<div class="header">
+   
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Home/Index">Main</a></li>         
+            <li class="breadcrumb-item active" aria-current="page">Add Personnel</li>
+        </ol>
+    </nav>
+</div>
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">
+                    @if (ViewBag.personid == 0)
+                    {
+
+                        <text>Add Personnel</text>
+
+                    }
+                    else
+                        {
+
+                         <text>Edit Personnel</text>
+
+                         }
+                </h5>
+            </div>
+            <create-new-person-component persontoeditid="@ViewBag.personid"></create-new-person-component>
+        </div>
+    </div>
+</div>
+
+

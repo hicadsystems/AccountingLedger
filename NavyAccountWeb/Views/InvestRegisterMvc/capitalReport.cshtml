@@ -1,0 +1,43 @@
+﻿@model IEnumerable<NavyAccountCore.Models.InvestmentView>
+ @using Microsoft.AspNetCore.Http;
+ @{
+        Layout = null;
+
+ }
+    <!DOCTYPE html>
+    <html>
+    <body>
+        <h2 style="text-align:center">NIGERIAN NAVY DIRECTORATE OF NON-PUBLIC FUND</h2>
+        <h2 style="text-align:center">NAVIP, DEPENDANT FUND AND WELFARE LOAN PORTFOLIOS</h2>
+
+        <table border="2" cellpadding="2" cellspacing="0" width="100%">
+
+            <tr>
+                <th>Investment Type</th>
+                <th>MatureDate</th>
+                <th>Issuance Bank</th>
+                <th>Receiving Bank</th>
+                <th>Amount</th>
+                <th>Interest</th>
+                <th>Tenure</th>
+
+
+            </tr>
+            @foreach (var a in Model.Select((x, i) => new { Data = x, Index = i + 1 }))
+            {
+                <tr>
+
+                    <td> @Html.DisplayFor(modelItem => a.Index)</td>
+                    <td> @Html.DisplayFor(modelItem => a.Data.InvestmentType)</td>
+                    <td> @Html.DisplayFor(modelItem => a.Data.Maturingdate)</td>
+                    <td> @Html.DisplayFor(modelItem => a.Data.issuancebank)</td>
+                    <td> @Html.DisplayFor(modelItem => a.Data.receivingbank)</td>
+                    <td> @Html.DisplayFor(modelItem => a.Data.Amount)</td>
+                    <td> @Html.DisplayFor(modelItem => a.Data.interest)</td>
+                    <td> @Html.DisplayFor(modelItem => a.Data.Tenure)</td>
+
+                </tr>
+            }
+        </table>
+    </body>
+</html>

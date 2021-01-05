@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="header">
+    <h1 class="header-title">
+        Open Balance Upload
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="Home/Index">Main</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Loan Balance</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Open Balance Application Upload</h5>
+            </div>
+
+           
+            <div class="card-body">
+                @using (Html.BeginForm("PrintPDf","Demo",FormMethod.Post))
+                {
+                    
+
+                    <input type="submit" value="print pdf" class="btn btn-primary" />
+
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewData["Title"] = "ViewFundType";
+}
+
+< <div class="header">
+    <h1 class="header-title">
+        Fund Type
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Home/Index">Main</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Fund Type</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Create Fund Type</h5>
+            </div>
+            @using (Html.BeginForm("CreateFundType", "FundType", FormMethod.Post))
+            {
+
+                @Html.AntiForgeryToken()
+
+                <create-fund-type-component></create-fund-type-component>
+
+            }
+
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Fund Type List</h5>
+                @using (Html.BeginForm("printfund2", "FundType", FormMethod.Get))
+                {
+                    <div class="col-4">
+                        <div class="form-group">
+                            <input type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Print" />
+                        </div>
+
+                    </div>
+
+                }
+            </div>
+           
+            <view-fund-type-component></view-fund-type-component>
+        </div>
+    </div>
+</div>

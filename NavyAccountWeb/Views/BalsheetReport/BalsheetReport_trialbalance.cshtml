@@ -1,0 +1,50 @@
+﻿@model IEnumerable<NavyAccountCore.Models.LedgersView2>
+
+@{
+    Layout = null;
+
+    decimal? sum = 0M;
+}
+
+<!DOCTYPE html>
+
+<html>
+<body>
+    <h6 style="text-align:center">RETRICTED</h6>
+    <h2 style="text-align:center">NIGERIAN NAVY DIRECTORATE OF NON-PUBLIC FUND</h2>
+    <h2 style="text-align:center">NAVIP, DEPENDANT FUND AND WELFARE LOAN PORTFOLIOS</h2>
+
+    <h3>Trial balance report </h3>
+
+    <span style="float:right;position:relative;top:-15px;"><b>Produced on:</b>@DateTime.Now</span>
+
+    <table border="2" cellpadding="2" cellspacing="0" width="85%">
+
+        <tr>
+            <th>Description</th>
+            <th>Amount</th>
+        </tr>
+
+
+        @foreach (var a in Model)
+        {
+            sum += a.Amount;
+
+            <tr>
+                <td>@a.description</td>
+                <td style="text-align:right;">@Math.Round(a.Amount,2)</td>
+            </tr>
+
+
+        }
+
+        <tr>
+            <td style="font-weight:800;font-size:28px;">Total</td>
+            <td style="text-align:right;">@Math.Round(sum.Value,2)</td>
+        </tr>
+
+
+    </table>
+    <h6 style="text-align:center">RETRICTED</h6>
+</body>
+</html>

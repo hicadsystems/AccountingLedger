@@ -1,0 +1,96 @@
+﻿@model IEnumerable<NavyAccountCore.Models.LedgersView2>
+
+@{
+    Layout = null;
+
+    decimal? sum = 0M;
+    decimal? sumsurplusanddeficit = 0M;
+    int count = 0;
+}
+
+<!DOCTYPE html>
+
+<html>
+<body>
+    <h2 style="text-align:center">NIGERIAN NAVY DIRECTORATE OF NON-PUBLIC FUND</h2>
+    <h2 style="text-align:center">NAVIP, DEPENDANT FUND AND WELFARE LOAN PORTFOLIOS</h2>
+
+    <h3>Main Trial balance report </h3>
+
+    <span style="float:right;position:relative;top:-25px;"><b>Produced on:</b>@DateTime.Now</span>
+
+    <table border="2" cellpadding="2" cellspacing="0" width="100%">
+
+        <tr>
+            <th>Description</th>
+            <th>Amount</th>
+        </tr>
+
+
+        @foreach (var a in Model)
+        {
+
+            sum += a.Amount;
+
+
+            if (!a.acctcode.Equals("4") && !a.acctcode.Equals("5"))
+            {
+                <tr>
+                    <td>@a.description</td>
+                    <td>@a.Amount</td>
+                </tr>
+            }
+            else
+            {
+                sumsurplusanddeficit += a.Amount;
+
+            }
+
+
+            if (a.acctcode.Equals("1"))
+            {
+                <tr>
+                    <td><b>Asset</b></td>
+                    <td><b>@a.Amount</b></td>
+                </tr>
+            }
+
+            if (a.acctcode.Equals("2"))
+            {
+                <tr>
+                    <td><b>Liability</b></td>
+                    <td><b>@a.Amount</b></td>
+                </tr>
+            }
+
+            if (a.acctcode.Equals("3"))
+            {
+                <tr>
+                    <td><b>Equity</b></td>
+                    <td><b>@a.Amount</b></td>
+                </tr>
+
+                if (count == (Model.Count() - 1))
+                {
+                    <tr>
+                        <td>Surplus/Deficit</td>
+                        <td>@sumsurplusanddeficit</td>
+                    </tr>
+                }
+            }
+
+
+            count++;
+
+        }
+
+        <tr>
+            <td>Total</td>
+            <td>@sum</td>
+        </tr>
+
+
+    </table>
+    
+</body>
+</html>

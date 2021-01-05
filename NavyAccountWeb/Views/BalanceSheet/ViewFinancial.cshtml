@@ -1,0 +1,58 @@
+﻿@model IEnumerable<NavyAccountWeb.ViewModels.AccbalsheViewmodel>
+
+@{
+    ViewBag.Title = "ViewFinancial";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    <div class="header">
+        <h1 class="header-title">
+            Balance Sheet
+        </h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/Home/Index">Main</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Balance Sheet</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Create Balance Sheet</h5>
+                </div>
+                @using (Html.BeginForm("CreateFinancial", "BalanceSheet", FormMethod.Post))
+                {
+
+                    @Html.AntiForgeryToken()
+
+                    <create-balancesheet-component></create-balancesheet-component>
+                }
+
+            </div>
+        </div>
+
+    </div>
+                
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Balance Sheet List</h5>
+                    @using (Html.BeginForm("printbalancesheet", "BalanceSheet", FormMethod.Get))
+                    {
+                        <div class="col-4">
+                            <div class="form-group">
+                                <input type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Print" />
+                            </div>
+
+                        </div>
+
+                    }
+                </div>
+                        <view-balancesheet-component></view-balancesheet-component>
+                </div>
+        </div>
+    </div>
+       
+

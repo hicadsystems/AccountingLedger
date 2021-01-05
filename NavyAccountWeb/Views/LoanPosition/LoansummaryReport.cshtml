@@ -1,0 +1,51 @@
+﻿@model  IEnumerable<NavyAccountCore.Models.LoanSummaryVM>
+@using Microsoft.AspNetCore.Http;
+@{
+    Layout = null;
+
+}
+<!DOCTYPE html>
+<html>
+<body>
+    <h6 style="text-align:center">RETRICTED</h6>
+    <h2 style="text-align:center">NIGERIAN NAVY DIRECTORATE OF NON-PUBLIC FUND</h2>
+    <h2 style="text-align:center">CAR REFURBISHING LOAN AND WELFARE LOAN PORTFOLIOS</h2>
+
+    <h3>Loan Position Report</h3>: Produce On @DateTime.Now
+    <table border="2" cellpadding="2" cellspacing="0" width="100%">
+
+        <tr>
+            <th>Batch No</th>
+            <th>Effective Date</th>
+            <th>Tenure</th>
+            <th>No Of People</th>
+            <th>Current Count</th>
+            <th>Total Loan</th>
+            <th>Expected Payment Todate</th>
+            <th>Current Year Payment</th>
+            <th>Cumulative Paymanet Todate</th>
+            <th>Discrepancy</th>
+        </tr>
+        @foreach (var a in Model)
+        {
+    <tr>
+        <td> @a.batchno </td>
+        <td> @a.Effectivedate.Date </td>
+        <td> @a.term </td>
+        <td> @a.noofpeople </td>
+        <td> @a.curcount </td>
+        <td> @Math.Round(a.totalloan, 2) </td>
+        <td> @Math.Round(a.amountpaid, 2) </td>
+        <td> @Math.Round(a.amountperyear, 2) </td>
+        <td> @Math.Round(a.amountpaidH, 2) </td>
+        <td> @Math.Round(a.amountowned, 2) </td>
+    </tr>
+    }
+        <tr><td></td><td></td><td></td><td></td><td>Total</td><td>@Math.Round(Model.ToList().Sum(x => x.totalloan),2)</td>
+        <td>@Math.Round(Model.ToList().Sum(x => x.amountpaid),2)</td><td>@Math.Round(Model.ToList().Sum(x=>x.amountperyear),2)</td>
+        <td>@Math.Round(Model.ToList().Sum(x => x.amountpaidH),2)</td><td>@Math.Round(Model.ToList().Sum(x => x.amountowned),2)</td></tr>
+    </table>
+  
+    <h6 style="text-align:center">RETRICTED</h6>
+</body>
+</html>

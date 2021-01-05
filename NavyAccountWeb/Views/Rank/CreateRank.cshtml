@@ -1,0 +1,41 @@
+﻿@using Microsoft.AspNetCore.Http;
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="header">
+    <h1 class="header-title">
+        Month End Processing
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="Home/Index">Main</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Month End Processing</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Month End Processing</h5>
+            </div>
+
+            @TempData["message"]
+            <div class="card-body">
+                @using (Html.BeginForm("Index", "MonthEndProcessing", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-group">
+                        <input type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Loan Upload" />
+                    </div>
+                }
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div>

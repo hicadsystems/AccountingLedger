@@ -1,0 +1,37 @@
+﻿@model IEnumerable<NavyAccountCore.Models.LedgersView>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Trial Balance Report</title>
+</head>
+<body>
+
+    <h1>The Trial balance Report</h1>
+    <table>
+        <tr>
+            <th>Code</th>
+            <th>Description</th>
+            <th>Debit</th>
+            <th>Credit</th>
+        </tr>
+        @foreach (var j in Model)
+        {
+            <tr>
+                <td>@j.code</td>
+                <td>@j.desc</td>
+                <td>@j.opBal</td>
+                <td>@j.dbbal</td>
+            </tr>
+        }
+
+    </table>
+
+</body>
+</html>

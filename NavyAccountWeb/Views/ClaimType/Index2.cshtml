@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="header">
+    <h1 class="header-title">
+        Claim Process
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="Home/Index">Main</a></li>
+            <li class="breadcrumb-item active" aria-current="page">claim type</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Claim Application Upload</h5>
+            </div>
+
+            @TempData["message"]
+            <div class="card-body">
+                <a href="~/uploads/Claim_Application.xlsx">Download Sample</a>
+
+                @using (Html.BeginForm("Index2", "ClaimType", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <input type="file" name="formFile" class="form-control" required />
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                <input type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Upload" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                }
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+

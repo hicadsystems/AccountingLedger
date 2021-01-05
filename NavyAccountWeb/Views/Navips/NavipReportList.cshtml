@@ -1,0 +1,40 @@
+﻿@model IEnumerable<NavyAccountCore.Models.navipVM2>
+@using Microsoft.AspNetCore.Http;
+@{
+    Layout = null;
+
+}
+<!DOCTYPE html>
+<html>
+<body>
+    <span>@System.DateTime.Now.Year</span>
+    <span style="float:right;position:relative;top:-25px;"><b>Produced on:</b>@DateTime.Now.ToShortDateString()</span>
+
+    <h2 style="text-align:center">SCHEDULE PAYMENT FOR NAVIP BENEFICIARIES -NAVIP @Model.FirstOrDefault().Batch</h2>
+    <table border="2" cellpadding="2" cellspacing="0" width="100%">
+        <tr>
+            <th>Rank</th>
+            <th>Account Name</th>
+            <th>Service Number</th>
+            <th>Bank</th>
+            <th>Account Number</th>
+            <th>Amount</th>
+            <th>Remark</th>
+
+        </tr>
+        @foreach (var a in Model)
+        {
+            <tr>
+                <td> @a.rank </td>
+                <td> @a.Name </td>
+                <td> @a.svcno </td>
+                <td>@a.bank</td>
+                <td>@a.acctno</td>
+                <td> @a.grandsuvaltotal </td>
+                <td>@a.remark</td>
+
+            </tr>
+        }
+    </table>
+</body>
+</html>

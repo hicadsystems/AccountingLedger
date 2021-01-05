@@ -1,0 +1,38 @@
+﻿@model IEnumerable<NavyAccountCore.Models.LoandiscVM>
+@using Microsoft.AspNetCore.Http;
+@{
+    Layout = null;
+
+}
+<!DOCTYPE html>
+<html>
+<body>
+    <h6 style="text-align:center">RETRICTED</h6>
+    <h2 style="text-align:center">NIGERIAN NAVY DIRECTORATE OF NON-PUBLIC FUND</h2>
+    <h2 style="text-align:center">LOAN PORTFOLIOS</h2>
+    Period: @Model.FirstOrDefault().period
+    <table border="2" cellpadding="2" cellspacing="0" width="100%">
+
+        <tr>
+            <th>Account</th>
+            <th>Name</th>
+            <th>Principal</th>
+            <th>Interest</th>
+            <th>Loan Pay</th>
+            <th></th>
+
+        </tr>
+        @foreach (var a in Model)
+        {
+            <tr>
+                <td>@a.loanact</td>
+                <td>@a.personname</td>
+                <td>@Math.Round(a.principal,2)</td>
+                <td>@Math.Round(a.interest,2)</td>
+                <td>@Math.Round(a.loanpay,2)</td>
+            </tr>
+        }
+    </table>
+    <h6 style="text-align:center">RETRICTED</h6>
+</body>
+</html>

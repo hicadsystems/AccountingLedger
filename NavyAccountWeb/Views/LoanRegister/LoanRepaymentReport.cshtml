@@ -1,0 +1,80 @@
+﻿@model NavyAccountWeb.ViewModels.LoanRepaymentViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<body>
+    <h6 style="text-align:center">RETRICTED</h6>
+    <h2 style="text-align:center">NIGERIAN NAVY DIRECTORATE OF NON-PUBLIC FUND</h2>
+    <h2 style="text-align:center">NAVIP, DEPENDANT FUND AND WELFARE LOAN PORTFOLIOS</h2>
+
+    <h3>Welfare Loan Repayment Card</h3>
+
+    <span style="float:right;position:relative;top:-25px;"><b>Produced on:</b>@DateTime.Now.ToShortDateString()</span>
+
+    <table>
+        <tr>
+            <td colspan="3"><h3>NAME : @Model.Name</h3></td>
+            <td><h3>RANK/RATE: @Model.Rank</h3></td>
+        </tr>
+        <tr>
+            <td><h3>EMAIL: @Model.Email  </h3></td>
+        </tr>
+        <tr>
+            <td colspan="3" style="font-size:18px;font-weight:800;"><span>AMOUNT GRANTED : @Math.Round(Model.AmountGranted,2)</span></td>
+            <td colspan="6" style="font-size:18px;font-weight:800;"><span>INTREST RATE : @Model.interest</span></td>
+            <td colspan="8" style="font-size:18px;font-weight:800;"><span>TENOR : @Model.Tenor</span></td>
+        </tr>
+    </table>
+    <br />
+
+
+
+
+
+    <table border="2" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th>MONTH</th>
+            <th>MONTHLY REPAYMENT</th>
+            <th>CUMULATIVE PAYMENT TO DATE</th>
+            <th>BALANCE OUTSTANDING</th>
+            <th colspan="4">ENTERED BY NAME & SIGN</th>
+            <th colspan="2">REMARKS</th>
+        </tr>
+
+        @if (Model.solly.Count() == 0)
+        {
+            <tr>
+                <td colspan="12"><b>No payment has been made</b></td>
+            </tr>
+        }
+        else
+        {
+            @foreach (var a in Model.solly)
+            {
+
+                <tr>
+                    <td>@a.id</td>
+                    <td>@Math.Round(a.MonthlyDeduction,2)</td>
+                    <td>@Math.Round(a.TotalRepaymentToDate,2)</td>
+                    <td>@Math.Round(a.OutstandingBalance,2)</td>
+                    <td colspan="4"></td>
+                    <td colspan="2"></td>
+                </tr>
+
+            }
+        }
+
+
+    </table>
+
+    <h6 style="text-align:center">RETRICTED</h6>
+
+
+</body>
+</html>

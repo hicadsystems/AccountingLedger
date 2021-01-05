@@ -1,0 +1,68 @@
+﻿@model NavyAccountWeb.ViewModels.AuditViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="header">
+    <h1 class="header-title">
+        Report
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="Home/Index">Main</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Audit Trail</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Audit Trail</h5>
+            </div>
+
+
+            <div class="card-body">
+
+                @using (Html.BeginForm("Index", "AuditTrail",FormMethod.Post))
+                {
+                    <div class="row" style="margin-bottom:20px;">
+
+                        @*@Html.HiddenFor(x => x.ProcessMth)
+                        @Html.HiddenFor(x => x.ProcessYear)
+                        @Html.HiddenFor(x => x.fundcode)*@
+
+                        <div class="col-md-3">
+                            @Html.LabelFor(x => x.acctcode,"Account")
+                            @Html.DropDownListFor(x => x.acctcode, new SelectList(Model.loadAllNpfChart, "code", "desc"), "select options", new { @class = "form-control" })
+                            
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.year, "Enter Year")
+                                @Html.DropDownListFor(x => x.year, new SelectList(Model.loadAllYear,"code","code"),"select options",new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                      
+
+                        <div class="col-md-1" style="position:relative;top:25px;">
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-lg btn-primary" value="Continue" />
+                            </div>
+
+                        </div>
+                    </div>
+
+                }
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+

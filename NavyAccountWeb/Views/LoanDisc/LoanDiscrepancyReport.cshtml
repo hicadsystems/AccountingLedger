@@ -1,0 +1,42 @@
+﻿@model IEnumerable<NavyAccountCore.Models.LoandiscVM>
+@using Microsoft.AspNetCore.Http;
+@{
+    Layout = null;
+
+}
+<!DOCTYPE html>
+<html>
+<body>
+    <h6 style="text-align:center">RETRICTED</h6>
+    <h2 style="text-align:center">NIGERIAN NAVY DIRECTORATE OF NON-PUBLIC FUND</h2>
+    <h2 style="text-align:center">NAVIP, DEPENDANT FUND AND WELFARE LOAN PORTFOLIOS</h2>
+    Period: @Model.FirstOrDefault().period
+    <table border="2" cellpadding="2" cellspacing="0" width="100%">
+
+        <tr>
+            <th>SN</th>
+            <th>Account</th>
+            <th>Loan Name</th>
+            <th>Loan Pay</th>
+            <th>External Loan</th>
+            <th>Loan Discrepancy</th>
+
+
+        </tr>
+        @foreach (var a in Model.Select((x, i) => new { Data = x, Index = i + 1 }))
+        {
+            <tr>
+
+                <td> @Html.DisplayFor(modelItem => a.Index)</td>
+                <td> @Html.DisplayFor(modelItem => a.Data.loanact)</td>
+                <td> @Html.DisplayFor(modelItem => a.Data.personname)</td>
+                <td> @Html.DisplayFor(modelItem => Math.Round(a.Data.loanpay,2))</td>
+                <td> @Html.DisplayFor(modelItem => Math.Round(a.Data.extpay,2))</td>
+                <td> @Html.DisplayFor(modelItem => Math.Round(a.Data.loandiscr,2))</td>
+
+            </tr>
+        }
+    </table>
+    <h6 style="text-align:center">RETRICTED</h6>
+</body>
+</html>

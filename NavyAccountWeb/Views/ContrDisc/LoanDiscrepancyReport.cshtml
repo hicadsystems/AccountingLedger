@@ -1,0 +1,35 @@
+﻿@model IEnumerable<NavyAccountCore.Models.ContrDiscVM>
+@using Microsoft.AspNetCore.Http;
+@{
+    Layout = null;
+
+}
+<!DOCTYPE html>
+<html>
+<body>
+    <h2 style="text-align:center">NIGERIAN NAVY DIRECTORATE OF NON-PUBLIC FUND</h2>
+    <h2 style="text-align:center">NAVIP, DEPENDANT FUND AND WELFARE LOAN PORTFOLIOS</h2>
+    Period: @Model.FirstOrDefault().period
+    <table border="2" cellpadding="2" cellspacing="0" width="100%">
+
+        <tr>
+            <th>Account</th>
+            <th>Name</th>
+            <th>Amount</th>
+            <th>External Loan</th>
+            <th>Loan Discrepancy</th>
+
+        </tr>
+        @foreach (var a in Model)
+        {
+            <tr>
+                <td> @a.contract </td>
+                <td> @a.personname </td>
+                <td> @a.amountpay </td>
+                <td> @a.extamt </td>
+                <td> @a.amtdiscr </td>
+            </tr>
+        }
+    </table>
+</body>
+</html>

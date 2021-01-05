@@ -1,0 +1,39 @@
+﻿@model NavyAccountWeb.ViewModels.ReportViewModel
+
+@{
+    Layout = null;
+
+}
+<!DOCTYPE html>
+<html>
+<body>
+    <h6 style="text-align:center">RETRICTED</h6>
+    <h2 style="text-align:center">NIGERIAN NAVY DIRECTORATE OF NON-PUBLIC FUND</h2>
+    <h2 style="text-align:center">NAVIP, DEPENDANT FUND AND WELFARE LOAN PORTFOLIOS</h2>
+
+    <h3>Loan Position Report</h3>: Produce On @DateTime.Now
+    <span style="float:right;position:relative;top:-25px;"><b>Produced on:</b>@DateTime.Now.ToShortDateString()</span>
+
+
+    <table border="2" cellpadding="2" cellspacing="0" width="100%">
+
+        <tr>
+            <th>Code</th>
+            <th>Description</th>
+            <th>Balance</th>
+        </tr>
+        @foreach (var a in Model.getList)
+        {
+            <tr>
+                <td> @a.code </td>
+                <td> @a.description </td>
+                <td> @Math.Round(a.debit,2) </td>
+            </tr>
+        }
+    </table>
+    <br />
+    Total
+    <span style="position:relative;left:700px;">@Math.Round(Model.TotalDebit,2)</span>
+    <h6 style="text-align:center">RETRICTED</h6>
+</body>
+</html>

@@ -1,0 +1,57 @@
+﻿@model NavyAccountWeb.ViewModels.ReportViewModel5
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<body>
+    <h6 style="text-align:center">RETRICTED</h6>
+    <h2 style="text-align:center">NIGERIAN NAVY DIRECTORATE OF NON-PUBLIC FUND</h2>
+    <h2 style="text-align:center">NAVIP, DEPENDANT FUND AND WELFARE LOAN PORTFOLIOS</h2>
+
+    <h3>Balsheet Report </h3>
+
+    <span style="float:right;position:relative;top:-25px;"><b>Produced on:</b>@DateTime.Now.ToShortDateString()</span>
+
+
+    <h5>By Main Legder</h5>
+    <table border="2" cellpadding="2" cellspacing="0" width="100%">
+
+        <tr>
+            <th>Description</th>
+            <th>Amount</th>
+        </tr>
+
+
+        @foreach (var a in Model.colly)
+        {
+            @foreach (var j in a.tolly)
+            {
+                if (j.acctcode == a.code)
+                {
+
+                    <tr>
+                        <td>@j.description</td>
+                        <td>@Math.Round(j.Amount,2)</td>
+                    </tr>
+                }
+
+            }
+
+
+            <tr>
+                <td><b>Total @a.bl_desc </b></td>
+                <td><b>@Math.Round(a.total,2)</b></td>
+            </tr>
+        }
+
+    </table>
+
+    <span style="font-weight:bold;font-size:25px;position:relative;top:30px;">Total balance sheet = @Math.Round(Model.deficit,2)</span>
+    <h6 style="text-align:center">RETRICTED</h6>
+
+</body>
+</html>

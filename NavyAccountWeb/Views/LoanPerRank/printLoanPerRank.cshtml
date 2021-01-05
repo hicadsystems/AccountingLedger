@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewData["Title"] = "printLoanPerRank";
+}
+
+<div class="header">
+    <h1 class="header-title">
+        Payperrank
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="Home/Index">Main</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Report</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Loan PerRank Report</h5>
+            </div>
+
+
+            <div class="card-body">
+
+
+                @using (Html.BeginForm("printLoanPerRank", "LoanPerRank", FormMethod.Get))
+                {
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            @Html.DropDownList("loancode", (SelectList)ViewBag.contributionList, "select loan", new { @class = "form-control" })
+                        </div>
+
+                        <div class="col-md-1" style="position:relative;top:-5px;">
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-lg btn-primary" value="Continue" />
+                            </div>
+                        </div>
+                    </div>
+
+                   
+
+
+                }
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div>

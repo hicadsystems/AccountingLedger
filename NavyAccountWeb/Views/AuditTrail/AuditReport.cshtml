@@ -1,0 +1,50 @@
+﻿@model NavyAccountWeb.ViewModels.ReportViewModel2
+
+@{
+    Layout = null;
+    decimal sum = 0;
+
+}
+<!DOCTYPE html>
+<html>
+<body>
+    <h6 style="text-align:center">RETRICTED</h6>
+    <h2 style="text-align:center">NIGERIAN NAVY DIRECTORATE OF NON-PUBLIC FUND</h2>
+    <h2 style="text-align:center">NAVIP, DEPENDANT FUND AND WELFARE LOAN PORTFOLIOS</h2>
+
+    <h3>Audit Trail for @Model.AcctCode (@Model.AcctDesc) produced on <span>@DateTime.Now</span></h3>
+
+    <h4>Opening Balance as at Jan 1, @Model.year = @Model.opy.opBal</h4>
+
+
+
+    <table border="2" cellpadding="2" cellspacing="0" width="100%">
+
+        <tr>
+            <th>Date</th>
+            <th>Document No</th>
+            <th>Remark</th>
+            <th>Amount</th>
+            <th>Balance</th>
+        </tr>
+
+        @foreach (var a in Model.solly)
+        {
+            sum += a.Amount;
+            <tr>
+                <td> @a.date </td>
+                <td> @a.doc </td>
+                <td>@a.remark</td>
+                <td>@Math.Round(a.Amount,2)</td>
+                <td> @Math.Round(sum,2)</td>
+
+            </tr>
+        }
+    </table>
+    <h6 style="text-align:center">RETRICTED</h6>
+    <br />
+
+
+
+</body>
+</html>

@@ -1,0 +1,66 @@
+﻿
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="header">
+    <h1 class="header-title">
+        Report
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="Home/Index">Main</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Receiveable List</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Receiveable List</h5>
+            </div>
+
+
+            <div class="card-body">
+
+
+
+                @using (Html.BeginForm("downloadRecieveable", "LoanRegister", FormMethod.Post))
+                {
+                    <div class="row" style="margin-bottom:20px;">
+
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Batch</label>
+                                @Html.DropDownList("batch", new SelectList(ViewBag.getloanbatch, "batchNo", "batchNo"), new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Loan Type</label>
+                                @Html.DropDownList("loantype", new SelectList(ViewBag.getloantype, "Id", "Description"), new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Only Outstanding</label> <input type="checkbox" name="ckforoutst" value="true" />
+                            </div>
+                        </div>
+                        <div class="col-md-1" style="position:relative;top:25px;">
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-lg btn-primary" value="Continue" />
+                            </div>
+
+                        </div>
+                    </div>
+
+                }
+
+            </div>
+            </div></div></div>

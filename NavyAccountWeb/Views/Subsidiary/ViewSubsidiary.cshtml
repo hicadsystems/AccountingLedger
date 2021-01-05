@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "ViewSubsidiary";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="header">
+    <h1 class="header-title">
+        Chart of Account
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Home/Index">Main</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Chart of Account</li>
+        </ol>
+    </nav>
+</div>
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Create Chart of Account</h5>
+            </div>
+
+            @using (Html.BeginForm("CreateSubsidiary", "Subsidiary", FormMethod.Post))
+            {
+
+                @Html.AntiForgeryToken()
+                <chartof-account-component></chartof-account-component>
+
+            }
+
+        </div>
+    </div>
+
+</div>
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Chart of Account List</h5>
+                @using (Html.BeginForm("printchart", "Subsidiary", FormMethod.Get))
+                {
+                    <div class="col-4">
+                        <div class="form-group">
+                            <input type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Print" />
+                        </div>
+
+                    </div>
+
+                }
+            </div>
+            <list-chartof-account-component></list-chartof-account-component>
+        </div>
+    </div>
+</div>
+
+

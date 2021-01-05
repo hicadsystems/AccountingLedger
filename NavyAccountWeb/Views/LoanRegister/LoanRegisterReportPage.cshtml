@@ -1,0 +1,52 @@
+﻿@model IEnumerable<NavyAccountCore.Models.LoanRegisterViewModel>
+@{
+    Layout = null;
+
+}
+<!DOCTYPE html>
+<html>
+<body>
+    <h6 style="text-align:center">RETRICTED</h6>
+    <h2 style="text-align:center">NIGERIAN NAVY DIRECTORATE OF NON-PUBLIC FUND</h2>
+    <h2 style="text-align:center">NAVIP, DEPENDANT FUND AND WELFARE LOAN PORTFOLIOS</h2>
+    Loan Register: Produce On @DateTime.Now
+<div class="card-body">
+    <table border="2" cellpadding="2" cellspacing="0" width="100%">
+        <tr>
+            <th>Service No</th>
+            <th>Full Name</th>
+            <th>Loan Type</th>
+            <th>Tenure(Months)</th>
+            <th>Amount</th>
+            <th>Remarks</th>
+            <th>Status</th>
+
+        </tr>
+        @if (Model.Count() == 0)
+        {
+            <tr>
+                <td colspan="12"><b>No Record Found</b></td>
+            </tr>
+        }
+        else
+        {
+            @foreach (var a in Model)
+            {
+                <tr>
+                    <td>@a.svcno</td>
+                    <td>@a.firstName</td>
+                    <td>@a.LoanTypeDesc </td>
+                    <td>@a.Tenure</td>
+                    <td>@Math.Round(a.Amount, 2)</td>
+                    <td>@a.remarks</td>
+                    <td>@a.Status</td>
+
+                </tr>
+            }
+        }
+    </table>
+    <h6 style="text-align:center">RETRICTED</h6>
+</div>
+</body>
+</html>
+

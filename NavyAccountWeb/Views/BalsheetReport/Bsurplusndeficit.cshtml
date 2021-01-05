@@ -1,0 +1,74 @@
+﻿@model IEnumerable<NavyAccountCore.Models.LedgersView2>
+
+@{
+    Layout = null;
+
+    decimal? sum = 0M;
+    int count = 0;
+    decimal? income = 0;
+    decimal? expenses = 0M;
+}
+
+<!DOCTYPE html>
+
+<html>
+<body>
+    <h2 style="text-align:center">NIGERIAN NAVY DIRECTORATE OF NON-PUBLIC FUND</h2>
+    <h2 style="text-align:center">NAVIP, DEPENDANT FUND AND WELFARE LOAN PORTFOLIOS</h2>
+
+    <h3>Main Trial balance report </h3>
+
+    <span style="float:right;position:relative;top:-25px;"><b>Produced on:</b>@DateTime.Now</span>
+
+    <table border="2" cellpadding="2" cellspacing="0" width="100%">
+
+        <tr>
+            <th>Description</th>
+            <th>Amount</th>
+        </tr>
+
+
+        @foreach (var a in Model)
+        {
+
+            sum += a.Amount;
+            if (a.acctcode.StartsWith("4"))
+            {
+                income += a.Amount;
+                <tr>
+                    <td>@a.description</td>
+                    <td>@a.Amount</td>
+                </tr>
+            }
+            else
+            {
+                expenses += a.Amount;
+                <tr>
+                    <td>@a.description</td>
+                    <td>@a.Amount</td>
+                </tr>
+
+            }
+
+        }
+
+        <tr>
+            <td>Income</td>
+            <td>@(income )</td>
+        </tr>
+
+        <tr>
+            <td>Expenses</td>
+            <td>@(expenses)</td>
+        </tr>
+
+        <tr>
+            <td>(SURPLUS) / DEFICIT</td>
+            <td>@(income + expenses)</td>
+        </tr>
+
+
+    </table>
+    
+</body>
+</html>

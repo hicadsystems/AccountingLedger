@@ -1,0 +1,31 @@
+﻿
+
+@using Microsoft.AspNetCore.Http;
+@{ ViewBag.Title = "ViewFinancial";
+                Layout = "~/Views/Shared/_Layout.cshtml"; }
+<div class="header">
+    <h1 class="header-title">
+        Loan Register
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="Home/Index">Main</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Loan Status Update</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Loan Status Update</h5>
+            </div>
+
+
+            <loan-status-update></loan-status-update>
+
+
+
+        </div>
+    </div>
+</div>

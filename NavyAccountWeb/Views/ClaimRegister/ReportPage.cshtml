@@ -1,0 +1,65 @@
+﻿@model NavyAccountCore.Models.DischargeCalcView;
+@{
+    Layout = null;
+
+}
+<!DOCTYPE html>
+<html>
+<body>
+    <h2 style="text-align:center">NIGERIAN NAVY DIRECTORATE OF NON-PUBLIC FUND</h2>
+    <h2 style="text-align:center">NAVIP, DEPENDANT FUND AND WELFARE LOAN PORTFOLIOS</h2>
+
+    <h3></h3>
+    <span>@System.DateTime.Now.Year</span>
+    <span style="float:right;position:relative;top:-25px;"><b>Produced on:</b>@DateTime.Now.ToShortDateString()</span>
+
+    @if (Model.personContributions.Count > 1)
+    {
+        <text>Contribution </text>
+        <table border="2" cellpadding="2" cellspacing="0" width="100%">
+
+            <tr>
+
+                <th>Description</th>
+                <th>Amount</th>
+            </tr>
+            @foreach (var a in Model.personContributions)
+            {
+                <tr>
+                    <td> @a.description </td>
+                    <td> @a.amount </td>
+                </tr>
+            }
+        </table>
+        <br />
+        <text>Total </text><span style="position:relative;left:550px;">@Model.contrTotal</span>
+    }
+
+
+    @if (Model.personLoans.Count > 1)
+    {
+        <text>Loan</text>
+
+        <table border="2" cellpadding="2" cellspacing="0" width="100%">
+
+            <tr>
+
+                <th>Description</th>
+                <th>Amount</th>
+            </tr>
+            @foreach (var a in Model.personLoans)
+            {
+                <tr>
+                    <td> @a.description </td>
+                    <td> @a.amount </td>
+                </tr>
+            }
+        </table>
+        <br />
+        <text>Total </text> <span style="position:relative;left:550px;">@Model.loanTotal</span>
+    }
+    Total Due <span style="position:relative;left:550px;">@Model.theTwoTotal</span>
+
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+﻿@using Microsoft.AspNetCore.Http;
+@{
+    ViewData["Title"] = "loanApplication";
+}
+<div class="header">
+    <h1 class="header-title">
+       Loan Processing
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Home/Index">Main</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Loan Applicaton</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Loan Application</h5>
+            </div>
+
+            @using (Html.BeginForm("createLoan", "LoanRegister", FormMethod.Post))
+            {
+
+                @Html.AntiForgeryToken()
+
+                <create-loan-register-component fundtypeid="@Context.Session.GetInt32("fundtypeid")"></create-loan-register-component>
+            }
+
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Loan Application Register List</h5>
+            </div>
+
+            <view-loan-register-component fundcodeid="@Context.Session.GetInt32("fundtypeid")" statusdef="1" isapplication="yes"></view-loan-register-component>
+        </div>
+    </div>
+</div>

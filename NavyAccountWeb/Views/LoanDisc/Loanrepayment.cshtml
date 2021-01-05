@@ -1,0 +1,171 @@
+﻿@using Microsoft.AspNetCore.Http;
+@model PaginatedList<NavyAccountCore.Models.LoandiscVM>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="header">
+    <h1 class="header-title">
+        Loan Repayment Generated
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="Home/Index">Main</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Generate Loan Repayment</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                @*<h5 class="card-title">Loan Repayment Generated</h5>*@
+            </div>
+            @*<script type="text/javascript">
+                window.onload = function () {
+                   // if (@TempData["message"]!= "") {
+                        alert("@TempData["message"]");
+                   // }
+                }
+            </script>*@
+           
+            <div class="card-body">
+
+                @using (Html.BeginForm("Loanrepayment", "LoanDisc", FormMethod.Get))
+                {
+                    @TempData["message"]
+                    <div class="row" style="margin-top:-25px">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                @*<label>Service Number</label>*@
+                                <input type="text" name="svcno" id="svcno" class="form-control" placeholder="Service Number" />
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <input type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Search" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Period</label>
+                                <input type="text" value="@Context.Session.GetInt32("processingYear")@Context.Session.GetInt32("processingMonth")" name="" readonly />
+
+                            </div>
+                        </div>
+                    </div>
+                }
+                <br />
+
+                @using (Html.BeginForm("Loanrepayment", "LoanDisc", FormMethod.Get))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+
+                                @Html.DropDownList("batchNo", new SelectList(ViewBag.batch, "batchNo", "batchNo"), "Select Batch No", new { @class = "form-control",@id="batch" })
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <input type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Generate Repayment" />
+                            </div>
+                        </div>
+                       
+                       
+                    </div>
+                }
+
+
+            <div class="row" style="margin-left:500px">
+                @using (Html.BeginForm("printloandisc", "LoanDisc", FormMethod.Get))
+                {
+                    <input type="text" value="@ViewBag.getbatch" id="batch" name="batchNo" hidden />
+                    <div class="col-md-2" style="margin-left:150px">
+                        <div class="form-group">
+                            <input type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Print" />
+                        </div>
+
+                    </div>
+
+                }
+                <div class="col-md-2">
+                    <button class='btn btn-primary btn-block' id="add-edit" data-toggle="modal" data-target="#userModal">
+                        <i class="fa fa-plus"></i> Add
+                    </button>
+                </div>
+
+            </div>
+                @if (Model != null && Model.Any())
+                {
+                    <table class="table table-striped table-bordered">
+                        <tr>
+                            <th>Account</th>
+                            <th>Name</th>
+                            <th>Principal</th>
+                            <th>Interest</th>
+                            <th>Loan Pay</th>
+                            <th></th>
+                        </tr>
+
+                        @foreach (var j in Model)
+                        {
+                    <tr>
+                        <td>@j.loanact</td>
+                        <td>@j.personname</td>
+                        <td>@Math.Round(j.principal, 2)</td>
+                        <td>@Math.Round(j.interest, 2)</td>
+                        <td>@Math.Round(j.loanpay, 2)</td>
+
+
+
+                        <td>
+                            <a class="btn btn-danger" asp-action="DeleteConfirmed" asp-controller="LoanDisc" asp-route-id="@j.Id">Delete</a>
+
+                        </td>
+                    </tr>
+                        }
+
+                    </table>
+
+                }
+                @{
+                    var prevDisabled = !Model.PreviousPage ? "disabled" : "";
+                    var nextDisabled = !Model.Nextpage ? "disabled" : "";
+                }
+
+                <a asp-action="Loanrepayment"
+                   asp-route-pageNumber="@(Model.PageIndex-1)" asp-route-batchNo="@ViewBag.getbatch"
+                   class="btn btn-default  @prevDisabled">previous</a>
+
+                <a asp-action="Loanrepayment" asp-route-pageNumber="@(Model.PageIndex+1)" asp-route-batchNo="@ViewBag.getbatch" class="btn btn-default  @nextDisabled">next</a>
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="vLabel" aria-hidden="true"
+     data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="userModalLabel">Add User</h5>
+                <button type="button" class="close dismiss-modal" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <create-loan-disc-component></create-loan-disc-component>
+
+            </div>
+        </div>
+    </div>
+</div>

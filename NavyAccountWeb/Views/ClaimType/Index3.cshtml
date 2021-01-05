@@ -1,0 +1,66 @@
+﻿@model NavyAccountCore.Core.Entities.Npf_ClaimRegister
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="header">
+    <h1 class="header-title">
+        Claim Process
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="Home/Index">Main</a></li>
+            <li class="breadcrumb-item active" aria-current="page">claim type</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Claim Application Approval</h5>
+            </div>
+
+            @TempData["message"]
+            <div class="card-body">
+               
+
+                @using (Html.BeginForm("Index3", "ClaimType", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.BatchNo)
+                            @Html.DropDownListFor(x => x.BatchNo, new SelectList(ViewBag.batchList, "BatchNo", "BatchNo"), "select batch no", new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.Beneficiary)
+                            @Html.DropDownListFor(x => x.Beneficiary, new SelectList(ViewBag.bank, "acctcode", "description"), "select bank no", new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+               
+                <div class="row">  
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <input type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Continue" />
+                        </div>
+                    </div>
+                </div>
+
+
+                }
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+

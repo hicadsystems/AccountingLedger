@@ -1,0 +1,76 @@
+﻿@model NavyAccountWeb.Models.balanceViewModel
+
+@{
+    ViewData["Title"] = "claimReportByDate";
+}
+
+@if (ViewBag.claimdesc != null)
+{
+    <script type="text/javascript">
+        alert('@ViewBag.claimdesc');
+    </script>
+}
+<div class="header">
+    <h1 class="header-title">
+        Claim Processing
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Home/Index">Main</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Claim Report</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="row">
+   <div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Claim Report By date</h5>
+        </div>
+        <div class="card-body">
+            @using (Html.BeginForm("claimReportByDate", "ClaimType", FormMethod.Post))
+            {
+            <div class="row">
+                <div class="col-12 col-xl-4">
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.Indicator, "Status")
+                        @Html.DropDownListFor(x => x.Indicator, new SelectList(ViewBag.status, "Code", "Description"), "", new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="col-12 col-xl-4">
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.startdate, new { @class = "control-label" })
+                        @Html.EditorFor(x => x.startdate, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="col-12 col-xl-4">
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.enddate)
+                        @Html.EditorFor(x => x.enddate, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                </div>
+                <div class="row" style="margin-top:-14px">
+                    <div class="col-12 col-xl-4">
+                        Excel @Html.CheckBoxFor(x => x.excel)
+                    </div>
+                </div>
+                <div class="row">
+                <div class="form-group">
+                    <input type="submit" value="Print" class="offset-3 btn btn-success" />
+                </div>
+            </div>
+            }
+
+        </div>
+       
+    </div>
+  </div>
+
+</div>
+
+
+
+

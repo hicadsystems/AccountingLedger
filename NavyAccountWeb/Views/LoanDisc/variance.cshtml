@@ -1,0 +1,114 @@
+﻿@model  PaginatedList<NavyAccountCore.Models.LoandiscVM>
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="header">
+    <h1 class="header-title">
+        Loan Variance
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="Home/Index">Main</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Generate Loan Variance</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Loan Variance</h5>
+            </div>
+
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-9">
+                        @using (Html.BeginForm("variance", "LoanDisc", FormMethod.Get))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Batch</label>
+                                        @Html.DropDownList("batchNo", new SelectList(ViewBag.batch, "batchno", "batchno"), new { @class = "form-control" })
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Generate Variance" />
+                            </div>
+                        }
+                    </div>
+
+                    @using (Html.BeginForm("printloandiscVariance", "LoanDisc", FormMethod.Get))
+                    {
+                        <input type="text" value="@ViewBag.getbatch" id="batch" name="batchNo" hidden />
+                        <div class="col-4">
+                            <div class="form-group">
+                                <input type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Print" />
+                            </div>
+
+                        </div>
+
+                    }
+                </div>
+                @if (Model != null && Model.Any())
+                {
+                    <table class="table table-striped table-bordered">
+                        <tr>
+                            <th>Account</th>
+                            <th>Name</th>
+                            <th>Loan Pay</th>
+                            <th>Previous Pay</th>
+                            <th>Difference</th>
+
+                            @*<th></th>*@
+                        </tr>
+
+                        @foreach (var j in Model)
+                        {
+                            <tr>
+                                <td>@j.loanact</td>
+                                <td>@j.personname</td>
+                                <td>@Math.Round(j.loanpay,2)</td>
+                                <td>@Math.Round(j.prvloan,2)</td>
+                                <td>@Math.Round(j.loanvar,2)</td>
+
+
+
+                                @*<td><a href="@Url.Action("LoanDisc","delete",new{@j.Id})" class="btn btn-danger"></a></td>*@
+                            </tr>
+                        }
+
+                    </table>
+
+
+
+                }
+
+                @{
+                    var prevDisabled = !Model.PreviousPage ? "disabled" : "";
+                    var nextDisabled = !Model.Nextpage ? "disabled" : "";
+                }
+
+                <a asp-action="variance"
+                   asp-route-pageNumber="@(Model.PageIndex-1)" asp-route-batchNo="@ViewBag.getbatch"
+                   class="btn btn-default  @prevDisabled">previous</a>
+
+                <a asp-action="variance"
+                   asp-route-pageNumber="@(Model.PageIndex+1)" asp-route-batchNo="@ViewBag.getbatch"
+                   class="btn btn-default  @nextDisabled">next</a>
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div>

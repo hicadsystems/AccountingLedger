@@ -1,0 +1,75 @@
+﻿@model IEnumerable<NavyAccountCore.Core.Entities.npf_contributions>
+
+@{
+    ViewData["Title"] = "printNpFContribution";
+}
+
+<div class="header">
+    @*<h1 class="header-title">
+        Payperrank
+    </h1>*@
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="Home/Index">Main</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Report</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Contribution Per Rank Report</h5>
+            </div>
+
+           
+            <div class="card-body">
+             
+
+                @using (Html.BeginForm("printNpFContribution", "NpFContribution",FormMethod.Get))
+                {
+
+                <div class="row">
+                    <div class="col-md-4">
+                       
+                        @Html.DropDownList("fundcode",(SelectList)ViewBag.contributionList,"select fundcode",new { @class = "form-control" })
+                    </div>
+
+                    <div class="col-md-1" style="position:relative;top:-5px;">
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-lg btn-primary" value="Continue" />
+                        </div>
+                    </div>
+                </div>
+
+                @if(Model!=null && Model.Any())
+                {
+                    <table>
+                        <tr>
+                            <th>fundcode</th>
+                            <th>Amount1</th>
+                        </tr>
+                     @foreach (var j in Model)
+                     {
+                         <tr>
+                             <td>@j.fundtype</td>
+                             <td>@j.amount01</td>
+                         </tr>
+
+                     }
+                    </table>
+                }
+
+
+            }
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+
+

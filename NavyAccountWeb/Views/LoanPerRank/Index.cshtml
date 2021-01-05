@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="header">
+    <h1 class="header-title">
+        Pay Per-Rank
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Home/Index">Main</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Loan PerRank</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Create LoanPerRank</h5>
+            </div>
+            @using (Html.BeginForm("CreateFinancial", "BalanceSheet"))
+            {
+
+                @Html.AntiForgeryToken()
+
+                <create-loan-perrank></create-loan-perrank>
+
+            }
+
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">LoanPerRank List</h5>
+            </div>
+
+            <view-loan-perrank></view-loan-perrank>
+        </div>
+    </div>
+</div>
+
+
+

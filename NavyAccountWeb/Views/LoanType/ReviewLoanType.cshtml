@@ -1,0 +1,59 @@
+﻿@using Microsoft.AspNetCore.Http;
+@{
+    ViewBag.Title = "GetAllLoanType";
+}
+
+<div class="header">
+    <h1 class="header-title">
+        Loan Type
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Home/Index">Main</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Loan Type</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Create Loan Type</h5>
+            </div>
+            @using (Html.BeginForm("CreateLoanType", "LoanType", FormMethod.Post))
+            {
+
+                @Html.AntiForgeryToken()
+
+                int fundtypeIDInSession = (int)Context.Session.GetInt32("fundtypeid");
+
+
+                <create-loan-typer-component></create-loan-typer-component>
+
+            }
+
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Loan Type List</h5>
+                @using (Html.BeginForm("printloan", "LoanType", FormMethod.Get))
+                {
+                    <div class="col-4">
+                        <div class="form-group">
+                            <input type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Print" />
+                        </div>
+
+                    </div>
+
+                }
+            </div>
+            <view-loan-typer-component></view-loan-typer-component>
+        </div>
+    </div>
+</div>

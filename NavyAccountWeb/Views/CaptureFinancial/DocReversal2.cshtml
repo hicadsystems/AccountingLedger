@@ -1,0 +1,31 @@
+﻿@model IEnumerable<NavyAccountWeb.ViewModels.AccbalsheViewmodel>
+
+@{
+    ViewBag.Title = "ViewFinancial";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="header">
+    <h1 class="header-title">
+        Document Reversal
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Home/Index">Main</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Document Reversal</li>
+        </ol>
+    </nav>
+
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Document Reversal</h5>
+                </div>
+                <view-financial-document-by-batch></view-financial-document-by-batch>
+               
+                </div>
+            </div>
+    </div>
+
+

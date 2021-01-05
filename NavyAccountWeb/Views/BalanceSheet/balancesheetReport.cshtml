@@ -1,0 +1,37 @@
+﻿@model IEnumerable<NavyAccountCore.Core.Entities.npf_balsheet>
+@using Microsoft.AspNetCore.Http;
+@{
+    Layout = null;
+
+}
+<!DOCTYPE html>
+<html>
+<body>
+    <h6 style="text-align:center">RETRICTED</h6>
+    <h2 style="text-align:center">NIGERIAN NAVY DIRECTORATE OF NON-PUBLIC FUND</h2>
+    <h2 style="text-align:center">NAVIP, DEPENDANT FUND AND WELFARE LOAN PORTFOLIOS</h2>
+    Balance Sheet Report:  Produce On @DateTime.Now
+    <table border="2" cellpadding="2" cellspacing="0" width="100%">
+
+        <tr>
+            <th>Code</th>
+            <th>Name</th>
+
+
+        </tr>
+        @foreach (var a in Model)
+        {
+            <tr>
+                <td> @a.bl_code </td>
+                <td> @a.bl_desc </td>
+
+            </tr>
+        }
+    </table>
+        <h6 style="text-align:center">RETRICTED</h6>
+</body>
+</html>
+
+
+
+

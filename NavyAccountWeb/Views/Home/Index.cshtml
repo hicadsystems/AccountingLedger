@@ -1,0 +1,118 @@
+﻿@using Microsoft.AspNetCore.Http;
+@using NavyAccountCore.Core.Entities
+
+
+<div class="page-wrapper">
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid">
+        <h1 class="sr-only">Dashboard</h1>
+        <div class="row page-titles">
+            <div class="col-md-5 align-self-center">
+
+            </div>
+            <div class="col-md-7 align-self-center">
+                <ol class="breadcrumb">
+                    <h1 style="color:white"></h1>
+
+
+                </ol>
+            </div>
+
+            <div class="">
+                <button class="right-side-toggle waves-effect waves-light btn-inverse btn btn-circle btn-sm pull-right m-l-10"><i class="ti-settings text-white"></i></button>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            @if (Context.Session.GetInt32("roleid") == 1)
+            {
+                <div class="col-lg-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex no-block">
+                                <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
+                                <div class="align-self-center">
+
+                                    <h6 class="text-muted m-t-10 m-b-0">Surplus/Deficit</h6>
+                                    <surplus-or-loss-component fundtypecode="@Context.Session.GetString("fundtypecode")"></surplus-or-loss-component>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (Context.Session.GetInt32("roleid") == 1)
+            {
+                <div class="col-lg-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex no-block">
+                                <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
+                                <div class="align-self-center">
+
+                                    <h6 class="text-muted m-t-10 m-b-0">Current Surplus/Deficit</h6>
+                                    <surplus-or-lossc-component fundtypecode="@Context.Session.GetString("fundtypecode")"></surplus-or-lossc-component>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+                <div class="col-lg-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex no-block">
+                                <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
+                                <div class="align-self-center">
+                                    <h6 class="text-muted m-t-10 m-b-0">Pending Applications</h6>
+                                    <loan-application-by-status-component fundtypeid="@Context.Session.GetInt32("fundtypeid")"></loan-application-by-status-component>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex no-block">
+                                <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
+                                <div class="align-self-center">
+                                    <h6 class="text-muted m-t-10 m-b-0">Approved Applications</h6>
+                                    <loan-approve-status-component fundtypeid="@Context.Session.GetInt32("fundtypeid")"></loan-approve-status-component>
+                                    @if (Context.Session.GetInt32("roleid") == 1)
+                                    {
+                                        <h6 class="text-muted m-t-10 m-b-0">Total Sum of Loan Figures</h6>
+                                        <total-sum-loan-component fundtypeid="@Context.Session.GetInt32("fundtypeid")"></total-sum-loan-component>
+                                    }
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @*<div class="col-lg-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex no-block">
+                            <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span><img src="../assets/images/icon/staff.png" alt="Income" /></div>
+                            <div class="align-self-center">
+                                <h6 class="text-muted m-t-10 m-b-0">Total Staff</h6>
+                                <h2 class="m-t-0">987,563</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+            </div>
+
+    </div>
+</div>
+<div class="row">
+    <div style="height:400px">
+
+    </div>
+</div>
+<!-- END MAIN CONTENT -->

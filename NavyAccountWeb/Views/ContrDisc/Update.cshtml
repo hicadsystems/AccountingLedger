@@ -1,0 +1,70 @@
+﻿@model IEnumerable<NavyAccountCore.Models.ContrDiscVM>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="header">
+    <h1 class="header-title">
+         Update
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="Home/Index">Main</a></li>
+            <li class="breadcrumb-item active" aria-current="page"> Update</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Update</h5>
+            </div>
+
+            @TempData["message"]
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        @using (Html.BeginForm("contrledgerupdate2", "ContrDisc", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-group">
+                                <input type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Update" />
+                            </div>
+                        }
+                    </div>
+
+                </div>
+                @if (Model != null && Model.Any())
+                {
+                    <table class="table table-striped table-bordered">
+                        <tr>
+                            <th>Account</th>
+                            <th>Name</th>
+                            <th>Extact Pay</th>
+                            
+                            <th></th>
+                        </tr>
+
+                        @foreach (var j in Model)
+                        {
+                            <tr>
+                                <td>@j.contract</td>
+                                <td>@j.personname</td>
+                                <td>@j.extamt</td>
+                               
+                            </tr>
+                        }
+
+                    </table>
+
+                }
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div>

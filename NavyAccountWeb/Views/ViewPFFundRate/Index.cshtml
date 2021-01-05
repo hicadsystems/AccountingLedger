@@ -1,0 +1,52 @@
+﻿@model IEnumerable<NavyAccountWeb.ViewModels.PfaFundRateViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@{
+    ViewBag.Title = "ViewPFFundRate";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="header">
+    <h1 class="header-title">
+        Main Account
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Home/Index">Main</a></li>
+            <li class="breadcrumb-item active" aria-current="page">PFFundRate</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Create PFundRate</h5>
+            </div>
+            @using (Html.BeginForm("CreateFinancial", "BalanceSheet", FormMethod.Post))
+            {
+
+                @Html.AntiForgeryToken()
+
+                <create-fund-rate></create-fund-rate>
+            }
+
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">PFFundRate List</h5>
+            </div>
+            
+            <view-fund-rate></view-fund-rate>
+        </div>
+    </div>
+</div>
+

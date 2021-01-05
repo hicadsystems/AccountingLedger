@@ -1,0 +1,99 @@
+﻿@model NavyAccountWeb.ViewModels.ReportViewModelQ
+
+@{
+    Layout = null;
+    decimal? sum = 0M;
+    decimal? exp = 0M;
+    decimal? exp2 = 0M;
+    string desc = "";
+}
+
+<!DOCTYPE html>
+
+<html>
+<body>
+    <h6 style="text-align:center">RETRICTED</h6>
+    <h2 style="text-align:center">NIGERIAN NAVY DIRECTORATE OF NON-PUBLIC FUND</h2>
+    <h2 style="text-align:center">NAVIP, DEPENDANT FUND AND WELFARE LOAN PORTFOLIOS</h2>
+
+    <h3>Balance sheet Report </h3>
+
+    <span style="float:right;position:relative;top:-25px;"><b>Produced on:</b>@DateTime.Now</span>
+
+
+
+    <table border="2" cellpadding="2" cellspacing="0" width="100%">
+
+        <tr>
+            <th>Description</th>
+            <th>Amount</th>
+        </tr>
+
+
+        @foreach (var a in Model.p)
+        {
+            sum += a.Amount;
+            foreach (var b in Model.q)
+            {
+                if (int.Parse(a.mainAccountCode) < 3)
+                {
+                    if (a.balSheetCode == b.balSheetCode)
+                    {
+                        <tr>
+                            <td>@b.description</td>
+                            <td style="text-align:right;">@b.Amount</td>
+                        </tr>
+                    }
+                }
+                else if (int.Parse(a.mainAccountCode) == 3)
+                {
+                    if (a.balSheetCode == b.balSheetCode)
+                    {
+                        exp += b.Amount;
+                        desc = a.description;
+                        <tr>
+                            <td>@b.description</td>
+                            <td style="text-align:right;">@b.Amount</td>
+                        </tr>
+                    }
+
+                }
+
+
+            }
+
+            if (int.Parse(a.mainAccountCode) > 3)
+            {
+                exp2 += a.Amount;
+                exp += a.Amount;
+            }
+
+
+
+
+            if (int.Parse(a.mainAccountCode) < 3)
+            {
+                <tr>
+                    <td style="font-size:23px;"><b>@a.description</b></td>
+                    <td style="text-align:right;font-size:23px;"><b>@a.Amount</b></td>
+                </tr>
+            }
+
+        }
+
+        <tr>
+            <td>SURPLUS/(DEFICIT)</td>
+            <td style="text-align:right;">@exp2</td>
+        </tr>
+        <tr>
+            <td style="font-size:23px;"><b>@desc</b></td>
+            <td style="text-align:right;font-size:23px;"><b>@exp</b></td>
+        </tr>
+        <tr>
+            <td style="font-size:23px;"><b>Total</b></td>
+            <td style="text-align:right;font-size:23px;"><b>@sum</b></td>
+        </tr>
+    </table>
+    <h6 style="text-align:center">RETRICTED</h6>
+</body>
+</html>

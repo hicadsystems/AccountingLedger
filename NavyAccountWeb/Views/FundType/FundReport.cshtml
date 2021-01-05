@@ -1,0 +1,33 @@
+﻿@model IEnumerable<NavyAccountCore.Core.Entities.Pf_fund>
+@using Microsoft.AspNetCore.Http;
+@{
+    Layout = null;
+
+}
+<!DOCTYPE html>
+<html>
+<body>
+    <h2 style="text-align:center">NIGERIAN NAVY DIRECTORATE OF NON-PUBLIC FUND</h2>
+    <h2 style="text-align:center">NAVIP, DEPENDANT FUND AND WELFARE LOAN PORTFOLIOS</h2>
+    Fund Type:  Produce On @DateTime.Now
+    <table border="2" cellpadding="2" cellspacing="0" width="100%">
+
+        <tr>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Fund Account</th>
+            <th>Tenure</th>
+
+        </tr>
+        @foreach (var a in Model)
+        {
+            <tr>
+                <td> @a.Code </td>
+                <td> @a.Description </td>
+                <td> @a.fundacct </td>
+                <td> @a.processingMonth </td>
+            </tr>
+        }
+    </table>
+</body>
+</html>

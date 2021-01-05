@@ -1,0 +1,50 @@
+﻿@model NavyAccountCore.Models.ContrDiscUpload
+<div class="header">
+    <h1 class="header-title">
+        Contribution
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="Home/Index">Main</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Contr Disc Upload</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Loan Application Upload</h5>
+            </div>
+
+            @TempData["message"]
+            <div class="card-body">
+
+                <a href="~/uploads/loanDisc.xlsx">
+                    Download Sample
+                </a>
+                @using (Html.BeginForm("ContrDiscUpload", "ContrDisc", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.Contraccount, "Fund Code")
+                            @Html.DropDownListFor(x => x.Contraccount, new SelectList(Model.getfund, "Code", "Description"), " ", new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="file" name="formFile" class="form-control" required />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Loan Disc Upload" />
+                    </div>
+                }
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
