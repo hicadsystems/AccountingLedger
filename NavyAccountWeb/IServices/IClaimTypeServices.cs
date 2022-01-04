@@ -1,4 +1,5 @@
 ﻿using NavyAccountCore.Core.Entities;
+using NavyAccountCore.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace NavyAccountWeb.IServices
         List<Npf_ClaimRegister> GetBatchList();
         List<Npf_ClaimRegister> GetSingleBatchno(string batchno);
         Npf_ClaimRegister GetPerson(string svcNo, string fundtype);
+        ClaimModel2 GetpersonClaim(string svcNo, string fundtype);
 
         string fundtypeDesc(string code);
 

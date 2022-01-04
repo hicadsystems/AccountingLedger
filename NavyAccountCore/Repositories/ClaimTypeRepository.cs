@@ -2,6 +2,7 @@
 using NavyAccountCore.Core.Data;
 using NavyAccountCore.Core.Entities;
 using NavyAccountCore.Core.IRepositories;
+using NavyAccountCore.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,7 +40,32 @@ namespace NavyAccountCore.Core.Repositories
           var ck= context.Npf_ClaimRegisters.Where(x => x.svcno == svcNo && x.FundTypeID == fundtype).FirstOrDefault();
            return ck;
         }
-            public decimal GetAmountPerDependent(string svcNo,string fundtype)
+        public ClaimModel2 GetpersonClaim(string svcNo, string fundtype)
+        {
+          var ck= (from claim in context.Npf_ClaimRegisters
+                   join per in context.person on claim.PersonID equals per.PersonID
+                   join fund in context.pf_Funds on claim.FundTypeID equals fund.Code
+                   join bank in context.py_Banks on claim.bank equals bank.Id
+                   where (claim.PersonID.ToString() == svcNo  && fund.Code == fundtype)
+             select new ClaimModel2
+             {
+
+                 svcno = claim.svcno,
+                 TotalContribution = Math.Round(claim.TotalContribution, 2),
+                 Beneficiary = claim.Beneficiary,
+                 acctno = claim.acctno,
+                 bank = bank.bankname,
+                 Remark = claim.Remark,
+                 designation = "Civilian",
+                 batchno = claim.BatchNo,
+                 statusdate=claim.statusdate,
+                 appdate=claim.appdate
+                 
+
+             }).FirstOrDefault();
+            return ck;
+        }
+        public decimal GetAmountPerDependent(string svcNo,string fundtype)
         {
             var per = context.person.FirstOrDefault(x => x.PersonID ==Convert.ToInt32(svcNo));
             var gh = context.npf_Contributions.First(x => x.fundtype == fundtype);

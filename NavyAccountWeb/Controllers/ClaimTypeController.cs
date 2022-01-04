@@ -359,12 +359,12 @@ namespace NavyAccountWeb.Controllers
                     List<Npf_ClaimRegister> successRecord = new List<Npf_ClaimRegister>();
                     List<ClaimCapture> errorRecord = new List<ClaimCapture>();
                     string batch = listApplication.FirstOrDefault().batchno;
-                    if (claimTypeService.checkClaimBatchnoExist(batch))
-                    {
-                        TempData["message"] = "Batch number exist";
-                    }
-                    else
-                    {
+                    //if (claimTypeService.checkClaimBatchnoExist(batch))
+                    //{
+                    //    TempData["message"] = "Batch number exist";
+                    //}
+                    //else
+                    //{
                         ClaimProcessUpload upload = new ClaimProcessUpload(listApplication,unitOfWork , claimTypeService, fundTypeService);
                         errorRecord = await upload.claimUploadInThread();
 
@@ -389,7 +389,7 @@ namespace NavyAccountWeb.Controllers
                             TempData["message"]="Successfully Uploaded";
                         }
                        
-                    }
+                   // }
                   
 
 

@@ -24,6 +24,7 @@ namespace NavyAccountCore.Models
         public string BANK { get; set; }
         public string CHEQUE_NO { get; set; }
         public string BATCH_NO { get; set; }
+        public DateTime EFFECTIVE_DATE { get; set; }
 
         public string VOUCHER_NO { get; set; }
         public string MONTHS_PAID { get; set; }

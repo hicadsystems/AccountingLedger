@@ -30,12 +30,17 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group">
+                            <label>Year</label>
                             <input type="text" name="year" class="form-control" />
-                          </div>
                         </div>
-                        <div class="col-md-3">
-                           @* <input type="checkbox" name="check" value="true" /><label>Excel</label>*@
                         </div>
+                    <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Loan Type</label>
+                                @Html.DropDownList("type", new SelectList(ViewBag.getloantype, "Id", "Description"), new { @class = "form-control" })
+                            </div>
+
+                    </div>
                     </div>
     <div class="row" style="margin-bottom:20px;">
      

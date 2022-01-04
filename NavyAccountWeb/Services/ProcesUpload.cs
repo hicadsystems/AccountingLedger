@@ -126,7 +126,7 @@ namespace NavyAccountWeb.Services
                         BankID = null,
                         //ApproveDate = null,
                         ChequeNo = null,
-                        //EffectiveDate = null,
+                        EffectiveDate = s.EFFECTIVE_DATE,
                         ExpDate = null,
                         loancount = (string.IsNullOrWhiteSpace(s.MONTHS_PAID)) ? 0 : Convert.ToInt32(s.MONTHS_PAID),
                         LoanAppNo = s.BATCH_NO + "-" + s.SVC_NO 

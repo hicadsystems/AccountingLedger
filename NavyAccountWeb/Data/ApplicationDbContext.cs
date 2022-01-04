@@ -14,6 +14,7 @@ namespace NavyAccountWeb.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+            Database.SetCommandTimeout(150000);
         }
 
         public DbContext Instance => this;

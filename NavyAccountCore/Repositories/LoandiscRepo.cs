@@ -31,7 +31,7 @@ namespace NavyAccountCore.Core.Repositories
         {
             return (from loandisc in context.pf_loandisc
                     join per in context.npf_Charts on loandisc.loanact equals per.acctcode
-                    where (loandisc.fundcode == fundcode && loandisc.loantype!="0" && loandisc.batchno==batch)
+                    where (loandisc.fundcode == fundcode && loandisc.batchno==batch)
                     select new LoandiscVM
                     {
                         count=0,

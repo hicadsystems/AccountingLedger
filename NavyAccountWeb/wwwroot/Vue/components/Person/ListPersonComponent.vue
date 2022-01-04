@@ -9,7 +9,7 @@
                         <vuejsAutocomplete source="/api/PersonAPI/getAllPersonsByServiceNoLimited/"
                                            input-class="form-control"
                                            @selected="setValuePersonID"
-                                           v-model="PersonID">
+                                           v-model="pp">
                         </vuejsAutocomplete>
 
                     </div>
@@ -74,7 +74,8 @@ export default {
         personelList:null,
         pageno:0,
         totalcount:0,
-          PersonID:0
+          PersonID:0,
+         pp:''
         };
     },
      created() {
@@ -105,6 +106,7 @@ export default {
             })
          },
           setValuePersonID: function(result) {
+              alert(result.value)
              axios
            .get(`/api/PersonAPI/getPersonByID2/${result.value}`)
            .then(response => {this.personelList = response.data;

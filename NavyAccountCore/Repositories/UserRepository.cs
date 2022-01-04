@@ -41,9 +41,20 @@ namespace NavyAccountCore.Core.Repositories
 
         public async Task<User> UserWithRoles(Expression<Func<User, bool>> predicate)
         {
-            return await context.Users
-                .Include(x => x.UserRoles)
-                .ThenInclude(x => x.Role).FirstOrDefaultAsync(predicate);
+
+            try
+            {
+                var pp = await context.Users
+                            .Include(x => x.UserRoles)
+                            .ThenInclude(x => x.Role).FirstOrDefaultAsync(predicate);
+                return pp;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+           
         }
 
       

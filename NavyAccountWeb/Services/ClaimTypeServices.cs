@@ -1,5 +1,6 @@
 ﻿using NavyAccountCore.Core.Data;
 using NavyAccountCore.Core.Entities;
+using NavyAccountCore.Models;
 using NavyAccountWeb.IServices;
 using System;
 using System.Collections.Generic;
@@ -39,8 +40,11 @@ namespace NavyAccountWeb.Services
         {
             return unitOfWork.cam.Getperson(svcNo, fundtype);
         }
-
-        public decimal GetNavipAmount(string svcNo, string fundtype, out decimal amt)
+        public ClaimModel2 GetpersonClaim(string svcNo, string fundtype)
+        { 
+            return unitOfWork.cam.GetpersonClaim(svcNo, fundtype);
+        }
+    public decimal GetNavipAmount(string svcNo, string fundtype, out decimal amt)
         {
             return unitOfWork.cam.GetAmountPerNavip(svcNo, fundtype,out amt);
         }

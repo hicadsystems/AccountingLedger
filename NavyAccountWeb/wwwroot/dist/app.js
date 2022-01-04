@@ -10504,6 +10504,219 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/Navip/ViewIndividualClaim.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/Navip/ViewIndividualClaim.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuejs_auto_complete__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuejs-auto-complete */ "./node_modules/vuejs-auto-complete/dist/build.js");
+/* harmony import */ var vuejs_auto_complete__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuejs_auto_complete__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    vuejsAutocomplete: vuejs_auto_complete__WEBPACK_IMPORTED_MODULE_0___default.a
+  },
+  props: ['fundtypeid'],
+  data: function data() {
+    return {
+      responseMessage: '',
+      errors: null,
+      searchData: '',
+      submitorUpdate: 'submit',
+      loantypeList: null,
+      autoselectenabled: false,
+      canProcess: true,
+      claimlist: null,
+      bankList: null,
+      wantshow: false,
+      wantshow2: true,
+      wantshow3: false,
+      claim: null,
+      textlimit: 10,
+      acctno: "",
+      maxLengthInCars: 10,
+      postBody: {
+        beneficiary: '',
+        bank: '',
+        PersonID: 0,
+        svcno: '',
+        FundTypeID: 20,
+        amountPaid: 0,
+        amountReceived: 0,
+        amountDue: 0,
+        totalContribution: 0,
+        acctno: ''
+      }
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    this.$store.state.objectToUpdate = null, axios.get('/api/FundType/getAllFundTypes').then(function (response) {
+      return _this.loantypeList = response.data;
+    });
+    axios.get('/api/Bank/getAllBanks').then(function (response) {
+      return _this.bankList = response.data;
+    });
+  },
+  watch: {
+    '$store.state.objectToUpdate': function $storeStateObjectToUpdate(newVal, oldval) {
+      this.postBody.amountReceived = this.$store.state.objectToUpdate.amountReceived, this.postBody.amountPaid = this.$store.state.objectToUpdate.amountPaid, this.postBody.amountDue = this.$store.state.objectToUpdate.amountDue, this.postBody.totalContribution = this.$store.state.objectToUpdate.totalContribution, this.postBody.bank = this.$store.state.objectToUpdate.bank, this.postBody.acctno = this.$store.state.objectToUpdate.acctno, this.postBody.beneficiary = this.$store.state.objectToUpdate.beneficiary, this.submitorUpdate = 'Update';
+    },
+    acctno: function acctno(newValue, oldValue) {
+      if (newValue.length > this.textlimit) this.acctno = oldValue;
+    }
+  },
+  methods: {
+    assertMaxChars: function assertMaxChars() {
+      if (this.acctno.length = this.maxLengthInCars) {
+        this.acctno = this.acctno.substring(0, this.maxLengthInCars);
+      }
+    },
+    generateReport: function generateReport() {
+      window.open("/ClaimRegister/finishClaimRequest/".concat(this.postBody.PersonID, "/").concat(this.postBody.FundTypeID), "_blank");
+    },
+    processRetrieve: function processRetrieve(discharges) {
+      this.$store.state.objectToUpdate = discharges;
+      this.wantshow = true;
+      this.wantshow2 = false;
+    },
+    setValuePersonID: function setValuePersonID(result) {
+      var _this2 = this;
+
+      // alert(this.postBody.FundTypeID);
+      axios.get("/api/Claimtype/GetPersonelClaim/".concat(result.value, "/").concat(this.postBody.FundTypeID)).then(function (response) {
+        _this2.claimlist = response.data;
+      });
+    },
+    checkForm: function checkForm(e) {
+      if (this.postBody.totalContribution) {
+        e.preventDefault();
+        this.canProcess = false;
+        this.postPost();
+      } else {
+        this.errors = [];
+        this.errors.push('Required');
+      }
+    },
+    postPost: function postPost() {
+      var _this3 = this;
+
+      if (this.submitorUpdate == 'Update') {
+        axios.post("/ClaimRegister/CreateClaim", this.postBody).then(function (response) {
+          _this3.responseMessage = response.data.responseDescription;
+          _this3.canProcess = true; //  this.wantshow3=true;
+
+          if (response.data.responseCode == '200') {
+            // this.generateReport();
+            _this3.postBody.PersonID = '';
+            _this3.postBody.appdate = '';
+            _this3.wanttoupdate = true; //this.generateReport();
+          }
+        })["catch"](function (e) {
+          _this3.errors.push(e);
+        });
+      }
+    }
+  },
+  computed: {
+    setter: function setter() {
+      var objecttoedit = this.$store.state.objectToUpdate;
+
+      if (objecttoedit.totalContribution) {
+        this.postBody.amountPaid = objecttoedit.amountPaid;
+        this.postBody.amountreceived = objecttoedit.amountReceived;
+        this.postBody.amountdue = objecttoedit.amountDue;
+        this.postBody.totalContribution = objecttoedit.totalContribution;
+      }
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/PFFundRate/CreateFundRate.vue?vue&type=script&lang=js&":
 /*!***********************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/PFFundRate/CreateFundRate.vue?vue&type=script&lang=js& ***!
@@ -11068,7 +11281,8 @@ __webpack_require__.r(__webpack_exports__);
           email: '',
           bank: '',
           accountno: '',
-          PersonID: 0
+          PersonID: 0,
+          GSMNumber: ''
         } // bene: {
         //     FirstName: '',
         //     LastName: '',
@@ -11232,8 +11446,8 @@ __webpack_require__.r(__webpack_exports__);
         _this2.postBody.person.BirthDate = response.data.birthDate;
         _this2.postBody.person.dateemployed = response.data.dateemployed;
         _this2.postBody.person.dateleft = response.data.dateleft;
-        _this2.postBody.person.bank = response.data.bankid;
-        _this2.postBody.person.Phone1 = response.data.phone1;
+        _this2.postBody.person.bank = response.data.bankname;
+        _this2.postBody.person.GSMNumber = response.data.gSMNumber;
         _this2.postBody.person.email = response.data.email;
         _this2.postBody.person.accountno = response.data.accountno;
       }); // [{"id":0,eNumber":null,"emailAddress":"hicad@hicad.com","placeOfWork":null,"nextofkinType":null,"isActive":true,"createdDate":"2020-03-07T13:55:47.4199588","createdBy":"hicad@hicad.com","modifiedDate":"2020-03-07T13:55:47.4201679","modifiedBy":"hicad@hicad.com","person":null},{"id":0,"personID":13,"firstName":"rewr","lastName":null,"relationshipId":"Mother","dateofbirth":"2020-03-23T12:55:00","fullAddress":"tetetetete","mobileNumber":"08064487564","homeNumber":null,"emailAddress":"hicad@hicad.com","placeOfWork":null,"nextofkinType":null,"isActive":true,"createdDate":"2020-03-07T13:55:47.4896898","createdBy":"hicad@hicad.com","modifiedDate":"2020-03-07T13:55:47.4896925","modifiedBy":"hicad@hicad.com","person":null},{"id":0,"personID":13,"firstName":"rewrbene3","lastName":null,"relationshipId":"Mother","dateofbirth":"2020-03-16T12:55:00","fullAddress":"tetetetete","mobileNumber":"08064487564","homeNumber":null,"emailAddress":"hicad@hicad.com","placeOfWork":null,"nextofkinType":null,"isActive":true,"createdDate":"2020-03-07T13:55:47.7151256","createdBy":"hicad@hicad.com","modifiedDate":"2020-03-07T13:55:47.7151273","modifiedBy":"hicad@hicad.com","person":null}]
@@ -11434,7 +11648,8 @@ __webpack_require__.r(__webpack_exports__);
       personelList: null,
       pageno: 0,
       totalcount: 0,
-      PersonID: 0
+      PersonID: 0,
+      pp: ''
     };
   },
   created: function created() {
@@ -11466,6 +11681,7 @@ __webpack_require__.r(__webpack_exports__);
     setValuePersonID: function setValuePersonID(result) {
       var _this3 = this;
 
+      alert(result.value);
       axios.get("/api/PersonAPI/getPersonByID2/".concat(result.value)).then(function (response) {
         _this3.personelList = response.data;
       });
@@ -45116,6 +45332,252 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/Navip/ViewIndividualClaim.vue?vue&type=template&id=a9c1a1a6&":
+/*!***************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/Navip/ViewIndividualClaim.vue?vue&type=template&id=a9c1a1a6& ***!
+  \***************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _vm.errors
+      ? _c(
+          "div",
+          {
+            staticClass: "alert alert-danger alert-dismissible",
+            attrs: { role: "alert" }
+          },
+          [
+            _c("div", { staticClass: "alert-message" }, [
+              _vm._v(
+                "\n                " + _vm._s([_vm.errors]) + "\n            "
+              )
+            ]),
+            _vm._v(" "),
+            _vm._m(0)
+          ]
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.responseMessage
+      ? _c(
+          "div",
+          {
+            staticClass: "alert alert-primary alert-dismissible",
+            attrs: { role: "alert" }
+          },
+          [
+            _c("div", { staticClass: "alert-message" }, [
+              _vm._v(" " + _vm._s(_vm.responseMessage) + " ")
+            ])
+          ]
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _c("div", { staticClass: "card-body" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-12 col-xl-6" }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { staticClass: "form-label" }, [_vm._v("Fund type")]),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.postBody.FundTypeID,
+                    expression: "postBody.FundTypeID"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { name: "FundTypeID", required: "" },
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.postBody,
+                      "FundTypeID",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  }
+                }
+              },
+              _vm._l(_vm.loantypeList, function(fund) {
+                return _c(
+                  "option",
+                  { key: fund.code, domProps: { value: fund.code } },
+                  [_vm._v(" " + _vm._s(fund.description) + " ")]
+                )
+              }),
+              0
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-12 col-xl-6" }, [
+          _c(
+            "div",
+            { staticClass: "form-group" },
+            [
+              _c("label", { staticClass: "form-label" }, [
+                _vm._v("Service Number")
+              ]),
+              _vm._v(" "),
+              _c("vuejsAutocomplete", {
+                attrs: {
+                  source: "/api/PersonAPI/getAllPersonsByServiceNoLimited/",
+                  "input-class": "form-control"
+                },
+                on: { selected: _vm.setValuePersonID },
+                model: {
+                  value: _vm.postBody.PersonID,
+                  callback: function($$v) {
+                    _vm.$set(_vm.postBody, "PersonID", $$v)
+                  },
+                  expression: "postBody.PersonID"
+                }
+              })
+            ],
+            1
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _vm.claimlist
+        ? _c("div", { staticClass: "card-body" }, [
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.wantshow2,
+                    expression: "wantshow2"
+                  }
+                ]
+              },
+              [
+                _c(
+                  "table",
+                  {
+                    staticClass: "table table-striped",
+                    staticStyle: { width: "100%" },
+                    attrs: { id: "datatables-buttons" }
+                  },
+                  [
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _c(
+                      "tbody",
+                      _vm._l(_vm.claimlist, function(discharges) {
+                        return _c("tr", [
+                          discharges.svcno
+                            ? _c("td", [_vm._v(_vm._s(discharges.svcno))])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          discharges.beneficiary
+                            ? _c("td", [_vm._v(_vm._s(discharges.beneficiary))])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          discharges.bank
+                            ? _c("td", [_vm._v(_vm._s(discharges.bank))])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          discharges.acctno
+                            ? _c("td", [_vm._v(_vm._s(discharges.acctno))])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          discharges.totalContribution
+                            ? _c("td", [
+                                _vm._v(_vm._s(discharges.totalContribution))
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          discharges.appdate
+                            ? _c("td", [_vm._v(_vm._s(discharges.appdate))])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          discharges.remark
+                            ? _c("td", [_vm._v(_vm._s(discharges.remark))])
+                            : _vm._e()
+                        ])
+                      }),
+                      0
+                    )
+                  ]
+                )
+              ]
+            )
+          ])
+        : _vm._e()
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "alert",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("�")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("SVC NO")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Beneficiary")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Bank")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Account No")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Amount")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Date")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Remark")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/PFFundRate/CreateFundRate.vue?vue&type=template&id=2b9d8f69&":
 /*!***************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/PFFundRate/CreateFundRate.vue?vue&type=template&id=2b9d8f69& ***!
@@ -45814,13 +46276,13 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.postBody.person.Phone1,
-                          expression: "postBody.person.Phone1"
+                          value: _vm.postBody.person.GSMNumber,
+                          expression: "postBody.person.GSMNumber"
                         }
                       ],
                       staticClass: "form-control",
-                      attrs: { name: "Phone1" },
-                      domProps: { value: _vm.postBody.person.Phone1 },
+                      attrs: { name: "GSMNumber" },
+                      domProps: { value: _vm.postBody.person.GSMNumber },
                       on: {
                         input: function($event) {
                           if ($event.target.composing) {
@@ -45828,7 +46290,7 @@ var render = function() {
                           }
                           _vm.$set(
                             _vm.postBody.person,
-                            "Phone1",
+                            "GSMNumber",
                             $event.target.value
                           )
                         }
@@ -46184,11 +46646,11 @@ var render = function() {
                   },
                   on: { selected: _vm.setValuePersonID },
                   model: {
-                    value: _vm.PersonID,
+                    value: _vm.pp,
                     callback: function($$v) {
-                      _vm.PersonID = $$v
+                      _vm.pp = $$v
                     },
-                    expression: "PersonID"
+                    expression: "pp"
                   }
                 })
               ],
@@ -62371,6 +62833,7 @@ var map = {
 	"./components/NPFContribution/ViewContributionComponent.vue": "./wwwroot/Vue/components/NPFContribution/ViewContributionComponent.vue",
 	"./components/Navip/CalculateNavip.vue": "./wwwroot/Vue/components/Navip/CalculateNavip.vue",
 	"./components/Navip/CreateNavip.vue": "./wwwroot/Vue/components/Navip/CreateNavip.vue",
+	"./components/Navip/ViewIndividualClaim.vue": "./wwwroot/Vue/components/Navip/ViewIndividualClaim.vue",
 	"./components/PFFundRate/CreateFundRate.vue": "./wwwroot/Vue/components/PFFundRate/CreateFundRate.vue",
 	"./components/PFFundRate/ViewFundRate.vue": "./wwwroot/Vue/components/PFFundRate/ViewFundRate.vue",
 	"./components/Person/CreateNewPersonComponent.vue": "./wwwroot/Vue/components/Person/CreateNewPersonComponent.vue",
@@ -66196,6 +66659,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateNavip_vue_vue_type_template_id_ce080f46___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateNavip_vue_vue_type_template_id_ce080f46___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./wwwroot/Vue/components/Navip/ViewIndividualClaim.vue":
+/*!**************************************************************!*\
+  !*** ./wwwroot/Vue/components/Navip/ViewIndividualClaim.vue ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ViewIndividualClaim_vue_vue_type_template_id_a9c1a1a6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ViewIndividualClaim.vue?vue&type=template&id=a9c1a1a6& */ "./wwwroot/Vue/components/Navip/ViewIndividualClaim.vue?vue&type=template&id=a9c1a1a6&");
+/* harmony import */ var _ViewIndividualClaim_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ViewIndividualClaim.vue?vue&type=script&lang=js& */ "./wwwroot/Vue/components/Navip/ViewIndividualClaim.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ViewIndividualClaim_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ViewIndividualClaim_vue_vue_type_template_id_a9c1a1a6___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ViewIndividualClaim_vue_vue_type_template_id_a9c1a1a6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "wwwroot/Vue/components/Navip/ViewIndividualClaim.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./wwwroot/Vue/components/Navip/ViewIndividualClaim.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************!*\
+  !*** ./wwwroot/Vue/components/Navip/ViewIndividualClaim.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewIndividualClaim_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ViewIndividualClaim.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/Navip/ViewIndividualClaim.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewIndividualClaim_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./wwwroot/Vue/components/Navip/ViewIndividualClaim.vue?vue&type=template&id=a9c1a1a6&":
+/*!*********************************************************************************************!*\
+  !*** ./wwwroot/Vue/components/Navip/ViewIndividualClaim.vue?vue&type=template&id=a9c1a1a6& ***!
+  \*********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewIndividualClaim_vue_vue_type_template_id_a9c1a1a6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./ViewIndividualClaim.vue?vue&type=template&id=a9c1a1a6& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/Navip/ViewIndividualClaim.vue?vue&type=template&id=a9c1a1a6&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewIndividualClaim_vue_vue_type_template_id_a9c1a1a6___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewIndividualClaim_vue_vue_type_template_id_a9c1a1a6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

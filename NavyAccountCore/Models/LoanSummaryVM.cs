@@ -22,5 +22,6 @@ namespace NavyAccountCore.Models
         public decimal amountperyearR { get; set; }
         public DateTime Effectivedate { get; set; }
         public string remark { get; set; }
+        public int loantype { get; set; }
     }
 }

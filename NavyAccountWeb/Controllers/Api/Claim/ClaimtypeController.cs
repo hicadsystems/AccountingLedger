@@ -57,5 +57,15 @@ namespace NavyAccountWeb.Controllers.Api.Claim
             return Ok(new { responseCode = 200, responseDescription = "Created Successfully",val });
             //return Ok(val);
         }
+
+        [Route("GetPersonelClaim/{serviceNo}/{fundtypeCode}")]
+        [HttpGet]
+        public IActionResult ViewPersonelclaim(string serviceNo, string fundtypeCode)
+        {
+            var claim = services.GetpersonClaim(serviceNo, fundtypeCode);
+            return Ok(new { responseCode = 200, responseDescription = "Created Successfully", claim });
+            //return Ok(val);
+        }
     }
 }
+   

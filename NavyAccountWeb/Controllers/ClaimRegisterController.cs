@@ -185,7 +185,10 @@ namespace NavyAccountWeb.Controllers
             }
             return RedirectToAction("Index");
         }
-
+        public ActionResult PersonelClaim()
+        {
+            return View();
+        }
        
     }
 }

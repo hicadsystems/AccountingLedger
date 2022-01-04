@@ -19,6 +19,7 @@ using NavyAccountWeb.Services;
 using NavyAccountCore.Core.AuditService;
 using NavyAccountWeb.Models;
 using MoreLinq.Extensions;
+using Microsoft.AspNetCore.Routing;
 
 namespace NavyAccountWeb.Controllers
 {
@@ -54,7 +55,9 @@ namespace NavyAccountWeb.Controllers
             ViewBag.batch = loan.OrderBy(x => x.LoanTypeID);
             var fundcode = HttpContext.Session.GetString("fundtypecode");
             ViewBag.getbatch = batchNo;
-            if (batchNo != null)
+            int? loanid = 0;
+             loanid = HttpContext.Session.GetInt32("deleted");
+            if (batchNo != null &&  loanid==0)
             {
                 string dd = HttpContext.Session.GetString("fundtypecode").ToString();
                 string k = dd;
@@ -78,7 +81,7 @@ namespace NavyAccountWeb.Controllers
                 var m = PaginatedList<LoandiscVM>.CreateAsync(listloanrepay, (int)pageNumber, 10);
                 return View(m);
             }
-            
+            HttpContext.Session.SetInt32("deleted",0);
             if (svcno != null)
             {
                 var listloanrepay2 = loandiscService.GetAllbyFundcodeandsvcno( fundcode, svcno).OrderByDescending(x => x.principal).AsQueryable();
@@ -95,9 +98,31 @@ namespace NavyAccountWeb.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var pfloandisc = await context.pf_loandisc.FindAsync(id);
-            await loandiscService.DeleteLoandisc(pfloandisc);
-            string batchNo = "Delete";
-            return RedirectToAction("Loanrepayment/"+batchNo,"LoanDisc");
+           // await loandiscService.DeleteLoandisc(pfloandisc);
+            using (SqlConnection sqls = new SqlConnection(_connectionstring))
+            {
+                using (SqlCommand cmd = new SqlCommand("deleteloandisc", sqls))
+                {
+                    cmd.CommandTimeout = 1200;
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@id", pfloandisc.Id));
+                    cmd.Parameters.Add(new SqlParameter("@batchno", pfloandisc.batchno));
+
+                    await sqls.OpenAsync();
+                    await cmd.ExecuteNonQueryAsync();
+
+                    TempData["message"] = "Uploaded Successfully";
+                }
+            }
+            HttpContext.Session.SetInt32("deleted", pfloandisc.Id);
+            return RedirectToAction("Loanrepayment", new RouteValueDictionary(
+                     new
+                     {
+                         controller = "LoanDisc",
+                         action = "Loanrepayment",
+                         batchNo = pfloandisc.batchno
+                     }));
+           
         }
         [HttpPost]
         public async Task<IActionResult> LoanrepaymentPost(string batchNo)

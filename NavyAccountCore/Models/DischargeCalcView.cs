@@ -58,6 +58,8 @@ namespace NavyAccountCore.Models
         public decimal TotalContribution { get; set; }     
         public string Remark { get; set; }
         public string batchno { get; set; }
+        public DateTime statusdate { get; set; }
+        public DateTime appdate { get; set; }
 
 
 

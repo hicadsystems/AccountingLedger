@@ -101,7 +101,8 @@ namespace NavyAccountWeb.Controllers
                     string STATUS = String.IsNullOrEmpty(worksheet.Cells[1, 8].ToString()) ? "" : worksheet.Cells[1, 8].Value.ToString().Trim();
                     string MONTHS_PAID = String.IsNullOrEmpty(worksheet.Cells[1, 9].ToString()) ? "" : worksheet.Cells[1, 9].Value.ToString().Trim();
                     string BATCH = String.IsNullOrEmpty(worksheet.Cells[1, 10].ToString()) ? "" : worksheet.Cells[1, 10].Value.ToString().Trim();
-                                     
+                    string EFFECTIVE_DATE = String.IsNullOrEmpty(worksheet.Cells[1, 11].ToString()) ? "" : worksheet.Cells[1, 11].Value.ToString().Trim();
+
                     if (SVC_NO != "SVC_NO" || RANK != "RANK" || SURNAME != "SURNAME" || OTHERNAME != "OTHERNAME" || LOAN_TYPE != "LOAN_TYPE" || AMOUNT != "AMOUNT" || TENURE != "TENURE"
                         || STATUS != "STATUS" || MONTHS_PAID != "MONTHS_PAID" || BATCH != "BATCH")
                     {
@@ -132,6 +133,8 @@ namespace NavyAccountWeb.Controllers
                             worksheet.Cells[1, 9].Value = "";
                        if (worksheet.Cells[1, 10].Value == null)
                             worksheet.Cells[1, 10].Value = "";
+                        if (worksheet.Cells[1, 11].Value == null)
+                            worksheet.Cells[1, 11].Value = "";
 
                         if (worksheet.Cells[row, 1].Value == null)
                             worksheet.Cells[row, 1].Value = "";
@@ -160,6 +163,8 @@ namespace NavyAccountWeb.Controllers
                             worksheet.Cells[row, 9].Value = "";
                         if (worksheet.Cells[row, 10].Value == null)
                             worksheet.Cells[row, 10].Value = "";
+                        if (worksheet.Cells[row, 11].Value == null)
+                            worksheet.Cells[row, 11].Value = "";
 
                         string svcno1 = String.IsNullOrEmpty(worksheet.Cells[row, 1].Value.ToString()) ? "" : worksheet.Cells[row, 1].Value.ToString().Trim();
                         string rank1 = String.IsNullOrEmpty(worksheet.Cells[row, 2].Value.ToString()) ? "" : worksheet.Cells[row, 2].Value.ToString().Trim();
@@ -172,7 +177,8 @@ namespace NavyAccountWeb.Controllers
                         string status1 = String.IsNullOrEmpty(worksheet.Cells[row, 8].Value.ToString()) ? "" : worksheet.Cells[row, 8].Value.ToString().Trim();
                         string monthpaid = String.IsNullOrEmpty(worksheet.Cells[row, 9].Value.ToString()) ? "" : worksheet.Cells[row, 9].Value.ToString().Trim();
                         string batch = String.IsNullOrEmpty(worksheet.Cells[row, 10].Value.ToString()) ? "" : worksheet.Cells[row, 10].Value.ToString().Trim();
-                       
+                        string effective_date = String.IsNullOrEmpty(worksheet.Cells[row, 11].Value.ToString()) ? "" : worksheet.Cells[row, 11].Value.ToString().Trim();
+
 
                         if (String.IsNullOrEmpty(worksheet.Cells[row, 1].Value.ToString()) ||
                            String.IsNullOrEmpty(worksheet.Cells[row, 2].Value.ToString()) ||
@@ -197,6 +203,7 @@ namespace NavyAccountWeb.Controllers
                                 STATUS = status1,
                                 MONTHS_PAID = monthpaid,
                                 BATCH_NO = batch,
+                                EFFECTIVE_DATE=Convert.ToDateTime(effective_date),
 
                                
                             });
@@ -217,6 +224,7 @@ namespace NavyAccountWeb.Controllers
                                 STATUS = status1,
                                 MONTHS_PAID = monthpaid,
                                 BATCH_NO = batch,
+                                EFFECTIVE_DATE = Convert.ToDateTime(effective_date),
 
                             });
                         }
@@ -720,7 +728,9 @@ namespace NavyAccountWeb.Controllers
            
             var loans = loanRegisterService.getListofLoanReportSummary(batch).Result;
             int count = getloancount(loans.FirstOrDefault().EffectiveDate);
-            var loanlist =loans.Where(x=>x.LoanTypeID!=count && Convert.ToInt32(x.Tenure)>=count).ToList();
+            if(count>Convert.ToInt32(loans.FirstOrDefault().Tenure))
+                count=Convert.ToInt32(loans.FirstOrDefault().Tenure);
+            var loanlist =loans.Where(x=>x.LoanTypeID!=count && Convert.ToInt32(x.Tenure)>count && Convert.ToInt32(x.Tenure)!= x.LoanTypeID).ToList();
             return await generatePdf.GetPdf("Views/LoanPosition/LoanRegisterReportPage.cshtml", loanlist);
 
         }
@@ -740,15 +750,17 @@ namespace NavyAccountWeb.Controllers
         }
         public IActionResult LoanSummary()
         {
-            
+            var loan = context.Pf_loanType.ToList();
+
+            ViewBag.getloantype = loan;
             return View();
 
         }
         [HttpPost]
-        public async Task<IActionResult> LoanSummary2(string year,bool check)
+        public async Task<IActionResult> LoanSummary2(string year,int type)
         {
             var LS = new List<LoanSummaryVM>();
-            var batchno = context.pf_LoanRegisters.DistinctBy(x => x.batchNo).ToList();
+            var batchno = context.pf_LoanRegisters.DistinctBy(x => x.batchNo).Where(x=>x.LoanTypeID==type).ToList();
             foreach (var a in batchno)
             {
                                
@@ -766,7 +778,7 @@ namespace NavyAccountWeb.Controllers
                     amountpaidOP = (decimal)context.npf_Histories.Where(x => x.batchNo == a.batchNo && x.doctype == "JV").ToList().Sum(x => x.cramt),
                     batchno = a.batchNo,
                     Effectivedate=a.EffectiveDate,
-                  
+                    loantype=(int)a.LoanTypeID,
                     //noofde=faulter = hcount
                 };
                 if (d.amountperyear == 0)
@@ -784,25 +796,7 @@ namespace NavyAccountWeb.Controllers
                 LS.Add(d);
             }
             decimal total = LS.ToList().Sum(x => x.amountperyear);
-            if (check == true)
-            {
-                var stream = new MemoryStream();
-
-                int row = 2;
-                using (var package = new ExcelPackage(stream))
-                {
-                    var workSheet = package.Workbook.Worksheets.Add("Sheet2");
-                    workSheet.Cells.LoadFromCollection(LS.OrderBy(x => x.batchno), true);
-                    package.Save();
-                }
-
-
-                string excelname = "LoanRecieveable.xlsx";
-
-                stream.Position = 0;
-                string excelName = $"LoanToCPO-{DateTime.Now.ToString("yyyyMMddHHmmssfff")}.xlsx";
-                return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelname);
-            }
+            
             return await generatePdf.GetPdf("Views/LoanPosition/LoansummaryReport.cshtml", LS.OrderBy(x=>x.batchno));
             ////return View(loanRecieveableList);
 

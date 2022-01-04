@@ -76,7 +76,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label>PhoneNumber</label>
-                                <input class="form-control" name="Phone1" v-model="postBody.person.Phone1" />
+                                <input class="form-control" name="GSMNumber" v-model="postBody.person.GSMNumber" />
                             </div>
                         </div>
 
@@ -336,6 +336,7 @@
                         bank: '',
                         accountno: '',
                         PersonID : 0,
+                        GSMNumber:''
                         
                     },
                     // bene: {
@@ -422,6 +423,7 @@
                                     email: '',
                                     bank: '',
                                     accountno: '',
+
                                 },
                                 // bene: {
                                 //     FirstName: '',
@@ -497,8 +499,8 @@
                         this.postBody.person.BirthDate = response.data.birthDate
                         this.postBody.person.dateemployed = response.data.dateemployed
                          this.postBody.person.dateleft = response.data.dateleft
-                          this.postBody.person.bank = response.data.bankid
-                        this.postBody.person.Phone1 = response.data.phone1
+                          this.postBody.person.bank = response.data.bankname
+                        this.postBody.person.GSMNumber = response.data.gSMNumber
                         this.postBody.person.email = response.data.email
                         this.postBody.person.accountno = response.data.accountno
                        

@@ -29,6 +29,7 @@ namespace NavyAccountWeb.Controllers
         public async Task<IActionResult> Index()
         {
             int rd;
+            
             var currentUser = await GetCurrentUser();
             
            
