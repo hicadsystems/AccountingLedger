@@ -105,14 +105,6 @@ namespace NavyAccountWeb.Data
                 .WithMany(x => x.RoleMenus)
                 .HasForeignKey(x => x.MenuId);
 
-
-
-
-
-
-
-
-
             builder.Entity<npf_NavipContribution>()
                .Property(e => e.Id)
                .UseSqlServerIdentityColumn();
