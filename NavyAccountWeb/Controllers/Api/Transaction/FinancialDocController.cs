@@ -81,6 +81,7 @@ namespace NavyAccountWeb.Controllers.Api.Transaction
                             cmd.Parameters.Add(new SqlParameter("@docRem", fdoc.remarks));
                             cmd.Parameters.Add(new SqlParameter("@Docno", value.documentNo));
                             cmd.Parameters.Add(new SqlParameter("@Refno", value.referenceNo));
+                            cmd.Parameters.Add(new SqlParameter("@batchno", value.documentNo));
 
                             //sqls.OpenAsync();
                             cmd.ExecuteNonQuery();
@@ -105,6 +106,7 @@ namespace NavyAccountWeb.Controllers.Api.Transaction
                             cmd2.Parameters.Add(new SqlParameter("@docRem", fdoc.remarks));
                             cmd2.Parameters.Add(new SqlParameter("@Docno", value.documentNo));
                             cmd2.Parameters.Add(new SqlParameter("@Refno", value.referenceNo));
+                            cmd2.Parameters.Add(new SqlParameter("@batchno", value.documentNo));
 
                             //sqls.OpenAsync();
                             cmd2.ExecuteNonQuery();

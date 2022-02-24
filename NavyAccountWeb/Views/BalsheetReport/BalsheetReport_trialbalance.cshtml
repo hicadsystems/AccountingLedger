@@ -1,9 +1,16 @@
-﻿@model IEnumerable<NavyAccountCore.Models.LedgersView2>
+﻿@model IEnumerable<NavyAccountCore.Models.V_TRIALBALANCE>
 
 @{
     Layout = null;
 
     decimal? sum = 0M;
+    decimal? Amt = 0M;
+    decimal? crd = 0M;
+    decimal? dbt = 0M;
+    decimal? mainCrd = 0M;
+    decimal? mainDbt = 0M;
+    decimal? summDbt = 0M;
+    decimal? summCrd = 0M;
 }
 
 <!DOCTYPE html>
@@ -21,26 +28,95 @@
     <table border="2" cellpadding="2" cellspacing="0" width="85%">
 
         <tr>
+            <th>Code</th>
             <th>Description</th>
-            <th>Amount</th>
+            @*<th>Amount</th>*@
+            <th>Debit</th>
+            <th>Credit</th>
         </tr>
-
+        @{
+            string incomingcode = null;
+            string incomingDesc = null;
+        }
 
         @foreach (var a in Model)
         {
-            sum += a.Amount;
+
+
+            @*if (incomingcode == null)
+            {
+                incomingcode = a.maincode;
+                incomingDesc = a.maindesc;
+            }
+
+            if (incomingcode != a.maincode)
+            {
+                <tr>
+                    <td style="font-weight:bold;">@incomingcode</td>
+                    <td style="font-weight:bold;">Total: @incomingDesc</td>
+                    <td></td>
+                    <td style="text-align: right; font-weight: bold;">@Math.Round(mainDbt.Value, 2)</td>
+                    <td style="text-align: right; font-weight: bold;">@Math.Round(mainCrd.Value, 2)</td>
+                </tr>
+
+                mainCrd = 0M;
+                mainDbt = 0M;
+            }*@
 
             <tr>
-                <td>@a.description</td>
-                <td style="text-align:right;">@Math.Round(a.Amount,2)</td>
+                <td>@a.acctcode</td>
+                <td>@a.subdesc</td>
+                @*<td style="text-align:right;">@Math.Round(a.amount, 2)</td>*@
+                @{
+                    if (a.amount > 0)
+                    {
+                        <td style="text-align:right;">@string.Format("{0:n}", Math.Round(a.amount, 2))</td>
+                    }
+                                else if (a.amount < 0)
+                                {
+                        <td style="text-align:right;">0.00</td>
+                                }
+
+                                if (a.amount < 0)
+                                {
+                        <td style="text-align:right;">@string.Format("{0:n}", (Amt - Math.Round(a.amount, 2))) </td>
+                        mainCrd -= a.amount;
+                                    summCrd -= a.amount;
+                                }
+                                else if (a.amount > 0)
+                                {
+                        <td style="text-align:right;">0.00</td>
+                        mainDbt += a.amount;
+                                    summDbt += a.amount;
+                                }
+
+                                sum += a.amount;
+
+                                //incomingcode = a.maincode;
+                                //incomingDesc = a.maindesc;
+                            }
             </tr>
 
-
         }
+        @*<tr>
+            <td style="font-weight:bold">@incomingcode</td>
+            <td style="font-weight:bold">Total: @incomingDesc</td>
+            <td></td>
+            <td style="text-align: right; font-weight: bold;">@Math.Round(mainDbt.Value, 2)</td>
+            <td style="text-align: right; font-weight: bold;">@Math.Round(mainCrd.Value, 2)</td>
+        </tr>*@
+        <tr>
+            <td></td>
+             <td style="font-size: 23px;"><b>T O T A L SUMMARY</b></td>
+            <td style="text-align: right; font-size: 23px; "><b>@string.Format("{0:n}", Math.Round(summDbt.Value, 2))</b></td>
+            <td style="text-align: right; font-size: 23px;"><b>@string.Format("{0:n}",Math.Round(summCrd.Value, 2))</b></td>
+        </tr>
 
         <tr>
-            <td style="font-weight:800;font-size:28px;">Total</td>
-            <td style="text-align:right;">@Math.Round(sum.Value,2)</td>
+            <td></td>
+            <td style="font-weight: 800; font-size: 23px;"><b>Control Total</b></td>
+            <td></td>
+            <td style="text-align: right; font-size: 23px;"><b>@string.Format("{0:n}", Math.Round(sum.Value, 2))</b></td>
         </tr>
 
 
@@ -48,3 +124,58 @@
     <h6 style="text-align:center">RETRICTED</h6>
 </body>
 </html>
+
+@*var chartfirstTwoChar = a.acctcode.Substring(0, 2);
+            var mainAccfirstTwoChar = a.mainAccountCode.Substring(0, 2);
+
+            if (chartfirstTwoChar == mainAccfirstTwoChar)
+            {
+                sum += a.Amount;
+                if (a.Amount > 0)
+                {
+                    mainDbt += a.Amount;
+                }
+                if (a.Amount < 0)
+                {
+                    mainCrd += a.Amount;
+                }
+
+<tr>
+    <td>@a.acctcode</td>
+    <td>@a.description</td>
+    <td style="text-align:right;">@Math.Round(a.Amount, 2)</td>
+    @{
+        if (a.Amount > 0)
+        {
+            <td style="text-align:right;">@Math.Round(a.Amount, 2)</td>
+        }
+        else if (a.Amount < 0)
+        {
+            <td style="text-align:right;">0.00</td>
+        }
+
+        if (a.Amount < 0)
+        {
+            <td style="text-align:right;">@(Amt - Math.Round(a.Amount, 2)) </td>
+        }
+        else if (a.Amount > 0)
+        {
+            <td style="text-align:right;">0.00</td>
+        }
+    }
+</tr>
+
+
+            }
+            if (chartfirstTwoChar == mainAccfirstTwoChar)
+            {
+<tr>
+    <td>@a.mainAccountCode</td>
+    <td>Total: @a.mainAccountDesc</td>
+    <td></td>
+    <td style="text-align:right;">@Math.Round(mainDbt.Value, 2)</td>
+    <td style="text-align:right;">@Math.Round(mainCrd.Value, 2)</td>
+</tr>
+
+
+            }*@

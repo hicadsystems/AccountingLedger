@@ -3,6 +3,7 @@
 using Microsoft.EntityFrameworkCore;
 using NavyAccountCore.Core.Entities;
 using NavyAccountCore.Entities;
+using NavyAccountCore.Models;
 using System.Threading.Tasks;
 
 namespace NavyAccountCore.Core.Data
@@ -52,6 +53,6 @@ namespace NavyAccountCore.Core.Data
         DbSet<npf_LoanTypeReview> npf_loantypereview { get; set; }
         DbSet<npf_loanstatus> npf_loanstatus { get; set; }
 
-
+        DbQuery<V_TRIALBALANCE> V_TRIALBALANCEs { get; set; }
     }
 }

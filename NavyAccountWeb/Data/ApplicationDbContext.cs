@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using NavyAccountCore.Core.Data;
 using NavyAccountCore.Core.Entities;
 using NavyAccountCore.Entities;
+using NavyAccountCore.Models;
 
 namespace NavyAccountWeb.Data
 {
@@ -58,7 +59,7 @@ namespace NavyAccountWeb.Data
         public DbSet<npf_navip> npf_navip { get; set; }
         public DbSet<npf_LoanTypeReview> npf_loantypereview { get; set; }
         public DbSet<npf_loanstatus> npf_loanstatus { get; set; }
-
+        public DbQuery<V_TRIALBALANCE> V_TRIALBALANCEs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -437,7 +438,7 @@ namespace NavyAccountWeb.Data
              .Property(e => e.calcdate1)
              .HasColumnType("date");
 
-
+            builder.Query<V_TRIALBALANCE>().ToView("V_TRIALBALANCE");
         }
     }
 }

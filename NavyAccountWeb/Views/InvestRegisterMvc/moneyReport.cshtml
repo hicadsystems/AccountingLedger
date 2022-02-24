@@ -32,7 +32,7 @@
         <td> @Html.DisplayFor(modelItem => a.Data.Maturingdate)</td>
         <td> @Html.DisplayFor(modelItem => a.Data.issuancebank)</td>
         <td> @Html.DisplayFor(modelItem => a.Data.receivingbank)</td>
-        <td> @Html.DisplayFor(modelItem => a.Data.Amount)</td>
+        <td> @string.Format("{0:n}", a.Data.Amount)</td>
         <td> @Html.DisplayFor(modelItem => a.Data.interest)</td>
         <td> @Html.DisplayFor(modelItem => a.Data.Tenure)</td>
 

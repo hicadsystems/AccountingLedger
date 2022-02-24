@@ -31,7 +31,7 @@
                     <td>@a.rank</td>
                     <td>@a.bank</td>
                     <td>@a.acctno</td>
-                    <td>@Math.Round(a.grandsuvaltotal,2)</td>
+                    <td>@string.Format("{0:n}", Math.Round(a.grandsuvaltotal,2))</td>
                     <td>@a.remark</td>
 
                 </tr>

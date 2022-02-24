@@ -34,9 +34,9 @@
             <tr>
                 <td> @a.date </td>
                 <td> @a.doc </td>
-                <td>@a.remark</td>
-                <td>@Math.Round(a.Amount,2)</td>
-                <td> @Math.Round(sum,2)</td>
+                <td> @a.remark</td>
+                <td> @string.Format("{0:n}", Math.Round(a.Amount,2))</td>
+                <td> @string.Format("{0:n}", Math.Round(sum,2))</td>
 
             </tr>
         }

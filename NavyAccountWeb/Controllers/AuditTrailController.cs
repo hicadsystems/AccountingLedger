@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -8,6 +9,7 @@ using NavyAccountCore.Core.AuditService;
 using NavyAccountCore.Models;
 using NavyAccountWeb.IServices;
 using NavyAccountWeb.ViewModels;
+using OfficeOpenXml;
 using Wkhtmltopdf.NetCore;
 
 namespace NavyAccountWeb.Controllers
@@ -46,11 +48,9 @@ namespace NavyAccountWeb.Controllers
             string wdoc = "Open" + fundTypeCode + model.year.Substring(2, 2) + "00";
 
             var result1 = services.GetSingleRecord(model.acctcode, wdoc);
-            var result2 = services.GetAllRecord(result1.period,model.acctcode).ToList();
+            var result2 = services.GetAllRecord(result1.period, model.acctcode).ToList();
             string description = services.GetNpfDesc(model.acctcode);
-
-            var result3 = GetAllSubs(result2, result1,model.acctcode,y.ToString(),description);
-           
+            var result3 = GetAllSubs(result2, result1, model.acctcode, y.ToString(), description);
 
             return await generatePdf.GetPdf("Views/AuditTrail/AuditReport.cshtml", result3);
   

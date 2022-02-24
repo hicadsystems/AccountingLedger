@@ -12,7 +12,15 @@ namespace NavyAccountWeb.IServices
         IEnumerable<LedgersView2> GetAllSurplus2();
         IEnumerable<LedgersView2> GetBalSheet();
         IEnumerable<LedgersView2> GetBalSheet_TrialBalance();
+
+        IEnumerable<V_TRIALBALANCE> GetTrialBalanceView();
+
+        IEnumerable<V_TRIALBALANCE> GetTrialBalanceProcedure(string funcode);
         public IEnumerable<LedgersView2> GetBalSheet_MainTrialBalance();
+
+        IEnumerable<V_TRIALBALANCE> GetBalSheet_MainTrialBalanceProcedure(string funcode);
+
+        IEnumerable<V_TRIALBALANCE> GetBalSheet_StoredProcedure(string fundcode);
 
         IEnumerable<LedgersView2> GetSurplus_Deficit();
         IEnumerable<LedgersView2> GetBalanceSheetSurplus_Deficit();

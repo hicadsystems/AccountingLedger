@@ -1,7 +1,11 @@
 <template>
     	<!-- WRAPPER -->
     <div>
-<div v-if="errors" class="has-error"> {{ [errors] }}</div>
+        <div v-if="errors" class="has-error" style="color:red;">
+            <p v-for="error in errors" v-bind:value="error.index" v-bind:key="error.index">
+                {{ error }}
+            </p>
+        </div>
         <div v-if="responseMessage" class="has-error"> {{ responseMessage }}</div>
         <div class="card-body">
             <div class="row">
@@ -43,6 +47,12 @@
                         </select>
 
                     </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Preferred Code</label>
+                        <input class="form-control" name="preferredCode" v-model="preferredCode" placeholder="0000" />
+                    </div>
+
                     </div>
                 <div class="col-12 col-xl-6">
                    <div class="btn-group mr-2 sw-btn-group-extra" v-if="canProcess" role="group"><button class="btn btn-submit btn-primary" v-on:click="checkForm" type="submit">{{submitorUpdate}}</button></div>
@@ -65,6 +75,7 @@ export default {
         responseMessage:'',
         errors: null,
         new_maincode :'',
+        preferredCode: '',
         submitorUpdate : 'Submit',
         balanceSheetList:null,
         canProcess : true,
@@ -73,26 +84,26 @@ export default {
                 description:'',
                 subtype: '',
                 shortname:'',
-                npf_balsheet_bl_code:''
+                npf_balsheet_bl_code:'',
 
         },
         mainaccountcodes: [
-            { value: '100', text: 'Assets' },
-            { value: '200', text: 'Liabilities' },
-            { value: '300', text: 'Capital and Reserve' },
-            { value: '400', text: 'Income' },
-            { value: '500', text: 'Expenses' }
+            { value: '10', text: 'Assets' },
+            { value: '20', text: 'Liabilities' },
+            { value: '30', text: 'Capital and Reserve' },
+            { value: '40', text: 'Income' },
+            { value: '50', text: 'Expenses' }
             ],
-        subtype: [
-            { value: '1', text: 'GL Account' },
-            { value: '2', text: 'Customers' },
-            { value: '3', text: 'Brokers' },
-            { value: '4', text: 'Bank' },
-            { value: '5', text: 'Insurance Coys' },
-            { value: '6', text: 'Mgt Expenses' },
-            { value: '7', text: 'Tech Expenses' },
-            { value: '8', text: 'Assets' },
-            { value: '9', text: 'Income' }
+       subtype: [
+           { value: '1', text: 'GL Account' },
+           { value: '2', text: 'Customers' },
+           { value: '4', text: 'Bank' },
+           { value: '6', text: 'Mgt Expenses' },
+           { value: '7', text: 'Tech Expenses' },
+           { value: '8', text: 'Assets' },
+           { value: '9', text: 'Income' },
+           { value: '3', text: 'None' },
+           { value: '5', text: 'None' }
     ]
         };
     },
@@ -131,14 +142,18 @@ export default {
             this.errors.push('Supply the Compulsory filde(s)');
           }
         },
+
         getLastUsedMainAccount() {
             axios.get(`/api/MainAccount/getLastMainAccount/${ this.postBody.maincode }`)
                         .then(response => {
                             
                             if (response.data.responseCode == '200' && response.data.data != 0) {
                                 this.new_maincode = 0;
-                                this.new_maincode = parseInt(response.data.data.maincode.slice(3, response.data.data.maincode.length)) + 10;
-                                this.new_maincode = this.postBody.maincode + ""+this.new_maincode;
+                                this.new_maincode = parseInt(response.data.data.maincode.slice(0, response.data.data.maincode.length)) + 100;
+                                //this.new_maincode = this.postBody.maincode + ""+this.new_maincode;
+
+                                alert(this.new_maincode);
+                                //alert(parseInt(this.new_maincode) + 100);
                             }
                             else {
                                 this.new_maincode = this.postBody.maincode + "10";
@@ -147,10 +162,60 @@ export default {
                         .catch(e => {
                             this.errors.push(e)
                         });
+
+                        // this.preferredCode = this.new_maincode.slice(0, this.new_maincode.length -4)
         },
         postPost() {
+            console.log(this.preferredCode);
+            if (this.preferredCode !== null && this.preferredCode !== ""){
+                    
+                    if(this.preferredCode.length === 4){
+                        
+                        var firstDigit = this.preferredCode.slice(0, this.preferredCode.length -3)
 
-            if (this.submitorUpdate == 'Submit') {
+                        if(firstDigit !== '1' && firstDigit !== '2' && firstDigit !== '3' && firstDigit !== '4' & firstDigit !== '5')
+                        {
+                            this.errors = [];
+                            this.errors.push('The first number(' +firstDigit+ ') of your Preferred code is invalid!!!');
+
+                            this.canProcess = true;
+                        }
+                        else{
+
+                            if (this.submitorUpdate == 'Submit') {
+                
+                                this.postBody.maincode = this.preferredCode;
+                                axios.post(`/api/MainAccount/createMainAccount`, this.postBody )
+                                .then(response => {
+                                this.responseMessage = response.data.responseDescription;
+                                this.canProcess = true;
+                                if (response.data.responseCode == '200')
+                                {
+                                    this.postBody.maincode = '';this.postBody.description = '';
+                                    this.postBody.npf_balsheet_bl_code = ''; this.postBody.subtype = '';
+                                    this.postBody.shortname = '';
+                                    this.$store.state.objectToUpdate = "create";
+                                    this.errors = [];
+                                }
+                                })
+                                .catch(e => {
+                                this.errors.push(e)
+                                });
+                            }
+                        }
+
+                    }
+                    else{
+                        
+                        this.canProcess = true;
+                        this.errors = [];
+                        this.errors.push('Preferred code must be FOUR(4) digits!!!');
+                    }
+            }
+            else
+            {
+                if (this.submitorUpdate == 'Submit') {
+                
                 this.postBody.maincode = this.new_maincode;
                     axios.post(`/api/MainAccount/createMainAccount`, this.postBody )
                         .then(response => {
@@ -161,16 +226,17 @@ export default {
                                 this.postBody.maincode = '';this.postBody.description = '';
                                 this.postBody.npf_balsheet_bl_code = ''; this.postBody.subtype = '';
                                 this.postBody.shortname = '';
-                                 this.$store.state.objectToUpdate = "create";
+                                this.$store.state.objectToUpdate = "create";
                             }
                         })
                         .catch(e => {
                             this.errors.push(e)
                         });
                 }
-            if (this.submitorUpdate == 'Update') {
+
+                if (this.submitorUpdate == 'Update') {
                      this.postBody.maincode = this.$store.state.objectToUpdate.maincode
-                    axios.put(`/api/MainAccount/updateMainAccount`, this.postBody )
+                        axios.put(`/api/MainAccount/updateMainAccount`, this.postBody )
                         .then(response => {
                             this.responseMessage = response.data.responseDescription;
                             this.canProcess = true;
@@ -186,8 +252,9 @@ export default {
                         .catch(e => {
                             this.errors.push(e)
                         });
-                }
+                }    
             }
         }
+    }
 };
 </script>

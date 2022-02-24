@@ -29,8 +29,8 @@
             <tr>
                 <td> @a.code </td>
                 <td> @a.description </td>
-                <td> @Math.Round(a.debit, 2) </td>
-                <td> @Math.Round(a.credit, 2) </td>
+                <td> @string.Format("{0:n}", Math.Round(a.debit, 2)) </td>
+                <td> @string.Format("{0:n}", Math.Round(a.credit, 2)) </td>
 
             </tr>
         }
