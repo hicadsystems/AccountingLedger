@@ -158,11 +158,11 @@ namespace NavyAccountWeb
 
             //app.UseRouting();
 
-            var IsCentralServer = config.GetValue<bool>("ServerSettings:CentralServer");
-            if (!IsCentralServer)
-            {
-               Seeder.SeedData(userManager, roleManager, config, unitOfWork);
-            }
+            //var IsCentralServer = config.GetValue<bool>("ServerSettings:CentralServer");
+            //if (!IsCentralServer)
+            //{
+            //   Seeder.SeedData(userManager, roleManager, config, unitOfWork);
+            //}
 
 
             app.UseAuthentication();
