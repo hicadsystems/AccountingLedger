@@ -328,6 +328,7 @@
                 else {
                     this.processingorsave = 'Processing';
                     e.disabled = true;
+                    alert("processing")
                       axios.post(`/api/FinancialDoc/laodFinanCialDocument`, postBody )
                         .then(response => {
                             this.responseMessage = response.data.responseDescription;

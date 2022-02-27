@@ -150,7 +150,7 @@ namespace NavyAccountCore.Core.Repositories
         public IEnumerable<LedgersView2> GetBalSheet_TrialBalance() {
             var op = (from p in context.npf_Ledgers
                       join q in context.npf_Charts on p.acctcode equals q.acctcode
-
+                      join mainAccont in context.mainacts on q.mainAccountCode equals mainAccont.maincode
                       select new LedgersView2
                       {
                           acctcode = p.acctcode,
@@ -159,17 +159,21 @@ namespace NavyAccountCore.Core.Repositories
                           crbalance = p.crbalance,
                           Amount = p.opbalance + p.adbbalance - p.crbalance,
                           description = q.description,
+                          mainAccountCode = mainAccont.maincode,
+                          mainAccountDesc = mainAccont.description,
 
                       });
 
             var jk = new List<LedgersView2>();
-            var gettotal = op.GroupBy(p=>p.acctcode)
+            var gettotal = op.GroupBy(p=>p.mainAccountCode)
                 .Select(
                   g => new LedgersView2
                   {
                       Amount =Math.Round((decimal)g.Sum(s => s.Amount),2),
                       description = g.First().description,
-                      acctcode = g.First().acctcode
+                      acctcode = g.First().acctcode,
+                      mainAccountCode = g.First().mainAccountCode,
+                      mainAccountDesc = g.First().mainAccountDesc,
 
                   }).OrderBy(g => g.acctcode);
 

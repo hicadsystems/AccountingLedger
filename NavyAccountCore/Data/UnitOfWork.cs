@@ -1,15 +1,22 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using NavyAccountCore.Core.IRepositories;
 using NavyAccountCore.Core.Repositories;
+using NavyAccountCore.IRepositories;
+using NavyAccountCore.Repositories;
 
 namespace NavyAccountCore.Core.Data
 {
     public class UnitOfWork : IUnitOfWork
     {
         private readonly INavyAccountDbContext context;
-        public UnitOfWork(INavyAccountDbContext context)
+        private readonly IConfiguration _configuration;
+        public UnitOfWork(INavyAccountDbContext context, IConfiguration configuration)
         {
             this.context = context;
+            this._configuration = configuration;
+
+
             Users = new UserRepository(context);
            
             Menus = new MenuRepository(context);
@@ -49,7 +56,9 @@ namespace NavyAccountCore.Core.Data
             cam = new ClaimTypeRepository(context);
             navip = new NavipRepository(context);
             loantypereview = new LoanTypeReviewRepo(context);
-       
+            trialBalanceReportView = new TrialBalanceReportView(context, configuration);
+
+
         }     
 
         public IUserRepository Users { get; private set; }
@@ -95,6 +104,8 @@ namespace NavyAccountCore.Core.Data
         public IClaimRepository cam { get; }
         public INavipRepo navip { get; }
         public ILoanTypeReviewRepo loantypereview { get; }
+
+        public ITrialBalanceReportView trialBalanceReportView { get;  }
 
 
         public async Task<bool> Done()

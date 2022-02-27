@@ -31,7 +31,7 @@
                     <td>@a.designation</td>
                     <td>@a.bank</td>
                     <td>@a.acctno</td>
-                    <td>@Math.Round(a.TotalContribution,2)</td>
+                    <td>@string.Format("{0:n}", Math.Round(a.TotalContribution,2))</td>
                     <td>@a.Remark</td>
 
                 </tr>

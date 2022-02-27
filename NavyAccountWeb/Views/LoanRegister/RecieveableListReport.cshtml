@@ -35,19 +35,19 @@
                                        {
                                            <tr>
                                                <td> @Html.DisplayFor(modelItem => a.Index)</td>
-                                               <td>@Html.DisplayFor(modelItem => a.Data.Rank)</td>
+                                               <td> @Html.DisplayFor(modelItem => a.Data.Rank)</td>
                                                <td> @Html.DisplayFor(modelItem => a.Data.Name) </td>
-                                               <td>@Html.DisplayFor(modelItem => a.Data.svcno)</td>
-                                               <td> @Html.DisplayFor(modelItem => a.Data.Amount)</td>
-                                               <td> @Html.DisplayFor(modelItem => a.Data.interstamt)</td>
+                                               <td> @Html.DisplayFor(modelItem => a.Data.svcno)</td>
+                                               <td> @string.Format("{0:n}", a.Data.Amount)</td>
+                                               <td> @string.Format("{0:n}", a.Data.interstamt)</td>
 
-                                               <td> @Html.DisplayFor(modelItem => a.Data.totalloantamt) </td>
+                                               <td> @string.Format("{0:n}", a.Data.totalloantamt) </td>
                                                <td> @Html.DisplayFor(modelItem => a.Data.Tenure) </td>
-                                               <td>@Html.DisplayFor(modelItem => a.Data.monthlydeductions)</td>
+                                               <td> @string.Format("{0:n}", a.Data.monthlydeductions)</td>
                                                <td> @Html.DisplayFor(modelItem => a.Data.loancount)</td>
-                                               <td> @Html.DisplayFor(modelItem => a.Data.totalloanpay)</td>
+                                               <td> @string.Format("{0:n}", a.Data.totalloanpay)</td>
                                                <td> @Html.DisplayFor(modelItem => a.Data.monthoutstanding)</td>
-                                               <td> @Html.DisplayFor(modelItem => a.Data.OutstandingPay)</td>
+                                               <td> @string.Format("{0:n}", a.Data.OutstandingPay)</td>
 
                                            </tr>
                                        }

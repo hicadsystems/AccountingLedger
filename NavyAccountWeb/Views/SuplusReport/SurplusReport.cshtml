@@ -36,7 +36,7 @@
                 {
                     <tr>
                         <td>@j.description</td>
-                        <td style="text-align:right;">@Math.Round(j.Amount, 2)</td>
+                        <td style="text-align:right;">@string.Format("{0:n}", Math.Round(j.Amount, 2))</td>
                     </tr>
 
                 }
@@ -45,12 +45,12 @@
             sum += @Math.Round(a.Amount,2);
             <tr>
                 <td style="font-size:22px;"><b>@a.description </b></td>
-                <td style="text-align:right;font-size:22px;"><b>@Math.Round(a.Amount, 2)</b></td>
+                <td style="text-align:right;font-size:22px;"><b>@string.Format("{0:n}", Math.Round(a.Amount, 2))</b></td>
             </tr>
         }
         <tr>
             <td>SURPLUS/(DEFICIT)</td>
-            <td style="text-align:right;font-size:24px;">@Math.Round(sum, 2)</td>
+            <td style="text-align:right;font-size:24px;">@string.Format("{0:n}", Math.Round(sum, 2))</td>
         </tr>
     </table>
     <h6 style="text-align:center">RETRICTED</h6>

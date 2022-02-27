@@ -18,6 +18,8 @@ namespace NavyAccountWeb.ViewModels
         public string remark { get; set; }
         public IEnumerable<LedgersView>solly{get;set;}
         public LedgersView opy { get; set; }
+
+        
     }
 
 

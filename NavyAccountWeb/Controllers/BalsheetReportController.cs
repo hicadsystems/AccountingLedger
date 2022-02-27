@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -7,20 +8,23 @@ using Microsoft.AspNetCore.Mvc;
 using NavyAccountCore.Models;
 using NavyAccountWeb.IServices;
 using NavyAccountWeb.ViewModels;
+using OfficeOpenXml;
 using Wkhtmltopdf.NetCore;
 
 namespace NavyAccountWeb.Controllers
 {
     public class BalsheetReportController : Controller
     {
+        private readonly IMainAccountService _mainAccountService;
         private readonly ISurplusService service;
         private readonly IFundTypeCodeService fundService;
         private readonly IGeneratePdf generatePdf;
 
-        public BalsheetReportController(IFundTypeCodeService fundService, ISurplusService service, IGeneratePdf generatePdf)
+        public BalsheetReportController(IFundTypeCodeService fundService,IMainAccountService mainAccountService, ISurplusService service, IGeneratePdf generatePdf)
         {
             this.fundService = fundService;
             this.service = service;
+            this._mainAccountService = mainAccountService;
             this.generatePdf = generatePdf;
         }
 
@@ -56,8 +60,10 @@ namespace NavyAccountWeb.Controllers
         public async Task<IActionResult> trialbalance(AuditViewModel model)
         {
 
+            LedgersView2 mainAcct = new LedgersView2();
+            mainAcct.mainAccountModel = _mainAccountService.GetMainAccounts();
 
-            var result = new List<LedgersView2>();
+            var result = new List<V_TRIALBALANCE>();
             string fundTypeCode = HttpContext.Session.GetString("fundtypecode");
             var p = fundService.GetFundTypeCodeByCode(fundTypeCode);
             int m = p.processingMonth;
@@ -68,19 +74,44 @@ namespace NavyAccountWeb.Controllers
 
             if (fperiod == fundperiod)
             {
-                //get list from surplus or deficit nd get total
-                var res = service.GetAllSurplus();
-                decimal total2 = GroupBybalsheetcode(res.ToList());
+                if(model.excel == true)
+                {
+                    var exc = service.GetTrialBalanceProcedure(fundTypeCode).ToList();
 
+                    var stream = new MemoryStream();
 
-                result = service.GetBalSheet_TrialBalance().ToList();
+                    int row = 2;
+                    using (var package = new ExcelPackage(stream))
+                    {
+                        var workSheet = package.Workbook.Worksheets.Add("Sheet2");
+                        workSheet.Cells.LoadFromCollection(exc, true);
+                        package.Save();
+                    }
 
+                    string excelname = "TrialBalance.xlsx";
+
+                    stream.Position = 0;
+                    string excelName = $"LoanSchedule-{DateTime.Now.ToString("yyyyMMddHHmmssfff")}.xlsx";
+                    return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelname);
+                }
+
+                else
+                {
+                    //get list from surplus or deficit nd get total
+                    var res = service.GetAllSurplus();
+                    decimal total2 = GroupBybalsheetcode(res.ToList());
+
+                    //result = service.GetTrialBalanceView().ToList();
+
+                    result = service.GetTrialBalanceProcedure(fundTypeCode).ToList();
+
+                    //result = service.GetBalSheet_TrialBalance().ToList();
+                    //result.Insert(0, mainAcct);
+                    return await generatePdf.GetPdf("Views/BalsheetReport/BalsheetReport_trialbalance.cshtml", result);
+                }
             }
 
-            return await generatePdf.GetPdf("Views/BalsheetReport/BalsheetReport_trialbalance.cshtml", result);
-
-
-
+            return View();
 
         }
 
@@ -104,7 +135,7 @@ namespace NavyAccountWeb.Controllers
         {
 
 
-            var result = new List<LedgersView2>();
+            var result = new List<V_TRIALBALANCE>();
             string fundTypeCode = HttpContext.Session.GetString("fundtypecode");
             var p = fundService.GetFundTypeCodeByCode(fundTypeCode);
             int m = p.processingMonth;
@@ -115,16 +146,41 @@ namespace NavyAccountWeb.Controllers
 
             if (fperiod == fundperiod)
             {
-                //get list from surplus or deficit nd get total
-                var res = service.GetAllSurplus();
-                decimal total2 = GroupBybalsheetcode(res.ToList());
+                if (model.excel == true)
+                {
+                    var exc2 = service.GetBalSheet_MainTrialBalanceProcedure(fundTypeCode).ToList();
+
+                    var stream = new MemoryStream();
+
+                    int row = 2;
+                    using (var package = new ExcelPackage(stream))
+                    {
+                        var workSheet = package.Workbook.Worksheets.Add("Sheet2");
+                        workSheet.Cells.LoadFromCollection(exc2, true);
+                        package.Save();
+                    }
+
+                    string excelname = "MainTrialBalance.xlsx";
+
+                    stream.Position = 0;
+                    string excelName = $"LoanSchedule-{DateTime.Now.ToString("yyyyMMddHHmmssfff")}.xlsx";
+                    return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelname);
+                }
+
+                else
+                {
+                    //get list from surplus or deficit nd get total
+                    var res = service.GetAllSurplus();
+                    decimal total2 = GroupBybalsheetcode(res.ToList());
 
 
-                result = service.GetBalSheet_MainTrialBalance().ToList();
-
+                    result = service.GetBalSheet_MainTrialBalanceProcedure(fundTypeCode).ToList();
+                    return await generatePdf.GetPdf("Views/BalsheetReport/BalsheetReport_maintrialbalance.cshtml", result);
+                }
+                
             }
 
-            return await generatePdf.GetPdf("Views/BalsheetReport/BalsheetReport_maintrialbalance.cshtml", result);
+            return View();
 
 
             //    decimal total3 = 0M;
@@ -334,11 +390,35 @@ namespace NavyAccountWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(AuditViewModel model)
         {
-            var result = new List<LedgersView2>();
-            var result2 = new List<LedgersView2>();
-            var result3= new List<LedgersView2>();
+            //var result = new List<LedgersView2>();
+            //var result2 = new List<LedgersView2>();
+            //var result3 = new List<LedgersView2>();
 
-            var gh = new ReportViewModelQ();
+            //var gh = new ReportViewModelQ();
+            //string fundTypeCode = HttpContext.Session.GetString("fundtypecode");
+            //var p = fundService.GetFundTypeCodeByCode(fundTypeCode);
+            //int m = p.processingMonth;
+            //int y = p.processingYear;
+
+            //string fperiod = model.year;
+            //string fundperiod = y.ToString();
+
+            //if (fperiod == fundperiod)
+            //{
+            //    result = service.GetBalSheet().ToList();
+            //    result2 = GroupBybalsheetcode2(result).ToList();
+            //    result3 = GroupBybalsheetcode9(result).ToList();
+
+
+            //    gh.p = result2;
+            //    gh.q = result3;
+
+            //}
+
+
+
+
+            var result = new List<V_TRIALBALANCE>();
             string fundTypeCode = HttpContext.Session.GetString("fundtypecode");
             var p = fundService.GetFundTypeCodeByCode(fundTypeCode);
             int m = p.processingMonth;
@@ -349,17 +429,36 @@ namespace NavyAccountWeb.Controllers
 
             if (fperiod == fundperiod)
             {
-                result = service.GetBalSheet().ToList();
-                result2 = GroupBybalsheetcode2(result).ToList();
-                result3 = GroupBybalsheetcode9(result).ToList();
+                if (model.excel == true)
+                {
+                    var exc3 = service.GetBalSheet_StoredProcedure(fundTypeCode).ToList();
 
+                    var stream = new MemoryStream();
 
-                gh.p = result2;
-                gh.q = result3;
+                    int row = 2;
+                    using (var package = new ExcelPackage(stream))
+                    {
+                        var workSheet = package.Workbook.Worksheets.Add("Sheet2");
+                        workSheet.Cells.LoadFromCollection(exc3, true);
+                        package.Save();
+                    }
 
+                    string excelname = "BalanceSheetReport.xlsx";
+
+                    stream.Position = 0;
+                    string excelName = $"LoanSchedule-{DateTime.Now.ToString("yyyyMMddHHmmssfff")}.xlsx";
+                    return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelname);
+                }
+
+                else
+                {
+                    result = service.GetBalSheet_StoredProcedure(fundTypeCode).ToList();
+                    return await generatePdf.GetPdf("Views/BalsheetReport/BalsheetReport.cshtml", result);
+                }
             }
 
-            return await generatePdf.GetPdf("Views/BalsheetReport/BalsheetReport.cshtml", gh);
+            return View();
+
             //   else
             //   {
             //       string year = model.year;

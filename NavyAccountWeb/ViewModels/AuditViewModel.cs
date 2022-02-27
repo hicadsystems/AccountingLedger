@@ -13,6 +13,8 @@ namespace NavyAccountWeb.ViewModels
         public string year { get; set; }
         public string Remark { get; set; }
 
+        public bool excel { get; set; }
+
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime startdate { get; set; }

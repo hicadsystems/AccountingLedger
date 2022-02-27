@@ -45,9 +45,29 @@ namespace NavyAccountWeb.Services
             return unitOfWork.surplus.GetBalSheet_TrialBalance();
         }
 
+        public IEnumerable<V_TRIALBALANCE> GetTrialBalanceView()
+        {
+            return unitOfWork.trialBalanceReportView.GetTrialBalanceReport();
+        }
+
+        public IEnumerable<V_TRIALBALANCE> GetTrialBalanceProcedure(string funcode)
+        {
+            return unitOfWork.trialBalanceReportView.GetTrialBalanceReportProcedure(funcode);
+        }
+
         public IEnumerable<LedgersView2> GetBalSheet_MainTrialBalance()
         {
             return unitOfWork.surplus.GetBalSheet_MainTrialBalance();
+        }
+
+        public IEnumerable<V_TRIALBALANCE> GetBalSheet_MainTrialBalanceProcedure(string funcode)
+        {
+            return unitOfWork.trialBalanceReportView.GetBalSheet_MainTrialBalanceProcedure(funcode);
+        }
+
+        public IEnumerable<V_TRIALBALANCE> GetBalSheet_StoredProcedure(string fundcode)
+        {
+            return unitOfWork.trialBalanceReportView.GetBalSheet_StoredProcedure(fundcode);
         }
 
 

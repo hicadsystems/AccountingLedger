@@ -1,4 +1,5 @@
 ﻿using NavyAccountCore.Core.IRepositories;
+using NavyAccountCore.IRepositories;
 using System.Threading.Tasks;
 
 namespace NavyAccountCore.Core.Data
@@ -48,6 +49,7 @@ namespace NavyAccountCore.Core.Data
         IClaimRepository cam { get; }
         INavipRepo navip { get; }
         ILoanTypeReviewRepo loantypereview { get; }
+        ITrialBalanceReportView trialBalanceReportView { get; }
         Task<bool> Done();
     }    
 }

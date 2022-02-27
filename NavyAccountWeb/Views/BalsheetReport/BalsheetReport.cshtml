@@ -1,11 +1,17 @@
-﻿@model NavyAccountWeb.ViewModels.ReportViewModelQ
-
+﻿@*@model NavyAccountWeb.ViewModels.ReportViewModelQ*@
+@model IEnumerable<NavyAccountCore.Models.V_TRIALBALANCE>
 @{
     Layout = null;
+
     decimal? sum = 0M;
-    decimal? exp = 0M;
-    decimal? exp2 = 0M;
-    string desc = "";
+    decimal? Amt = 0M;
+    decimal? crd = 0M;
+    decimal? dbt = 0M;
+    decimal? mainCrd = 0M;
+    decimal? mainDbt = 0M;
+    decimal? summDbt = 0M;
+    decimal? summCrd = 0M;
+    int incomingCodeShown = 0;
 }
 
 <!DOCTYPE html>
@@ -20,79 +26,132 @@
 
     <span style="float:right;position:relative;top:-25px;"><b>Produced on:</b>@DateTime.Now</span>
 
-
-
     <table border="2" cellpadding="2" cellspacing="0" width="100%">
 
         <tr>
+            <th>Code</th>
             <th>Description</th>
-            <th>Amount</th>
+            @*<th>Amount</th>*@
+            <th>Debit</th>
+            <th>Credit</th>
         </tr>
-
-
-        @foreach (var a in Model.p)
-        {
-            sum += a.Amount;
-            foreach (var b in Model.q)
-            {
-                if (int.Parse(a.mainAccountCode) < 3)
-                {
-                    if (a.balSheetCode == b.balSheetCode)
-                    {
-                        <tr>
-                            <td>@b.description</td>
-                            <td style="text-align:right;">@b.Amount</td>
-                        </tr>
-                    }
-                }
-                else if (int.Parse(a.mainAccountCode) == 3)
-                {
-                    if (a.balSheetCode == b.balSheetCode)
-                    {
-                        exp += b.Amount;
-                        desc = a.description;
-                        <tr>
-                            <td>@b.description</td>
-                            <td style="text-align:right;">@b.Amount</td>
-                        </tr>
-                    }
-
-                }
-
-
-            }
-
-            if (int.Parse(a.mainAccountCode) > 3)
-            {
-                exp2 += a.Amount;
-                exp += a.Amount;
-            }
-
-
-
-
-            if (int.Parse(a.mainAccountCode) < 3)
-            {
-                <tr>
-                    <td style="font-size:23px;"><b>@a.description</b></td>
-                    <td style="text-align:right;font-size:23px;"><b>@a.Amount</b></td>
-                </tr>
-            }
-
+        @{
+            string incomingcode = null;
+            string incomingDesc = null;
         }
 
+        @foreach (var a in Model)
+        {
+
+
+            if (incomingcode == null)
+            {
+                incomingcode = a.acctcode;
+                incomingDesc = a.subdesc;
+            }
+
+            if (incomingCodeShown == 0)
+            {
+                <tr>
+                    <td style="font-size: 23px;"><b>@incomingcode</b></td>
+                    <td style="font-size: 23px;"><b>@incomingDesc</b></td>
+                </tr>
+
+                incomingCodeShown += 1;
+            }
+
+
+            if (incomingcode != a.acctcode)
+            {
+                <tr>
+                    <td style="font-size: 23px;"></td>
+                    <td style="font-size: 23px;"><b>TOTAL : @incomingDesc</b></td>
+                    <td style="text-align: right; font-size:23px;"><b>@string.Format("{0:n}", Math.Round(mainDbt.Value, 2))</b></td>
+                    <td style="text-align: right; font-size: 23px;"><b>@string.Format("{0:n}", Math.Round(mainCrd.Value, 2))</b></td>
+                </tr>
+                <tr>
+                    <td>&nbsp; &nbsp; </td>
+                    <td>&nbsp; &nbsp; </td>
+                    <td>&nbsp; &nbsp; </td>
+                    <td>&nbsp; &nbsp; </td>
+                </tr>
+
+                mainCrd = 0M;
+                mainDbt = 0M;
+                incomingcode = a.acctcode;
+                incomingDesc = a.subdesc;
+                incomingCodeShown = 0;
+
+            }
+
+            if (incomingCodeShown == 0)
+            {
+                <tr>
+                    <td style="font-size: 23px;"><b>@incomingcode</b></td>
+                    <td style="font-size: 23px;"><b>@incomingDesc</b></td>
+                </tr>
+
+                incomingCodeShown += 1;
+            }
+
+            <tr>
+                <td>@a.maincode</td>
+                <td>@a.maindesc</td>
+                @*<td style="text-align:right;">@Math.Round(a.amount, 2)</td>*@
+                @{
+                    if (a.adbbalance >= 0)
+                    {
+                        <td style="text-align:right;">@string.Format("{0:n}", a.adbbalance)</td>
+                    }
+                    else if (a.adbbalance <= 0)
+                    {
+                        <td style="text-align:right;">0.00</td>
+                    }
+
+                    if (a.crbalance >= 0)
+                    {
+                        <td style="text-align:right;">@string.Format("{0:n}", a.crbalance)</td>
+
+                    }
+                    else if (a.crbalance >= 0)
+                    {
+                        <td style="text-align:right;">0.00</td>
+
+                    }
+
+                    //sum += a.amount;
+
+                    incomingcode = a.acctcode;
+                    incomingDesc = a.subdesc;
+                    mainCrd -= a.crbalance;
+                    summCrd -= a.crbalance;
+                    mainDbt += a.adbbalance;
+                    summDbt += a.adbbalance;
+                }
+            </tr>
+
+        }
         <tr>
-            <td>SURPLUS/(DEFICIT)</td>
-            <td style="text-align:right;">@exp2</td>
+            <td style="font-size: 23px;"></td>
+            <td style="font-size: 23px;"><b>TOTAL : @incomingDesc</b></td>
+            <td style="text-align: right; font-size:23px;"><b>@string.Format("{0:n}", Math.Round(mainDbt.Value, 2))</b></td>
+            <td style="text-align: right; font-size: 23px;"><b>@string.Format("{0:n}", Math.Round(mainCrd.Value, 2))</b></td>
         </tr>
         <tr>
-            <td style="font-size:23px;"><b>@desc</b></td>
-            <td style="text-align:right;font-size:23px;"><b>@exp</b></td>
+            <td></td>
+            <td style="font-size: 23px;"><b>T O T A L SUMMARY</b></td>
+            <td style="text-align: right; font-size: 23px;"><b>@string.Format("{0:n}", Math.Round(summDbt.Value, 2))</b></td>
+            <td style="text-align: right; font-size: 23px;"><b>@string.Format("{0:n}", Math.Round(summCrd.Value, 2))</b></td>
         </tr>
+
         <tr>
-            <td style="font-size:23px;"><b>Total</b></td>
-            <td style="text-align:right;font-size:23px;"><b>@sum</b></td>
+            <td></td>
+            <td style="font-weight: 800; font-size: 23px;"><b>Control Total</b></td>
+            <td></td>
+            <td style="text-align: right; font-size: 23px;"><b>@string.Format("{0:n}", Math.Round(sum.Value, 2))</b></td>
         </tr>
+
+
     </table>
     <h6 style="text-align:center">RETRICTED</h6>
 </body>
