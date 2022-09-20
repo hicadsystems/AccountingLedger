@@ -40,7 +40,7 @@
                 </div>
 
                   <div class="col-12 ">
-                        <div class="btn-group mr-2 sw-btn-group-extra" v-if="canProcess" role="group">
+                        <div class="btn-group mr-2 sw-btn-group-extra" role="group">
                             <button class="btn btn-submit btn-primary" v-on:click="checkForm" type="submit">{{submitorUpdate}}</button>
                         </div>
                  </div>

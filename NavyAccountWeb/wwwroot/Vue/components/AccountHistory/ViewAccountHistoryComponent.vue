@@ -80,8 +80,10 @@ export default {
         mounted() {
             this.$store.state.objectToUpdate = null,
                 axios
-           
-                    .get(`/api/AccountHistory/getAccountHistoryByRefNo/${this.refno}/${this.accountcode}/${this.svcno}`)
+                //   this.svcno=this.svcno.replace('/', '');
+                //   this.refno=this.refno.replace('/', '');
+                //   alert(this.accountcode)
+                    .get(`/api/AccountHistory/getAccountHistoryByRefNo/${this.refno.replace('/', '')}/${this.accountcode}/${this.svcno.replace('/', '')}`)
                     .then(response => (this.personApplications = response.data))
             
             console.log(this.personApplications)

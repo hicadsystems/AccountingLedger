@@ -42,7 +42,7 @@ namespace NavyAccountCore.Repositories
                     SqlCommand cmd = new SqlCommand("npf_trial_balance", SqlConn)
                     {
                         CommandTimeout = 1200,
-                        CommandType = System.Data.CommandType.StoredProcedure,
+                        CommandType = CommandType.StoredProcedure,
                     };
 
                     SqlParameter fundtype = new SqlParameter
@@ -108,7 +108,7 @@ namespace NavyAccountCore.Repositories
                     SqlCommand cmd = new SqlCommand("npf_main_trialbalance", SqlConn)
                     {
                         CommandTimeout = 1200,
-                        CommandType = System.Data.CommandType.StoredProcedure,
+                        CommandType = CommandType.StoredProcedure,
                     };
 
                     SqlParameter fundtype = new SqlParameter
@@ -174,7 +174,7 @@ namespace NavyAccountCore.Repositories
                     SqlCommand cmd = new SqlCommand("npf_Balance_Sheet", SqlConn)
                     {
                         CommandTimeout = 1200,
-                        CommandType = System.Data.CommandType.StoredProcedure,
+                        CommandType = CommandType.StoredProcedure,
                     };
 
                     SqlParameter fundtype = new SqlParameter

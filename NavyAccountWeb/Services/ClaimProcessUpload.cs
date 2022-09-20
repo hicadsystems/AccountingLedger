@@ -27,6 +27,8 @@ namespace NavyAccountWeb.Services
 
         public async Task<List<ClaimCapture>> claimUploadInThread()
         {
+            try
+            {
             List<ClaimCapture> result = new List<ClaimCapture>();
             foreach(var j in Captures)
             {
@@ -46,19 +48,36 @@ namespace NavyAccountWeb.Services
                     //if (validateFieldDuplicate(getperson.SVC_NO, gettype.Code) == "valid")
                     //{
                         List<Npf_ClaimRegister> result2 = new List<Npf_ClaimRegister>();
-                        //var res = process(j.svcno, gettype.Code);
-                        //result2.Add(res);
-                        //if (gettype.Description.ToUpper() != "DEPENDANT FUND")
-                        //    res.AmountDue = j.amount;
+                    //var res = process(j.svcno, gettype.Code);
+                    //result2.Add(res);
+                    //if (gettype.Description.ToUpper() != "DEPENDANT FUND")
+                    //    res.AmountDue = j.amount;
                     if (getperson != null)
                     {
-                         PersonID = getperson.PersonID;
-                         svcno = getperson.SVC_NO;
+                        PersonID = getperson.PersonID;
+                        svcno = getperson.SVC_NO;
                     }
                     else
                     {
-                        PersonID = 0;
-                        svcno = j.svcno;
+                        if (j.type == "Navip") {
+                            unitOfWork.person.Create(new Person()
+                            {
+                                rank = getrank.Id,
+                                SVC_NO = j.svcno,
+                                LastName = j.accountname,
+                                // FirstName = s.OTHERNAME,
+                                CreatedDate = System.DateTime.Now,
+                            });
+                            await unitOfWork.Done();
+
+                            getperson = unitOfWork.person.GetPersonBySVC_No(x => x.SVC_NO == j.svcno.Trim());
+                            PersonID = getperson.PersonID;
+                            svcno = getperson.SVC_NO;
+                        }
+                        else { 
+                            PersonID = 0;
+                            svcno = j.svcno;
+                        }
                     }
                 if (getbank != null)
                 {
@@ -132,6 +151,13 @@ namespace NavyAccountWeb.Services
            // }
 
             return result;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
 
         }
 

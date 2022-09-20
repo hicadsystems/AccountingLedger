@@ -34,26 +34,27 @@
                 @using (Html.BeginForm("Loanrepayment", "LoanDisc", FormMethod.Get))
                 {
                     @TempData["message"]
-                    <div class="row" style="margin-top:-25px">
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                @*<label>Service Number</label>*@
-                                <input type="text" name="svcno" id="svcno" class="form-control" placeholder="Service Number" />
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <input type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Search" />
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Period</label>
-                                <input type="text" value="@Context.Session.GetInt32("processingYear")@Context.Session.GetInt32("processingMonth")" name="" readonly />
-
-                            </div>
+                <div class="row" style="margin-top:-25px">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @*<label>Service Number</label>*@
+                            <input type="text" name="svcno" id="svcno" class="form-control" placeholder="Service Number" />
                         </div>
                     </div>
+                    <input type="text" value="@Context.Session.GetString("batchNo")" id="batch"  name="batchNo" hidden/>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <input type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Search" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Period</label>
+                            <input type="text" value="@Context.Session.GetInt32("processingYear")@Context.Session.GetInt32("processingMonth")" name="" readonly />
+
+                        </div>
+                    </div>
+                </div>
                 }
                 <br />
 

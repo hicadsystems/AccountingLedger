@@ -124,6 +124,9 @@ namespace NavyAccountCore.Core.Repositories
 
         public IEnumerable<string> GetAllyear()
         {
+            try
+            {
+
             var jk = context.npf_Histories.ToList();
             var opo = new List<string>();
             
@@ -134,6 +137,13 @@ namespace NavyAccountCore.Core.Repositories
             }
             var opo2 = opo.ToList().Distinct();
             return opo2;
+
+            }
+            catch (System.Exception ex)
+            {
+
+                throw;
+            }
         }
 
         public string RefractCode(string Code)

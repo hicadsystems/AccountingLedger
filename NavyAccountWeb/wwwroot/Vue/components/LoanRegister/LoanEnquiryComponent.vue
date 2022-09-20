@@ -81,7 +81,7 @@
         </div>
 
 
-        <view-account-history-component v-if="refno" :refno="refnoVal" :accountcode="loanAccountVal":svcno="svcno"></view-account-history-component>
+        <view-account-history-component v-if="refno" :refno="refnoVal" :accountcode="loanAccountVal" :svcno="svcno"></view-account-history-component>
 
     </div>
 							

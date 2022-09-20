@@ -63,200 +63,212 @@ namespace NavyAccountWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> loanUpload(IFormFile formFile, CancellationToken cancellationToken)
         {
-            if (formFile == null || formFile.Length <= 0)
+            try
             {
-                TempData["message"] = "No File Uploaded";
-                //return BadRequest("File not an Excel Format");
-                return View();
-                //return BadRequest("No File Uploaded");
-            }
-
-            if (!Path.GetExtension(formFile.FileName).Equals(".xlsx", StringComparison.OrdinalIgnoreCase))
-            {
-                TempData["message"] = "File not an Excel Format";
-                //return BadRequest("File not an Excel Format");
-                return View();
-            }
-            string user = User.Identity.Name;
-            int fundTypeId = (int)HttpContext.Session.GetInt32("fundtypeid");
-            string fundTypeCode = HttpContext.Session.GetString("fundtypecode");
-            var listapplication = new List<LoanCapture>();
-            var listapplicationofrecordnotavailable = new List<LoanCapture>();
-
-            using (var stream = new MemoryStream())
-            {
-                await formFile.CopyToAsync(stream, cancellationToken);
-
-                using (var package = new ExcelPackage(stream))
+                if (formFile == null || formFile.Length <= 0)
                 {
-                    ExcelWorksheet worksheet = package.Workbook.Worksheets["Sheet1"];
-                    var rowCount = worksheet.Dimension.Rows;
-                    string SVC_NO = String.IsNullOrEmpty(worksheet.Cells[1, 1].ToString()) ? "" : worksheet.Cells[1, 1].Value.ToString().Trim();
-                    string RANK = String.IsNullOrEmpty(worksheet.Cells[1, 2].ToString()) ? "" : worksheet.Cells[1, 2].Value.ToString().Trim();
-                    string SURNAME= String.IsNullOrEmpty(worksheet.Cells[1, 3].ToString()) ? "" : worksheet.Cells[1, 3].Value.ToString().Trim();
-                    string OTHERNAME = String.IsNullOrEmpty(worksheet.Cells[1, 4].ToString()) ? "" : worksheet.Cells[1, 4].Value.ToString().Trim();
-                    string LOAN_TYPE = String.IsNullOrEmpty(worksheet.Cells[1, 5].ToString()) ? "" : worksheet.Cells[1, 5].Value.ToString().Trim();
-                    string AMOUNT = String.IsNullOrEmpty(worksheet.Cells[1, 6].ToString()) ? "" : worksheet.Cells[1, 6].Value.ToString().Trim();
-                    string TENURE = String.IsNullOrEmpty(worksheet.Cells[1, 7].ToString()) ? "" : worksheet.Cells[1, 7].Value.ToString().Trim();
-                    string STATUS = String.IsNullOrEmpty(worksheet.Cells[1, 8].ToString()) ? "" : worksheet.Cells[1, 8].Value.ToString().Trim();
-                    string MONTHS_PAID = String.IsNullOrEmpty(worksheet.Cells[1, 9].ToString()) ? "" : worksheet.Cells[1, 9].Value.ToString().Trim();
-                    string BATCH = String.IsNullOrEmpty(worksheet.Cells[1, 10].ToString()) ? "" : worksheet.Cells[1, 10].Value.ToString().Trim();
-                    string EFFECTIVE_DATE = String.IsNullOrEmpty(worksheet.Cells[1, 11].ToString()) ? "" : worksheet.Cells[1, 11].Value.ToString().Trim();
+                    TempData["message"] = "No File Uploaded";
+                    //return BadRequest("File not an Excel Format");
+                    return View();
+                    //return BadRequest("No File Uploaded");
+                }
 
-                    if (SVC_NO != "SVC_NO" || RANK != "RANK" || SURNAME != "SURNAME" || OTHERNAME != "OTHERNAME" || LOAN_TYPE != "LOAN_TYPE" || AMOUNT != "AMOUNT" || TENURE != "TENURE"
-                        || STATUS != "STATUS" || MONTHS_PAID != "MONTHS_PAID" || BATCH != "BATCH")
+                if (!Path.GetExtension(formFile.FileName).Equals(".xlsx", StringComparison.OrdinalIgnoreCase))
+                {
+                    TempData["message"] = "File not an Excel Format";
+                    //return BadRequest("File not an Excel Format");
+                    return View();
+                }
+                string user = User.Identity.Name;
+                int fundTypeId = (int)HttpContext.Session.GetInt32("fundtypeid");
+                string fundTypeCode = HttpContext.Session.GetString("fundtypecode");
+                var listapplication = new List<LoanCapture>();
+                var listapplicationofrecordnotavailable = new List<LoanCapture>();
+
+                using (var stream = new MemoryStream())
+                {
+                    await formFile.CopyToAsync(stream, cancellationToken);
+
+                    using (var package = new ExcelPackage(stream))
                     {
-                        return BadRequest("File not in the Right format");
-                    }
-                    for (int row = 2; row <= rowCount; row++)
-                    {
-                        if (worksheet.Cells[1, 1].Value == null)
-                            worksheet.Cells[1, 1].Value = "";
+                        ExcelWorksheet worksheet = package.Workbook.Worksheets["Sheet1"];
+                        var rowCount = worksheet.Dimension.Rows;
+                        string SVC_NO = String.IsNullOrEmpty(worksheet.Cells[1, 1].ToString()) ? "" : worksheet.Cells[1, 1].Value.ToString().Trim();
+                        string RANK = String.IsNullOrEmpty(worksheet.Cells[1, 2].ToString()) ? "" : worksheet.Cells[1, 2].Value.ToString().Trim();
+                        string SURNAME = String.IsNullOrEmpty(worksheet.Cells[1, 3].ToString()) ? "" : worksheet.Cells[1, 3].Value.ToString().Trim();
+                        string OTHERNAME = String.IsNullOrEmpty(worksheet.Cells[1, 4].ToString()) ? "" : worksheet.Cells[1, 4].Value.ToString().Trim();
+                        string LOAN_TYPE = String.IsNullOrEmpty(worksheet.Cells[1, 5].ToString()) ? "" : worksheet.Cells[1, 5].Value.ToString().Trim();
+                        string AMOUNT = String.IsNullOrEmpty(worksheet.Cells[1, 6].ToString()) ? "" : worksheet.Cells[1, 6].Value.ToString().Trim();
+                        string TENURE = String.IsNullOrEmpty(worksheet.Cells[1, 7].ToString()) ? "" : worksheet.Cells[1, 7].Value.ToString().Trim();
+                        string STATUS = String.IsNullOrEmpty(worksheet.Cells[1, 8].ToString()) ? "" : worksheet.Cells[1, 8].Value.ToString().Trim();
+                        string MONTHS_PAID = String.IsNullOrEmpty(worksheet.Cells[1, 9].ToString()) ? "" : worksheet.Cells[1, 9].Value.ToString().Trim();
+                        string BATCH = String.IsNullOrEmpty(worksheet.Cells[1, 10].ToString()) ? "" : worksheet.Cells[1, 10].Value.ToString().Trim();
+                        string EFFECTIVE_DATE = String.IsNullOrEmpty(worksheet.Cells[1, 11].ToString()) ? "" : worksheet.Cells[1, 11].Value.ToString().Trim();
 
-                        if (worksheet.Cells[1, 2].Value == null)
-                            worksheet.Cells[1, 2].Value = "";
-
-                        if (worksheet.Cells[1, 3].Value == null)
-                            worksheet.Cells[1, 3].Value = "";
-
-                        if (worksheet.Cells[1, 4].Value == null)
-                            worksheet.Cells[1, 4].Value = "";
-                        if (worksheet.Cells[1, 5].Value == null)
-                            worksheet.Cells[1, 5].Value = "";
-                        if (worksheet.Cells[1, 6].Value == null)
-                            worksheet.Cells[1, 6].Value = "";
-                        if (worksheet.Cells[1, 7].Value == null)
-                            worksheet.Cells[1, 7].Value = "";
-                        if (worksheet.Cells[1, 8].Value == null)
-                            worksheet.Cells[1, 8].Value = "";
-                        if (worksheet.Cells[1, 9].Value == null)
-                            worksheet.Cells[1, 9].Value = "";
-                       if (worksheet.Cells[1, 10].Value == null)
-                            worksheet.Cells[1, 10].Value = "";
-                        if (worksheet.Cells[1, 11].Value == null)
-                            worksheet.Cells[1, 11].Value = "";
-
-                        if (worksheet.Cells[row, 1].Value == null)
-                            worksheet.Cells[row, 1].Value = "";
-
-                        if (worksheet.Cells[row, 2].Value == null)
-                            worksheet.Cells[row, 2].Value = "";
-
-                        if (worksheet.Cells[row, 3].Value == null)
-                            worksheet.Cells[row, 3].Value = "";
-
-                        if (worksheet.Cells[row, 4].Value == null)
-                            worksheet.Cells[row, 4].Value = "";
-
-                        if (worksheet.Cells[row, 5].Value == null)
-                            worksheet.Cells[row, 5].Value = "";
-
-                        if (worksheet.Cells[row, 6].Value == null)
-                            worksheet.Cells[row, 6].Value = "";
-                        if (worksheet.Cells[row, 7].Value == null)
-                            worksheet.Cells[row, 7].Value = "";
-
-                        if (worksheet.Cells[row, 8].Value == null)
-                            worksheet.Cells[row, 8].Value = "";
-
-                        if (worksheet.Cells[row, 9].Value == null)
-                            worksheet.Cells[row, 9].Value = "";
-                        if (worksheet.Cells[row, 10].Value == null)
-                            worksheet.Cells[row, 10].Value = "";
-                        if (worksheet.Cells[row, 11].Value == null)
-                            worksheet.Cells[row, 11].Value = "";
-
-                        string svcno1 = String.IsNullOrEmpty(worksheet.Cells[row, 1].Value.ToString()) ? "" : worksheet.Cells[row, 1].Value.ToString().Trim();
-                        string rank1 = String.IsNullOrEmpty(worksheet.Cells[row, 2].Value.ToString()) ? "" : worksheet.Cells[row, 2].Value.ToString().Trim();
-                        string surname1 = String.IsNullOrEmpty(worksheet.Cells[row, 3].Value.ToString()) ? "" :worksheet.Cells[row, 3].Value.ToString().Trim();
-                        string othername1 = String.IsNullOrEmpty(worksheet.Cells[row, 4].Value.ToString())? "" : worksheet.Cells[row, 4].Value.ToString().Trim();
-                        string loantype1 = String.IsNullOrEmpty(worksheet.Cells[row, 5].Value.ToString()) ? "" : worksheet.Cells[row, 5].Value.ToString().Trim();
-                        decimal amount1 = String.IsNullOrEmpty(worksheet.Cells[row, 6].Value.ToString()) ? 0 : Decimal.Parse(worksheet.Cells[row, 6].Value.ToString().Trim());
-                        int tenure1 = String.IsNullOrEmpty(worksheet.Cells[row, 7].Value.ToString()) ? 0 : int.Parse(worksheet.Cells[row, 7].Value.ToString().Trim());
-
-                        string status1 = String.IsNullOrEmpty(worksheet.Cells[row, 8].Value.ToString()) ? "" : worksheet.Cells[row, 8].Value.ToString().Trim();
-                        string monthpaid = String.IsNullOrEmpty(worksheet.Cells[row, 9].Value.ToString()) ? "" : worksheet.Cells[row, 9].Value.ToString().Trim();
-                        string batch = String.IsNullOrEmpty(worksheet.Cells[row, 10].Value.ToString()) ? "" : worksheet.Cells[row, 10].Value.ToString().Trim();
-                        string effective_date = String.IsNullOrEmpty(worksheet.Cells[row, 11].Value.ToString()) ? "" : worksheet.Cells[row, 11].Value.ToString().Trim();
-
-
-                        if (String.IsNullOrEmpty(worksheet.Cells[row, 1].Value.ToString()) ||
-                           String.IsNullOrEmpty(worksheet.Cells[row, 2].Value.ToString()) ||
-                           String.IsNullOrEmpty(worksheet.Cells[row, 3].Value.ToString()) ||
-                           String.IsNullOrEmpty(worksheet.Cells[row, 4].Value.ToString()) ||
-                           String.IsNullOrEmpty(worksheet.Cells[row, 5].Value.ToString()) ||
-                           String.IsNullOrEmpty(worksheet.Cells[row, 6].Value.ToString()) ||
-                           String.IsNullOrEmpty(worksheet.Cells[row, 7].Value.ToString()) ||
-                           String.IsNullOrEmpty(worksheet.Cells[row, 8].Value.ToString()) ||
-                           String.IsNullOrEmpty(worksheet.Cells[row, 9].Value.ToString()) ||
-                           String.IsNullOrEmpty(worksheet.Cells[row, 10].Value.ToString()) )
+                        if (SVC_NO != "SVC_NO" || RANK != "RANK" || SURNAME != "SURNAME" || OTHERNAME != "OTHERNAME" || LOAN_TYPE != "LOAN_TYPE" || AMOUNT != "AMOUNT" || TENURE != "TENURE"
+                            || STATUS != "STATUS" || MONTHS_PAID != "MONTHS_PAID" || BATCH != "BATCH")
                         {
-                            listapplicationofrecordnotavailable.Add(new LoanCapture
-                            {
-                                SVC_NO = svcno1,
-                                RANK = rank1,
-                                SURNAME = surname1,
-                                OTHERNAME = othername1,
-                                LOAN_TYPE= loantype1,
-                                AMOUNT = amount1,
-                                TENURE = tenure1,
-                                STATUS = status1,
-                                MONTHS_PAID = monthpaid,
-                                BATCH_NO = batch,
-                                EFFECTIVE_DATE=Convert.ToDateTime(effective_date),
-
-                               
-                            });
-                           
+                            return BadRequest("File not in the Right format");
                         }
-                        else
+                        for (int row = 2; row <= rowCount; row++)
                         {
-                            //check if already in the list -- a possibility
-                            listapplication.Add(new LoanCapture
+                            if (worksheet.Cells[1, 1].Value == null)
+                                worksheet.Cells[1, 1].Value = "";
+
+                            if (worksheet.Cells[1, 2].Value == null)
+                                worksheet.Cells[1, 2].Value = "";
+
+                            if (worksheet.Cells[1, 3].Value == null)
+                                worksheet.Cells[1, 3].Value = "";
+
+                            if (worksheet.Cells[1, 4].Value == null)
+                                worksheet.Cells[1, 4].Value = "";
+                            if (worksheet.Cells[1, 5].Value == null)
+                                worksheet.Cells[1, 5].Value = "";
+                            if (worksheet.Cells[1, 6].Value == null)
+                                worksheet.Cells[1, 6].Value = "";
+                            if (worksheet.Cells[1, 7].Value == null)
+                                worksheet.Cells[1, 7].Value = "";
+                            if (worksheet.Cells[1, 8].Value == null)
+                                worksheet.Cells[1, 8].Value = "";
+                            if (worksheet.Cells[1, 9].Value == null)
+                                worksheet.Cells[1, 9].Value = "";
+                            if (worksheet.Cells[1, 10].Value == null)
+                                worksheet.Cells[1, 10].Value = "";
+                            if (worksheet.Cells[1, 11].Value == null)
+                                worksheet.Cells[1, 11].Value = "";
+
+                            if (worksheet.Cells[row, 1].Value == null)
+                                worksheet.Cells[row, 1].Value = "";
+
+                            if (worksheet.Cells[row, 2].Value == null)
+                                worksheet.Cells[row, 2].Value = "";
+
+                            if (worksheet.Cells[row, 3].Value == null)
+                                worksheet.Cells[row, 3].Value = "";
+
+                            if (worksheet.Cells[row, 4].Value == null)
+                                worksheet.Cells[row, 4].Value = "";
+
+                            if (worksheet.Cells[row, 5].Value == null)
+                                worksheet.Cells[row, 5].Value = "";
+
+                            if (worksheet.Cells[row, 6].Value == null)
+                                worksheet.Cells[row, 6].Value = "";
+                            if (worksheet.Cells[row, 7].Value == null)
+                                worksheet.Cells[row, 7].Value = "";
+
+                            if (worksheet.Cells[row, 8].Value == null)
+                                worksheet.Cells[row, 8].Value = "";
+
+                            if (worksheet.Cells[row, 9].Value == null)
+                                worksheet.Cells[row, 9].Value = "";
+                            if (worksheet.Cells[row, 10].Value == null)
+                                worksheet.Cells[row, 10].Value = "";
+                            if (worksheet.Cells[row, 11].Value == null)
+                                worksheet.Cells[row, 11].Value = "";
+
+                            string svcno1 = String.IsNullOrEmpty(worksheet.Cells[row, 1].Value.ToString()) ? "" : worksheet.Cells[row, 1].Value.ToString().Trim();
+                            string rank1 = String.IsNullOrEmpty(worksheet.Cells[row, 2].Value.ToString()) ? "" : worksheet.Cells[row, 2].Value.ToString().Trim();
+                            string surname1 = String.IsNullOrEmpty(worksheet.Cells[row, 3].Value.ToString()) ? "" : worksheet.Cells[row, 3].Value.ToString().Trim();
+                            string othername1 = String.IsNullOrEmpty(worksheet.Cells[row, 4].Value.ToString()) ? "" : worksheet.Cells[row, 4].Value.ToString().Trim();
+                            string loantype1 = String.IsNullOrEmpty(worksheet.Cells[row, 5].Value.ToString()) ? "" : worksheet.Cells[row, 5].Value.ToString().Trim();
+                            decimal amount1 = String.IsNullOrEmpty(worksheet.Cells[row, 6].Value.ToString()) ? 0 : Decimal.Parse(worksheet.Cells[row, 6].Value.ToString().Trim());
+                            int tenure1 = String.IsNullOrEmpty(worksheet.Cells[row, 7].Value.ToString()) ? 0 : int.Parse(worksheet.Cells[row, 7].Value.ToString().Trim());
+
+                            string status1 = String.IsNullOrEmpty(worksheet.Cells[row, 8].Value.ToString()) ? "" : worksheet.Cells[row, 8].Value.ToString().Trim();
+                            string monthpaid = String.IsNullOrEmpty(worksheet.Cells[row, 9].Value.ToString()) ? "" : worksheet.Cells[row, 9].Value.ToString().Trim();
+                            string batch = String.IsNullOrEmpty(worksheet.Cells[row, 10].Value.ToString()) ? "" : worksheet.Cells[row, 10].Value.ToString().Trim();
+                            string effective_date = String.IsNullOrEmpty(worksheet.Cells[row, 11].Value.ToString()) ? "" : worksheet.Cells[row, 11].Value.ToString().Trim();
+
+
+                            if (String.IsNullOrEmpty(worksheet.Cells[row, 1].Value.ToString()) ||
+                               String.IsNullOrEmpty(worksheet.Cells[row, 2].Value.ToString()) ||
+                               String.IsNullOrEmpty(worksheet.Cells[row, 3].Value.ToString()) ||
+                               String.IsNullOrEmpty(worksheet.Cells[row, 4].Value.ToString()) ||
+                               String.IsNullOrEmpty(worksheet.Cells[row, 5].Value.ToString()) ||
+                               String.IsNullOrEmpty(worksheet.Cells[row, 6].Value.ToString()) ||
+                               String.IsNullOrEmpty(worksheet.Cells[row, 7].Value.ToString()) ||
+                               String.IsNullOrEmpty(worksheet.Cells[row, 8].Value.ToString()) ||
+                               String.IsNullOrEmpty(worksheet.Cells[row, 9].Value.ToString()) ||
+                               String.IsNullOrEmpty(worksheet.Cells[row, 10].Value.ToString()))
                             {
-                                SVC_NO = svcno1,
-                                RANK = rank1,
-                                SURNAME = surname1,
-                                OTHERNAME = othername1,
-                                LOAN_TYPE = loantype1,
-                                AMOUNT = amount1,
-                                TENURE = tenure1,
-                                STATUS = status1,
-                                MONTHS_PAID = monthpaid,
-                                BATCH_NO = batch,
-                                EFFECTIVE_DATE = Convert.ToDateTime(effective_date),
+                                listapplicationofrecordnotavailable.Add(new LoanCapture
+                                {
+                                    SVC_NO = svcno1,
+                                    RANK = rank1,
+                                    SURNAME = surname1,
+                                    OTHERNAME = othername1,
+                                    LOAN_TYPE = loantype1,
+                                    AMOUNT = amount1,
+                                    TENURE = tenure1,
+                                    STATUS = status1,
+                                    MONTHS_PAID = monthpaid,
+                                    BATCH_NO = batch,
+                                    EFFECTIVE_DATE = Convert.ToDateTime(effective_date),
 
-                            });
+
+                                });
+
+                            }
+                            else
+                            {
+                                //check if already in the list -- a possibility
+                                listapplication.Add(new LoanCapture
+                                {
+                                    SVC_NO = svcno1,
+                                    RANK = rank1,
+                                    SURNAME = surname1,
+                                    OTHERNAME = othername1,
+                                    LOAN_TYPE = loantype1,
+                                    AMOUNT = amount1,
+                                    TENURE = tenure1,
+                                    STATUS = status1,
+                                    MONTHS_PAID = monthpaid,
+                                    BATCH_NO = batch,
+                                    EFFECTIVE_DATE = Convert.ToDateTime(effective_date),
+
+                                });
+                            }
+
                         }
+                        string userp = User.Identity.Name;
 
-                    }
-                     string userp = User.Identity.Name;
-                
-                        ProcesUpload procesUpload2 = new ProcesUpload(listapplication,unitofWork,fundTypeId, fundTypeCode, userp,"");
+                        ProcesUpload procesUpload2 = new ProcesUpload(listapplication, unitofWork, fundTypeId, fundTypeCode, userp, "");
                         await procesUpload2.processUploadInThread();
                         TempData["message"] = "Uploaded Successfully";
-                   
+
+                    }
+
                 }
-
-            }
-            if (listapplicationofrecordnotavailable.Count > 0)
-            {
-
-                var stream = new MemoryStream();
-
-                using (var package = new ExcelPackage(stream))
+                if (listapplicationofrecordnotavailable.Count > 0)
                 {
-                    var workSheet = package.Workbook.Worksheets.Add("Sheet2");
-                    workSheet.Cells.LoadFromCollection(listapplicationofrecordnotavailable, true);
-                    package.Save();
-                }
-                stream.Position = 0;
-                string excelName = $"UserList-{DateTime.Now.ToString("yyyyMMddHHmmssfff")}.xlsx";
 
-                //return File(stream, "application/octet-stream", excelName);  
-                return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
+                    var stream = new MemoryStream();
+
+                    using (var package = new ExcelPackage(stream))
+                    {
+                        var workSheet = package.Workbook.Worksheets.Add("Sheet2");
+                        workSheet.Cells.LoadFromCollection(listapplicationofrecordnotavailable, true);
+                        package.Save();
+                    }
+                    stream.Position = 0;
+                    string excelName = $"UserList-{DateTime.Now.ToString("yyyyMMddHHmmssfff")}.xlsx";
+
+                    //return File(stream, "application/octet-stream", excelName);  
+                    return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
+                }
+
+
+                return View();
             }
-            return View();
+            catch (Exception ex)
+            {
+                TempData["message"] = "Fail To Uplaod";
+                throw;
+            }
+            
+
         }
 
         public ActionResult ViewLoanRegister()
@@ -621,17 +633,24 @@ namespace NavyAccountWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> LoanRecievable(int loantype,string batch,bool ckforoutst)
         {
-            var batchno = context.pf_LoanRegisters.DistinctBy(x => x.batchNo).ToList();
-            var loan = context.Pf_loanType.ToList();
+            try
+            {
+                var batchno = context.pf_LoanRegisters.DistinctBy(x => x.batchNo).ToList();
+                var loan = context.Pf_loanType.ToList();
 
-            ViewBag.getloantype = loan;
-            ViewBag.getloanbatch = batchno;
+                ViewBag.getloantype = loan;
+                ViewBag.getloanbatch = batchno;
 
-            var loanRecieveableList = loanRegisterService.getListofLoanRegisterRecieveable(loantype, batch, ckforoutst).Result;
+                var loanRecieveableList = loanRegisterService.getListofLoanRegisterRecieveable(loantype, batch, ckforoutst).Result;
 
-            return await generatePdf.GetPdf("Views/LoanRegister/RecieveableListReport.cshtml", loanRecieveableList);
-            //return View(loanRecieveableList);
+                return await generatePdf.GetPdf("Views/LoanRegister/RecieveableListReport.cshtml", loanRecieveableList);
 
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
         [HttpGet]
         public IActionResult downloadRecieveable()

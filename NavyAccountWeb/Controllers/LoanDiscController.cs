@@ -54,10 +54,12 @@ namespace NavyAccountWeb.Controllers
             var loan = loanRegisterService.getListofLoanRegisterByBatchDrp().Result;
             ViewBag.batch = loan.OrderBy(x => x.LoanTypeID);
             var fundcode = HttpContext.Session.GetString("fundtypecode");
+            if(batchNo!=null)
+            HttpContext.Session.SetString("batchNo", batchNo);
             ViewBag.getbatch = batchNo;
             int? loanid = 0;
              loanid = HttpContext.Session.GetInt32("deleted");
-            if (batchNo != null &&  loanid==0)
+            if (batchNo != null &&  loanid==0 && svcno==null)
             {
                 string dd = HttpContext.Session.GetString("fundtypecode").ToString();
                 string k = dd;
@@ -84,13 +86,70 @@ namespace NavyAccountWeb.Controllers
             HttpContext.Session.SetInt32("deleted",0);
             if (svcno != null)
             {
-                var listloanrepay2 = loandiscService.GetAllbyFundcodeandsvcno( fundcode, svcno).OrderByDescending(x => x.principal).AsQueryable();
+                var listloanrepay2 = loandiscService.GetAllbyFundcodeandsvcno( fundcode, svcno,batchNo).OrderByDescending(x => x.principal).AsQueryable();
                 var m2 = PaginatedList<LoandiscVM>.CreateAsync(listloanrepay2, (int)pageNumber, 10);
                 return View(m2);
             }
             else
             {
                 var listloanrepay = loandiscService.GetAllbyFundcode(fundcode, batchNo).OrderByDescending(x => x.principal).AsQueryable();
+                var m = PaginatedList<LoandiscVM>.CreateAsync(listloanrepay, (int)pageNumber, 10);
+                return View(m);
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> LoanrepaymentByType(string loantype, string svcno, int? pageNumber)
+        {
+            var getloantype = context.Pf_loanType.ToList();
+
+            ViewBag.getloantype = getloantype;
+
+            if (pageNumber == null)
+            {
+                pageNumber = 1;
+            }
+            var loan = loanRegisterService.getListofLoanRegisterByBatchDrp().Result;
+            ViewBag.batch = loan.OrderBy(x => x.LoanTypeID);
+            var fundcode = HttpContext.Session.GetString("fundtypecode");
+            if (loantype != null)
+                HttpContext.Session.SetString("batchNo", loantype);
+           // ViewBag.getbatch = batchNo;
+            int? loanid = 0;
+            loanid = HttpContext.Session.GetInt32("deleted");
+            if (loantype != null && loanid == 0 && svcno == null)
+            {
+                string dd = HttpContext.Session.GetString("fundtypecode").ToString();
+                string k = dd;
+                using (SqlConnection sqls = new SqlConnection(_connectionstring))
+                {
+                    using (SqlCommand cmd = new SqlCommand("npf_generate_contr_loanrepay", sqls))
+                    {
+                        cmd.CommandTimeout = 1200;
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.Parameters.Add(new SqlParameter("@globaluser", User.Identity.Name));
+                        cmd.Parameters.Add(new SqlParameter("@fundcode", HttpContext.Session.GetString("fundtypecode")));
+                        cmd.Parameters.Add(new SqlParameter("@loantype", loantype));
+
+                        await sqls.OpenAsync();
+                        await cmd.ExecuteNonQueryAsync();
+
+                        TempData["message"] = "Uploaded Successfully";
+                    }
+                }
+                var listloanrepay = loandiscService.GetAllbyFundcode(fundcode, loantype).OrderByDescending(x => x.principal).AsQueryable();
+                var m = PaginatedList<LoandiscVM>.CreateAsync(listloanrepay, (int)pageNumber, 10);
+                return View(m);
+            }
+            HttpContext.Session.SetInt32("deleted", 0);
+            if (svcno != null)
+            {
+                var listloanrepay2 = loandiscService.GetAllbyFundcodeandsvcno(fundcode, svcno, loantype).OrderByDescending(x => x.principal).AsQueryable();
+                var m2 = PaginatedList<LoandiscVM>.CreateAsync(listloanrepay2, (int)pageNumber, 10);
+                return View(m2);
+            }
+            else
+            {
+                var listloanrepay = loandiscService.GetAllbyFundcode(fundcode, loantype).OrderByDescending(x => x.principal).AsQueryable();
                 var m = PaginatedList<LoandiscVM>.CreateAsync(listloanrepay, (int)pageNumber, 10);
                 return View(m);
             }

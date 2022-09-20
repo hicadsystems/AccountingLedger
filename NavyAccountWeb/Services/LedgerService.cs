@@ -14,20 +14,26 @@ namespace NavyAccountWeb.Services
     {
 
         private readonly IUnitOfWork unitofWork;
+        private readonly INavyAccountDbContext context;
 
-        public LedgerService(IUnitOfWork unitofWork)
+        public LedgerService(IUnitOfWork unitofWork, INavyAccountDbContext context)
         {
             this.unitofWork = unitofWork;
-
+            this.context = context;
         }
         public decimal getSurplus_Loss(string acctcode, string fundcode)
         {
-            var getRecord = unitofWork.npf_Ledgers.getSurplusValue(x => x.acctcode == acctcode && x.fundcode == fundcode);
+            string mainacct = acctcode.Substring(0, 4);
+            var getRecord = context.npf_Ledgers.Where(x =>x.acctcode.Substring(0,4) == acctcode.Substring(0, 4) && x.fundcode == fundcode).ToList();
             decimal rret = 0;
-            if (getRecord != null)
+            foreach(var d in getRecord)
             {
-                rret = getRecord.opbalance + getRecord.adbbalance - getRecord.crbalance;
+                rret=rret+d.opbalance + d.adbbalance - d.crbalance;
             }
+            //if (getRecord != null)
+            //{
+            //    rret = getRecord.opbalance + getRecord.adbbalance - getRecord.crbalance;
+            //}
 
             return rret;
         }

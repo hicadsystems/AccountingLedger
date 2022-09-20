@@ -11,7 +11,7 @@ namespace NavyAccountWeb.IServices
     {
         IEnumerable<LoandiscVM> GetAllbyFundcode(string fundcode, string batch);
         IEnumerable<LoandiscVM> GetAllbyFundcode(string fundcode);
-        IEnumerable<LoandiscVM> GetAllbyFundcodeandsvcno(string fundcode, string svcno);
+        IEnumerable<LoandiscVM> GetAllbyFundcodeandsvcno(string fundcode, string svcno,string batchno);
         Task<bool> AddLoandisc(pf_loandisc loan);
         Task<bool> DeleteLoandisc(pf_loandisc loan);
         Task<List<pf_loandisc>> getListofLoandiscByBatchDrp();

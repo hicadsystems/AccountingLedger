@@ -54,5 +54,12 @@ namespace NavyAccountCore.Core.Data
         DbSet<npf_loanstatus> npf_loanstatus { get; set; }
 
         DbQuery<V_TRIALBALANCE> V_TRIALBALANCEs { get; set; }
+
+        DbSet<sr_ClaimRecord> sr_ClaimRecord { get; set; }
+        DbSet<sr_GuardianRecord> sr_GuardianRecord { get; set; }
+        DbSet<sr_ParentRecord> sr_ParentRecord { get; set; }
+        DbSet<sr_PaymentRecord> sr_PaymentRecord { get; set; }
+        DbSet<sr_SchoolRecord> sr_SchoolRecord { get; set; }
+        DbSet<sr_StudentRecord> sr_StudentRecord { get; set; }
     }
 }

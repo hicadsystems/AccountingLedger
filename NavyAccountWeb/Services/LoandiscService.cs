@@ -25,9 +25,9 @@ namespace NavyAccountWeb.Services
         {
             return unitOfWork.pf_loandisc.Getbyfundcode(fundcode);
         }
-        public IEnumerable<LoandiscVM> GetAllbyFundcodeandsvcno(string fundcode,string svcno)
+        public IEnumerable<LoandiscVM> GetAllbyFundcodeandsvcno(string fundcode,string svcno,string batchno)
         {
-            return unitOfWork.pf_loandisc.Getbyfundcodeandsvcno(fundcode,svcno);
+            return unitOfWork.pf_loandisc.Getbyfundcodeandsvcno(fundcode,svcno,batchno);
         }
         public async Task<bool> AddLoandisc(pf_loandisc loan)
         {

@@ -29,14 +29,14 @@ namespace NavyAccountCore.Core.Repositories
         }
         public IEnumerable<LoandiscVM> Getbyfundcode(string fundcode,string batch)
         {
-            return (from loandisc in context.pf_loandisc
+             var pp= (from loandisc in context.pf_loandisc
                     join per in context.npf_Charts on loandisc.loanact equals per.acctcode
                     where (loandisc.fundcode == fundcode && loandisc.batchno==batch)
                     select new LoandiscVM
                     {
                         count=0,
                         Id= loandisc.Id,
-                        personname=per.description,
+                       personname=per.description,
                         period=loandisc.period,
                         interest=loandisc.interest,
                         loanappno=loandisc.loanappno,
@@ -48,6 +48,7 @@ namespace NavyAccountCore.Core.Repositories
                         loanact = loandisc.loanact,
                         loandiscr=loandisc.loandiscr
                     }).ToList();
+            return pp;
         }
         public IEnumerable<LoandiscVM> Getbyfundcode(string fundcode)
         {
@@ -71,7 +72,7 @@ namespace NavyAccountCore.Core.Repositories
                         loandiscr = loandisc.loandiscr
                     }).ToList();
         }
-        public IEnumerable<LoandiscVM> Getbyfundcodeandsvcno(string fundcode,string svcno)
+        public IEnumerable<LoandiscVM> Getbyfundcodeandsvcno(string fundcode,string svcno,string batchno)
         {
            var d=(from loandisc in context.pf_loandisc
                     join per in context.npf_Charts on loandisc.loanact equals per.acctcode
@@ -92,6 +93,28 @@ namespace NavyAccountCore.Core.Repositories
                         loanact = loandisc.loanact,
                         loandiscr = loandisc.loandiscr
                     }).ToList();
+            if (d.Count == 0)
+            {
+                 d = (from loandisc in context.pf_loandisc
+                         join per in context.npf_Charts on loandisc.loanact equals per.acctcode
+                         where (loandisc.fundcode == fundcode && loandisc.loantype != "0" && loandisc.batchno == batchno)
+                         select new LoandiscVM
+                         {
+                             count = 0,
+                             Id = loandisc.Id,
+                             personname = per.description,
+                             period = loandisc.period,
+                             interest = loandisc.interest,
+                             loanappno = loandisc.loanappno,
+                             principal = loandisc.principal,
+                             prvloan = loandisc.prvloan,
+                             loanvar = loandisc.loanvar,
+                             extpay = loandisc.extpay,
+                             loanpay = loandisc.loanpay,
+                             loanact = loandisc.loanact,
+                             loandiscr = loandisc.loandiscr
+                         }).ToList();
+            }
             return d;
         }
         public pf_loandisc GetloanDiscByBatch(string loanacct,string batchno)

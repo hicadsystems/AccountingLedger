@@ -61,6 +61,14 @@ namespace NavyAccountWeb.Data
         public DbSet<npf_loanstatus> npf_loanstatus { get; set; }
         public DbQuery<V_TRIALBALANCE> V_TRIALBALANCEs { get; set; }
 
+        public DbSet<sr_ClaimRecord> sr_ClaimRecord { get; set; }
+        public DbSet<sr_GuardianRecord> sr_GuardianRecord { get; set; }
+        public DbSet<sr_ParentRecord> sr_ParentRecord { get; set; }
+        public DbSet<sr_PaymentRecord> sr_PaymentRecord { get; set; }
+        public DbSet<sr_SchoolRecord> sr_SchoolRecord { get; set; }
+        public DbSet<sr_StudentRecord> sr_StudentRecord { get; set; }
+
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -133,6 +141,15 @@ namespace NavyAccountWeb.Data
             builder.Entity<npf_chart>()
                .Property(e => e.Id)
                .UseSqlServerIdentityColumn();
+
+            builder.Entity<sr_PaymentRecord>()
+             .Property(e => e.Amount)
+              .HasColumnType("money");
+
+            builder.Entity<sr_ClaimRecord>()
+             .Property(e => e.Amount)
+              .HasColumnType("money");
+
 
             builder.Entity<npf_history>()
                .Property(e => e.Id)

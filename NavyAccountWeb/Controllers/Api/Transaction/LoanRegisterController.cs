@@ -103,7 +103,7 @@ namespace NavyAccountWeb.Controllers.Api.Transaction
                 using (SqlCommand cmd = new SqlCommand("npf_Batch_approval_loan", sqls))
                 {
                     cmd.CommandTimeout = 1200;
-                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add(new SqlParameter("@globaluser", User.Identity.Name));
                     cmd.Parameters.Add(new SqlParameter("@fundcode", HttpContext.Session.GetString("fundtypecode")));
                     cmd.Parameters.Add(new SqlParameter("@chqno", batchNo));
@@ -314,7 +314,7 @@ namespace NavyAccountWeb.Controllers.Api.Transaction
                 using (SqlCommand cmd = new SqlCommand("npf_approve_loan", sqls))
                 {
                     cmd.CommandTimeout = 1200;
-                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add(new SqlParameter("@globaluser", User.Identity.Name));
                     cmd.Parameters.Add(new SqlParameter("@fundcode", HttpContext.Session.GetString("fundtypecode")));
                     cmd.Parameters.Add(new SqlParameter("@applno", val.LoanAppNo));
@@ -341,7 +341,7 @@ namespace NavyAccountWeb.Controllers.Api.Transaction
                 using (SqlCommand cmd = new SqlCommand("npf_Batch_approval_loan", sqls))
                 {
                     cmd.CommandTimeout = 1200;
-                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add(new SqlParameter("@globaluser", User.Identity.Name));
                     cmd.Parameters.Add(new SqlParameter("@fundcode", HttpContext.Session.GetString("fundtypecode")));
                     cmd.Parameters.Add(new SqlParameter("@batchno", val.LoanAppNo));
@@ -368,7 +368,7 @@ namespace NavyAccountWeb.Controllers.Api.Transaction
                 using (SqlCommand cmd = new SqlCommand("npf_Batch_update_loan", sqls))
                 {
                     cmd.CommandTimeout = 1200;
-                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add(new SqlParameter("@globaluser", User.Identity.Name));
                     cmd.Parameters.Add(new SqlParameter("@fundcode", HttpContext.Session.GetString("fundtypecode")));
                     cmd.Parameters.Add(new SqlParameter("@batchno", val.batchNo));
@@ -410,7 +410,7 @@ namespace NavyAccountWeb.Controllers.Api.Transaction
                 using (SqlCommand cmd = new SqlCommand("npf_update_loanReversal", sqls))
                 {
                     cmd.CommandTimeout = 1200;
-                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add(new SqlParameter("@globaluser", User.Identity.Name));
                     cmd.Parameters.Add(new SqlParameter("@fundtype", fund));
                     cmd.Parameters.Add(new SqlParameter("@batchno", val.batchNo));

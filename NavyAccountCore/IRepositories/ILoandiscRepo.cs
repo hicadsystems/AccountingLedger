@@ -14,7 +14,7 @@ namespace NavyAccountCore.Core.IRepositories
         pf_loandisc GetloanDiscByCode(Expression<Func<pf_loandisc, bool>> predicate);
         IEnumerable<LoandiscVM> Getbyfundcode(string fundcode, string batch);
         IEnumerable<LoandiscVM> Getbyfundcode(string fundcode);
-        IEnumerable<LoandiscVM> Getbyfundcodeandsvcno(string fundcode, string svcno);
+        IEnumerable<LoandiscVM> Getbyfundcodeandsvcno(string fundcode, string svcno,string batchno);
         pf_loandisc GetloanDiscByBatch(string loanacct, string batchno);
         Task<List<pf_loandisc>> GetloanDiscByBatchdrp();
     }
