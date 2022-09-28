@@ -112,6 +112,11 @@ namespace NavyAccountWeb
             services.AddScoped<IClaimTypeServices, ClaimTypeServices>();
             services.AddScoped <INavipService, NavipService>();
             services.AddScoped<ILoantypeReviewService, LoantypeReviewService>();
+            services.AddScoped<ISchoolRecordService, SchoolRecordService>();
+            services.AddScoped<IStudentRecordService, StudentRecordService>();
+            services.AddScoped<IParentRecordService, ParentRecordService>();
+            services.AddScoped<IPaymentRecordService, PaymentRecordService>();
+            services.AddScoped<IClaimRecordService, ClaimRecordService>();
 
             services.ConfigureApplicationCookie(options =>
             {

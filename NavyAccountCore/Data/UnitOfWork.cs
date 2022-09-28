@@ -57,9 +57,15 @@ namespace NavyAccountCore.Core.Data
             navip = new NavipRepository(context);
             loantypereview = new LoanTypeReviewRepo(context);
             trialBalanceReportView = new TrialBalanceReportView(context, configuration);
+            student = new StudentRecordRepository(context);
+            school = new SchoolRecordRepository(context);
+            payment = new PaymentRepository(context);
+            schclaim = new ClaimRecordRepository(context);
+            parent = new ParentGuardianRecordRepository(context);
 
 
-        }     
+
+    }     
 
         public IUserRepository Users { get; private set; }
         public IMenuGroupRepository MenuGroups { get; private set; }
@@ -106,6 +112,12 @@ namespace NavyAccountCore.Core.Data
         public ILoanTypeReviewRepo loantypereview { get; }
 
         public ITrialBalanceReportView trialBalanceReportView { get;  }
+
+        public IStudentRecordRepository student { get; }
+        public ISchoolRecordRepository school { get; }
+        public IPaymentRepository payment { get; }
+        public IClaimRecordRepository schclaim { get; }
+        public IParentGuardianRecordRepository parent { get; }
 
 
         public async Task<bool> Done()

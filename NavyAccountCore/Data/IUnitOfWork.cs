@@ -50,6 +50,11 @@ namespace NavyAccountCore.Core.Data
         INavipRepo navip { get; }
         ILoanTypeReviewRepo loantypereview { get; }
         ITrialBalanceReportView trialBalanceReportView { get; }
+        IStudentRecordRepository student { get; }
+        ISchoolRecordRepository school { get; }
+        IPaymentRepository payment { get; }
+        IClaimRecordRepository schclaim { get; }
+        IParentGuardianRecordRepository parent { get; }
         Task<bool> Done();
     }    
 }

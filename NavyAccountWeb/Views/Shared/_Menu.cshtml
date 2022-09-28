@@ -20,43 +20,41 @@
 }
 
 <ul class="sidebar-nav">
+   
     @foreach (var group in menuGroups)
     {
         counter++;
         if (group.Group == null)
         {
-            @foreach (var menu in group.menus)
-            {
+@foreach (var menu in group.menus)
+{
 
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="/@menu.Controller/@menu.Action">
-                        <i class="align-middle mr-2 fas fa-fw fa-book"> </i>
-                        <span class="align-middle"> @menu.Name </span>
-                    </a>
-                </li>
+<li class="sidebar-item">
+    <a class="sidebar-link" href="/@menu.Controller/@menu.Action">
+        <i class="align-middle mr-2 fas fa-fw fa-book"> </i>
+        <span class="align-middle"> @menu.Name </span>
+    </a>
+</li>} }
+                else
+                {
+
+<li class="sidebar-item">
+    <a href="#pages-@counter" data-toggle="collapse" class="sidebar-link collapsed"><i class="align-middle mr-2 fas fa-fw fa-file"></i> <span class="align-middle">@group.Group.Name</span></a>
+    <ul id="pages-@counter" class="sidebar-dropdown list-unstyled collapse " data-parent="#sidebar">
+        @foreach (var menu in group.menus)
+        {
+            //if (menu.IsActive == false)
+            //{
+<li class="sidebar-item">
+    <a asp-controller="@menu.Controller" class="sidebar-link" asp-action="@menu.Action">@menu.Name</a>
+</li>                        // }
+                    }
+    </ul>
+</li>}
 
             }
-        }
-        else
-        {
 
-            <li class="sidebar-item">
-                <a href="#pages-@counter" data-toggle="collapse" class="sidebar-link collapsed"><i class="align-middle mr-2 fas fa-fw fa-file"></i> <span class="align-middle">@group.Group.Name</span></a>
-                <ul id="pages-@counter" class="sidebar-dropdown list-unstyled collapse " data-parent="#sidebar">
-                    @foreach (var menu in group.menus)
-                    {
-                        //if (menu.IsActive == false)
-                        //{
-                        <li class="sidebar-item">
-                            <a asp-controller="@menu.Controller" class="sidebar-link" asp-action="@menu.Action">@menu.Name</a>
-                        </li>
-                        // }
-                    }
-                </ul>
-            </li>
-        }
 
-    }
 
 </ul>
 

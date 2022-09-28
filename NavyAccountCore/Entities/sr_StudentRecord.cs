@@ -14,6 +14,9 @@ namespace NavyAccountCore.Entities
         public string FirstName {set;get;}
         public string MiddleName {set;get;}
         public string Sex {set;get;}
+        public int Age { get; set; }
+        public string ClassCategory { get; set; }
+        public string ParentalStatus { get; set; }
         public string SchoolCode {set;get;}
         public string CommencementDate {set;get;}
         public string Class {set;get;}

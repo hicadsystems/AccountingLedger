@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NavyAccountWeb.Data;
 
 namespace NavyAccountWeb.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220922152150_schoolupdate")]
+    partial class schoolupdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1706,40 +1708,6 @@ namespace NavyAccountWeb.Migrations
                     b.HasKey("id");
 
                     b.ToTable("sr_StudentRecord");
-                });
-
-            modelBuilder.Entity("NavyAccountCore.Entities.sr_lga", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("code");
-
-                    b.Property<string>("description");
-
-                    b.Property<string>("statecode");
-
-                    b.Property<int>("stateid");
-
-                    b.HasKey("id");
-
-                    b.ToTable("sr_lga");
-                });
-
-            modelBuilder.Entity("NavyAccountCore.Entities.sr_state", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("code");
-
-                    b.Property<string>("description");
-
-                    b.HasKey("id");
-
-                    b.ToTable("sr_state");
                 });
 
             modelBuilder.Entity("NavyAccountCore.Core.Entities.UserRole", b =>

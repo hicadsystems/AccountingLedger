@@ -12,6 +12,8 @@ namespace NavyAccountCore.Entities
         public string SchoolCode {get;set;}
         public string Schoolname {get;set;}
         public string SchoolAddress {get;set;}
+        public int SchoolCount { get; set; }
+
         public string SchoolCity {get;set;}
         public string SchoolLGA {get;set;}
         public string SchoolState {get;set;}

@@ -1,0 +1,355 @@
+﻿@using Microsoft.AspNetCore.Http;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - NavyAccountWeb</title>
+
+
+    <style>
+
+        body {
+            opacity: 0;
+        }
+    </style>
+    <style>
+
+        .caption {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user {
+            display: flex;
+            flex-direction: row;
+        }
+    </style>
+    <style>
+        .e-row:hover {
+            cursor: pointer;
+            background-color: #03a9f430 !important
+        }
+    </style>
+
+
+    <link href="~/dist/app.css" rel="stylesheet" />
+    <script src="~/js/settings.js"></script>
+    <script src="~/js/jquery.min.js"></script>
+</head>
+
+<body>
+
+    <div id="app">
+        <div class="wrapper">
+            <nav id="sidebar" class="sidebar">
+                <a class="sidebar-brand" href="index.html">
+                    <svg>
+                        <use xlink:href="#ion-ios-pulse-strong"></use>
+                    </svg>
+                    NIGERIAN NAVY NPF
+                </a>
+                <div class="sidebar-content">
+                    <div class="sidebar-user">
+                        <img src="~/assets/logonavy2.jpg" class="img-fluid rounded-circle mb-2" alt="Navy Logo" />
+                        <div class="font-weight-bold">@User.Identity.Name</div>
+
+                        <small>Role: </small>
+                    </div>
+
+                    <ul class="sidebar-nav">
+
+
+                        <li class="sidebar-item">
+                            <a href="#pages-2" data-toggle="collapse" class="sidebar-link collapsed"><i class="align-middle mr-2 fas fa-fw fa-book"></i> <span class="align-middle">Student Records</span></a>
+                            <ul id="pages-2" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
+
+                                <li class="sidebar-item">
+                                    <a asp-controller="" class="sidebar-link" asp-action="">New Student</a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a asp-controller="" class="sidebar-link" asp-action="">New Student Upload</a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a asp-controller="" class="sidebar-link" asp-action="">Existing Students</a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a asp-controller="" class="sidebar-link" asp-action=""> Former Students</a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a asp-controller="" class="sidebar-link" asp-action="">Student on Claim</a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        
+                        <li class="sidebar-item">
+                            <a href="#pages-3" data-toggle="collapse" class="sidebar-link collapsed"><i class="align-middle mr-2 fas fa-fw fa-cash-register"></i> <span class="align-middle">Payment Processing</span></a>
+                            <ul id="pages-3" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
+
+                                <li class="sidebar-item">
+                                    <a asp-controller="" class="sidebar-link" asp-action="">Print Payment Schedule</a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a asp-controller="" class="sidebar-link" asp-action="">Payment Upload</a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a asp-controller="" class="sidebar-link" asp-action="">Print Discrepancy Report</a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a asp-controller="" class="sidebar-link" asp-action=""> Payment Verification</a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a asp-controller="" class="sidebar-link" asp-action="">Payment Update</a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#pages-4" data-toggle="collapse" class="sidebar-link collapsed"><i class="align-middle mr-2 fas fa-fw fa-money-bill"></i> <span class="align-middle">Claim Processing</span></a>
+                            <ul id="pages-4" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
+
+                                <li class="sidebar-item">
+                                    <a asp-controller="" class="sidebar-link" asp-action="">Initiate Claim</a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a asp-controller="" class="sidebar-link" asp-action="">Cliam Upload</a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a asp-controller="" class="sidebar-link" asp-action="">Claim Status</a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a asp-controller="" class="sidebar-link" asp-action="">Claim Payment Report</a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a asp-controller="" class="sidebar-link" asp-action="">Claim School reimbursement</a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a href="#pages-5" data-toggle="collapse" class="sidebar-link collapsed"><i class="align-middle mr-2 fas fa-fw fa-file"></i> <span class="align-middle">UTILITY</span></a>
+                            <ul id="pages-5" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
+
+                                <li class="sidebar-item">
+                                    <a asp-controller="" class="sidebar-link" asp-action="">Systems Control</a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a asp-controller="" class="sidebar-link" asp-action="">Initiate Term</a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a asp-controller="" class="sidebar-link" asp-action="">New session processing</a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a asp-controller="" class="sidebar-link" asp-action="">Defaulter for the year</a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#pages-6" data-toggle="collapse" class="sidebar-link collapsed"><i class="align-middle mr-2 fas fa-fw fa-file"></i> <span class="align-middle">Static Table</span></a>
+                            <ul id="pages-6" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
+
+                                <li class="sidebar-item">
+                                    <a asp-controller="SRSchoolRecord" class="sidebar-link" asp-action="Index">School</a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a asp-controller="" class="sidebar-link" asp-action=""> <i class="align-middle mr-2 fas fa-fw fa-book"> </i> <span class="align-middle"> Parent </span></a>
+
+                                </li>
+                                <li class="sidebar-item">
+                                    <a asp-controller="" class="sidebar-link" asp-action=""> <i class="align-middle mr-2 fas fa-fw fa-book"> </i> <span class="align-middle">Guardian</span></a>
+
+                                </li>
+                            </ul>
+
+                        <li class="sidebar-item">
+                            <a href="#pages-6" data-toggle="collapse" class="sidebar-link collapsed"><i class="align-middle mr-2 fas fa-fw fa-file"></i> <span class="align-middle">Reports</span></a>
+                            <ul id="pages-6" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
+
+                                <li class="sidebar-item">
+                                    <a asp-controller="" class="sidebar-link" asp-action="">Nominal Role</a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a asp-controller="" class="sidebar-link" asp-action="">Students Reports </a>
+                                </li>
+
+
+                            </ul>
+                        </li>
+                        @*<li class="sidebar-item">
+            <a asp-controller="" class="sidebar-link" asp-action="">Log Out </a>
+        </li>*@
+                    </ul>
+
+
+
+                </div>
+            </nav>
+
+            <div class="main">
+                <nav class="navbar navbar-expand navbar-theme">
+                    <a class="sidebar-toggle d-flex mr-2">
+                        <i class="hamburger align-self-center"></i>
+                    </a>
+
+                    <form class="form-inline d-none d-sm-inline-block">
+                        <h5 style="color:white"> @Context.Session.GetString("fundtypedescription") </h5>
+                    </form>
+
+                    <div class="navbar-collapse collapse">
+                        <ul class="navbar-nav ml-auto">
+                          
+                            <li class="nav-item dropdown ml-lg-2">
+                                <a class="nav-link dropdown-toggle position-relative" href="#" id="userDropdown" data-toggle="dropdown">
+                                    <i class="align-middle fas fa-cog"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="/Authentication/LogOut"><i class="align-middle mr-1 fas fa-fw fa-arrow-alt-circle-right"></i> Sign out</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                </nav>
+                <main class="content">
+                    <div class="container-fluid">
+                        @RenderBody()
+                    </div>
+                </main>
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row text-muted">
+                            <div class="col-8 text-left">
+                                <ul class="list-inline">
+                                    <li class="list-inline-item">
+                                        <a class="text-muted" href="#">Support</a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a class="text-muted" href="#">Privacy</a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a class="text-muted" href="#">Terms of Service</a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a class="text-muted" href="#">Contact</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-4 text-right">
+                                <p class="mb-0">
+                                    &copy; @DateTime.Now.Year - <a href="dashboard-default.html" class="text-muted">Hicad Systems Ltd</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="~/js/app.js"></script>
+
+    <script src="~/dist/app.js" asp-append-version="true"></script>
+
+
+    <script>$(function () {
+            $("#smartwizard-default-primary").smartWizard({
+                theme: "default",
+                showStepURLhash: false
+            });
+            $("#smartwizard-default-success").smartWizard({
+                theme: "default",
+                showStepURLhash: false
+            });
+            $("#smartwizard-default-danger").smartWizard({
+                theme: "default",
+                showStepURLhash: false
+            });
+            $("#smartwizard-default-warning").smartWizard({
+                theme: "default",
+                showStepURLhash: false
+            });
+            $("#smartwizard-arrows-primary").smartWizard({
+                theme: "arrows",
+                showStepURLhash: false
+            });
+            $("#smartwizard-arrows-success").smartWizard({
+                theme: "arrows",
+                showStepURLhash: false
+            });
+            $("#smartwizard-arrows-danger").smartWizard({
+                theme: "arrows",
+                showStepURLhash: false
+            });
+            $("#smartwizard-arrows-warning").smartWizard({
+                theme: "arrows",
+                showStepURLhash: false
+            });
+            // Validation
+            var $validationForm = $("#smartwizard-validation");
+            $validationForm.validate({
+                errorPlacement: function errorPlacement(error, element) {
+                    $(element).parents(".form-group").append(
+                        error.addClass("invalid-feedback small d-block")
+                    )
+                },
+                highlight: function (element) {
+                    $(element).addClass("is-invalid");
+                },
+                unhighlight: function (element) {
+                    $(element).removeClass("is-invalid");
+                },
+                rules: {
+                    "wizard-confirm": {
+                        equalTo: "input[name=\"wizard-password\"]"
+                    }
+                }
+            });
+            $validationForm
+                .smartWizard({
+                    autoAdjustHeight: false,
+                    backButtonSupport: false,
+                    useURLhash: false,
+                    showStepURLhash: false,
+                    toolbarSettings: {
+                        toolbarExtraButtons: [$("<button class=\"btn btn-submit btn-primary\" type=\"submit\">Finish</button>")]
+                    }
+                })
+                .on("leaveStep", function (e, anchorObject, stepNumber, stepDirection) {
+                    if (stepDirection === "forward") {
+                        return $validationForm.valid();
+                    }
+                    return true;
+                });
+            $validationForm.find(".btn-submit").on("click", function () {
+                if (!$validationForm.valid()) {
+                    return;
+                }
+                //alert("Great! The form is valid and ready to submit.");
+                //return false;
+            });
+        });</script>
+
+
+  
+
+
+    <script>$(document).ready(function () {
+            $('#data-table-user').DataTable({
+                "language ": {
+                    "emptyTable ": "No User. Add new User. "
+                }
+            });
+
+
+    </script>
+
+
+</body>
+</html>
+

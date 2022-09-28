@@ -1,0 +1,244 @@
+﻿@using Microsoft.AspNetCore.Http;
+@using NavyAccountCore.Core.Entities
+@{
+    ViewData["Title"] = "Home";
+    Layout = "~/Views/Shared/_SchoolLayout.cshtml";
+}
+
+<div class="page-wrapper">
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid">
+        <h1 class="sr-only">Dashboard</h1>
+        <div class="row page-titles">
+            <div class="col-md-5 align-self-center">
+
+            </div>
+            <div class="col-md-7 align-self-center">
+                <ol class="breadcrumb">
+                    <h1 style="color:white"></h1>
+
+
+                </ol>
+            </div>
+
+            <div class="">
+                <button class="right-side-toggle waves-effect waves-light btn-inverse btn btn-circle btn-sm pull-right m-l-10"><i class="ti-settings text-white"></i></button>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+
+            <div class="col-lg-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex no-block">
+                            <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
+                            <div class="align-self-center">
+
+                                <h6 class="text-muted m-t-10 m-b-0">LAGOS</h6>
+                                0  10
+
+                                <h6 class="text-muted m-t-10 m-b-0">OKURA-ALAFIA</h6>
+
+                                1200     10
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex no-block">
+                            <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
+                            <div class="align-self-center">
+
+                                <h6 class="text-muted m-t-10 m-b-0">
+                                    ABEOKUTA
+                                </h6>
+                                1200     10
+                                <h6 class="text-muted m-t-10 m-b-0">
+                                    CALABAR
+                                </h6>
+                                1200     10
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex no-block">
+                            <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
+                            <div class="align-self-center">
+                                <h6 class="text-muted m-t-10 m-b-0">
+                                    P/ HARCOURT
+                                </h6>
+                                1200     10
+                                <h6 class="text-muted m-t-10 m-b-0">
+                                    KUJE
+                                </h6>
+                                1200     10
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex no-block">
+                            <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
+                            <div class="align-self-center">
+                                <h6 class="text-muted m-t-10 m-b-0">
+                                    IMERI
+
+                                </h6>
+                                1200     10
+                                <h6 class="text-muted m-t-10 m-b-0">
+                                    NMS
+                                </h6>
+                                1200     10
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex no-block">
+                            <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
+                            <div class="align-self-center">
+                                <h6 class="text-muted m-t-10 m-b-0">
+                                    IMERI
+
+                                </h6>
+                                1200     10
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex no-block">
+                            <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
+                            <div class="align-self-center">
+                                <h6 class="text-muted m-t-10 m-b-0">
+                                    OGBOMOSHO
+
+                                </h6>
+                                1200     10
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Primary School-->
+        <div class="row">
+
+            <div class="col-lg-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex no-block">
+                            <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
+                            <div class="align-self-center">
+
+                                <h6 class="text-muted m-t-10 m-b-0">
+                                    OKOKOMAIKO
+                                </h6>
+                                1200     10
+                                <h6 class="text-muted m-t-10 m-b-0">
+                                    WARRI
+                                </h6>
+                                1200     10
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex no-block">
+                            <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
+                            <div class="align-self-center">
+
+                                <h6 class="text-muted m-t-10 m-b-0">
+                                    OJO
+                                </h6>
+                                1200     10
+                                <h6 class="text-muted m-t-10 m-b-0">
+                                    BOROKIRI
+                                </h6>
+                                1200     10
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex no-block">
+                            <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
+                            <div class="align-self-center">
+                                <h6 class="text-muted m-t-10 m-b-0">
+                                    MOBIL ROAD
+                                </h6>
+                                1200     10
+                                <h6 class="text-muted m-t-10 m-b-0">
+                                    PATHFINDERS
+                                </h6>
+                                1200     10
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex no-block">
+                            <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
+                            <div class="align-self-center">
+
+                                <h6 class="text-muted m-t-10 m-b-0">
+                                    KUJE
+                                </h6>
+                                1200     10
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div style="height:400px">
+
+    </div>
+</div>
+<!-- END MAIN CONTENT -->

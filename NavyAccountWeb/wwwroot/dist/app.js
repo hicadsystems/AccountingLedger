@@ -7186,8 +7186,7 @@ __webpack_require__.r(__webpack_exports__);
     gettoalamountperbatch: function gettoalamountperbatch() {
       var _this2 = this;
 
-      axios;
-      alert(this.postBody.batchNo).get("/api/LoanRegister/getbatchtotal/".concat(this.postBody.batchNo)).then(function (response) {
+      axios.get("/api/LoanRegister/getbatchtotal/".concat(this.postBody.batchNo)).then(function (response) {
         _this2.totalbatch = response.data.data;
       });
     },
@@ -11746,6 +11745,280 @@ __webpack_require__.r(__webpack_exports__);
     getAppropriateGender: function getAppropriateGender(gender) {
       if (gender == 'M') return 'Male';
       if (gender == 'F') return 'Female';
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/SchoolRecord/CreateUpdateSchoolRecord.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/SchoolRecord/CreateUpdateSchoolRecord.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      errors: null,
+      responseMessage: '',
+      submitorUpdate: 'Submit',
+      canProcess: true,
+      stateList: null,
+      lgaList: null,
+      postBody: {
+        schoolCode: '',
+        schoolname: '',
+        schoolAddress: '',
+        schoolCity: '',
+        schoolState: '' // schoolCount:'',
+
+      }
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/statictable/getallstate').then(function (response) {
+      _this.stateList = response.data;
+    });
+  },
+  watch: {
+    '$store.state.objectToUpdate': function $storeStateObjectToUpdate(newval, oldval) {
+      this.postBody.schoolCode = this.$store.state.objectToUpdate.schoolCode, this.postBody.schoolname = this.$store.state.objectToUpdate.schoolname, this.postBody.schoolAddress = this.$store.state.objectToUpdate.schoolAddress, this.postBody.schoolCity = this.$store.state.objectToUpdate.schoolCity, this.postBody.schoolState = this.$store.state.objectToUpdate.schoolState, //this.postBody.schoolCount=this.$store.state.objectToUpdate.schoolCount
+      this.submitorUpdate = 'Update'; /// alert('i am here')
+    }
+  },
+  methods: {
+    checkForm: function checkForm(e) {
+      alert('i am here ooo');
+
+      if (this.postBody.schoolCode) {
+        e.preventDefault();
+        this.canProcess = false;
+        this.postData();
+      } else {
+        this.errors = [];
+        this.errors.push('Code is Required');
+      }
+    },
+    localgvt: function localgvt() {
+      var _this2 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/statictable/getalllga/".concat(this.postBody.schoolState)).then(function (response) {
+        _this2.lgaList = response.data;
+      });
+    },
+    postData: function postData() {
+      var _this3 = this;
+
+      if (this.submitorUpdate == 'Submit') {
+        alert('i am here');
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/api/SchoolRecord/AddSchool", this.postBody).then(function (response) {
+          _this3.responseMessage = response.data.responseDescription;
+          _this3.canProcess = true;
+
+          if (response.data.responseCode == '200') {
+            _this3.postBody.schoolCode = '';
+            _this3.postBody.schoolAddress = '';
+            _this3.postBody.schoolname = '';
+            _this3.postBody.schoolCity = ''; // this.postBody.schoolCount='';
+
+            _this3.$store.state.objectToUpdate = 'create';
+          }
+        })["catch"](function (e) {
+          _this3.errors.push(e);
+        });
+      }
+
+      if (this.submitorUpdate == 'update') {
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/api/SchoolRecord/UpdateSchool", this.postBody).then(function (response) {
+          _this3.responseMessage = response.data.responseDescription;
+
+          if (response.data.responseCode == '200') {
+            _this3.submitorUpdate = 'Submit';
+            _this3.postBody.schoolCode = '';
+            _this3.postBody.schoolAddress = '';
+            _this3.postBody.schoolname = '';
+            _this3.postBody.schoolCity = ''; //this.postBody.schoolCount='';
+
+            _this3.$store.state.objectToUpdate = 'update';
+          }
+        })["catch"](function (e) {
+          _this3.errors.push(e);
+        });
+      }
+    }
+  },
+  computed: {
+    setter: function setter() {
+      var objectToUpdate = this.$store.state.objectToUpdate;
+
+      if (objectToUpdate.schoolCode) {
+        this.postBody.schoolCode = objectToUpdate.schoolCode, this.postBody.schoolname = objectToUpdate.schoolname, this.postBody.schoolAddress = objectToUpdate.schoolAddress, this.postBody.schoolCity = objectToUpdate.schoolCity, this.postBody.schoolState = objectToUpdate.schoolState; //this.postBody.schoolCount=objectToUpdate.schoolCount
+      }
+
+      ;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/SchoolRecord/ViewSchoolRecord.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/SchoolRecord/ViewSchoolRecord.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      schoolList: null
+    };
+  },
+  created: function created() {
+    this.$store.state.objectToUpdate = null;
+  },
+  watch: {
+    '$store.state.objectToUpdate': function $storeStateObjectToUpdate(newval, oldval) {
+      this.getAllSchool();
+    }
+  },
+  mounted: function mounted() {
+    this.getAllSchool();
+  },
+  methods: {
+    processRetrieve: function processRetrieve(school) {
+      this.$store.state.objectToUpdate = school;
+    },
+    getAllSchool: function getAllSchool() {
+      var _this = this;
+
+      axios.get('/api/SchoolRecord/GetAll').then(function (respose) {
+        return _this.schoolList = respose.data;
+      });
+    },
+    processDelete: function processDelete(id) {
+      var _this2 = this;
+
+      alert(id);
+      axios.get("/api/SchoolRecord/DeleteRecord/".concat(id)).then(function (response) {
+        if (response.data.responseCode = '200') {
+          alert("School Successfully Deleted");
+
+          _this2.getAllSchool();
+        }
+      })["catch"](function (e) {
+        _this2.error.push(e);
+      });
     }
   }
 });
@@ -46849,6 +47122,384 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/SchoolRecord/CreateUpdateSchoolRecord.vue?vue&type=template&id=d7255ef0&":
+/*!***************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/SchoolRecord/CreateUpdateSchoolRecord.vue?vue&type=template&id=d7255ef0& ***!
+  \***************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _vm.errors
+      ? _c("div", { staticClass: "has-error" }, [
+          _vm._v(" " + _vm._s([_vm.errors]))
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.responseMessage
+      ? _c("div", { staticClass: "has-error" }, [
+          _vm._v(" " + _vm._s(_vm.responseMessage))
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _c("form", { attrs: { method: "post" }, on: { submit: _vm.checkForm } }, [
+      _c("div", { staticClass: "card-body" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-12 col-xl-4" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { staticClass: "form-label" }, [
+                _vm._v("School Code")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.postBody.schoolCode,
+                    expression: "postBody.schoolCode"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  name: "schoolCode",
+                  required: "",
+                  readonly: _vm.submitorUpdate == "Update"
+                },
+                domProps: { value: _vm.postBody.schoolCode },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.postBody, "schoolCode", $event.target.value)
+                  }
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-12 col-xl-4" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { staticClass: "form-label" }, [
+                _vm._v("School Name")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.postBody.schoolname,
+                    expression: "postBody.schoolname"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { name: "schoolname" },
+                domProps: { value: _vm.postBody.schoolname },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.postBody, "schoolname", $event.target.value)
+                  }
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-12 col-xl-4" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { staticClass: "form-label" }, [
+                _vm._v("School Address")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.postBody.schoolAdress,
+                    expression: "postBody.schoolAdress"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { name: "schoolAdress" },
+                domProps: { value: _vm.postBody.schoolAdress },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.postBody, "schoolAdress", $event.target.value)
+                  }
+                }
+              })
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-12 col-xl-4" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { staticClass: "form-label" }, [
+                _vm._v("School State")
+              ]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.postBody.schoolState,
+                      expression: "postBody.schoolState"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { name: "schoolState", required: "" },
+                  on: {
+                    change: [
+                      function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.postBody,
+                          "schoolState",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      },
+                      _vm.localgvt
+                    ]
+                  }
+                },
+                _vm._l(_vm.stateList, function(state) {
+                  return _c(
+                    "option",
+                    { key: state.code, domProps: { value: state.code } },
+                    [_vm._v(" " + _vm._s(state.description) + " ")]
+                  )
+                }),
+                0
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-12 col-xl-4" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { staticClass: "form-label" }, [
+                _vm._v("School City")
+              ]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.postBody.schoolCity,
+                      expression: "postBody.schoolCity"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { name: "schoolCity", required: "" },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.postBody,
+                        "schoolCity",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
+                },
+                _vm._l(_vm.lgaList, function(city) {
+                  return _c(
+                    "option",
+                    { key: city.code, domProps: { value: city.code } },
+                    [_vm._v(" " + _vm._s(city.description) + " ")]
+                  )
+                }),
+                0
+              )
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-12 " }, [
+            _vm.canProcess
+              ? _c(
+                  "div",
+                  {
+                    staticClass: "btn-group mr-2 sw-btn-group-extra",
+                    attrs: { role: "group" }
+                  },
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-submit btn-primary",
+                        attrs: { type: "submit" },
+                        on: { click: _vm.checkForm }
+                      },
+                      [_vm._v(_vm._s(_vm.submitorUpdate))]
+                    )
+                  ]
+                )
+              : _vm._e()
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/SchoolRecord/ViewSchoolRecord.vue?vue&type=template&id=4d804f70&":
+/*!*******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/SchoolRecord/ViewSchoolRecord.vue?vue&type=template&id=4d804f70& ***!
+  \*******************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "card-body" }, [
+      _c(
+        "table",
+        {
+          staticClass: "table table-striped",
+          staticStyle: { width: "100%" },
+          attrs: { id: "datatables-buttons" }
+        },
+        [
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.schoolList, function(sch) {
+              return _c("tr", [
+                _c("td", [_vm._v(_vm._s(sch.schoolCode))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(sch.schoolname))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(sch.schoolAddress))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(sch.schoolCity))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(sch.schoolState))]),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-submit btn-primary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.processRetrieve(sch)
+                        }
+                      }
+                    },
+                    [_vm._v("Edit")]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-submit btn-primary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.processDelete(sch.id)
+                        }
+                      }
+                    },
+                    [_vm._v("Delete")]
+                  )
+                ])
+              ])
+            }),
+            0
+          )
+        ]
+      )
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("td", [_vm._v("School Code")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("School Name")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("School Address")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("School City")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("School State")]),
+        _vm._v(" "),
+        _c("td")
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/TrialBalanceReport/AccountBalanceComponent.vue?vue&type=template&id=beb1bb16&":
 /*!********************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/TrialBalanceReport/AccountBalanceComponent.vue?vue&type=template&id=beb1bb16& ***!
@@ -62929,6 +63580,8 @@ var map = {
 	"./components/Person/CreateNewPersonComponent.vue": "./wwwroot/Vue/components/Person/CreateNewPersonComponent.vue",
 	"./components/Person/ListInactivePersonComponent.vue": "./wwwroot/Vue/components/Person/ListInactivePersonComponent.vue",
 	"./components/Person/ListPersonComponent.vue": "./wwwroot/Vue/components/Person/ListPersonComponent.vue",
+	"./components/SchoolRecord/CreateUpdateSchoolRecord.vue": "./wwwroot/Vue/components/SchoolRecord/CreateUpdateSchoolRecord.vue",
+	"./components/SchoolRecord/ViewSchoolRecord.vue": "./wwwroot/Vue/components/SchoolRecord/ViewSchoolRecord.vue",
 	"./components/TrialBalanceReport/AccountBalanceComponent.vue": "./wwwroot/Vue/components/TrialBalanceReport/AccountBalanceComponent.vue",
 	"./components/TrialBalanceReport/ViewTriaBalanceReport.vue": "./wwwroot/Vue/components/TrialBalanceReport/ViewTriaBalanceReport.vue"
 };
@@ -67181,6 +67834,144 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ListPersonComponent_vue_vue_type_template_id_83fb5928___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ListPersonComponent_vue_vue_type_template_id_83fb5928___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./wwwroot/Vue/components/SchoolRecord/CreateUpdateSchoolRecord.vue":
+/*!**************************************************************************!*\
+  !*** ./wwwroot/Vue/components/SchoolRecord/CreateUpdateSchoolRecord.vue ***!
+  \**************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _CreateUpdateSchoolRecord_vue_vue_type_template_id_d7255ef0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateUpdateSchoolRecord.vue?vue&type=template&id=d7255ef0& */ "./wwwroot/Vue/components/SchoolRecord/CreateUpdateSchoolRecord.vue?vue&type=template&id=d7255ef0&");
+/* harmony import */ var _CreateUpdateSchoolRecord_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateUpdateSchoolRecord.vue?vue&type=script&lang=js& */ "./wwwroot/Vue/components/SchoolRecord/CreateUpdateSchoolRecord.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _CreateUpdateSchoolRecord_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CreateUpdateSchoolRecord_vue_vue_type_template_id_d7255ef0___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _CreateUpdateSchoolRecord_vue_vue_type_template_id_d7255ef0___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "wwwroot/Vue/components/SchoolRecord/CreateUpdateSchoolRecord.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./wwwroot/Vue/components/SchoolRecord/CreateUpdateSchoolRecord.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************!*\
+  !*** ./wwwroot/Vue/components/SchoolRecord/CreateUpdateSchoolRecord.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateUpdateSchoolRecord_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./CreateUpdateSchoolRecord.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/SchoolRecord/CreateUpdateSchoolRecord.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateUpdateSchoolRecord_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./wwwroot/Vue/components/SchoolRecord/CreateUpdateSchoolRecord.vue?vue&type=template&id=d7255ef0&":
+/*!*********************************************************************************************************!*\
+  !*** ./wwwroot/Vue/components/SchoolRecord/CreateUpdateSchoolRecord.vue?vue&type=template&id=d7255ef0& ***!
+  \*********************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateUpdateSchoolRecord_vue_vue_type_template_id_d7255ef0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./CreateUpdateSchoolRecord.vue?vue&type=template&id=d7255ef0& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/SchoolRecord/CreateUpdateSchoolRecord.vue?vue&type=template&id=d7255ef0&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateUpdateSchoolRecord_vue_vue_type_template_id_d7255ef0___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateUpdateSchoolRecord_vue_vue_type_template_id_d7255ef0___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./wwwroot/Vue/components/SchoolRecord/ViewSchoolRecord.vue":
+/*!******************************************************************!*\
+  !*** ./wwwroot/Vue/components/SchoolRecord/ViewSchoolRecord.vue ***!
+  \******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ViewSchoolRecord_vue_vue_type_template_id_4d804f70___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ViewSchoolRecord.vue?vue&type=template&id=4d804f70& */ "./wwwroot/Vue/components/SchoolRecord/ViewSchoolRecord.vue?vue&type=template&id=4d804f70&");
+/* harmony import */ var _ViewSchoolRecord_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ViewSchoolRecord.vue?vue&type=script&lang=js& */ "./wwwroot/Vue/components/SchoolRecord/ViewSchoolRecord.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ViewSchoolRecord_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ViewSchoolRecord_vue_vue_type_template_id_4d804f70___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ViewSchoolRecord_vue_vue_type_template_id_4d804f70___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "wwwroot/Vue/components/SchoolRecord/ViewSchoolRecord.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./wwwroot/Vue/components/SchoolRecord/ViewSchoolRecord.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************!*\
+  !*** ./wwwroot/Vue/components/SchoolRecord/ViewSchoolRecord.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewSchoolRecord_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ViewSchoolRecord.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/SchoolRecord/ViewSchoolRecord.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewSchoolRecord_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./wwwroot/Vue/components/SchoolRecord/ViewSchoolRecord.vue?vue&type=template&id=4d804f70&":
+/*!*************************************************************************************************!*\
+  !*** ./wwwroot/Vue/components/SchoolRecord/ViewSchoolRecord.vue?vue&type=template&id=4d804f70& ***!
+  \*************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewSchoolRecord_vue_vue_type_template_id_4d804f70___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./ViewSchoolRecord.vue?vue&type=template&id=4d804f70& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/SchoolRecord/ViewSchoolRecord.vue?vue&type=template&id=4d804f70&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewSchoolRecord_vue_vue_type_template_id_4d804f70___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewSchoolRecord_vue_vue_type_template_id_4d804f70___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

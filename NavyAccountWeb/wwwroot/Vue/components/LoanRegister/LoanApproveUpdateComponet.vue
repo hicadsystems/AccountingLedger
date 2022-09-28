@@ -84,8 +84,7 @@ export default {
     methods:{
         gettoalamountperbatch(){
           axios
-        alert(this.postBody.batchNo)
-        .get(`/api/LoanRegister/getbatchtotal/${ this.postBody.batchNo}`)
+          .get(`/api/LoanRegister/getbatchtotal/${ this.postBody.batchNo}`)
          .then(response=>{this.totalbatch=response.data.data})
         },
           gettotalbank(){

@@ -24,7 +24,37 @@ namespace NavyAccountWeb.Controllers
             this.userService = userService;
             this.config = config;
         }
+        public async Task<IActionResult> SchoolHome()
+        {
+            int rd;
 
+            var currentUser = await GetCurrentUser();
+
+
+            if (currentUser == null)
+            {
+
+                if (HttpContext.Session.GetString("Message") != null)
+                {
+                    ViewBag.message = HttpContext.Session.GetString("Message");
+                }
+
+                return View("Login");
+            }
+            var role = currentUser.UserRoles;
+            foreach (var r in role)
+            {
+                rd = r.RoleId;
+                HttpContext.Session.SetInt32("roleid", rd);
+            }
+            //Get session FundType
+            ViewBag.Category = HttpContext.Session.GetString("fundtypedescription");
+
+
+            return View();
+            //return Redirect("User/index");
+
+        }
 
         public async Task<IActionResult> Index()
         {
