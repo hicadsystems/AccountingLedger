@@ -12,7 +12,9 @@ namespace NavyAccountCore.Entities
         public string Reg_Number {set;get;}
         public string Surname {set;get;}
         public string FirstName {set;get;}
-        public string MiddleName {set;get;}
+        public int Parentid {set;get;}
+        public int Guardianid { set; get; }
+        public string MiddleName { set; get; }
         public string Sex {set;get;}
         public int Age { get; set; }
         public string ClassCategory { get; set; }

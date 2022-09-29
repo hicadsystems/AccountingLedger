@@ -1,36 +1,34 @@
 ﻿
-@{ ViewData["Title"] = "ViewSchool";
-    Layout = "~/Views/Shared/_SchoolLayout.cshtml";
-    }
+@{ ViewData["Title"] = "ViewParent";
+    Layout = "~/Views/Shared/_SchoolLayout.cshtml"; }
 
-< <div class="header">
+<div class="header">
     <h1 class="header-title">
-        Fund Type
     </h1>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/Home/Index">Main</a></li>
-            <li class="breadcrumb-item active" aria-current="page">School Record</li>
+            <li class="breadcrumb-item active" aria-current="page">GGuardian Record</li>
         </ol>
     </nav>
 </div>
-  <div class="row">
-      <div class="col-12">
-          <div class="card">
-              <div class="card-header">
-                  <h5 class="card-title">Add New School</h5>
-              </div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Add New Guardian</h5>
+            </div>
 
-              <create-update-school-record></create-update-school-record>
-          </div>
-      </div>
-  </div>
+            <create-update-guardian></create-update-guardian>
+        </div>
+    </div>
+</div>
 
 <div class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h5 class="card-title">School List</h5>
+                <h5 class="card-title">Guardian List</h5>
                 @using (Html.BeginForm("printfund2", "FundType", FormMethod.Get))
                 {
     <div class="col-4">
@@ -41,7 +39,7 @@
     </div>}
             </div>
 
-            <view-school-record></view-school-record>
+            <view-guardian></view-guardian>
         </div>
     </div>
 </div>

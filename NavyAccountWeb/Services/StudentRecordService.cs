@@ -42,11 +42,28 @@ namespace NavyAccountWeb.Services
         {
             return await _unitOfWork.student.GetStudentByCode(x => x.id == id);
         }
+        public async Task<List<sr_StudentRecord>> GetStudentList(int iDisplayStart, int iDisplayLength)
+        {
+            return await _unitOfWork.student.getStudentList(iDisplayStart, iDisplayLength);
+        }
 
+        public async Task<int> getStudentListCount()
+        {
+            return await _unitOfWork.student.getStudentListCount();
+        }
+        public async Task<List<sr_StudentRecord>> GetStudentListByName(string Studenttname)
+        {
+            return await _unitOfWork.student.getStudentListByName(Studenttname);
+        }
         public async Task<bool> UpdateStudent(sr_StudentRecord value)
         {
             _unitOfWork.student.Update(value);
             return await _unitOfWork.Done();
+        }
+
+        public async Task<List<sr_StudentRecord>> GetInactiveStudentList(int iDisplayStart, int iDisplayLength)
+        {
+            return await _unitOfWork.student.GetInactiveStudentList(iDisplayStart, iDisplayLength);
         }
     }
 }

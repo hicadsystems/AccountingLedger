@@ -1,0 +1,23 @@
+﻿
+@{ ViewData["Title"] = "ViewParent";
+    Layout = "~/Views/Shared/_SchoolLayout.cshtml"; }
+
+<div class="header">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Home/Index">Main</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Student Record</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Add New Student</h5>
+            </div>
+
+            <create-or-update-new-student></create-or-update-new-student>
+        </div>
+    </div>
+</div>

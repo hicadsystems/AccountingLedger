@@ -12,22 +12,22 @@ using System.Threading.Tasks;
 
 namespace NavyAccountCore.Repositories
 {
-    public class ParentGuardianRecordRepository:Repository<sr_ParentRecord>,IParentGuardianRecordRepository
+    public class GuardianRecordRepository:Repository<sr_GuardianRecord>,IGuardianRecordRepository
     {
         private readonly INavyAccountDbContext context;
-        public ParentGuardianRecordRepository(INavyAccountDbContext context):base(context)
+        public GuardianRecordRepository(INavyAccountDbContext context):base(context)
         {
             this.context = context;
         }
 
-        public async Task<sr_ParentRecord> GetParentByCode(Expression<Func<sr_ParentRecord,bool>> predicate)
+        public async Task<sr_GuardianRecord> GetGuardianByCode(Expression<Func<sr_GuardianRecord,bool>> predicate)
         {
-            return await context.sr_ParentRecord.FirstOrDefaultAsync(predicate);
+            return await context.sr_GuardianRecord.FirstOrDefaultAsync(predicate);
         }
-        public async Task<List<sr_ParentRecord>> getParentList(int iDisplayStart, int iDisplayLength)
+        public async Task<List<sr_GuardianRecord>> getGuardianList(int iDisplayStart, int iDisplayLength)
         {
-             var dd= (from pers in context.sr_ParentRecord
-                          select new sr_ParentRecord
+             var dd= (from pers in context.sr_GuardianRecord
+                          select new sr_GuardianRecord
                           {
                               id = pers.id,
                               Surname = pers.Surname,
@@ -39,12 +39,12 @@ namespace NavyAccountCore.Repositories
                           }).Skip(iDisplayStart).Take(iDisplayLength).ToListAsync();
             return await dd;
         }
-        public async Task<List<sr_ParentRecord>> getParentListByName(string parentname)
+        public async Task<List<sr_GuardianRecord>> getGuardianListByName(string Guardianname)
         {
-            return await (from pers in context.sr_ParentRecord
+            return await (from pers in context.sr_GuardianRecord
                               //join npfranks in context.ranks on pers.rank equals npfranks.Id
-                              where pers.Surname.Contains(parentname)|| pers.OtherNames.Contains(parentname)
-                          select new sr_ParentRecord
+                              where pers.Surname.Contains(Guardianname)|| pers.OtherNames.Contains(Guardianname)
+                          select new sr_GuardianRecord
                           {
                               id = pers.id,
                               Surname = pers.Surname,
@@ -57,9 +57,9 @@ namespace NavyAccountCore.Repositories
 
                           }).ToListAsync();
         }
-        public async Task<int> getParentListCount()
+        public async Task<int> getGuardianListCount()
         {
-            return await context.sr_ParentRecord.CountAsync();
+            return await context.sr_GuardianRecord.CountAsync();
         }
         }
 }

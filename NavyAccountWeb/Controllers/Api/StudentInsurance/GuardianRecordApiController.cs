@@ -9,34 +9,34 @@ using static NavyAccountWeb.Models.SchoolFilterModels;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace NavyAccountWeb.Controllers.Api.ParentInsurance
+namespace NavyAccountWeb.Controllers.Api.GuardianInsurance
 {
-    [Route("api/ParentRecord")]
+    [Route("api/GuardianRecord")]
     [ApiController]
-    public class ParentRecordApiController : ControllerBase
+    public class GuardianRecordApiController : ControllerBase
     {
-        // GET: api/<ParentRecordApiController>
-        private readonly IParentRecordService recordService;
-        public ParentRecordApiController(IParentRecordService recordService)
+        // GET: api/<GuardianRecordApiController>
+        private readonly IGuardianRecordService recordService;
+        public GuardianRecordApiController(IGuardianRecordService recordService)
         {
             this.recordService = recordService;
         }
-        [Route("getAllParents")]
+        [Route("getAllGuardians")]
         [HttpGet]
         public async Task<IActionResult> Get(int? pageno)
         {
             int iDisplayLength = 10;
             pageno = pageno == null ? 0 : (pageno--);
-            var _parentlist = await recordService.GetParentList(((int)pageno * iDisplayLength), iDisplayLength);
-            var countall = await recordService.getParentListCount();
-            return Ok(new { responseCode = 200, parentlist = _parentlist, total = countall });
+            var _Guardianlist = await recordService.GetGuardianList(((int)pageno * iDisplayLength), iDisplayLength);
+            var countall = await recordService.getGuardianListCount();
+            return Ok(new { responseCode = 200, Guardianlist = _Guardianlist, total = countall });
         }
-        [Route("getAllParentByNameLimited/{parentname}")]
+        [Route("getAllGuardianByNameLimited/{Guardianname}")]
         [HttpGet]
-        public List<Searchby_Name> getByNameLimited(string parentname)
+        public List<Searchby_Name> getByNameLimited(string Guardianname)
         {
             List<Searchby_Name> pp = new List<Searchby_Name>();
-            var result = recordService.GetParentListByName(parentname).Result;
+            var result = recordService.GetGuardianListByName(Guardianname).Result;
             foreach (var v in result)
             {
                 pp.Add(new Searchby_Name()
@@ -51,16 +51,16 @@ namespace NavyAccountWeb.Controllers.Api.ParentInsurance
         // GET: api/<ParenRecordApiController>
         [Route("GetAll")]
         [HttpGet]
-        public async Task<IEnumerable<sr_ParentRecord>> GetAll()
+        public async Task<IEnumerable<sr_GuardianRecord>> GetAll()
         {
-            return await recordService.GetAllParent();
+            return await recordService.GetAllGuardian();
         }
-        [Route("GetParentName")]
+        [Route("GetGuardianName")]
         [HttpGet]
-        public List<Searchby_Name> GetParentName()
+        public List<Searchby_Name> GetGuardianName()
         {
             List<Searchby_Name> pp = new List<Searchby_Name>();
-            var result = recordService.GetAllParent().Result;
+            var result = recordService.GetAllGuardian().Result;
             foreach (var v in result)
             {
                 pp.Add(new Searchby_Name()
@@ -71,21 +71,21 @@ namespace NavyAccountWeb.Controllers.Api.ParentInsurance
             }
             return pp;
         }
-        [Route("GetParentById/{id:int}")]
+        [Route("GetGuardianById/{id:int}")]
         [HttpGet]
-        public IActionResult GetParentById(int id)
+        public IActionResult GetGuardianById(int id)
         {
-            var pers = recordService.GetParentByid(id).Result;
-            sr_ParentRecord parent = new sr_ParentRecord();
-            parent.id = pers.id;
-            parent.Surname = pers.Surname;
-            parent.OtherNames = pers.OtherNames;
-            parent.Email = pers.Email;
-            parent.Address = pers.Address;
-            parent.PhoneNumber = pers.PhoneNumber;
-            parent.Workclass = pers.Workclass;
+            var pers = recordService.GetGuardianByid(id).Result;
+            sr_GuardianRecord Guardian = new sr_GuardianRecord();
+            Guardian.id = pers.id;
+            Guardian.Surname = pers.Surname;
+            Guardian.OtherNames = pers.OtherNames;
+            Guardian.Email = pers.Email;
+            Guardian.Address = pers.Address;
+            Guardian.PhoneNumber = pers.PhoneNumber;
+            Guardian.Workclass = pers.Workclass;
 
-            return Ok(new { responseCode = 200, parent });
+            return Ok(new { responseCode = 200, Guardian });
         }
 
         // GET api/<SchoolRecordApiController>/5
@@ -93,7 +93,7 @@ namespace NavyAccountWeb.Controllers.Api.ParentInsurance
         [HttpGet("{id}")]
         public IActionResult GetByCode(string code)
         {
-            var result = recordService.GetParentByCode(code);
+            var result = recordService.GetGuardianByCode(code);
             if (result == null)
                 return Ok(new { responseCode = "404", responseDescription = "Dose not Exist" });
             else
@@ -103,17 +103,17 @@ namespace NavyAccountWeb.Controllers.Api.ParentInsurance
         // POST api/<SchoolRecordApiController>
         [Route("Add")]
         [HttpPost]
-        public IActionResult AddParent([FromBody] sr_ParentRecord value)
+        public IActionResult AddGuardian([FromBody] sr_GuardianRecord value)
         {
             try
             {
-                if (recordService.GetParentByCode(value.Reg_Number).Result != null)
+                if (recordService.GetGuardianByCode(value.Reg_Number).Result != null)
                 {
                     return Ok(new { responseCode = 400, responseDescription = "Already Exist" });
                 }
                 value.CreatedBy = User.Identity.Name;
                 value.CreatedDate = DateTime.Now;
-                recordService.AddParent(value);
+                recordService.AddGuardian(value);
 
                 return Ok(new { respnseCode = 200, ResponseDescription = "Successfully Added" });
             }
@@ -126,11 +126,11 @@ namespace NavyAccountWeb.Controllers.Api.ParentInsurance
         // PUT api/<SchoolRecordApiController>/5
         [Route("Update/{id}")]
         [HttpPut]
-        public IActionResult Update(int id, [FromBody] sr_ParentRecord value)
+        public IActionResult Update(int id, [FromBody] sr_GuardianRecord value)
         {
             try
             {
-                var sch = recordService.GetParentByid(id).Result;
+                var sch = recordService.GetGuardianByid(id).Result;
                 if (sch == null)
                 {
                     return Ok(new { responseCode = 400, responseDescription = "Not Found" });
@@ -145,7 +145,7 @@ namespace NavyAccountWeb.Controllers.Api.ParentInsurance
                 sch.Address = value.Address;
                
 
-                recordService.UpdateParent(sch);
+                recordService.UpdateGuardian(sch);
                 return Ok(new { respnseCode = 200, ResponseDescription = "Successfully Updated" });
 
 
@@ -162,12 +162,12 @@ namespace NavyAccountWeb.Controllers.Api.ParentInsurance
         [HttpDelete]
         public IActionResult Delete(int id)
         {
-            var sch = recordService.GetParentByid(id).Result;
+            var sch = recordService.GetGuardianByid(id).Result;
             if (sch == null)
             {
                 return Ok(new { responseCode = 400, responseDescription = "Not Found" });
             }
-            recordService.DeleteParent(sch);
+            recordService.DeleteGuardian(sch);
             return Ok(new { respnseCode = 200, ResponseDescription = "Successfully Deleted" });
         }
     }

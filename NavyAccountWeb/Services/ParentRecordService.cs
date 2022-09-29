@@ -27,7 +27,19 @@ namespace NavyAccountWeb.Services
             _unitOfWork.parent.Remove(value);
             _unitOfWork.Done();
         }
+        public async Task<List<sr_ParentRecord>> GetParentList(int iDisplayStart, int iDisplayLength)
+        {
+            return await _unitOfWork.parent.getParentList(iDisplayStart, iDisplayLength);
+        }
 
+        public async Task<int> getParentListCount()
+        {
+            return await _unitOfWork.parent.getParentListCount();
+        }
+        public async Task<List<sr_ParentRecord>> GetParentListByName(string parentname)
+        {
+            return await _unitOfWork.parent.getParentListByName(parentname);
+        }
         public Task<IEnumerable<sr_ParentRecord>> GetAllParent()
         {
             throw new NotImplementedException();

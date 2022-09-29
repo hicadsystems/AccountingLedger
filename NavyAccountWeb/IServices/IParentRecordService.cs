@@ -14,6 +14,8 @@ namespace NavyAccountWeb.IServices
         Task<IEnumerable<sr_ParentRecord>> GetAllParent();
         Task<sr_ParentRecord> GetParentByCode(string code);
         Task<sr_ParentRecord> GetParentByid(int id);
-        
+        Task<List<sr_ParentRecord>> GetParentList(int iDisplayStart, int iDisplayLength);
+        Task<int> getParentListCount();
+        Task<List<sr_ParentRecord>> GetParentListByName(string parentname);
     }
 }

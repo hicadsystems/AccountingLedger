@@ -55,6 +55,7 @@ namespace NavyAccountCore.Core.Data
         IPaymentRepository payment { get; }
         IClaimRecordRepository schclaim { get; }
         IParentGuardianRecordRepository parent { get; }
+        IGuardianRecordRepository Guardian { get; }
         Task<bool> Done();
     }    
 }

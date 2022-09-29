@@ -65,16 +65,16 @@
                             <ul id="pages-2" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
 
                                 <li class="sidebar-item">
-                                    <a asp-controller="" class="sidebar-link" asp-action="">New Student</a>
+                                    <a asp-controller="SRStudentRecord" class="sidebar-link" asp-action="Create">New Student</a>
                                 </li>
                                 <li class="sidebar-item">
                                     <a asp-controller="" class="sidebar-link" asp-action="">New Student Upload</a>
                                 </li>
                                 <li class="sidebar-item">
-                                    <a asp-controller="" class="sidebar-link" asp-action="">Existing Students</a>
+                                    <a asp-controller="SRStudentRecord" class="sidebar-link" asp-action="Index">Existing Students</a>
                                 </li>
                                 <li class="sidebar-item">
-                                    <a asp-controller="" class="sidebar-link" asp-action=""> Former Students</a>
+                                    <a asp-controller="SRStudentRecord" class="sidebar-link" asp-action=""> Former Students</a>
                                 </li>
                                 <li class="sidebar-item">
                                     <a asp-controller="" class="sidebar-link" asp-action="">Student on Claim</a>
@@ -152,14 +152,15 @@
                             <ul id="pages-6" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
 
                                 <li class="sidebar-item">
-                                    <a asp-controller="SRSchoolRecord" class="sidebar-link" asp-action="Index">School</a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a asp-controller="" class="sidebar-link" asp-action=""> <i class="align-middle mr-2 fas fa-fw fa-book"> </i> <span class="align-middle"> Parent </span></a>
+                                    <a asp-controller="SRSchoolRecord" class="sidebar-link" asp-action="Index"> <i class="align-middle mr-2 fas fa-fw fa-book"> </i> <span class="align-middle"> School </span></a>
 
                                 </li>
                                 <li class="sidebar-item">
-                                    <a asp-controller="" class="sidebar-link" asp-action=""> <i class="align-middle mr-2 fas fa-fw fa-book"> </i> <span class="align-middle">Guardian</span></a>
+                                    <a asp-controller="SRParentRecord" class="sidebar-link" asp-action="Index"> <i class="align-middle mr-2 fas fa-fw fa-book"> </i> <span class="align-middle"> Parent </span></a>
+
+                                </li>
+                                <li class="sidebar-item">
+                                    <a asp-controller="SRParentRecord" class="sidebar-link" asp-action="Index2"> <i class="align-middle mr-2 fas fa-fw fa-book"> </i> <span class="align-middle">Guardian</span></a>
 
                                 </li>
                             </ul>

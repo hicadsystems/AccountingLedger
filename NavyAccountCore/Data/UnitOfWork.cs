@@ -62,10 +62,11 @@ namespace NavyAccountCore.Core.Data
             payment = new PaymentRepository(context);
             schclaim = new ClaimRecordRepository(context);
             parent = new ParentGuardianRecordRepository(context);
+            Guardian = new GuardianRecordRepository(context);
 
 
 
-    }     
+        }     
 
         public IUserRepository Users { get; private set; }
         public IMenuGroupRepository MenuGroups { get; private set; }
@@ -118,6 +119,7 @@ namespace NavyAccountCore.Core.Data
         public IPaymentRepository payment { get; }
         public IClaimRecordRepository schclaim { get; }
         public IParentGuardianRecordRepository parent { get; }
+        public IGuardianRecordRepository Guardian { get; }
 
 
         public async Task<bool> Done()
