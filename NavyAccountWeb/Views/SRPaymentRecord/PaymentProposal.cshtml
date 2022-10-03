@@ -1,0 +1,65 @@
+﻿@model NavyAccountWeb.Models.StudentPaymentProposal
+
+@{
+    Layout = null;
+    decimal total = 0M;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>PaymentProposal</title>
+</head>
+<body>
+    <h6 style="text-align:center">RETRICTED</h6>
+    <h2 style="text-align:center">NIGERIAN NAVY DIRECTORATE OF NON-PUBLIC FUND</h2>
+    <h2 style="text-align:center">NAVIP, DEPENDANT FUND AND WELFARE LOAN PORTFOLIOS</h2>
+    Payment Proposal: Produce On @DateTime.Now
+    <div class="card-body">
+        <table border="2" cellpadding="2" cellspacing="0" width="100%">
+            <tr>
+                <th>Reg number</th>
+                <th>Full Name</th>
+                <th>School name</th>
+                <th>School city</th>
+                <th>School Type</th>
+                <th>Amount</th>
+            </tr>
+            @if (Model.distintrecord.Count == 0)
+            {
+                <tr>
+                    <td colspan="12"><b>No Record Found</b></td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var a in Model.distintrecord)
+                {
+
+                    @foreach(var b in Model.studentRecord)
+                    {
+                        <tr>
+                            <td>@b.Req_Number</td>
+                            <td>@b.Surname+" "+@b.FirstName+ " "+@b.MiddleName</td>
+                            <td>@b.Schoolname</td>
+                            <td>@a.SchoolCity</td>
+                            <td>@a.SchoolType</td>
+                            <td>@a.Amount</td>
+                        </tr>
+
+                        total += (decimal)b.Amount;
+                    }
+                    <tr>
+                       <td colspan="5" style="font-weight:bold">Total</td>
+                       <td style="font-weight:bold">@total</td>
+                    </tr>
+                   
+                }
+            }
+        </table>
+        <h6 style="text-align:center">RETRICTED</h6>
+    </div>
+</body>
+</html>

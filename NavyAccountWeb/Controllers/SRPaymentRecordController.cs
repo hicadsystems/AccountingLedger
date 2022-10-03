@@ -1,17 +1,47 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MoreLinq;
+using NavyAccountWeb.IServices;
+using NavyAccountWeb.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Wkhtmltopdf.NetCore;
 
 namespace NavyAccountWeb.Controllers
 {
     public class SRPaymentRecordController : Controller
     {
         // GET: SRPaymentRecordController
+        private readonly IPaymentRecordService paymentRecordService;
+
+        public IGeneratePdf GeneratePdf { get; }
+
+        public SRPaymentRecordController(IPaymentRecordService paymentRecordService, IGeneratePdf generatePdf)
+        {
+            this.paymentRecordService = paymentRecordService;
+            GeneratePdf = generatePdf;
+        }
+
+
+        public async Task<IActionResult> PrintPaymentProposalAsPdf()
+        {
+            var op = await paymentRecordService.GetStudentpaymentProposal();
+            var distinctRecord = op.DistinctBy(x => x.Schoolname).ToList();
+            var studentRecord = await paymentRecordService.moveRecord(op);
+            var oq = new StudentPaymentProposal
+            {
+                distintrecord = distinctRecord,
+                studentRecord = studentRecord
+            };
+
+            return await GeneratePdf.GetPdf("Views/SRPaymentRecord/PaymentProposal.cshtml", oq);
+
+        }
         public ActionResult Index()
         {
+
             return View();
         }
 
