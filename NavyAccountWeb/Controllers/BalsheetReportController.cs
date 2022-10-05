@@ -79,7 +79,7 @@ namespace NavyAccountWeb.Controllers
                     var exc = service.GetTrialBalanceProcedure(fundTypeCode).ToList();
 
                     var stream = new MemoryStream();
-
+                    
                     int row = 2;
                     using (var package = new ExcelPackage(stream))
                     {
@@ -296,7 +296,7 @@ namespace NavyAccountWeb.Controllers
         public IActionResult suplusanddeficit()
         {
             string fundTypeCode = HttpContext.Session.GetString("fundtypecode");
-            var p = fundService.GetFundTypeCodeByCode(fundTypeCode);
+            var p = fundService.GetFundTypeCodeByCode(fundTypeCode); ;
             int y = p.processingYear;
 
             var jk = new AuditViewModel
