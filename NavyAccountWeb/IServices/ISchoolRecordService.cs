@@ -11,6 +11,7 @@ namespace NavyAccountWeb.IServices
         Task<bool> AddSchool(sr_SchoolRecord value);
         Task<bool> UpdateSchool(sr_SchoolRecord value);
         Task<sr_SchoolRecord> GetAllSchoolByCode(string code);
+        Task<List<sr_SchoolRecord>> GetSchoolByName(string schoolName);
         Task<IEnumerable<sr_SchoolRecord>> GetAllSchool();
         Task<sr_SchoolRecord> GetSchoolByid(int id);
         void DeleteSchool(sr_SchoolRecord value);

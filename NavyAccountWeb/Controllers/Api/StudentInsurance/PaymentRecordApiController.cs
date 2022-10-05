@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NavyAccountCore.Entities;
 using NavyAccountWeb.IServices;
+using NavyAccountWeb.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,11 +21,25 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
             this.recordService = recordService;
         }
         // GET: api/<PaymenRecordApiController>
-        [Route("GetAll")]
+        [Route("GetAllPaymentProposal")]
         [HttpGet]
-        public async Task<IEnumerable<sr_PaymentRecord>> GetAll()
+        public async Task<IEnumerable<PaymentProposalRecord>> GetAll()
         {
-            return await recordService.GetAllPayment();
+            return await recordService.GetStudentpaymentProposal();
+        }
+
+        [Route("GetAllProposalBySchoolName/{schoolName}")]
+        [HttpGet]
+        public async Task<IEnumerable<PaymentProposalRecord>> Get(string schoolName)
+        {
+            return await recordService.GetStudentpaymentProposalbySchool(schoolName);
+        }
+
+        [Route("GetDescrepancyRecord")]
+        [HttpGet]
+        public async Task<IEnumerable<PaymentProposalRecord>> Get()
+        {
+            return await recordService.GetDiscrepancyRecord();
         }
 
         // GET api/<SchoolRecordApiController>/5

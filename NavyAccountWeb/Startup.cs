@@ -19,6 +19,7 @@ using NavyAccountWeb.Data;
 using System;
 using Wkhtmltopdf.NetCore;
 using ReflectionIT.Mvc.Paging;
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 
 namespace NavyAccountWeb
 {
@@ -114,12 +115,14 @@ namespace NavyAccountWeb
             services.AddScoped<ILoantypeReviewService, LoantypeReviewService>();
 
 
+
             services.AddScoped<ISchoolRecordService, SchoolRecordService>();
             services.AddScoped<IStudentRecordService, StudentRecordService>();
             services.AddScoped<IParentRecordService, ParentRecordService>();
             services.AddScoped<IGuardianRecordService, GuardianRecordService>();
             services.AddScoped<IPaymentRecordService, PaymentRecordService>();
             services.AddScoped<IClaimRecordService, ClaimRecordService>();
+            services.AddScoped<IDapper, Dapperr>();
 
             services.ConfigureApplicationCookie(options =>
             {
@@ -143,6 +146,8 @@ namespace NavyAccountWeb
 
             services.AddPaging();
 
+            
+            
         }
 
 
@@ -161,6 +166,7 @@ namespace NavyAccountWeb
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 //app.UseHsts();
             }
+
             //app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -171,7 +177,7 @@ namespace NavyAccountWeb
             //{
             //   Seeder.SeedData(userManager, roleManager, config, unitOfWork);
             //}
-
+            
 
             app.UseAuthentication();
             app.UseSession();

@@ -19,7 +19,7 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
         {
             this.recordService = recordService;    
         }
-        // GET: api/<SchoolRecordApiController>
+        // GET: api/<SchoolRecordApiController> api/SchoolRecord/GetAll
         [Route("GetAll")]
         [HttpGet]
         public async Task<IEnumerable<sr_SchoolRecord>> GetAll()
@@ -28,16 +28,27 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
         }
         
 
-        // GET api/<SchoolRecordApiController>/5
-        [Route("GetRecordbyCode/{code}")]
+        // GET api/<SchoolRecordApiController>/5 
+        [Route("GetRecordbyCode/{code}")]    //api/SchoolRecord/GetRecordbyCode/{code}
         [HttpGet]
-        public IActionResult GetByCode(string code)
+        public async Task<IActionResult> GetByCode(string code)
         {
-            var result = recordService.GetAllSchoolByCode(code);
+            var result = await recordService.GetAllSchoolByCode(code);
             if (result == null)
                 return Ok(new { responseCode = "404", responseDescription = "School Dose not Exist" });
             else
            return Ok(new { responseCode = "200", responseDescription = "Successfull", data = result });
+        }
+
+        [Route("GetschoolByName/{school}")]    //api/SchoolRecord/GetschoolByName/{school}
+        [HttpGet]
+        public async Task<IActionResult> GetschoolByName(string school)
+        {
+            var result = await recordService.GetSchoolByName(school);
+            if (result == null)
+                return Ok(new { responseCode = "404", responseDescription = "School Dose not Exist" });
+            else
+                return Ok(new { responseCode = "200", responseDescription = "Successfull", data = result });
         }
 
         // POST api/<SchoolRecordApiController>
