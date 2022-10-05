@@ -14,6 +14,8 @@ namespace NavyAccountWeb.IServices
         Task<IEnumerable<sr_ClaimRecord>> GetAllClaim();
         Task<sr_ClaimRecord> GetClaimRecordByCode(string code);
         Task<sr_ClaimRecord> GetClaimByid(int id);
-        
+        decimal GetAmountPerSchoolType(string studentNo, out decimal amt);
+
+
     }
 }

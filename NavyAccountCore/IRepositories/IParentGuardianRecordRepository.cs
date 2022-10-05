@@ -14,5 +14,7 @@ namespace NavyAccountCore.IRepositories
         Task<List<sr_ParentRecord>> getParentList(int iDisplayStart, int iDisplayLength);
         Task<int> getParentListCount();
         Task<List<sr_ParentRecord>> getParentListByName(string parentname);
+        Task<IEnumerable<sr_ParentRecord>> getAllParent();
+
     }
 }

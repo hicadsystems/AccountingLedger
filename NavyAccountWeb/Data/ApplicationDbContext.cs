@@ -149,6 +149,14 @@ namespace NavyAccountWeb.Data
              .Property(e => e.Amount)
               .HasColumnType("money");
 
+            builder.Entity<sr_StudentRecord>()
+            .Property(e => e.ClaimAmount)
+             .HasColumnType("money");
+
+            builder.Entity<sr_ClassRecord>()
+            .Property(e => e.Schoolfee)
+             .HasColumnType("money");
+
             builder.Entity<sr_ClaimRecord>()
              .Property(e => e.Amount)
               .HasColumnType("money");

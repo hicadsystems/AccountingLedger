@@ -5,13 +5,14 @@ using System.Text;
 
 namespace NavyAccountCore.Entities
 {
-   public class sr_ClassRecord
+   public class sr_ClaimTable
     {
         [Key]
         public int id { get; set; }
-        public string ClassName {get;set;}
-        public string SchoolType { get; set; }
-        public decimal Schoolfee { get; set; }
+        public string Reg_Number {get;set;}
+        public decimal Amount {get;set;}
+
+
 
     }
 }

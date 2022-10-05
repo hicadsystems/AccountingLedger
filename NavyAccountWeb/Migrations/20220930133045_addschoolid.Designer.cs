@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NavyAccountWeb.Data;
 
 namespace NavyAccountWeb.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220930133045_addschoolid")]
+    partial class addschoolid
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1531,9 +1533,6 @@ namespace NavyAccountWeb.Migrations
 
                     b.Property<string>("SchoolType");
 
-                    b.Property<decimal>("Schoolfee")
-                        .HasColumnType("money");
-
                     b.HasKey("id");
 
                     b.ToTable("sr_ClassRecord");
@@ -1676,22 +1675,17 @@ namespace NavyAccountWeb.Migrations
 
                     b.Property<int>("Age");
 
-                    b.Property<decimal>("ClaimAmount")
-                        .HasColumnType("money");
-
-                    b.Property<DateTime>("ClaimDate");
-
                     b.Property<string>("Class");
 
                     b.Property<string>("ClassCategory");
 
                     b.Property<int>("ClassId");
 
-                    b.Property<DateTime>("CommencementDate");
+                    b.Property<string>("CommencementDate");
 
                     b.Property<string>("Email");
 
-                    b.Property<DateTime>("ExitDate");
+                    b.Property<string>("ExitDate");
 
                     b.Property<string>("ExitReason");
 

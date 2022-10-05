@@ -9,14 +9,18 @@ namespace NavyAccountWeb.Controllers
 {
     public class SRClaimRecordController : Controller
     {
+        public SRClaimRecordController()
+        {
+
+        }
         // GET: SRClaimRecordController
-        public ActionResult Index()
+        public ActionResult InitiateClaim()
         {
             return View();
         }
 
         // GET: SRClaimRecordController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult CliamUpload(int id)
         {
             return View();
         }
@@ -27,61 +31,11 @@ namespace NavyAccountWeb.Controllers
             return View();
         }
 
-        // POST: SRClaimRecordController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: SRClaimRecordController/Edit/5
+         // GET: SRClaimRecordController/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: SRClaimRecordController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: SRClaimRecordController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: SRClaimRecordController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

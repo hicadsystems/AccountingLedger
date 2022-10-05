@@ -14,10 +14,19 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h5 class="card-title">Add New Student</h5>
-            </div>
+                <h5 class="card-title">
+                    @if (ViewBag.studentid == 0)
+                    {
 
-            <create-or-update-new-student></create-or-update-new-student>
+            <text>Add Student</text> }
+                        else
+                        {
+
+            <text>Update Student</text>}
+                </h5>
+            </div>
+            <add-or-update-record studenttoeditid="@ViewBag.studentid"></add-or-update-record>
+            @*<create-or-update-new-student studenttoeditid="@ViewBag.studentid"></create-or-update-new-student>*@
         </div>
     </div>
 </div>

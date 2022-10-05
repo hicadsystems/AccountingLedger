@@ -48,5 +48,9 @@ namespace NavyAccountWeb.Services
             _unitOfWork.schclaim.Update(value);
             return await _unitOfWork.Done();
         }
+        public decimal GetAmountPerSchoolType(string studentNo, out decimal amt)
+        {
+            return _unitOfWork.schclaim.GetAmountPerSchoolType(studentNo,out amt);
+        }
     }
 }

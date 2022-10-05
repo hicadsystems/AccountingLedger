@@ -14,5 +14,6 @@ namespace NavyAccountCore.IRepositories
         Task<List<sr_GuardianRecord>> getGuardianList(int iDisplayStart, int iDisplayLength);
         Task<int> getGuardianListCount();
         Task<List<sr_GuardianRecord>> getGuardianListByName(string Guardianname);
+        Task<IEnumerable<sr_GuardianRecord>> getAllGuardian();
     }
 }

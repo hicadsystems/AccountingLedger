@@ -1,5 +1,6 @@
 ﻿using NavyAccountCore.Core.Data;
 using NavyAccountCore.Entities;
+using NavyAccountCore.Models;
 using NavyAccountWeb.IServices;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,10 @@ namespace NavyAccountWeb.Services
         {
             return await _unitOfWork.student.GetAllStudent();
         }
+        public async Task<sr_StudentRecord> GetAllStudentByID(int id)
+        {
+            return await _unitOfWork.student.getStudentById(id);
+        }
 
         public async Task<sr_StudentRecord> GetStudentByCode(string code)
         {
@@ -42,18 +47,34 @@ namespace NavyAccountWeb.Services
         {
             return await _unitOfWork.student.GetStudentByCode(x => x.id == id);
         }
-        public async Task<List<sr_StudentRecord>> GetStudentList(int iDisplayStart, int iDisplayLength)
+        public async Task<List<StudentRecordVM>> GetStudentList(int iDisplayStart, int iDisplayLength)
         {
             return await _unitOfWork.student.getStudentList(iDisplayStart, iDisplayLength);
+        }
+        public StudentRecordVM GetStudentListByID(int id)
+        {
+            return  _unitOfWork.student.getStudentListByID(id);
+        }
+        public StudentRecordVM GetOldStudentListByID(int id)
+        {
+            return _unitOfWork.student.getOldStudentListByID(id);
         }
 
         public async Task<int> getStudentListCount()
         {
             return await _unitOfWork.student.getStudentListCount();
         }
+        public async Task<int> getInactiveStudentListCount()
+        {
+            return await _unitOfWork.student.getInactiveStudentListCount();
+        }
         public async Task<List<sr_StudentRecord>> GetStudentListByName(string Studenttname)
         {
             return await _unitOfWork.student.getStudentListByName(Studenttname);
+        }
+        public async Task<List<sr_StudentRecord>> GetOldStudentListByName(string Studenttname)
+        {
+            return await _unitOfWork.student.getOldStudentListByName(Studenttname);
         }
         public async Task<bool> UpdateStudent(sr_StudentRecord value)
         {
@@ -61,7 +82,7 @@ namespace NavyAccountWeb.Services
             return await _unitOfWork.Done();
         }
 
-        public async Task<List<sr_StudentRecord>> GetInactiveStudentList(int iDisplayStart, int iDisplayLength)
+        public async Task<List<StudentRecordVM>> GetInactiveStudentList(int iDisplayStart, int iDisplayLength)
         {
             return await _unitOfWork.student.GetInactiveStudentList(iDisplayStart, iDisplayLength);
         }

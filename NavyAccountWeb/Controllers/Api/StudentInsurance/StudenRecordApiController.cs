@@ -28,6 +28,13 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
         {
             return await recordService.GetAllStudent();
         }
+        [Route("GetStudentById2/{id}")]
+        [HttpGet]
+        public sr_StudentRecord GetStudentById(int id)
+        {
+            return recordService.GetAllStudentByID(id).Result;
+
+        }
         [Route("getAllSTudents")]
         [HttpGet]
         public async Task<IActionResult> Get(int? pageno)
@@ -45,17 +52,17 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
             int iDisplayLength = 10;
             pageno = pageno == null ? 0 : (pageno--);
             var _studentlist = await recordService.GetInactiveStudentList(((int)pageno * iDisplayLength), iDisplayLength);
-            //var countall = await recordService.getStudentListCount();
-            return Ok(new { responseCode = 200, studentlist = _studentlist});
+            var countall = await recordService.getInactiveStudentListCount();
+            return Ok(new { responseCode = 200, studentlist = _studentlist, total = countall });
         }
 
         
-        [Route("getPersonByID2/{id}")]
+        [Route("getStudentByID/{id}")]
         [HttpGet]
-        public IActionResult getBySTudentById(int id)
+        public IActionResult getByStudentById(int id)
         {
-            var pers = recordService.GetStudentByid(id).Result;
-            sr_StudentRecord pn = new sr_StudentRecord();
+            var pers = recordService.GetStudentListByID(id);
+            StudentRecordVM pn = new StudentRecordVM();
             pn.id = pers.id;
             pn.Reg_Number = pers.Reg_Number;
             pn.Surname = pers.Surname;
@@ -67,7 +74,9 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
             pn.ParentalStatus = pers.ParentalStatus;
             pn.SchoolCode = pers.SchoolCode;
             pn.PhoneNumber = pers.PhoneNumber;
-            pn.Class = pers.Class;
+            pn.ClassName = pers.ClassName;
+            pn.ParentName = pers.ParentName;
+            pn.GuardianName = pers.GuardianName;
             pn.ClassCategory = pers.ClassCategory;
 
             return Ok(new { responseCode = 200, pn });
@@ -78,6 +87,47 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
         {
             List<Searchby_Name> pp = new List<Searchby_Name>();
             var result = recordService.GetStudentListByName(studentname).Result;
+            foreach (var v in result)
+            {
+                pp.Add(new Searchby_Name()
+                {
+                    Id = v.id,
+                    name = v.FirstName + " " + v.Surname + " " + v.MiddleName + "_" + v.Reg_Number
+                });
+            }
+            return pp;
+        }
+
+        [Route("getOldStudentByID/{id}")]
+        [HttpGet]
+        public IActionResult getOldByStudentById(int id)
+        {
+            var pers = recordService.GetOldStudentListByID(id);
+            StudentRecordVM pn = new StudentRecordVM();
+            pn.id = pers.id;
+            pn.Reg_Number = pers.Reg_Number;
+            pn.Surname = pers.Surname;
+            pn.FirstName = pers.FirstName;
+            pn.MiddleName = pers.MiddleName;
+            pn.Email = pers.Email;
+            pn.Age = pers.Age;
+            pn.Sex = pers.Sex;
+            pn.ParentalStatus = pers.ParentalStatus;
+            pn.SchoolCode = pers.SchoolCode;
+            pn.PhoneNumber = pers.PhoneNumber;
+            pn.ClassName = pers.ClassName;
+            pn.ParentName = pers.ParentName;
+            pn.GuardianName = pers.GuardianName;
+            pn.ClassCategory = pers.ClassCategory;
+
+            return Ok(new { responseCode = 200, pn });
+        }
+        [Route("getAllOldStudentByNameLimited/{studentname}")]
+        [HttpGet]
+        public List<Searchby_Name> getOldByStudentNameLimited(string studentname)
+        {
+            List<Searchby_Name> pp = new List<Searchby_Name>();
+            var result = recordService.GetOldStudentListByName(studentname).Result;
             foreach (var v in result)
             {
                 pp.Add(new Searchby_Name()
@@ -102,9 +152,9 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
         }
 
         // POST api/<SchoolRecordApiController>
-        [Route("Add")]
+        [Route("CreateStudent")]
         [HttpPost]
-        public IActionResult Addschool([FromBody] sr_StudentRecord value)
+        public IActionResult CreateStudent([FromBody] sr_StudentRecord value)
         {
             try
             {
@@ -113,10 +163,10 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
                     return Ok(new { responseCode = 400, responseDescription = "Already Exist" });
                 }
                 //value.CommencementDate = DateTime.Now;
-                //value.CreatedBy = User.Identity.Name;
+                //value.CreatedBy= User.Identity.Name;
                 recordService.AddStudent(value);
 
-                return Ok(new { respnseCode = 200, ResponseDescription = "Successfully Added" });
+                return Ok(new { resposeCode = 200, responseDescription = "Successfully Added" });
             }
             catch (Exception ex)
             {
@@ -125,27 +175,33 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
         }
 
         // PUT api/<SchoolRecordApiController>/5
-        [Route("Update/{id}")]
+        [Route("Update")]
         [HttpPut]
-        public IActionResult Update(int id, [FromBody] sr_StudentRecord value)
+        public IActionResult Update([FromBody] sr_StudentRecord pers)
         {
             try
             {
-                var sch = recordService.GetStudentByid(id).Result;
+                var sch = recordService.GetStudentByCode(pers.Reg_Number).Result;
                 if (sch == null)
                 {
                     return Ok(new { responseCode = 400, responseDescription = "Not Found" });
                 }
-                sch.Reg_Number = value.Reg_Number;
-                sch.Surname = value.Surname;
-                sch.MiddleName = value.MiddleName;
-                sch.FirstName = value.FirstName;
-                sch.Sex = value.Sex;
-                sch.SchoolCode = value.SchoolCode;
-                sch.PhoneNumber = value.PhoneNumber;
-                sch.ParentalStatus = value.ParentalStatus;
-                sch.Status = value.Status;
-                sch.Age = value.Age;
+                //sch.id = pers.id;
+                sch.Reg_Number = pers.Reg_Number;
+                sch.Surname = pers.Surname;
+                sch.FirstName = pers.FirstName;
+                sch.MiddleName = pers.MiddleName;
+                sch.Email = pers.Email;
+                sch.Age = pers.Age;
+                sch.Sex = pers.Sex;
+                sch.ParentalStatus = pers.ParentalStatus;
+                sch.PhoneNumber = pers.PhoneNumber;
+                sch.ClassCategory = pers.ClassCategory;
+                sch.Parentid = pers.Parentid;
+                sch.Guardianid = pers.Guardianid;
+                sch.ClassId = pers.ClassId;
+                sch.SchoolId = pers.SchoolId;
+                sch.Status = pers.Status;
 
                 recordService.UpdateStudent(sch);
                 return Ok(new { respnseCode = 200, ResponseDescription = "Successfully Updated" });

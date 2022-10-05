@@ -1,0 +1,26 @@
+﻿
+@{ ViewData["Title"] = "ViewStudent";
+    Layout = "~/Views/Shared/_SchoolLayout.cshtml"; }
+
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Old Student List</h5>
+                @using (Html.BeginForm("printfund2", "FundType", FormMethod.Get))
+                {
+                <div class="col-4">
+                    <div class="form-group">
+                        <input type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Print" />
+                    </div>
+
+                </div>
+                }
+            </div>
+
+            <view-old-student></view-old-student>
+        </div>
+    </div>
+</div>

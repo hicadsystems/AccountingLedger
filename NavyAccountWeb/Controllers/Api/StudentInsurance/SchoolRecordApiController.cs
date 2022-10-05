@@ -26,6 +26,7 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
         {
             return await recordService.GetAllSchool();
         }
+        
 
         // GET api/<SchoolRecordApiController>/5
         [Route("GetRecordbyCode/{code}")]

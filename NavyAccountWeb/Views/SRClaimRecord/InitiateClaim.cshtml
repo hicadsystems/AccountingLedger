@@ -1,0 +1,25 @@
+﻿
+@{ ViewData["Title"] = "InitiateClaim";
+    Layout = "~/Views/Shared/_SchoolLayout.cshtml"; }
+
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Student Cliam Initiation</h5>
+                @using (Html.BeginForm("printfund2", "FundType", FormMethod.Get))
+                {
+    <div class="col-4">
+        <div class="form-group">
+            <input type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Print" />
+        </div>
+
+    </div>}
+            </div>
+
+            <initiate-student-claim></initiate-student-claim>
+        </div>
+    </div>
+</div>

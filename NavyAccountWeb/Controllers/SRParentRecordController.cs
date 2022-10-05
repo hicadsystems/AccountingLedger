@@ -10,7 +10,7 @@ namespace NavyAccountWeb.Controllers
     public class SRParentRecordController : Controller
     {
         // GET: SRParentRecordController
-        public ActionResult Index()
+        public ActionResult ViewPaarent()
         {
             return View();
         }
@@ -28,6 +28,7 @@ namespace NavyAccountWeb.Controllers
         // GET: SRParentRecordController/Create
         public ActionResult Create()
         {
+           
             return View();
         }
 
@@ -38,7 +39,7 @@ namespace NavyAccountWeb.Controllers
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(ViewPaarent));
             }
             catch
             {
@@ -59,7 +60,7 @@ namespace NavyAccountWeb.Controllers
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(ViewPaarent));
             }
             catch
             {
@@ -80,7 +81,7 @@ namespace NavyAccountWeb.Controllers
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(ViewPaarent));
             }
             catch
             {

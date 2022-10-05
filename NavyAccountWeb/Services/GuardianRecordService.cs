@@ -40,9 +40,9 @@ namespace NavyAccountWeb.Services
         {
             return await _unitOfWork.Guardian.getGuardianListByName(Guardianname);
         }
-        public Task<IEnumerable<sr_GuardianRecord>> GetAllGuardian()
+        public async Task<IEnumerable<sr_GuardianRecord>> GetAllGuardian()
         {
-            throw new NotImplementedException();
+            return await _unitOfWork.Guardian.getAllGuardian();
         }
 
         public async Task<sr_GuardianRecord> GetGuardianByCode(string code)

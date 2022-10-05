@@ -57,6 +57,16 @@ namespace NavyAccountCore.Repositories
 
                           }).ToListAsync();
         }
+        
+        public async Task<IEnumerable<sr_GuardianRecord>> getAllGuardian()
+        {
+            return await (from pers in context.sr_GuardianRecord
+                          select new sr_GuardianRecord
+                          {
+                              id = pers.id,
+                              Surname = pers.Surname +" " + pers.OtherNames,
+                          }).OrderByDescending(x => x.Surname).ToListAsync();
+        }
         public async Task<int> getGuardianListCount()
         {
             return await context.sr_GuardianRecord.CountAsync();

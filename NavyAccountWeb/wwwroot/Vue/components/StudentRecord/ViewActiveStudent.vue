@@ -5,8 +5,8 @@
      <div class="row">
         <div class="col-12 col-xl-4">
                 <div class="form-group">
-                    <label class="form-label">Service Number</label>
-                    <vuejsAutocomplete source="/api/PersonAPI/getAllStudentByNameLimited/"
+                    <label class="form-label">Student Number</label>
+                    <vuejsAutocomplete source="/api/StudentRecord/getAllStudentByNameLimited/"
                                        input-class="form-control"
                                        @selected="setValueStudent"
                                        v-model="pp">
@@ -30,14 +30,14 @@
             </thead>
             <tbody>
                 <tr v-for="student in studentList">
-                    <td>{{ student.reg_number }}</td>
+                    <td>{{ student.reg_Number }}</td>
                     <td>{{ student.surname}}{{ student.firstName }}  {{ student.middleName }}</td>
-                    <td>{{ student.ParentSatus }}</td>
+                    <td>{{ student.parentName }}</td>
                     <td>{{ getAppropriateGender(student.sex) }}</td>
                     <td>{{ student.age }}</td>
-                    <td>{{ student.class }}</td>
-                    <td>{{ student.school }}</td>
-                   <td><a type="button" :href="'CreatePerson?id='+personel.personID" class="btn btn-submit btn-primary">Edit</a></td>
+                    <td>{{ student.className }}</td>
+                    <td>{{ student.schoolCode }}</td>
+                   <td><a type="button" :href="'Create?id='+student.id" class="btn btn-submit btn-primary">Edit</a></td>
                 </tr>
             </tbody>
 
@@ -75,7 +75,7 @@ data() {
     studentList:null,
     pageno:0,
     totalcount:0,
-      ID:0,
+      id:0,
      pp:''
     };
 },
@@ -109,7 +109,7 @@ mounted () {
       setValueStudent: function(result) {
           alert(result.value)
          axios
-       .get(`/api/StudentRecord/getStudentById/${result.value}`)
+       .get(`/api/StudentRecord/getStudentByID/${result.value}`)
        .then(response => {this.studentList = response.data;
       
        })
