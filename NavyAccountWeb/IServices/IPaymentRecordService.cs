@@ -12,7 +12,7 @@ namespace NavyAccountWeb.IServices
         Task<List<PaymentProposalRecord>> GetStudentpaymentProposal();
         Task<List<PaymentProposalRecord>> GetStudentpaymentProposalbySchool(string schoolname);
         Task<List<PaymentProposalRecord>> GetDiscrepancyRecord();
-        Task<int> UpdatePaymentProposal(PaymentPoposalExcelRecord req);
+        Task UpdatePaymentProposal(PaymentPoposalExcelRecord req);
         Task<List<PaymentProposalRecord>> moveRecord(List<PaymentProposalRecord> record);
 
         Task<bool> AddPayment(sr_PaymentRecord value);

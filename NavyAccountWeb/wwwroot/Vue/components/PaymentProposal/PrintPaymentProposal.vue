@@ -7,11 +7,16 @@
                     <label class="form-label">School Name</label>
                     <div class="row">
                           <div class="col-xl-4">
-                                <vuejsAutocomplete source="/api/SchoolRecord/GetschoolByName/"
+                                  <select class="form-control" v-model="postBody.schoolName" name="schoolName" required>
+                                    <!-- <option value="All" selected>All</option> -->
+                                    <option v-for="loantype in SchoolList" v-bind:value="loantype.schoolname" v-bind:key="loantype.schoolname"> {{ loantype.schoolname }} </option>
+                                  </select>
+
+                                <!-- <vuejsAutocomplete source="/api/SchoolRecord/GetschoolByName/"
                                             input-class="form-control"
                                             @selected="setValueStudent"
                                             v-model="pp">
-                                </vuejsAutocomplete>
+                                </vuejsAutocomplete> -->
                           </div>
                                 
                         <div class="col-12 col-xl-2">
@@ -81,15 +86,37 @@
         pageno:0,
         totalcount:0,
         ID:0,
-        pp:''
+        pp:'',
+        SchoolList:null,
+        postBody: {
+                schoolName:'all'
+           }
         };
     },
+     mounted() {
+            this.$store.state.objectToUpdate = null, 
+         axios
+            .get('/api/SchoolRecord/GetAll')
+            .then(response => (this.SchoolList = response.data))
+     },
     methods: {
+
         printProposal:function(){
-            window.open('/SRPaymentRecord/PrintPaymentProposalAsPdf')
+            if(this.postBody.schoolName){
+               window.open(`/SRPaymentRecord/PrintPaymentProposalAsPdf/${this.postBody.schoolName}`)
+            }
+            else{
+               window.open('/SRPaymentRecord/PrintPaymentProposalAsPdf')
+         }
         },
         printProposalAsExcel:function(){
-           window.open('/SRPaymentRecord/PrintPaymentProposalAsExcel')
+           if(this.postBody.schoolName){
+              window.open(`/SRPaymentRecord/PrintPaymentProposalAsExcelBySchool/${this.postBody.schoolName}`);
+           }else{
+              window.open('/SRPaymentRecord/PrintPaymentProposalAsExcel');
+           }
+       
+           
         },
         setValueStudent: function(result) {
             alert(result.value)

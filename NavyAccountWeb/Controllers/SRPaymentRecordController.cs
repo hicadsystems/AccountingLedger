@@ -12,6 +12,10 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Wkhtmltopdf.NetCore;
+using NavyAccountCore.Core.Data;
+using NavyAccountCore.Models;
+using NavyAccountWeb.Services;
+using System.Threading;
 
 namespace NavyAccountWeb.Controllers
 {
@@ -75,13 +79,14 @@ namespace NavyAccountWeb.Controllers
         {
 
             var op = await paymentRecordService.GetStudentpaymentProposalbySchool(schoolName);
+            var oq = await paymentRecordService.moveRecord(op);
             var stream = new MemoryStream();
 
             int row = 2;
             using (var package = new ExcelPackage(stream))
             {
                 var workSheet = package.Workbook.Worksheets.Add("Sheet2");
-                workSheet.Cells.LoadFromCollection(op, true);
+                workSheet.Cells.LoadFromCollection(oq, true);
                 package.Save();
             }
 
@@ -97,9 +102,152 @@ namespace NavyAccountWeb.Controllers
         public async Task<IActionResult> PrintPaymentProposalAsPdf(string schoolName)
         {
                 var op = await paymentRecordService.GetStudentpaymentProposalbySchool(schoolName);
-                return await GeneratePdf.GetPdf("Views/SRPaymentRecord/PaymentProposal.cshtml", op);
+                var oq = await paymentRecordService.moveRecord(op);
+                return await GeneratePdf.GetPdf("Views/SRPaymentRecord/PaymentProposal.cshtml", oq);
         }
 
+
+        public IActionResult PaymentProposalupload()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PaymentProposalupload(IFormFile formFile, CancellationToken cancellationToken)
+        {
+            try
+            {
+                if (formFile == null || formFile.Length <= 0)
+                {
+                    TempData["message"] = "No File Uploaded";
+                    //return BadRequest("File not an Excel Format");
+                    return View();
+                    //return BadRequest("No File Uploaded");
+                }
+
+                if (!Path.GetExtension(formFile.FileName).Equals(".xlsx", StringComparison.OrdinalIgnoreCase))
+                {
+                    TempData["message"] = "File not an Excel Format";
+                    //return BadRequest("File not an Excel Format");
+                    return View();
+                }
+               
+                var listapplication = new List<PaymentProposalCapture>();
+                var listapplicationofrecordnotavailable = new List<PaymentProposalCapture>();
+
+                using (var stream = new MemoryStream())
+                {
+                    await formFile.CopyToAsync(stream, cancellationToken);
+
+                    using (var package = new ExcelPackage(stream))
+                    {
+                        ExcelWorksheet worksheet = package.Workbook.Worksheets["Sheet1"];
+                        var rowCount = worksheet.Dimension.Rows;
+                        string Req_No = String.IsNullOrEmpty(worksheet.Cells[1, 1].ToString()) ? "" : worksheet.Cells[1, 1].Value.ToString().Trim();
+                        string Schoolname = String.IsNullOrEmpty(worksheet.Cells[1, 2].ToString()) ? "" : worksheet.Cells[1, 2].Value.ToString().Trim();
+                        string Amount = String.IsNullOrEmpty(worksheet.Cells[1, 3].ToString()) ? "" : worksheet.Cells[1, 3].Value.ToString().Trim();
+                      
+
+                        if (Req_No != "REG_NUMBER"  || Schoolname != "SCHOOLNAME" || Amount != "AMOUNT"
+                            )
+                        {
+                            return BadRequest("File not in the Right format");
+                        }
+                        for (int row = 2; row <= rowCount; row++)
+                        {
+                            if (worksheet.Cells[1, 1].Value == null)
+                                worksheet.Cells[1, 1].Value = "";
+
+                            if (worksheet.Cells[1, 2].Value == null)
+                                worksheet.Cells[1, 2].Value = "";
+
+                            if (worksheet.Cells[1, 3].Value == null)
+                                worksheet.Cells[1, 3].Value = "";
+
+
+                            if (worksheet.Cells[row, 1].Value == null)
+                                worksheet.Cells[row, 1].Value = "";
+
+                            if (worksheet.Cells[row, 2].Value == null)
+                                worksheet.Cells[row, 2].Value = "";
+
+                            if (worksheet.Cells[row, 3].Value == null)
+                                worksheet.Cells[row, 3].Value = "";
+
+
+                            string req_num = String.IsNullOrEmpty(worksheet.Cells[row, 1].Value.ToString()) ? "" : worksheet.Cells[row, 1].Value.ToString().Trim();
+                            string schName = String.IsNullOrEmpty(worksheet.Cells[row, 2].Value.ToString()) ? "" : worksheet.Cells[row, 2].Value.ToString().Trim();
+                            string amount = String.IsNullOrEmpty(worksheet.Cells[row, 3].Value.ToString()) ? "" : worksheet.Cells[row, 3].Value.ToString().Trim();
+                        
+
+                            
+
+                            if (String.IsNullOrEmpty(worksheet.Cells[row, 1].Value.ToString()) ||
+                               String.IsNullOrEmpty(worksheet.Cells[row, 2].Value.ToString()) ||
+                               String.IsNullOrEmpty(worksheet.Cells[row, 3].Value.ToString()))
+                            {
+                                listapplicationofrecordnotavailable.Add(new PaymentProposalCapture
+                                {
+                                    REG_NUMBER = req_num,
+                                    SCHOOLNAME = schName,
+                                    AMOUNT = amount
+                                });
+
+                            }
+                            else
+                            {
+                                //check if already in the list -- a possibility
+                                listapplication.Add(new PaymentProposalCapture
+                                {
+                                    REG_NUMBER = req_num,
+                                    SCHOOLNAME = schName,
+                                    AMOUNT = amount
+                                });
+                            }
+                        }
+                        foreach(var j in listapplication)
+                        {
+                            var op = new PaymentPoposalExcelRecord
+                            {
+                                Amount = decimal.Parse(j.AMOUNT),
+                                Schoolname = j.SCHOOLNAME,
+                                Req_Number = j.REG_NUMBER
+                            };
+
+                            await paymentRecordService.UpdatePaymentProposal(op);
+                        }
+                        TempData["message"] = "Uploaded Successfully";
+                    }
+                }
+                if (listapplicationofrecordnotavailable.Count > 0)
+                {
+
+                    var stream = new MemoryStream();
+
+                    using (var package = new ExcelPackage(stream))
+                    {
+                        var workSheet = package.Workbook.Worksheets.Add("Sheet2");
+                        workSheet.Cells.LoadFromCollection(listapplicationofrecordnotavailable, true);
+                        package.Save();
+                    }
+                    stream.Position = 0;
+                    string excelName = $"paymentproposal-{DateTime.Now.ToString("yyyyMMddHHmmssfff")}.xlsx";
+
+                    //return File(stream, "application/octet-stream", excelName);  
+                    return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
+                }
+
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                TempData["message"] = "Fail To Uplaod";
+                throw;
+            }
+
+
+        }
 
         public ActionResult Index()
         {

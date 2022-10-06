@@ -12288,6 +12288,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -12301,15 +12306,34 @@ __webpack_require__.r(__webpack_exports__);
       pageno: 0,
       totalcount: 0,
       ID: 0,
-      pp: ''
+      pp: '',
+      SchoolList: null,
+      postBody: {
+        schoolName: 'all'
+      }
     };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    this.$store.state.objectToUpdate = null, axios.get('/api/SchoolRecord/GetAll').then(function (response) {
+      return _this.SchoolList = response.data;
+    });
   },
   methods: {
     printProposal: function printProposal() {
-      window.open('/SRPaymentRecord/PrintPaymentProposalAsPdf');
+      if (this.postBody.schoolName) {
+        window.open("/SRPaymentRecord/PrintPaymentProposalAsPdf/".concat(this.postBody.schoolName));
+      } else {
+        window.open('/SRPaymentRecord/PrintPaymentProposalAsPdf');
+      }
     },
     printProposalAsExcel: function printProposalAsExcel() {
-      window.open('/SRPaymentRecord/PrintPaymentProposalAsExcel');
+      if (this.postBody.schoolName) {
+        window.open("/SRPaymentRecord/PrintPaymentProposalAsExcelBySchool/".concat(this.postBody.schoolName));
+      } else {
+        window.open('/SRPaymentRecord/PrintPaymentProposalAsExcel');
+      }
     },
     setValueStudent: function setValueStudent(result) {
       alert(result.value); //     axios
@@ -49102,27 +49126,53 @@ var render = function() {
             _c("label", { staticClass: "form-label" }, [_vm._v("School Name")]),
             _vm._v(" "),
             _c("div", { staticClass: "row" }, [
-              _c(
-                "div",
-                { staticClass: "col-xl-4" },
-                [
-                  _c("vuejsAutocomplete", {
-                    attrs: {
-                      source: "/api/SchoolRecord/GetschoolByName/",
-                      "input-class": "form-control"
-                    },
-                    on: { selected: _vm.setValueStudent },
-                    model: {
-                      value: _vm.pp,
-                      callback: function($$v) {
-                        _vm.pp = $$v
-                      },
-                      expression: "pp"
+              _c("div", { staticClass: "col-xl-4" }, [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.postBody.schoolName,
+                        expression: "postBody.schoolName"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { name: "schoolName", required: "" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.postBody,
+                          "schoolName",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      }
                     }
-                  })
-                ],
-                1
-              ),
+                  },
+                  _vm._l(_vm.SchoolList, function(loantype) {
+                    return _c(
+                      "option",
+                      {
+                        key: loantype.schoolname,
+                        domProps: { value: loantype.schoolname }
+                      },
+                      [_vm._v(" " + _vm._s(loantype.schoolname) + " ")]
+                    )
+                  }),
+                  0
+                )
+              ]),
               _vm._v(" "),
               _c("div", { staticClass: "col-12 col-xl-2" }, [
                 _c(
@@ -67444,6 +67494,7 @@ var map = {
 	"./components/ParentRecord/CreateUpdateParent.vue": "./wwwroot/Vue/components/ParentRecord/CreateUpdateParent.vue",
 	"./components/ParentRecord/ViewGuardian.vue": "./wwwroot/Vue/components/ParentRecord/ViewGuardian.vue",
 	"./components/ParentRecord/ViewParent.vue": "./wwwroot/Vue/components/ParentRecord/ViewParent.vue",
+	"./components/PaymentProposal/PaymentProposalDiscrepancy.vue": "./wwwroot/Vue/components/PaymentProposal/PaymentProposalDiscrepancy.vue",
 	"./components/PaymentProposal/PrintPaymentProposal.vue": "./wwwroot/Vue/components/PaymentProposal/PrintPaymentProposal.vue",
 	"./components/Person/CreateNewPersonComponent.vue": "./wwwroot/Vue/components/Person/CreateNewPersonComponent.vue",
 	"./components/Person/ListInactivePersonComponent.vue": "./wwwroot/Vue/components/Person/ListInactivePersonComponent.vue",
@@ -71798,19 +71849,50 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./wwwroot/Vue/components/PaymentProposal/PaymentProposalDiscrepancy.vue":
+/*!*******************************************************************************!*\
+  !*** ./wwwroot/Vue/components/PaymentProposal/PaymentProposalDiscrepancy.vue ***!
+  \*******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+var render, staticRenderFns
+var script = {}
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__["default"])(
+  script,
+  render,
+  staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+component.options.__file = "wwwroot/Vue/components/PaymentProposal/PaymentProposalDiscrepancy.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
 /***/ "./wwwroot/Vue/components/PaymentProposal/PrintPaymentProposal.vue":
 /*!*************************************************************************!*\
   !*** ./wwwroot/Vue/components/PaymentProposal/PrintPaymentProposal.vue ***!
   \*************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _PrintPaymentProposal_vue_vue_type_template_id_784415fe___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PrintPaymentProposal.vue?vue&type=template&id=784415fe& */ "./wwwroot/Vue/components/PaymentProposal/PrintPaymentProposal.vue?vue&type=template&id=784415fe&");
 /* harmony import */ var _PrintPaymentProposal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PrintPaymentProposal.vue?vue&type=script&lang=js& */ "./wwwroot/Vue/components/PaymentProposal/PrintPaymentProposal.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _PrintPaymentProposal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _PrintPaymentProposal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _PrintPaymentProposal_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PrintPaymentProposal.vue?vue&type=style&index=0&lang=css& */ "./wwwroot/Vue/components/PaymentProposal/PrintPaymentProposal.vue?vue&type=style&index=0&lang=css&");
+/* empty/unused harmony star reexport *//* harmony import */ var _PrintPaymentProposal_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PrintPaymentProposal.vue?vue&type=style&index=0&lang=css& */ "./wwwroot/Vue/components/PaymentProposal/PrintPaymentProposal.vue?vue&type=style&index=0&lang=css&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -71842,7 +71924,7 @@ component.options.__file = "wwwroot/Vue/components/PaymentProposal/PrintPaymentP
 /*!**************************************************************************************************!*\
   !*** ./wwwroot/Vue/components/PaymentProposal/PrintPaymentProposal.vue?vue&type=script&lang=js& ***!
   \**************************************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

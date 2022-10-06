@@ -28,6 +28,7 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
         {
             return await recordService.GetAllStudent();
         }
+
         [Route("getAllSTudents")]
         [HttpGet]
         public async Task<IActionResult> Get(int? pageno)
@@ -38,6 +39,7 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
             var countall = await recordService.getStudentListCount();
             return Ok(new { responseCode = 200, studentlist = _studentlist, total = countall });
         }
+
         [Route("getAllInactivestudents")]
         [HttpGet]
         public async Task<IActionResult> Getinactive(int? pageno)
