@@ -24,7 +24,8 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
         [HttpGet]
         public async Task<IEnumerable<sr_SchoolRecord>> GetAll()
         {
-            return await recordService.GetAllSchool();
+            var po= await recordService.GetAllSchool();
+            return po;
         }
         
 

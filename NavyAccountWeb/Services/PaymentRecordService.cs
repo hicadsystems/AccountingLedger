@@ -103,15 +103,15 @@ namespace NavyAccountWeb.Services
             return await _unitOfWork.Done();
         }
 
-        public async Task<int> UpdatePaymentProposal(PaymentPoposalExcelRecord req)
+        public async Task UpdatePaymentProposal(PaymentPoposalExcelRecord req)
         {
             var param = new DynamicParameters();
             param.Add("@Req_Number", req.Req_Number);
             param.Add("@amount", req.Amount);
+            param.Add("@schoolname", req.Schoolname);
 
-            var result = dapper.Get<int>("sr_UpdatePaymentProposal", param, commandType:System.Data.CommandType.StoredProcedure);
+            dapper.Execute("sr_UpdatePaymentProposal", param, commandType:System.Data.CommandType.StoredProcedure);
 
-            return result;
         }
     }
 }

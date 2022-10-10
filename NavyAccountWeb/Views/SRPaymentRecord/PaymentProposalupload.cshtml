@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewData["Title"] = "PaymentProposalupload";
+    Layout = "~/Views/Shared/_SchoolLayout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Payment Proposal Upload</h5>
+            </div>
+            
+            <div class="card-body">
+                <div class="btn btn-success">
+                    @TempData["message"]
+                </div>
+
+                <a href="~/uploads/PaymentProposal.xlsx">Download Sample</a>
+                @using (Html.BeginForm("PaymentProposalupload", "SRPaymentRecord", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                        <div class="form-group">
+                            <input type="file" name="formFile" class="form-control" required />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Proposal Upload" />
+                        </div>
+                }
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
