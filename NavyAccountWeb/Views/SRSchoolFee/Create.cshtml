@@ -1,0 +1,39 @@
+﻿
+@{ ViewData["Title"] = "ViewSchool";
+    Layout = "~/Views/Shared/_SchoolLayout.cshtml"; }
+
+< <div class="header">
+    <h1 class="header-title">
+        Fund Type
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Home/Index">Main</a></li>
+            <li class="breadcrumb-item active" aria-current="page">School Fee</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Add New School Fee</h5>
+            </div>
+
+            <create-update-school-fee></create-update-school-fee>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">School Fee List</h5>
+                
+            </div>
+
+            <view-school-fee></view-school-fee>
+        </div>
+    </div>
+</div>

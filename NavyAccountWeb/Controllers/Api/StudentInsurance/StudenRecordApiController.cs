@@ -166,7 +166,7 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
                 //value.CreatedBy= User.Identity.Name;
                 recordService.AddStudent(value);
 
-                return Ok(new { resposeCode = 200, responseDescription = "Successfully Added" });
+                return Ok(new { responseCode = 200, responseDescription = "Successfully Added" });
             }
             catch (Exception ex)
             {

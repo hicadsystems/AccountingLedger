@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div v-if="errors" class="has-error"> {{ [errors] }}</div>
-        <div v-if="responseMessage" class="has-error"> {{ responseMessage }}</div>
+        <div v-if="errors" class="has-error" style="color:red"> {{ [errors] }}</div>
+        <div v-if="responseMessage" class="has-error" style="color:green"> {{ responseMessage }}</div>
         <form @submit="checkForm"  method="post">
                 <div class="sw-container tab-content">
                     <div id="validation-step-1" class="tab-pane step-content col-12" style="display: block;">
@@ -28,10 +28,7 @@
                             </div>
                         
                         <div class="form-row">
-                            <div class="col-sm-4">
-                                <label>Age</label>
-                                <input class="form-control" name="Age" v-model="postBody.Age" required />
-                            </div>
+                           
                             <!-- <div class="col-12 col-xl-4">
                                 <div class="form-group">
                                     <label class="form-label">Parent Name</label>
@@ -45,12 +42,15 @@
                                 </div>
                             </div> -->
                                 <div class="form-group col-md-4">
-                               <label class="form-label">Parent Name</label>
-                                <select class="form-control" v-model="postBody.Parentid" name="parentid" required>
-                                    <option v-for="pr in parentList" v-bind:value="pr.id" v-bind:key="pr.id"> {{ pr.surname }} </option>
-                                </select>
+                                <label class="form-label">Parent Name</label>
+                                    <select class="form-control" v-model="postBody.Parentid" name="parentid" required>
+                                        <option v-for="pr in parentList" v-bind:value="pr.id" v-bind:key="pr.id"> {{ pr.surname }} </option>
+                                    </select>
                                 </div>
-                               
+                                <div class="form-group col-md-4">
+                                    <label>Parental Status</label>
+                                    <input class="form-control" name="parentalStatus" v-model="postBody.ParentalStatus" required />
+                                 </div>
                                 <div class="form-group col-md-4">
                                <label class="form-label">Guardian Name</label>
                                 <select class="form-control" v-model="postBody.Guardianid" name="guardianid" required>
@@ -74,6 +74,10 @@
                         </div>
 
                         <div class="form-row">
+                            <div class="col-sm-4">
+                                <label>Age</label>
+                                <input class="form-control" name="Age" v-model="postBody.Age" required />
+                            </div>
                             <div class="form-group col-md-4">
                                 <label>Sex</label>
                                 <select class="form-control" v-model="postBody.Sex" name="sex" required>
@@ -84,34 +88,35 @@
                                 <label>Email</label>
                                 <input class="form-control" name="Email" v-model="postBody.Email" />
                             </div>
+                            
+                        </div>
+
+                        <div class="form-row">
                             <div class="col-md-4">
                                 <label>PhoneNumber</label>
                                 <input class="form-control" name="PhoneNumber" v-model="postBody.PhoneNumber" />
                             </div>
-                        </div>
-
-                        <div class="form-row">
-                            
                             <div class="form-group col-md-4">
                                 <label>Class</label>
-                                <select class="form-control" v-model="postBody.ClassId" name="classId" required>
+                                <select class="form-control" v-model="postBody.ClassId" name="classId" @change="process2"  required>
                                     <option v-for="cls in classList" v-bind:value="cls.id" v-bind:key="cls.id"> {{ cls.className }} </option>
                                 </select>
                             </div>
                             <div class="col-sm-4">
                                 <label>School</label>
-                                <select class="form-control" v-model="postBody.SchoolId" name="schoolId" required>
+                                <select class="form-control" v-model="postBody.SchoolId" name="schoolId" @change="process" required>
                                     <option v-for="sch in schoolList" v-bind:value="sch.id" v-bind:key="sch.id"> {{ sch.schoolname }} </option>
                                 </select>
-                            </div>
+                                <input class="form-control" name="SchoolCode" hidden v-model="postBody.SchoolCode"/>
+
+                            </div>                          
+
+                        </div>
+                        <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label>Class Category</label>
                                 <input class="form-control" name="ClassCategory" v-model="postBody.ClassCategory" />
                             </div>
-                            
-
-                        </div>
-                        <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label>Status</label>
                                 <select class="form-control" v-model="postBody.Status" name="status" required>
@@ -122,14 +127,18 @@
                                 <label>Enrolment Date</label>
                                 <vuejsDatepicker v-model="postBody.CommencementDate" input-class="form-control" name="commencementDate"></vuejsDatepicker>
                             </div>
-
+                            </div>
+                         <div class="form-row" v-if="canupdate">
                              <div class="col-md-4">
                                 <label>Exit Left</label>
                                 <vuejsDatepicker v-model="postBody.ExitDate" input-class="form-control" name="cxitDate"></vuejsDatepicker>
                             </div>
                             <div class="col-md-4">
                                 <label>Exit Reason</label>
-                                <input class="form-control" name="exitReason" v-model="postBody.ExitReason" />
+                                <select class="form-control" v-model="postBody.ExitReason" name="status">
+                                    <option v-for="stu in exitreasonList" v-bind:value="stu.value" v-bind:key="stu.value"> {{ stu.text }} </option>
+                                </select>
+                                <!-- <input class="form-control" name="exitReason" v-model="postBody.ExitReason" /> -->
                             </div>
                             <!-- <div class="filter">
                              <label for="autocomplete-dropdown">Autocomplete dropdown: </label>
@@ -168,6 +177,7 @@ export default {
             responseMessage:'',
             submitorUpdate:'Submit',
             canProcess: true,
+            canupdate:false,
             stateList:null,
             parentList: null,
             guardianList: null,
@@ -232,7 +242,6 @@ export default {
         .then(response => (this.classList = response.data));
 
         if (this.studenttoeditid != 0) {
-                alert('i am here')
                 Axios
                     .get(`/api/StudentRecord/GetStudentById2/${this.studenttoeditid}`)
                     .then(response => {
@@ -257,12 +266,25 @@ export default {
                         this.postBody.Age= response.data.age
                         this.postBody.ClassCategory= response.data.classCategory
                         this.postBody.ParentalStatus= response.data.parentalStatus
-                        this.submitorUpdate='update'              
+                        this.submitorUpdate='update'
+                        this.canupdate=true;              
                     })
 
             }
     },
     methods:{
+        process2(){
+        Axios
+        .get(`/api/SchoolRecord/GetschoolByClass/${this.postBody.ClassId}`)
+        .then(response=>(this.schoolList=response.data
+        )
+        )},
+        process(){
+        Axios
+        .get(`/api/SchoolRecord/GetschoolById/${this.postBody.SchoolId}`)
+        .then(response=>(this.postBody.SchoolCode=response.data.schoolType
+        )
+        )},
         setValueParentID(result){
             this.postBody.Parentid=result.value;
             },
@@ -271,7 +293,6 @@ export default {
             },
             
         checkForm: function (e) {
-            alert(this.postBody.Reg_Number);
             if (this.postBody.Reg_Number) {
                  e.preventDefault();
                  this.canProcess = false;
@@ -290,32 +311,30 @@ export default {
                 this.responseMessage=response.data.responseDescription;
                 this.canProcess = true;
                 if(response.data.responseCode=='200'){
-                    this.postBody = {
-                                    Reg_Number:'',Surname:'', FirstName:'',                                
-                                    MiddleName:'', Sex:'', SchoolCode:'',
-                                    CommencementDate:'',Class:'',  PhoneNumber:'',
-                                    Email:'',Status:'',ExitDate:'', ExitReason:'',
-                                    Age:'',ClassCategory:'',ParentalStatus:''
-                            };
+                   alert('Successfully Saved')
+                    this.postBody.Reg_Number='',this.postBody.Surname='', this.postBody.FirstName='',                                
+                    this.postBody.MiddleName='', this.postBody.Sex='', this.postBody.SchoolCode='',
+                    this.postBody.CommencementDate='',this.postBody.ClassId='', this.postBody.SchoolId='',   this.postBody.PhoneNumber='',
+                    this.postBody.Email='',this.postBody.Status='',this.postBody.ExitDate='', this.postBody.ExitReason='',
+                    this.postBody.Age='',this.postBody.ClassCategory='',this.postBody.ParentalStatus=''
+              
                 }
             }).catch(e=>{
                 this.errors.push(e);
             })
             }
             if(this.submitorUpdate=='update'){
-                alert('i am here 444');
                 Axios.put(`/api/StudentRecord/Update`,this.postBody)
                 .then(response=>{
                 this.responseMessage=response.data.responseDescription;
                 if(response.data.responseCode=='200'){
                     this.submitorUpdate='Submit';
-                    this.postBody = {
-                                    Reg_Number:'',Surname:'', FirstName:'',                                
-                                    MiddleName:'', Sex:'', SchoolCode:'',
-                                    CommencementDate:'',Class:'',  PhoneNumber:'',
-                                    Email:'',Status:'',ExitDate:'', ExitReason:'',
-                                    Age:'',ClassCategory:'',ParentalStatus:''
-                            };
+                    this.postBody.Reg_Number='',this.postBody.Surname='', this.postBody.FirstName='',                                
+                    this.postBody.MiddleName='', this.postBody.Sex='', this.postBody.SchoolCode='',
+                    this.postBody.CommencementDate='',this.postBody.ClassId='', this.postBody.SchoolId='',   this.postBody.PhoneNumber='',
+                    this.postBody.Email='',this.postBody.Status='',this.postBody.ExitDate='', this.postBody.ExitReason='',
+                    this.postBody.Age='',this.postBody.ClassCategory='',this.postBody.ParentalStatus=''
+
                 }
             }).catch(e=>{
                 this.errors.push(e);

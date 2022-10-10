@@ -52,6 +52,7 @@ namespace NavyAccountCore.Core.Data
         ITrialBalanceReportView trialBalanceReportView { get; }
         IStudentRecordRepository student { get; }
         ISchoolRecordRepository school { get; }
+        ISchoolFeeRepository schoolFee { get; }
         IPaymentRepository payment { get; }
         IClaimRecordRepository schclaim { get; }
         IParentGuardianRecordRepository parent { get; }

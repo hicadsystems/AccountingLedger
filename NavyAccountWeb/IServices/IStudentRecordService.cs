@@ -24,5 +24,6 @@ namespace NavyAccountWeb.IServices
         Task<sr_StudentRecord> GetAllStudentByID(int id);
         StudentRecordVM GetStudentListByID(int id);
         StudentRecordVM GetOldStudentListByID(int id);
+        Task<List<StudentRecordVM>> GetStudentListOnClaim();
     }
 }

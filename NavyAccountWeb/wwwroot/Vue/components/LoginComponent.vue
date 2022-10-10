@@ -68,6 +68,7 @@ export default {
                 this.FundTypeList = response.data
                 
                 if(this.FundTypeList.length === 1){
+                    //alert(this.FundTypeList[0].code)
                 this.postBody.FundTypeID = this.FundTypeList[0].code
                 }
                 

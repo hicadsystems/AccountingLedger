@@ -31,7 +31,7 @@
             <tbody>
                 <tr v-for="student in studentList">
                     <td>{{ student.reg_Number }}</td>
-                    <td>{{ student.surname}}{{ student.firstName }}  {{ student.middleName }}</td>
+                    <td>{{ student.surname}}  {{ student.firstName }}  {{ student.middleName }}</td>
                     <td>{{ student.parentName }}</td>
                     <td>{{ getAppropriateGender(student.sex) }}</td>
                     <td>{{ student.age }}</td>

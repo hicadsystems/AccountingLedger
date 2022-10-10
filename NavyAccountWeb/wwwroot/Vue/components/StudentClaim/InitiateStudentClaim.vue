@@ -49,13 +49,7 @@
                 </div>
             </div>
             </div>
-            <div class="row">
-            <!-- <div class="col-md-4">
-                <div class="form-group">
-                    <label class="form-label">Transaction Date</label>
-                    <input class="form-control" name="Transdate" v-model="postBody.Transdate" readonly />
-                </div>
-            </div> -->
+            <!-- <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
                     <label class="form-label">Voucher Number</label>
@@ -64,7 +58,7 @@
             </div>
 
 
-            </div>
+            </div> -->
 
             <div class="row">
                 <div class="btn-group mr-2 sw-btn-group-extra" v-if="canProcess" role="group">
@@ -107,35 +101,16 @@ export default {
             maxLengthInCars: 10,
             pp:'',
         postBody: {
-            beneficiary:'',
-            bank:0,
-            PersonID:0,
-            FundTypeID: 20,
             amountPaid: 0,
-            amountReceived: 0,
             Amount: 0,
-            totalContribution: 0,
             studentname:'',
             VoucherNumber:'',
-            Transdate:'',
             Reg_Number:''
   
         },
         };
         },
-        mounted() {
-            this.$store.state.objectToUpdate = null
-     },
-     watch:{
-        '$store.state.objectToUpdate':function (newVal, oldval) { 
-         this.postBody.studentname = this.$store.state.objectToUpdate.studentname,
-         this.postBody.amountPaid = this.$store.state.objectToUpdate.amountPaid,
-         this.postBody.amountDue = this.$store.state.objectToUpdate.amountDue
-              
-         this.submitorUpdate = 'Update';
-               
-        }
-    },
+            
      methods: {
 
          setValueStudent(result) {
@@ -155,6 +130,7 @@ export default {
              if (this.postBody.Amount) {
               e.preventDefault();
               this.canProcess = false;
+              
               this.postPost();
           }
           else{
@@ -164,8 +140,8 @@ export default {
           }
         },
         postPost() {
-            if (this.submitorUpdate == 'Update') {
-                    axios.post(`/api/StudentClaim/UpdateCLaim`, this.postBody )
+                alert('i am here 5')
+                    axios.post(`/api/StudentClaim/UpdateCLaim`, this.postBody)
                         .then(response => {
                             this.responseMessage = response.data.responseDescription;
                             this.canProcess = true;
@@ -179,20 +155,7 @@ export default {
                             this.errors.push(e)
                         });
             }
-
-
-        } 
         },
-        computed: {
-            setter(){
-                let objecttoedit = this.$store.state.objectToUpdate;
-                if (objecttoedit.amountPaid) {
-                    this.postBody.amountPaid = objecttoedit.amountPaid;
-                    this.postBody.studentname = objecttoedit.studentname;
-
-                }
-            }
-        }
      }
 
 </script>

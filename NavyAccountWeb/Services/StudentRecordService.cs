@@ -86,5 +86,9 @@ namespace NavyAccountWeb.Services
         {
             return await _unitOfWork.student.GetInactiveStudentList(iDisplayStart, iDisplayLength);
         }
+        public async Task<List<StudentRecordVM>> GetStudentListOnClaim()
+        {
+            return await _unitOfWork.student.GetStudentListOnCliam();
+        }
     }
 }

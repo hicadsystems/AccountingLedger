@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using NavyAccountCore.Entities;
 using NavyAccountWeb.IServices;
+using NavyAccountWeb.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -59,15 +60,33 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
 
 
         // GET api/<SchoolRecordApiController>/5
-        [Route("GetRecordbyCode/{code}")]
-        [HttpGet("{id}")]
-        public IActionResult GetByCode(string code)
+        [Route("GetStudentsOnClaim")]
+        [HttpGet()]
+        public async Task<IEnumerable<ClaimPaymentReport>> GetByCode()
         {
-            var result = recordService.GetClaimRecordByCode(code);
-            if (result == null)
-                return Ok(new { responseCode = "404", responseDescription = "Dose not Exist" });
-            else
-                return Ok(new { responseCode = "200", responseDescription = "Successfull", data = result });
+          return await recordService.GetStudentClaim();
+           //return Ok(new { responseCode = "200", responseDescription = "Successfull", data = result });
+        }
+        
+        [Route("getCliamBySchool/{schoolname}")]
+        [HttpGet()]
+        public async Task<IEnumerable<ClaimPaymentReport>> GetBySchool(string schoolname)
+        {
+            return await recordService.GetStudentClaimBySchool(schoolname);
+          
+        }
+        [Route("UpdateLedger")]
+        [HttpGet()]
+        public async Task<int> UpdateAllLedger()
+        {
+            return await recordService.UpdateAllLedger();
+        }
+        [Route("UpdateLedgerBySchool/{schoolname}/{VoucherNumber}")]
+        [HttpGet()]
+        public async Task<int> UpdateAllLedgerBySchool(string schoolname,string VoucherNumber)
+        {
+
+            return await recordService.UpdateStudentClaimLedgerBySchool(schoolname, VoucherNumber,User.Identity.Name);
         }
 
         // POST api/<SchoolRecordApiController>
@@ -93,17 +112,16 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
             }
         }
 
-        // PUT api/<SchoolRecordApiController>/5
         [Route("UpdateCLaim")]
-        [HttpPut]
-        public IActionResult Update(int id, [FromBody] sr_ClaimRecord value)
+        [HttpPost]
+        public IActionResult Update([FromBody] sr_ClaimRecord value)
         {
             try
             {
-                var sch = recordService.GetClaimByid(id).Result;
-                if (sch == null)
+                var sch = recordService.GetClaimRecordByCode(value.Reg_Number).Result;
+                if (sch != null)
                 {
-                    return Ok(new { responseCode = 400, responseDescription = "Not Found" });
+                    return Ok(new { responseCode = 400, responseDescription = "Student is already on claim" });
                 }
                 using (SqlConnection sqls = new SqlConnection(_connectionstring))
                 {
@@ -130,6 +148,7 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
                 return Ok(new { respnseCode = 500, ResponseDescription = ex.Message });
             }
         }
+
 
         // DELETE api/<SchoolRecordApiController>/5
         [Route("Delete/{id}")]

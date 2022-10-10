@@ -1504,15 +1504,17 @@ namespace NavyAccountWeb.Migrations
 
                     b.Property<string>("CreatedBy");
 
-                    b.Property<DateTime>("CreatedDate");
+                    b.Property<DateTime?>("CreatedDate");
 
                     b.Property<string>("DeletedBy");
 
-                    b.Property<DateTime>("DeletedDate");
+                    b.Property<DateTime?>("DeletedDate");
+
+                    b.Property<string>("Period");
 
                     b.Property<string>("Reg_Number");
 
-                    b.Property<DateTime>("Transdate");
+                    b.Property<DateTime?>("Transdate");
 
                     b.Property<string>("VoucherNumber");
 
@@ -1637,6 +1639,33 @@ namespace NavyAccountWeb.Migrations
                     b.ToTable("sr_PaymentRecord");
                 });
 
+            modelBuilder.Entity("NavyAccountCore.Entities.sr_SchoolFeeTB", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("Amount");
+
+                    b.Property<string>("ClassCategory");
+
+                    b.Property<int>("ClassId");
+
+                    b.Property<string>("CreatedBy");
+
+                    b.Property<DateTime?>("CreatedDate");
+
+                    b.Property<string>("Period");
+
+                    b.Property<int>("SchoolId");
+
+                    b.Property<string>("term");
+
+                    b.HasKey("id");
+
+                    b.ToTable("sr_SchoolFeeTB");
+                });
+
             modelBuilder.Entity("NavyAccountCore.Entities.sr_SchoolRecord", b =>
                 {
                     b.Property<int>("id")
@@ -1666,6 +1695,25 @@ namespace NavyAccountWeb.Migrations
                     b.HasKey("id");
 
                     b.ToTable("sr_SchoolRecord");
+                });
+
+            modelBuilder.Entity("NavyAccountCore.Entities.sr_SchoolRecordControl", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Period");
+
+                    b.Property<int>("SchoolCount");
+
+                    b.Property<string>("term");
+
+                    b.HasKey("id");
+
+                    b.ToTable("sr_SchoolRecordControl");
                 });
 
             modelBuilder.Entity("NavyAccountCore.Entities.sr_StudentRecord", b =>
@@ -1704,6 +1752,8 @@ namespace NavyAccountWeb.Migrations
                     b.Property<string>("ParentalStatus");
 
                     b.Property<int>("Parentid");
+
+                    b.Property<string>("Period");
 
                     b.Property<string>("PhoneNumber");
 

@@ -214,5 +214,36 @@ namespace NavyAccountCore.Repositories
         {
             return await context.sr_StudentRecord.Where(x => x.Status == "Inactive").CountAsync();
         }
+        public async Task<List<StudentRecordVM>> GetStudentListOnCliam()
+        {
+            var dd = (from pers in context.sr_StudentRecord
+                      join sch in context.sr_SchoolRecord on pers.SchoolId equals sch.id
+                      join gu in context.sr_GuardianRecord on pers.Guardianid equals gu.id
+                      join par in context.sr_ParentRecord on pers.Parentid equals par.id
+                      join cl in context.sr_ClassRecord on pers.ClassId equals cl.id
+                      where (pers.Status == "Active" && pers.ClaimAmount>0)
+                      select new StudentRecordVM
+                      {
+
+                          id = pers.id,
+                          Reg_Number = pers.Reg_Number,
+                          Surname = pers.Surname,
+                          FirstName = pers.FirstName,
+                          MiddleName = pers.MiddleName,
+                          Email = pers.Email,
+                          Age = pers.Age,
+                          Sex = pers.Sex,
+                          ParentalStatus = pers.ParentalStatus,
+                          PhoneNumber = pers.PhoneNumber,
+                          SchoolCode = sch.Schoolname,
+                          ClassName = cl.ClassName,
+                          ParentName = par.Surname + " " + par.OtherNames,
+                          GuardianName = gu.Surname + " " + gu.OtherNames,
+                          ClassCategory = pers.ClassCategory,
+                          ClaimAmount=pers.ClaimAmount,
+                          ClaimDate=pers.ClaimDate
+                      }).ToListAsync();
+            return await dd;
+        }
     }
 }

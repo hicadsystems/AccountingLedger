@@ -47,7 +47,7 @@
                     <svg>
                         <use xlink:href="#ion-ios-pulse-strong"></use>
                     </svg>
-                    NN STUDENTS WELFARE SCHEME
+                    STUDENTS WELFARE
                 </a>
                 <div class="sidebar-content">
                     <div class="sidebar-user">
@@ -116,13 +116,13 @@
                                     <a asp-controller="SRClaimRecord" class="sidebar-link" asp-action="CliamUpload">Cliam Upload</a>
                                 </li>
                                 <li class="sidebar-item">
-                                    <a asp-controller="" class="sidebar-link" asp-action="">Claim Status</a>
+                                    <a asp-controller="SRClaimRecord" class="sidebar-link" asp-action="">Claim Status</a>
                                 </li>
                                 <li class="sidebar-item">
-                                    <a asp-controller="" class="sidebar-link" asp-action="">Claim Payment Report</a>
+                                    <a asp-controller="SRClaimRecord" class="sidebar-link" asp-action="ClaimPayment">Claim Payment Report</a>
                                 </li>
                                 <li class="sidebar-item">
-                                    <a asp-controller="" class="sidebar-link" asp-action="">Claim School reimbursement</a>
+                                    <a asp-controller="SRClaimRecord" class="sidebar-link" asp-action="ClaimReimbursment">Claim School reimbursement</a>
                                 </li>
 
                             </ul>
@@ -136,10 +136,10 @@
                                     <a asp-controller="" class="sidebar-link" asp-action="">Systems Control</a>
                                 </li>
                                 <li class="sidebar-item">
-                                    <a asp-controller="" class="sidebar-link" asp-action="">Initiate Term</a>
+                                    <a asp-controller="SRSesssion" class="sidebar-link" asp-action="term">Initiate Term</a>
                                 </li>
                                 <li class="sidebar-item">
-                                    <a asp-controller="" class="sidebar-link" asp-action="">New session processing</a>
+                                    <a asp-controller="SRSesssion" class="sidebar-link" asp-action="session">New session processing</a>
                                 </li>
                                 <li class="sidebar-item">
                                     <a asp-controller="" class="sidebar-link" asp-action="">Defaulter for the year</a>
@@ -156,6 +156,10 @@
 
                                 </li>
                                 <li class="sidebar-item">
+                                    <a asp-controller="SRSchoolFee" class="sidebar-link" asp-action="Create"> <i class="align-middle mr-2 fas fa-fw fa-book"> </i> <span class="align-middle"> School Fee </span></a>
+
+                                </li>
+                                <li class="sidebar-item">
                                     <a asp-controller="SRParentRecord" class="sidebar-link" asp-action="Index"> <i class="align-middle mr-2 fas fa-fw fa-book"> </i> <span class="align-middle"> Parent </span></a>
 
                                 </li>
@@ -166,8 +170,8 @@
                             </ul>
 
                         <li class="sidebar-item">
-                            <a href="#pages-6" data-toggle="collapse" class="sidebar-link collapsed"><i class="align-middle mr-2 fas fa-fw fa-file"></i> <span class="align-middle">Reports</span></a>
-                            <ul id="pages-6" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
+                            <a href="#pages-7" data-toggle="collapse" class="sidebar-link collapsed"><i class="align-middle mr-2 fas fa-fw fa-file"></i> <span class="align-middle">Reports</span></a>
+                            <ul id="pages-7" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
 
                                 <li class="sidebar-item">
                                     <a asp-controller="" class="sidebar-link" asp-action="">Nominal Role</a>
@@ -196,7 +200,7 @@
                     </a>
 
                     <form class="form-inline d-none d-sm-inline-block">
-                        <h5 style="color:white"> @Context.Session.GetString("fundtypedescription") </h5>
+                        <h5 style="color:white">  NIGERIAN NAVY STUDENTS WELFARE SCHEME </h5>
                     </form>
 
                     <div class="navbar-collapse collapse">

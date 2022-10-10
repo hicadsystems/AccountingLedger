@@ -26,6 +26,8 @@ namespace NavyAccountCore.Models
         public string ExitReason { set; get; }
         public string ParentName { set; get; }
         public string GuardianName { set; get; }
+        public decimal? ClaimAmount { get; set; }
+        public DateTime? ClaimDate { get; set; }
 
     }
 }

@@ -42,9 +42,9 @@ namespace NavyAccountWeb.Services
             _unitOfWork.Done();
         }
 
-        public Task<sr_SchoolRecord> GetSchoolByid(int id)
+        public async Task<sr_SchoolRecord> GetSchoolByid(int id)
         {
-            return _unitOfWork.school.GetSchoolByCode(x=>x.id==id);
+            return await _unitOfWork.school.GetSchoolByCode(x=>x.id==id);
         }
 
         public async Task<List<sr_SchoolRecord>> GetSchoolByName(string schoolName)
@@ -54,6 +54,15 @@ namespace NavyAccountWeb.Services
 
             param.Add("@schoolName", schoolName);
             result = dapper.GetAll<sr_SchoolRecord>("sr_GetSchoolByName", param, commandType: System.Data.CommandType.StoredProcedure);
+            return result;
+        }
+        public async Task<List<sr_SchoolRecord>> GetSchoolByClass(int classid)
+        {
+            var result = new List<sr_SchoolRecord>();
+            var param = new DynamicParameters();
+
+            param.Add("@classid", classid);
+            result = dapper.GetAll<sr_SchoolRecord>("sr_GetSchoolByClass", param, commandType: System.Data.CommandType.StoredProcedure);
             return result;
         }
     }

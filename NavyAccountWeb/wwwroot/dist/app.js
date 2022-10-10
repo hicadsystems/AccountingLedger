@@ -9313,6 +9313,7 @@ __webpack_require__.r(__webpack_exports__);
       _this.FundTypeList = response.data;
 
       if (_this.FundTypeList.length === 1) {
+        //alert(this.FundTypeList[0].code)
         _this.postBody.FundTypeID = _this.FundTypeList[0].code;
       }
     });
@@ -12205,6 +12206,122 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/PaymentProposal/PrintPaymentProposal.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/PaymentProposal/PrintPaymentProposal.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuejs_paginate__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuejs-paginate */ "./node_modules/vuejs-paginate/dist/index.js");
+/* harmony import */ var vuejs_paginate__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuejs_paginate__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuejs_auto_complete__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuejs-auto-complete */ "./node_modules/vuejs-auto-complete/dist/build.js");
+/* harmony import */ var vuejs_auto_complete__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuejs_auto_complete__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    Paginate: vuejs_paginate__WEBPACK_IMPORTED_MODULE_0___default.a,
+    vuejsAutocomplete: vuejs_auto_complete__WEBPACK_IMPORTED_MODULE_1___default.a
+  },
+  data: function data() {
+    return {
+      paymentProposalList: null,
+      pageno: 0,
+      totalcount: 0,
+      ID: 0,
+      pp: ''
+    };
+  },
+  methods: {
+    printProposal: function printProposal() {
+      window.open('/SRPaymentRecord/PrintPaymentProposalAsPdf');
+    },
+    printProposalAsExcel: function printProposalAsExcel() {
+      window.open('/SRPaymentRecord/PrintPaymentProposalAsExcel');
+    },
+    setValueStudent: function setValueStudent(result) {
+      alert(result.value); //     axios
+      // .get(`/api/StudentRecord/getStudentById/${result.value}`)
+      // .then(response => {this.studentList = response.data;
+      // });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/Person/CreateNewPersonComponent.vue?vue&type=script&lang=js&":
 /*!*****************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/Person/CreateNewPersonComponent.vue?vue&type=script&lang=js& ***!
@@ -12966,6 +13083,266 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/SchoolFee/CreateUpdateSchoolFee.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/SchoolFee/CreateUpdateSchoolFee.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      errors: null,
+      responseMessage: '',
+      submitorUpdate: 'Submit',
+      canProcess: true,
+      classList: null,
+      schoolList: null,
+      postBody: {
+        Period: '',
+        SchoolId: 0,
+        ClassId: 0,
+        ClassCategory: '',
+        Amount: 0
+      },
+      ClasscatList: [{
+        value: 'Primary',
+        text: 'Primary'
+      }, {
+        value: 'Secondary',
+        text: 'Secondary'
+      }]
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/SchoolRecord/GetAll').then(function (response) {
+      return _this.schoolList = response.data;
+    });
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/statictable/getallclass').then(function (response) {
+      return _this.classList = response.data;
+    });
+  },
+  watch: {
+    '$store.state.objectToUpdate': function $storeStateObjectToUpdate(newval, oldval) {
+      this.postBody.Period = this.$store.state.objectToUpdate.period, this.postBody.SchoolId = this.$store.state.objectToUpdate.schoolId, this.postBody.ClassId = this.$store.state.objectToUpdate.classId, this.postBody.ClassCategory = this.$store.state.objectToUpdate.classCategory, this.postBody.Amount = this.$store.state.objectToUpdate.amount, this.submitorUpdate = 'Update';
+    }
+  },
+  methods: {
+    checkForm: function checkForm(e) {
+      if (this.postBody.Period) {
+        e.preventDefault();
+        this.canProcess = false;
+        this.postData();
+      } else {
+        this.errors = [];
+        this.errors.push('Code is Required');
+      }
+    },
+    postData: function postData() {
+      var _this2 = this;
+
+      if (this.submitorUpdate == 'Submit') {
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/api/SchoolFee/AddSchoolFee", this.postBody).then(function (response) {
+          _this2.responseMessage = response.data.responseDescription;
+          _this2.canProcess = true;
+
+          if (response.data.responseCode == '200') {
+            _this2.postBody.Period = '';
+            _this2.postBody.SchoolId = '';
+            _this2.postBody.Amount = '';
+            _this2.postBody.ClassId = '';
+            _this2.postBody.ClassCategory = '';
+            _this2.$store.state.objectToUpdate = 'create';
+          }
+        })["catch"](function (e) {
+          _this2.errors.push(e);
+        });
+      }
+
+      if (this.submitorUpdate == 'update') {
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/api/SchoolFee/UpdateSchoolFee", this.postBody).then(function (response) {
+          _this2.responseMessage = response.data.responseDescription;
+
+          if (response.data.responseCode == '200') {
+            _this2.submitorUpdate = 'Submit';
+            _this2.postBody.Period = '';
+            _this2.postBody.SchoolId = '';
+            _this2.postBody.Amount = '';
+            _this2.postBody.ClassId = '';
+            _this2.postBody.ClassCategory = '';
+            _this2.$store.state.objectToUpdate = 'update';
+          }
+        })["catch"](function (e) {
+          _this2.errors.push(e);
+        });
+      }
+    }
+  },
+  computed: {
+    setter: function setter() {
+      var objectToUpdate = this.$store.state.objectToUpdate;
+
+      if (objectToUpdate.period) {
+        this.postBody.Period = objectToUpdate.period, this.postBody.SchoolId = objectToUpdate.schoolId, this.postBody.ClassId = objectToUpdate.classId, this.postBody.ClassCategory = objectToUpdate.classCategory, this.postBody.Amount = objectToUpdate.amount;
+      }
+
+      ;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/SchoolFee/ViewSchoolFee.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/SchoolFee/ViewSchoolFee.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      schoolFeeList: null
+    };
+  },
+  created: function created() {
+    this.$store.state.objectToUpdate = null;
+  },
+  watch: {
+    '$store.state.objectToUpdate': function $storeStateObjectToUpdate(newval, oldval) {
+      this.getAllSchoolFee();
+    }
+  },
+  mounted: function mounted() {
+    this.getAllSchoolFee();
+  },
+  methods: {
+    processRetrieve: function processRetrieve(schoolfee) {
+      this.$store.state.objectToUpdate = schoolfee;
+    },
+    getAllSchoolFee: function getAllSchoolFee() {
+      var _this = this;
+
+      axios.get('/api/SchoolFee/GetAll').then(function (respose) {
+        return _this.schoolFeeList = respose.data;
+      });
+    },
+    processDelete: function processDelete(id) {
+      var _this2 = this;
+
+      alert(id);
+      axios.get("/api/SchoolFee/DeleteRecord/".concat(id)).then(function (response) {
+        if (response.data.responseCode = '200') {
+          alert("SchoolFee Successfully Deleted");
+
+          _this2.getAllSchoolFee();
+        }
+      })["catch"](function (e) {
+        _this2.error.push(e);
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/SchoolRecord/CreateUpdateSchoolRecord.vue?vue&type=script&lang=js&":
 /*!***********************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/SchoolRecord/CreateUpdateSchoolRecord.vue?vue&type=script&lang=js& ***!
@@ -13240,6 +13617,317 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/StudentClaim/ClaimPaymentReport.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/StudentClaim/ClaimPaymentReport.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuejs_paginate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuejs-paginate */ "./node_modules/vuejs-paginate/dist/index.js");
+/* harmony import */ var vuejs_paginate__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuejs_paginate__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    Paginate: vuejs_paginate__WEBPACK_IMPORTED_MODULE_1___default.a,
+    Axios: axios__WEBPACK_IMPORTED_MODULE_0___default.a
+  },
+  data: function data() {
+    return {
+      paymentProposalList: null,
+      schoolList: null,
+      pageno: 0,
+      totalcount: 0,
+      ID: 0,
+      pp: '',
+      postBody: {
+        schoolname: ''
+      }
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/SchoolRecord/GetAll').then(function (response) {
+      return _this.schoolList = response.data;
+    });
+  },
+  methods: {
+    printProposal: function printProposal(schoolname) {
+      if (schoolname === '') {
+        schoolname = 'NULL';
+      }
+
+      window.open("/SRClaimRecord/CLaimPaymentByPdf/".concat(schoolname));
+    },
+    printProposalAsExcel: function printProposalAsExcel(schoolname) {
+      if (schoolname === '') {
+        schoolname = 'NULL';
+      }
+
+      window.open("/SRClaimRecord/CLaimPaymentByExcel/".concat(postBody.schoolname));
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/StudentClaim/ClaimReimbursment.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/StudentClaim/ClaimReimbursment.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuejs_paginate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuejs-paginate */ "./node_modules/vuejs-paginate/dist/index.js");
+/* harmony import */ var vuejs_paginate__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuejs_paginate__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    Paginate: vuejs_paginate__WEBPACK_IMPORTED_MODULE_1___default.a,
+    Axios: axios__WEBPACK_IMPORTED_MODULE_0___default.a
+  },
+  data: function data() {
+    return {
+      responseMessage: '',
+      paymentProposalList: null,
+      schoolList: null,
+      studentList: null,
+      pageno: 0,
+      totalcount: 0,
+      ID: 0,
+      pp: '',
+      postBody: {
+        schoolname: '',
+        VoucherNumber: ''
+      }
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/SchoolRecord/GetAll').then(function (response) {
+      return _this.schoolList = response.data;
+    });
+    this.getAllClaim();
+  },
+  methods: {
+    getAllClaim: function getAllClaim() {
+      var _this2 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/StudentClaim/GetStudentsOnClaim').then(function (response) {
+        _this2.studentList = response.data;
+        console.log(_this2.studentList);
+      });
+    },
+    printProposal: function printProposal(schoolname) {
+      var _this3 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/StudentClaim/getCliamBySchool/".concat(schoolname)).then(function (response) {
+        _this3.studentList = response.data;
+      });
+    },
+    UpdateClaim: function UpdateClaim(schoolname, VoucherNumber) {
+      var _this4 = this;
+
+      if (schoolname === '') {
+        schoolname = 'NULL';
+      } //alert(schoolname)
+
+
+      alert(VoucherNumber);
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/StudentClaim/UpdateLedgerBySchool/".concat(schoolname, "/").concat(VoucherNumber)).then(function (response) {
+        if (response.data.responseCode = '200') {
+          _this4.responseMessage = response.data.responseDescription;
+
+          _this4.getAllClaim();
+        }
+      })["catch"](function (e) {
+        _this4.error.push(e);
+      });
+    },
+    processDelete: function processDelete(id) {
+      var _this5 = this;
+
+      alert(id);
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/StudentClaim/DeleteRecord/".concat(id)).then(function (response) {
+        if (response.data.responseCode = '200') {
+          alert("Successfully Deleted");
+
+          _this5.getAllClaim();
+        }
+      })["catch"](function (e) {
+        _this5.error.push(e);
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/StudentClaim/InitiateStudentClaim.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/StudentClaim/InitiateStudentClaim.vue?vue&type=script&lang=js& ***!
@@ -13251,12 +13939,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuejs_auto_complete__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuejs-auto-complete */ "./node_modules/vuejs-auto-complete/dist/build.js");
 /* harmony import */ var vuejs_auto_complete__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuejs_auto_complete__WEBPACK_IMPORTED_MODULE_0__);
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -13357,29 +14039,13 @@ __webpack_require__.r(__webpack_exports__);
       maxLengthInCars: 10,
       pp: '',
       postBody: {
-        beneficiary: '',
-        bank: 0,
-        PersonID: 0,
-        FundTypeID: 20,
         amountPaid: 0,
-        amountReceived: 0,
         Amount: 0,
-        totalContribution: 0,
         studentname: '',
         VoucherNumber: '',
-        Transdate: '',
         Reg_Number: ''
       }
     };
-  },
-  mounted: function mounted() {
-    this.$store.state.objectToUpdate = null;
-  },
-  watch: {
-    '$store.state.objectToUpdate': function $storeStateObjectToUpdate(newVal, oldval) {
-      this.postBody.studentname = this.$store.state.objectToUpdate.studentname, this.postBody.amountPaid = this.$store.state.objectToUpdate.amountPaid, this.postBody.amountDue = this.$store.state.objectToUpdate.amountDue;
-      this.submitorUpdate = 'Update';
-    }
   },
   methods: {
     setValueStudent: function setValueStudent(result) {
@@ -13406,30 +14072,19 @@ __webpack_require__.r(__webpack_exports__);
     postPost: function postPost() {
       var _this2 = this;
 
-      if (this.submitorUpdate == 'Update') {
-        axios.post("/api/StudentClaim/UpdateCLaim", this.postBody).then(function (response) {
-          _this2.responseMessage = response.data.responseDescription;
-          _this2.canProcess = true;
+      alert('i am here 5');
+      axios.post("/api/StudentClaim/UpdateCLaim", this.postBody).then(function (response) {
+        _this2.responseMessage = response.data.responseDescription;
+        _this2.canProcess = true;
 
-          if (response.data.responseCode == '200') {
-            _this2.postBody.studentname = '';
-            _this2.postBody.Amount = '';
-            _this2.wanttoupdate = true;
-          }
-        })["catch"](function (e) {
-          _this2.errors.push(e);
-        });
-      }
-    }
-  },
-  computed: {
-    setter: function setter() {
-      var objecttoedit = this.$store.state.objectToUpdate;
-
-      if (objecttoedit.amountPaid) {
-        this.postBody.amountPaid = objecttoedit.amountPaid;
-        this.postBody.studentname = objecttoedit.studentname;
-      }
+        if (response.data.responseCode == '200') {
+          _this2.postBody.studentname = '';
+          _this2.postBody.Amount = '';
+          _this2.wanttoupdate = true;
+        }
+      })["catch"](function (e) {
+        _this2.errors.push(e);
+      });
     }
   }
 });
@@ -13603,6 +14258,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -13619,6 +14283,7 @@ __webpack_require__.r(__webpack_exports__);
       responseMessage: '',
       submitorUpdate: 'Submit',
       canProcess: true,
+      canupdate: false,
       stateList: null,
       parentList: null,
       guardianList: null,
@@ -13699,7 +14364,6 @@ __webpack_require__.r(__webpack_exports__);
     });
 
     if (this.studenttoeditid != 0) {
-      alert('i am here');
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/StudentRecord/GetStudentById2/".concat(this.studenttoeditid)).then(function (response) {
         alert(response.data.reg_Number);
         _this.postBody.Reg_Number = response.data.reg_Number;
@@ -13723,10 +14387,25 @@ __webpack_require__.r(__webpack_exports__);
         _this.postBody.ClassCategory = response.data.classCategory;
         _this.postBody.ParentalStatus = response.data.parentalStatus;
         _this.submitorUpdate = 'update';
+        _this.canupdate = true;
       });
     }
   },
   methods: {
+    process2: function process2() {
+      var _this2 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/SchoolRecord/GetschoolByClass/".concat(this.postBody.ClassId)).then(function (response) {
+        return _this2.schoolList = response.data;
+      });
+    },
+    process: function process() {
+      var _this3 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/SchoolRecord/GetschoolById/".concat(this.postBody.SchoolId)).then(function (response) {
+        return _this3.postBody.SchoolCode = response.data.schoolType;
+      });
+    },
     setValueParentID: function setValueParentID(result) {
       this.postBody.Parentid = result.value;
     },
@@ -13734,8 +14413,6 @@ __webpack_require__.r(__webpack_exports__);
       this.postBody.Guardianid = result.value;
     },
     checkForm: function checkForm(e) {
-      alert(this.postBody.Reg_Number);
-
       if (this.postBody.Reg_Number) {
         e.preventDefault();
         this.canProcess = false;
@@ -13746,66 +14423,32 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     postData: function postData() {
-      var _this2 = this;
+      var _this4 = this;
 
       if (this.submitorUpdate == 'Submit') {
         axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/api/StudentRecord/CreateStudent", this.postBody).then(function (response) {
-          _this2.responseMessage = response.data.responseDescription;
-          _this2.canProcess = true;
+          _this4.responseMessage = response.data.responseDescription;
+          _this4.canProcess = true;
 
           if (response.data.responseCode == '200') {
-            _this2.postBody = {
-              Reg_Number: '',
-              Surname: '',
-              FirstName: '',
-              MiddleName: '',
-              Sex: '',
-              SchoolCode: '',
-              CommencementDate: '',
-              Class: '',
-              PhoneNumber: '',
-              Email: '',
-              Status: '',
-              ExitDate: '',
-              ExitReason: '',
-              Age: '',
-              ClassCategory: '',
-              ParentalStatus: ''
-            };
+            alert('Successfully Saved');
+            _this4.postBody.Reg_Number = '', _this4.postBody.Surname = '', _this4.postBody.FirstName = '', _this4.postBody.MiddleName = '', _this4.postBody.Sex = '', _this4.postBody.SchoolCode = '', _this4.postBody.CommencementDate = '', _this4.postBody.ClassId = '', _this4.postBody.SchoolId = '', _this4.postBody.PhoneNumber = '', _this4.postBody.Email = '', _this4.postBody.Status = '', _this4.postBody.ExitDate = '', _this4.postBody.ExitReason = '', _this4.postBody.Age = '', _this4.postBody.ClassCategory = '', _this4.postBody.ParentalStatus = '';
           }
         })["catch"](function (e) {
-          _this2.errors.push(e);
+          _this4.errors.push(e);
         });
       }
 
       if (this.submitorUpdate == 'update') {
-        alert('i am here 444');
         axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/api/StudentRecord/Update", this.postBody).then(function (response) {
-          _this2.responseMessage = response.data.responseDescription;
+          _this4.responseMessage = response.data.responseDescription;
 
           if (response.data.responseCode == '200') {
-            _this2.submitorUpdate = 'Submit';
-            _this2.postBody = {
-              Reg_Number: '',
-              Surname: '',
-              FirstName: '',
-              MiddleName: '',
-              Sex: '',
-              SchoolCode: '',
-              CommencementDate: '',
-              Class: '',
-              PhoneNumber: '',
-              Email: '',
-              Status: '',
-              ExitDate: '',
-              ExitReason: '',
-              Age: '',
-              ClassCategory: '',
-              ParentalStatus: ''
-            };
+            _this4.submitorUpdate = 'Submit';
+            _this4.postBody.Reg_Number = '', _this4.postBody.Surname = '', _this4.postBody.FirstName = '', _this4.postBody.MiddleName = '', _this4.postBody.Sex = '', _this4.postBody.SchoolCode = '', _this4.postBody.CommencementDate = '', _this4.postBody.ClassId = '', _this4.postBody.SchoolId = '', _this4.postBody.PhoneNumber = '', _this4.postBody.Email = '', _this4.postBody.Status = '', _this4.postBody.ExitDate = '', _this4.postBody.ExitReason = '', _this4.postBody.Age = '', _this4.postBody.ClassCategory = '', _this4.postBody.ParentalStatus = '';
           }
         })["catch"](function (e) {
-          _this2.errors.push(e);
+          _this4.errors.push(e);
         });
       }
     }
@@ -14754,6 +15397,25 @@ exports.push([module.i, "\n.pagination{display:inline-block;padding-left:0;margi
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/PaymentProposal/PrintPaymentProposal.vue?vue&type=style&index=0&id=784415fe&lang=css&":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/PaymentProposal/PrintPaymentProposal.vue?vue&type=style&index=0&id=784415fe&lang=css& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.pagination{display:inline-block;padding-left:0;margin:20px 0;border-radius:4px}.pagination>li{display:inline}.pagination>li>a,.pagination>li>span{position:relative;float:left;padding:6px 12px;margin-left:-1px;line-height:1.42857143;color:#337ab7;text-decoration:none;background-color:#fff;border:1px solid #ddd}.pagination>li>a:focus,.pagination>li>a:hover,.pagination>li>span:focus,.pagination>li>span:hover{z-index:2;color:#23527c;background-color:#eee;border-color:#ddd}.pagination>li:first-child>a,.pagination>li:first-child>span{margin-left:0;border-top-left-radius:4px;border-bottom-left-radius:4px}.pagination>li:last-child>a,.pagination>li:last-child>span{border-top-right-radius:4px;border-bottom-right-radius:4px}.pagination>.active>a,.pagination>.active>a:focus,.pagination>.active>a:hover,.pagination>.active>span,.pagination>.active>span:focus,.pagination>.active>span:hover{z-index:3;color:#fff;cursor:default;background-color:#337ab7;border-color:#337ab7}.pagination>.disabled>a,.pagination>.disabled>a:focus,.pagination>.disabled>a:hover,.pagination>.disabled>span,.pagination>.disabled>span:focus,.pagination>.disabled>span:hover{color:#777;cursor:not-allowed;background-color:#fff;border-color:#ddd}.pagination-lg>li>a,.pagination-lg>li>span{padding:10px 16px;font-size:18px;line-height:1.3333333}.pagination-lg>li:first-child>a,.pagination-lg>li:first-child>span{border-top-left-radius:6px;border-bottom-left-radius:6px}.pagination-lg>li:last-child>a,.pagination-lg>li:last-child>span{border-top-right-radius:6px;border-bottom-right-radius:6px}.pagination-sm>li>a,.pagination-sm>li>span{padding:5px 10px;font-size:12px;line-height:1.5}.pagination-sm>li:first-child>a,.pagination-sm>li:first-child>span{border-top-left-radius:3px;border-bottom-left-radius:3px}.pagination-sm>li:last-child>a,.pagination-sm>li:last-child>span{border-top-right-radius:3px;border-bottom-right-radius:3px}.pager{padding-left:0;margin:20px 0;text-align:center;list-style:none}.pager li{display:inline}.pager li>a,.pager li>span{display:inline-block;padding:5px 14px;background-color:#fff;border:1px solid #ddd;border-radius:15px}.pager li>a:focus,.pager li>a:hover{text-decoration:none;background-color:#eee}.pager .next>a,.pager .next>span{float:right}.pager .previous>a,.pager .previous>span{float:left}.pager .disabled>a,.pager .disabled>a:focus,.pager .disabled>a:hover,.pager .disabled>span{color:#777;cursor:not-allowed;background-color:#fff}\r\n\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/Person/ListPersonComponent.vue?vue&type=style&index=0&id=83fb5928&lang=css&":
 /*!*******************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/Person/ListPersonComponent.vue?vue&type=style&index=0&id=83fb5928&lang=css& ***!
@@ -14767,6 +15429,44 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 // module
 exports.push([module.i, "\n.pagination{display:inline-block;padding-left:0;margin:20px 0;border-radius:4px}.pagination>li{display:inline}.pagination>li>a,.pagination>li>span{position:relative;float:left;padding:6px 12px;margin-left:-1px;line-height:1.42857143;color:#337ab7;text-decoration:none;background-color:#fff;border:1px solid #ddd}.pagination>li>a:focus,.pagination>li>a:hover,.pagination>li>span:focus,.pagination>li>span:hover{z-index:2;color:#23527c;background-color:#eee;border-color:#ddd}.pagination>li:first-child>a,.pagination>li:first-child>span{margin-left:0;border-top-left-radius:4px;border-bottom-left-radius:4px}.pagination>li:last-child>a,.pagination>li:last-child>span{border-top-right-radius:4px;border-bottom-right-radius:4px}.pagination>.active>a,.pagination>.active>a:focus,.pagination>.active>a:hover,.pagination>.active>span,.pagination>.active>span:focus,.pagination>.active>span:hover{z-index:3;color:#fff;cursor:default;background-color:#337ab7;border-color:#337ab7}.pagination>.disabled>a,.pagination>.disabled>a:focus,.pagination>.disabled>a:hover,.pagination>.disabled>span,.pagination>.disabled>span:focus,.pagination>.disabled>span:hover{color:#777;cursor:not-allowed;background-color:#fff;border-color:#ddd}.pagination-lg>li>a,.pagination-lg>li>span{padding:10px 16px;font-size:18px;line-height:1.3333333}.pagination-lg>li:first-child>a,.pagination-lg>li:first-child>span{border-top-left-radius:6px;border-bottom-left-radius:6px}.pagination-lg>li:last-child>a,.pagination-lg>li:last-child>span{border-top-right-radius:6px;border-bottom-right-radius:6px}.pagination-sm>li>a,.pagination-sm>li>span{padding:5px 10px;font-size:12px;line-height:1.5}.pagination-sm>li:first-child>a,.pagination-sm>li:first-child>span{border-top-left-radius:3px;border-bottom-left-radius:3px}.pagination-sm>li:last-child>a,.pagination-sm>li:last-child>span{border-top-right-radius:3px;border-bottom-right-radius:3px}.pager{padding-left:0;margin:20px 0;text-align:center;list-style:none}.pager li{display:inline}.pager li>a,.pager li>span{display:inline-block;padding:5px 14px;background-color:#fff;border:1px solid #ddd;border-radius:15px}.pager li>a:focus,.pager li>a:hover{text-decoration:none;background-color:#eee}.pager .next>a,.pager .next>span{float:right}.pager .previous>a,.pager .previous>span{float:left}.pager .disabled>a,.pager .disabled>a:focus,.pager .disabled>a:hover,.pager .disabled>span{color:#777;cursor:not-allowed;background-color:#fff}\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/StudentClaim/ClaimPaymentReport.vue?vue&type=style&index=0&id=82672980&lang=css&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/StudentClaim/ClaimPaymentReport.vue?vue&type=style&index=0&id=82672980&lang=css& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.pagination{display:inline-block;padding-left:0;margin:20px 0;border-radius:4px}.pagination>li{display:inline}.pagination>li>a,.pagination>li>span{position:relative;float:left;padding:6px 12px;margin-left:-1px;line-height:1.42857143;color:#337ab7;text-decoration:none;background-color:#fff;border:1px solid #ddd}.pagination>li>a:focus,.pagination>li>a:hover,.pagination>li>span:focus,.pagination>li>span:hover{z-index:2;color:#23527c;background-color:#eee;border-color:#ddd}.pagination>li:first-child>a,.pagination>li:first-child>span{margin-left:0;border-top-left-radius:4px;border-bottom-left-radius:4px}.pagination>li:last-child>a,.pagination>li:last-child>span{border-top-right-radius:4px;border-bottom-right-radius:4px}.pagination>.active>a,.pagination>.active>a:focus,.pagination>.active>a:hover,.pagination>.active>span,.pagination>.active>span:focus,.pagination>.active>span:hover{z-index:3;color:#fff;cursor:default;background-color:#337ab7;border-color:#337ab7}.pagination>.disabled>a,.pagination>.disabled>a:focus,.pagination>.disabled>a:hover,.pagination>.disabled>span,.pagination>.disabled>span:focus,.pagination>.disabled>span:hover{color:#777;cursor:not-allowed;background-color:#fff;border-color:#ddd}.pagination-lg>li>a,.pagination-lg>li>span{padding:10px 16px;font-size:18px;line-height:1.3333333}.pagination-lg>li:first-child>a,.pagination-lg>li:first-child>span{border-top-left-radius:6px;border-bottom-left-radius:6px}.pagination-lg>li:last-child>a,.pagination-lg>li:last-child>span{border-top-right-radius:6px;border-bottom-right-radius:6px}.pagination-sm>li>a,.pagination-sm>li>span{padding:5px 10px;font-size:12px;line-height:1.5}.pagination-sm>li:first-child>a,.pagination-sm>li:first-child>span{border-top-left-radius:3px;border-bottom-left-radius:3px}.pagination-sm>li:last-child>a,.pagination-sm>li:last-child>span{border-top-right-radius:3px;border-bottom-right-radius:3px}.pager{padding-left:0;margin:20px 0;text-align:center;list-style:none}.pager li{display:inline}.pager li>a,.pager li>span{display:inline-block;padding:5px 14px;background-color:#fff;border:1px solid #ddd;border-radius:15px}.pager li>a:focus,.pager li>a:hover{text-decoration:none;background-color:#eee}.pager .next>a,.pager .next>span{float:right}.pager .previous>a,.pager .previous>span{float:left}.pager .disabled>a,.pager .disabled>a:focus,.pager .disabled>a:hover,.pager .disabled>span{color:#777;cursor:not-allowed;background-color:#fff}\r\n\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/StudentClaim/ClaimReimbursment.vue?vue&type=style&index=0&id=106ae653&lang=css&":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/StudentClaim/ClaimReimbursment.vue?vue&type=style&index=0&id=106ae653&lang=css& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.pagination{display:inline-block;padding-left:0;margin:20px 0;border-radius:4px}.pagination>li{display:inline}.pagination>li>a,.pagination>li>span{position:relative;float:left;padding:6px 12px;margin-left:-1px;line-height:1.42857143;color:#337ab7;text-decoration:none;background-color:#fff;border:1px solid #ddd}.pagination>li>a:focus,.pagination>li>a:hover,.pagination>li>span:focus,.pagination>li>span:hover{z-index:2;color:#23527c;background-color:#eee;border-color:#ddd}.pagination>li:first-child>a,.pagination>li:first-child>span{margin-left:0;border-top-left-radius:4px;border-bottom-left-radius:4px}.pagination>li:last-child>a,.pagination>li:last-child>span{border-top-right-radius:4px;border-bottom-right-radius:4px}.pagination>.active>a,.pagination>.active>a:focus,.pagination>.active>a:hover,.pagination>.active>span,.pagination>.active>span:focus,.pagination>.active>span:hover{z-index:3;color:#fff;cursor:default;background-color:#337ab7;border-color:#337ab7}.pagination>.disabled>a,.pagination>.disabled>a:focus,.pagination>.disabled>a:hover,.pagination>.disabled>span,.pagination>.disabled>span:focus,.pagination>.disabled>span:hover{color:#777;cursor:not-allowed;background-color:#fff;border-color:#ddd}.pagination-lg>li>a,.pagination-lg>li>span{padding:10px 16px;font-size:18px;line-height:1.3333333}.pagination-lg>li:first-child>a,.pagination-lg>li:first-child>span{border-top-left-radius:6px;border-bottom-left-radius:6px}.pagination-lg>li:last-child>a,.pagination-lg>li:last-child>span{border-top-right-radius:6px;border-bottom-right-radius:6px}.pagination-sm>li>a,.pagination-sm>li>span{padding:5px 10px;font-size:12px;line-height:1.5}.pagination-sm>li:first-child>a,.pagination-sm>li:first-child>span{border-top-left-radius:3px;border-bottom-left-radius:3px}.pagination-sm>li:last-child>a,.pagination-sm>li:last-child>span{border-top-right-radius:3px;border-bottom-right-radius:3px}.pager{padding-left:0;margin:20px 0;text-align:center;list-style:none}.pager li{display:inline}.pager li>a,.pager li>span{display:inline-block;padding:5px 14px;background-color:#fff;border:1px solid #ddd;border-radius:15px}.pager li>a:focus,.pager li>a:hover{text-decoration:none;background-color:#eee}.pager .next>a,.pager .next>span{float:right}.pager .previous>a,.pager .previous>span{float:left}.pager .disabled>a,.pager .disabled>a:focus,.pager .disabled>a:hover,.pager .disabled>span{color:#777;cursor:not-allowed;background-color:#fff}\r\n\r\n", ""]);
 
 // exports
 
@@ -33016,6 +33716,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/PaymentProposal/PrintPaymentProposal.vue?vue&type=style&index=0&id=784415fe&lang=css&":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/PaymentProposal/PrintPaymentProposal.vue?vue&type=style&index=0&id=784415fe&lang=css& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--5-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--5-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./PrintPaymentProposal.vue?vue&type=style&index=0&id=784415fe&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/PaymentProposal/PrintPaymentProposal.vue?vue&type=style&index=0&id=784415fe&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/Person/ListPersonComponent.vue?vue&type=style&index=0&id=83fb5928&lang=css&":
 /*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/Person/ListPersonComponent.vue?vue&type=style&index=0&id=83fb5928&lang=css& ***!
@@ -33025,6 +33755,66 @@ if(false) {}
 
 
 var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--5-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--5-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./ListPersonComponent.vue?vue&type=style&index=0&id=83fb5928&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/Person/ListPersonComponent.vue?vue&type=style&index=0&id=83fb5928&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/StudentClaim/ClaimPaymentReport.vue?vue&type=style&index=0&id=82672980&lang=css&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/StudentClaim/ClaimPaymentReport.vue?vue&type=style&index=0&id=82672980&lang=css& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--5-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--5-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./ClaimPaymentReport.vue?vue&type=style&index=0&id=82672980&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/StudentClaim/ClaimPaymentReport.vue?vue&type=style&index=0&id=82672980&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/StudentClaim/ClaimReimbursment.vue?vue&type=style&index=0&id=106ae653&lang=css&":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/StudentClaim/ClaimReimbursment.vue?vue&type=style&index=0&id=106ae653&lang=css& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--5-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--5-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./ClaimReimbursment.vue?vue&type=style&index=0&id=106ae653&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/StudentClaim/ClaimReimbursment.vue?vue&type=style&index=0&id=106ae653&lang=css&");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -49637,6 +50427,88 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/PaymentProposal/PrintPaymentProposal.vue?vue&type=template&id=784415fe&":
+/*!**************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/PaymentProposal/PrintPaymentProposal.vue?vue&type=template&id=784415fe& ***!
+  \**************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "card-body" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-12 col-xl-12" }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { staticClass: "form-label" }, [_vm._v("School Name")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c(
+                "div",
+                { staticClass: "col-xl-4" },
+                [
+                  _c("vuejsAutocomplete", {
+                    attrs: {
+                      source: "/api/SchoolRecord/GetschoolByName/",
+                      "input-class": "form-control",
+                    },
+                    on: { selected: _vm.setValueStudent },
+                    model: {
+                      value: _vm.pp,
+                      callback: function ($$v) {
+                        _vm.pp = $$v
+                      },
+                      expression: "pp",
+                    },
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-12 col-xl-2" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-submit btn-primary",
+                    attrs: { type: "submit" },
+                    on: { click: _vm.printProposal },
+                  },
+                  [_vm._v("Export to Pdf")]
+                ),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-12 col-xl-2" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-submit btn-success",
+                    attrs: { type: "submit" },
+                    on: { click: _vm.printProposalAsExcel },
+                  },
+                  [_vm._v("Export to Excel")]
+                ),
+              ]),
+            ]),
+          ]),
+        ]),
+      ]),
+    ]),
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/Person/CreateNewPersonComponent.vue?vue&type=template&id=6ea7819c&":
 /*!*********************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/Person/CreateNewPersonComponent.vue?vue&type=template&id=6ea7819c& ***!
@@ -50509,6 +51381,386 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/SchoolFee/CreateUpdateSchoolFee.vue?vue&type=template&id=3e138024&":
+/*!*********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/SchoolFee/CreateUpdateSchoolFee.vue?vue&type=template&id=3e138024& ***!
+  \*********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _vm.errors
+      ? _c("div", { staticClass: "has-error" }, [
+          _vm._v(" " + _vm._s([_vm.errors])),
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.responseMessage
+      ? _c("div", { staticClass: "has-error" }, [
+          _vm._v(" " + _vm._s(_vm.responseMessage)),
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _c("form", { attrs: { method: "post" }, on: { submit: _vm.checkForm } }, [
+      _c("div", { staticClass: "card-body" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-12 col-xl-4" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { staticClass: "form-label" }, [
+                _vm._v("School Session"),
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.postBody.Period,
+                    expression: "postBody.Period",
+                  },
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  name: "schoolCode",
+                  required: "",
+                  readonly: _vm.submitorUpdate == "Update",
+                },
+                domProps: { value: _vm.postBody.Period },
+                on: {
+                  input: function ($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.postBody, "Period", $event.target.value)
+                  },
+                },
+              }),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-12 col-xl-4" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { staticClass: "form-label" }, [
+                _vm._v("School Fee"),
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.postBody.Amount,
+                    expression: "postBody.Amount",
+                  },
+                ],
+                staticClass: "form-control",
+                attrs: { name: "amount" },
+                domProps: { value: _vm.postBody.Amount },
+                on: {
+                  input: function ($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.postBody, "Amount", $event.target.value)
+                  },
+                },
+              }),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group col-md-4" }, [
+            _c("label", { staticClass: "form-label" }, [
+              _vm._v("Class Category"),
+            ]),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.postBody.ClassCategory,
+                    expression: "postBody.ClassCategory",
+                  },
+                ],
+                staticClass: "form-control",
+                attrs: { name: "classCategory", required: "" },
+                on: {
+                  change: function ($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function (o) {
+                        return o.selected
+                      })
+                      .map(function (o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.postBody,
+                      "ClassCategory",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  },
+                },
+              },
+              _vm._l(_vm.ClasscatList, function (ge) {
+                return _c(
+                  "option",
+                  { key: ge.value, domProps: { value: ge.value } },
+                  [_vm._v(" " + _vm._s(ge.text) + " ")]
+                )
+              }),
+              0
+            ),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-4" }, [
+            _c("label", [_vm._v("Class")]),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.postBody.ClassId,
+                    expression: "postBody.ClassId",
+                  },
+                ],
+                staticClass: "form-control",
+                attrs: { name: "classId", required: "" },
+                on: {
+                  change: function ($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function (o) {
+                        return o.selected
+                      })
+                      .map(function (o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.postBody,
+                      "ClassId",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  },
+                },
+              },
+              _vm._l(_vm.classList, function (cls) {
+                return _c(
+                  "option",
+                  { key: cls.id, domProps: { value: cls.id } },
+                  [_vm._v(" " + _vm._s(cls.className) + " ")]
+                )
+              }),
+              0
+            ),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-sm-4" }, [
+            _c("label", [_vm._v("School")]),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.postBody.SchoolId,
+                    expression: "postBody.SchoolId",
+                  },
+                ],
+                staticClass: "form-control",
+                attrs: { name: "schoolId", required: "" },
+                on: {
+                  change: function ($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function (o) {
+                        return o.selected
+                      })
+                      .map(function (o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.postBody,
+                      "SchoolId",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  },
+                },
+              },
+              _vm._l(_vm.schoolList, function (sch) {
+                return _c(
+                  "option",
+                  { key: sch.id, domProps: { value: sch.id } },
+                  [_vm._v(" " + _vm._s(sch.schoolname) + " ")]
+                )
+              }),
+              0
+            ),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-12 " }, [
+            _vm.canProcess
+              ? _c(
+                  "div",
+                  {
+                    staticClass: "btn-group mr-2 sw-btn-group-extra",
+                    attrs: { role: "group" },
+                  },
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-submit btn-primary",
+                        attrs: { type: "submit" },
+                        on: { click: _vm.checkForm },
+                      },
+                      [_vm._v(_vm._s(_vm.submitorUpdate))]
+                    ),
+                  ]
+                )
+              : _vm._e(),
+          ]),
+        ]),
+      ]),
+    ]),
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/SchoolFee/ViewSchoolFee.vue?vue&type=template&id=3c19a564&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/SchoolFee/ViewSchoolFee.vue?vue&type=template&id=3c19a564& ***!
+  \*************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "card-body" }, [
+      _c(
+        "table",
+        {
+          staticClass: "table table-striped",
+          staticStyle: { width: "100%" },
+          attrs: { id: "datatables-buttons" },
+        },
+        [
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.schoolFeeList, function (sch) {
+              return _c("tr", [
+                _c("td", [_vm._v(_vm._s(sch.period))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(sch.schoolName))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(sch.className))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(sch.classCategory))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(sch.amount))]),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-submit btn-primary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function ($event) {
+                          return _vm.processRetrieve(sch)
+                        },
+                      },
+                    },
+                    [_vm._v("Edit")]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-submit btn-primary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function ($event) {
+                          return _vm.processDelete(sch.id)
+                        },
+                      },
+                    },
+                    [_vm._v("Delete")]
+                  ),
+                ]),
+              ])
+            }),
+            0
+          ),
+        ]
+      ),
+    ]),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("td", [_vm._v("School Session")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("School Name")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("Class")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("Class Category")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("Amount")]),
+        _vm._v(" "),
+        _c("td"),
+      ]),
+    ])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/SchoolRecord/CreateUpdateSchoolRecord.vue?vue&type=template&id=d7255ef0&":
 /*!***************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/SchoolRecord/CreateUpdateSchoolRecord.vue?vue&type=template&id=d7255ef0& ***!
@@ -50887,6 +52139,363 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/StudentClaim/ClaimPaymentReport.vue?vue&type=template&id=82672980&":
+/*!*********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/StudentClaim/ClaimPaymentReport.vue?vue&type=template&id=82672980& ***!
+  \*********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "card-body" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-12 col-xl-12" }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-sm-4" }, [
+                _c("label", { staticClass: "form-label" }, [
+                  _vm._v("School Name"),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.postBody.schoolname,
+                        expression: "postBody.schoolname",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    attrs: { name: "schoolname", required: "" },
+                    on: {
+                      change: function ($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function (o) {
+                            return o.selected
+                          })
+                          .map(function (o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.postBody,
+                          "schoolname",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      },
+                    },
+                  },
+                  _vm._l(_vm.schoolList, function (sch) {
+                    return _c(
+                      "option",
+                      {
+                        key: sch.schoolname,
+                        domProps: { value: sch.schoolname },
+                      },
+                      [_vm._v(" " + _vm._s(sch.schoolname) + " ")]
+                    )
+                  }),
+                  0
+                ),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-12 col-xl-2" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-submit btn-primary",
+                    attrs: { type: "submit" },
+                    on: {
+                      click: function ($event) {
+                        return _vm.printProposal(_vm.postBody.schoolname)
+                      },
+                    },
+                  },
+                  [_vm._v("Export to Pdf")]
+                ),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-12 col-xl-2" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-submit btn-success",
+                    attrs: { type: "submit" },
+                    on: {
+                      click: function ($event) {
+                        return _vm.printProposalAsExcel(_vm.postBody.schoolname)
+                      },
+                    },
+                  },
+                  [_vm._v("Export to Excel")]
+                ),
+              ]),
+            ]),
+          ]),
+        ]),
+      ]),
+    ]),
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/StudentClaim/ClaimReimbursment.vue?vue&type=template&id=106ae653&":
+/*!********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/StudentClaim/ClaimReimbursment.vue?vue&type=template&id=106ae653& ***!
+  \********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "card-body" }, [
+      _vm.responseMessage
+        ? _c(
+            "div",
+            {
+              staticClass: "alert alert-primary alert-dismissible",
+              attrs: { role: "alert" },
+            },
+            [
+              _c("div", { staticClass: "alert-message" }, [
+                _vm._v(" " + _vm._s(_vm.responseMessage) + " "),
+              ]),
+            ]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-12 col-xl-12" }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-sm-4" }, [
+                _c("label", { staticClass: "form-label" }, [
+                  _vm._v("School Name"),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.postBody.schoolname,
+                        expression: "postBody.schoolname",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    attrs: { name: "schoolname", required: "" },
+                    on: {
+                      change: function ($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function (o) {
+                            return o.selected
+                          })
+                          .map(function (o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.postBody,
+                          "schoolname",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      },
+                    },
+                  },
+                  _vm._l(_vm.schoolList, function (sch) {
+                    return _c(
+                      "option",
+                      {
+                        key: sch.schoolname,
+                        domProps: { value: sch.schoolname },
+                      },
+                      [_vm._v(" " + _vm._s(sch.schoolname) + " ")]
+                    )
+                  }),
+                  0
+                ),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-4" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { staticClass: "form-label" }, [
+                    _vm._v("Voucher Number"),
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.postBody.VoucherNumber,
+                        expression: "postBody.VoucherNumber",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    attrs: { name: "VoucherNumber" },
+                    domProps: { value: _vm.postBody.VoucherNumber },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.postBody,
+                          "VoucherNumber",
+                          $event.target.value
+                        )
+                      },
+                    },
+                  }),
+                ]),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-12 col-xl-2" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-submit btn-success",
+                    attrs: { type: "submit" },
+                    on: {
+                      click: function ($event) {
+                        return _vm.UpdateClaim(
+                          _vm.postBody.schoolname,
+                          _vm.postBody.VoucherNumber
+                        )
+                      },
+                    },
+                  },
+                  [_vm._v("Update")]
+                ),
+              ]),
+            ]),
+          ]),
+        ]),
+      ]),
+      _vm._v(" "),
+      _c(
+        "table",
+        {
+          staticClass: "table table-striped",
+          staticStyle: { width: "100%" },
+          attrs: { id: "datatables-buttons" },
+        },
+        [
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.studentList, function (student) {
+              return _c("tr", [
+                _c("td", [_vm._v(_vm._s(student.reg_Number))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(student.surname))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(student.parentName))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(student.sex))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(student.age))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(student.schoolname))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(student.schoolType))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(student.className))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(student.claimAmount))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(student.feeAmount))]),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-submit btn-primary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function ($event) {
+                          return _vm.processDelete(_vm.sch.id)
+                        },
+                      },
+                    },
+                    [_vm._v("Delete")]
+                  ),
+                ]),
+              ])
+            }),
+            0
+          ),
+        ]
+      ),
+    ]),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Registration Number")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Full Name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Parent Name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Sex")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Age")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("School Name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("School Type")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Class")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Amount")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("School Fee")]),
+      ]),
+    ])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/StudentClaim/InitiateStudentClaim.vue?vue&type=template&id=d1c85288&":
 /*!***********************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/StudentClaim/InitiateStudentClaim.vue?vue&type=template&id=d1c85288& ***!
@@ -51086,42 +52695,6 @@ var render = function () {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-md-4" }, [
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", { staticClass: "form-label" }, [
-                        _vm._v("Voucher Number"),
-                      ]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.postBody.VoucherNumber,
-                            expression: "postBody.VoucherNumber",
-                          },
-                        ],
-                        staticClass: "form-control",
-                        attrs: { name: "VoucherNumber" },
-                        domProps: { value: _vm.postBody.VoucherNumber },
-                        on: {
-                          input: function ($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.postBody,
-                              "VoucherNumber",
-                              $event.target.value
-                            )
-                          },
-                        },
-                      }),
-                    ]),
-                  ]),
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "row" }, [
                   _vm.canProcess
                     ? _c(
                         "div",
@@ -51192,15 +52765,17 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("div", [
     _vm.errors
-      ? _c("div", { staticClass: "has-error" }, [
+      ? _c("div", { staticClass: "has-error", staticStyle: { color: "red" } }, [
           _vm._v(" " + _vm._s([_vm.errors])),
         ])
       : _vm._e(),
     _vm._v(" "),
     _vm.responseMessage
-      ? _c("div", { staticClass: "has-error" }, [
-          _vm._v(" " + _vm._s(_vm.responseMessage)),
-        ])
+      ? _c(
+          "div",
+          { staticClass: "has-error", staticStyle: { color: "green" } },
+          [_vm._v(" " + _vm._s(_vm.responseMessage))]
+        )
       : _vm._e(),
     _vm._v(" "),
     _c("form", { attrs: { method: "post" }, on: { submit: _vm.checkForm } }, [
@@ -51327,32 +52902,6 @@ var render = function () {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-row" }, [
-              _c("div", { staticClass: "col-sm-4" }, [
-                _c("label", [_vm._v("Age")]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.postBody.Age,
-                      expression: "postBody.Age",
-                    },
-                  ],
-                  staticClass: "form-control",
-                  attrs: { name: "Age", required: "" },
-                  domProps: { value: _vm.postBody.Age },
-                  on: {
-                    input: function ($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.postBody, "Age", $event.target.value)
-                    },
-                  },
-                }),
-              ]),
-              _vm._v(" "),
               _c("div", { staticClass: "form-group col-md-4" }, [
                 _c("label", { staticClass: "form-label" }, [
                   _vm._v("Parent Name"),
@@ -51400,6 +52949,36 @@ var render = function () {
                   }),
                   0
                 ),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group col-md-4" }, [
+                _c("label", [_vm._v("Parental Status")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.postBody.ParentalStatus,
+                      expression: "postBody.ParentalStatus",
+                    },
+                  ],
+                  staticClass: "form-control",
+                  attrs: { name: "parentalStatus", required: "" },
+                  domProps: { value: _vm.postBody.ParentalStatus },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.postBody,
+                        "ParentalStatus",
+                        $event.target.value
+                      )
+                    },
+                  },
+                }),
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "form-group col-md-4" }, [
@@ -51453,6 +53032,32 @@ var render = function () {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-row" }, [
+              _c("div", { staticClass: "col-sm-4" }, [
+                _c("label", [_vm._v("Age")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.postBody.Age,
+                      expression: "postBody.Age",
+                    },
+                  ],
+                  staticClass: "form-control",
+                  attrs: { name: "Age", required: "" },
+                  domProps: { value: _vm.postBody.Age },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.postBody, "Age", $event.target.value)
+                    },
+                  },
+                }),
+              ]),
+              _vm._v(" "),
               _c("div", { staticClass: "form-group col-md-4" }, [
                 _c("label", [_vm._v("Sex")]),
                 _vm._v(" "),
@@ -51525,7 +53130,9 @@ var render = function () {
                   },
                 }),
               ]),
-              _vm._v(" "),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-row" }, [
               _c("div", { staticClass: "col-md-4" }, [
                 _c("label", [_vm._v("PhoneNumber")]),
                 _vm._v(" "),
@@ -51551,9 +53158,7 @@ var render = function () {
                   },
                 }),
               ]),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-row" }, [
+              _vm._v(" "),
               _c("div", { staticClass: "form-group col-md-4" }, [
                 _c("label", [_vm._v("Class")]),
                 _vm._v(" "),
@@ -51571,23 +53176,26 @@ var render = function () {
                     staticClass: "form-control",
                     attrs: { name: "classId", required: "" },
                     on: {
-                      change: function ($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function (o) {
-                            return o.selected
-                          })
-                          .map(function (o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.postBody,
-                          "ClassId",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      },
+                      change: [
+                        function ($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function (o) {
+                              return o.selected
+                            })
+                            .map(function (o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.postBody,
+                            "ClassId",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        },
+                        _vm.process2,
+                      ],
                     },
                   },
                   _vm._l(_vm.classList, function (cls) {
@@ -51618,23 +53226,26 @@ var render = function () {
                     staticClass: "form-control",
                     attrs: { name: "schoolId", required: "" },
                     on: {
-                      change: function ($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function (o) {
-                            return o.selected
-                          })
-                          .map(function (o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.postBody,
-                          "SchoolId",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      },
+                      change: [
+                        function ($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function (o) {
+                              return o.selected
+                            })
+                            .map(function (o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.postBody,
+                            "SchoolId",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        },
+                        _vm.process,
+                      ],
                     },
                   },
                   _vm._l(_vm.schoolList, function (sch) {
@@ -51646,8 +53257,32 @@ var render = function () {
                   }),
                   0
                 ),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.postBody.SchoolCode,
+                      expression: "postBody.SchoolCode",
+                    },
+                  ],
+                  staticClass: "form-control",
+                  attrs: { name: "SchoolCode", hidden: "" },
+                  domProps: { value: _vm.postBody.SchoolCode },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.postBody, "SchoolCode", $event.target.value)
+                    },
+                  },
+                }),
               ]),
-              _vm._v(" "),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-row" }, [
               _c("div", { staticClass: "form-group col-md-4" }, [
                 _c("label", [_vm._v("Class Category")]),
                 _vm._v(" "),
@@ -51677,9 +53312,7 @@ var render = function () {
                   },
                 }),
               ]),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-row" }, [
+              _vm._v(" "),
               _c("div", { staticClass: "form-group col-md-4" }, [
                 _c("label", [_vm._v("Status")]),
                 _vm._v(" "),
@@ -51749,53 +53382,81 @@ var render = function () {
                 ],
                 1
               ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "col-md-4" },
-                [
-                  _c("label", [_vm._v("Exit Left")]),
-                  _vm._v(" "),
-                  _c("vuejsDatepicker", {
-                    attrs: { "input-class": "form-control", name: "cxitDate" },
-                    model: {
-                      value: _vm.postBody.ExitDate,
-                      callback: function ($$v) {
-                        _vm.$set(_vm.postBody, "ExitDate", $$v)
-                      },
-                      expression: "postBody.ExitDate",
-                    },
-                  }),
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-4" }, [
-                _c("label", [_vm._v("Exit Reason")]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.postBody.ExitReason,
-                      expression: "postBody.ExitReason",
-                    },
-                  ],
-                  staticClass: "form-control",
-                  attrs: { name: "exitReason" },
-                  domProps: { value: _vm.postBody.ExitReason },
-                  on: {
-                    input: function ($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.postBody, "ExitReason", $event.target.value)
-                    },
-                  },
-                }),
-              ]),
             ]),
+            _vm._v(" "),
+            _vm.canupdate
+              ? _c("div", { staticClass: "form-row" }, [
+                  _c(
+                    "div",
+                    { staticClass: "col-md-4" },
+                    [
+                      _c("label", [_vm._v("Exit Left")]),
+                      _vm._v(" "),
+                      _c("vuejsDatepicker", {
+                        attrs: {
+                          "input-class": "form-control",
+                          name: "cxitDate",
+                        },
+                        model: {
+                          value: _vm.postBody.ExitDate,
+                          callback: function ($$v) {
+                            _vm.$set(_vm.postBody, "ExitDate", $$v)
+                          },
+                          expression: "postBody.ExitDate",
+                        },
+                      }),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-4" }, [
+                    _c("label", [_vm._v("Exit Reason")]),
+                    _vm._v(" "),
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.postBody.ExitReason,
+                            expression: "postBody.ExitReason",
+                          },
+                        ],
+                        staticClass: "form-control",
+                        attrs: { name: "status" },
+                        on: {
+                          change: function ($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function (o) {
+                                return o.selected
+                              })
+                              .map(function (o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.postBody,
+                              "ExitReason",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          },
+                        },
+                      },
+                      _vm._l(_vm.exitreasonList, function (stu) {
+                        return _c(
+                          "option",
+                          { key: stu.value, domProps: { value: stu.value } },
+                          [_vm._v(" " + _vm._s(stu.text) + " ")]
+                        )
+                      }),
+                      0
+                    ),
+                  ]),
+                ])
+              : _vm._e(),
             _vm._v(" "),
             _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "col-12 " }, [
@@ -52592,6 +54253,7 @@ var render = function () {
                   _c("td", [
                     _vm._v(
                       _vm._s(student.surname) +
+                        "  " +
                         _vm._s(student.firstName) +
                         "  " +
                         _vm._s(student.middleName)
@@ -52707,7 +54369,7 @@ var render = function () {
               { staticClass: "form-group" },
               [
                 _c("label", { staticClass: "form-label" }, [
-                  _vm._v("Service Number"),
+                  _vm._v("Student Number / Name"),
                 ]),
                 _vm._v(" "),
                 _c("vuejsAutocomplete", {
@@ -68921,11 +70583,17 @@ var map = {
 	"./components/ParentRecord/CreateUpdateParent.vue": "./wwwroot/Vue/components/ParentRecord/CreateUpdateParent.vue",
 	"./components/ParentRecord/ViewGuardian.vue": "./wwwroot/Vue/components/ParentRecord/ViewGuardian.vue",
 	"./components/ParentRecord/ViewParent.vue": "./wwwroot/Vue/components/ParentRecord/ViewParent.vue",
+	"./components/PaymentProposal/PrintPaymentProposal.vue": "./wwwroot/Vue/components/PaymentProposal/PrintPaymentProposal.vue",
 	"./components/Person/CreateNewPersonComponent.vue": "./wwwroot/Vue/components/Person/CreateNewPersonComponent.vue",
 	"./components/Person/ListInactivePersonComponent.vue": "./wwwroot/Vue/components/Person/ListInactivePersonComponent.vue",
 	"./components/Person/ListPersonComponent.vue": "./wwwroot/Vue/components/Person/ListPersonComponent.vue",
+	"./components/SchoolFee/CreateUpdateSchoolFee.vue": "./wwwroot/Vue/components/SchoolFee/CreateUpdateSchoolFee.vue",
+	"./components/SchoolFee/ViewSchoolFee.vue": "./wwwroot/Vue/components/SchoolFee/ViewSchoolFee.vue",
 	"./components/SchoolRecord/CreateUpdateSchoolRecord.vue": "./wwwroot/Vue/components/SchoolRecord/CreateUpdateSchoolRecord.vue",
 	"./components/SchoolRecord/ViewSchoolRecord.vue": "./wwwroot/Vue/components/SchoolRecord/ViewSchoolRecord.vue",
+	"./components/StudentClaim/ClaimPaymentReport.vue": "./wwwroot/Vue/components/StudentClaim/ClaimPaymentReport.vue",
+	"./components/StudentClaim/ClaimReimbursment.vue": "./wwwroot/Vue/components/StudentClaim/ClaimReimbursment.vue",
+	"./components/StudentClaim/ClaimStatus.vue": "./wwwroot/Vue/components/StudentClaim/ClaimStatus.vue",
 	"./components/StudentClaim/InitiateStudentClaim.vue": "./wwwroot/Vue/components/StudentClaim/InitiateStudentClaim.vue",
 	"./components/StudentRecord/AddOrUpdateRecord.vue": "./wwwroot/Vue/components/StudentRecord/AddOrUpdateRecord.vue",
 	"./components/StudentRecord/CreateOrUpdateNewStudent.vue": "./wwwroot/Vue/components/StudentRecord/CreateOrUpdateNewStudent.vue",
@@ -73276,6 +74944,93 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./wwwroot/Vue/components/PaymentProposal/PrintPaymentProposal.vue":
+/*!*************************************************************************!*\
+  !*** ./wwwroot/Vue/components/PaymentProposal/PrintPaymentProposal.vue ***!
+  \*************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _PrintPaymentProposal_vue_vue_type_template_id_784415fe___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PrintPaymentProposal.vue?vue&type=template&id=784415fe& */ "./wwwroot/Vue/components/PaymentProposal/PrintPaymentProposal.vue?vue&type=template&id=784415fe&");
+/* harmony import */ var _PrintPaymentProposal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PrintPaymentProposal.vue?vue&type=script&lang=js& */ "./wwwroot/Vue/components/PaymentProposal/PrintPaymentProposal.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _PrintPaymentProposal_vue_vue_type_style_index_0_id_784415fe_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PrintPaymentProposal.vue?vue&type=style&index=0&id=784415fe&lang=css& */ "./wwwroot/Vue/components/PaymentProposal/PrintPaymentProposal.vue?vue&type=style&index=0&id=784415fe&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _PrintPaymentProposal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _PrintPaymentProposal_vue_vue_type_template_id_784415fe___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _PrintPaymentProposal_vue_vue_type_template_id_784415fe___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "wwwroot/Vue/components/PaymentProposal/PrintPaymentProposal.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./wwwroot/Vue/components/PaymentProposal/PrintPaymentProposal.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************!*\
+  !*** ./wwwroot/Vue/components/PaymentProposal/PrintPaymentProposal.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PrintPaymentProposal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./PrintPaymentProposal.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/PaymentProposal/PrintPaymentProposal.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PrintPaymentProposal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./wwwroot/Vue/components/PaymentProposal/PrintPaymentProposal.vue?vue&type=style&index=0&id=784415fe&lang=css&":
+/*!**********************************************************************************************************************!*\
+  !*** ./wwwroot/Vue/components/PaymentProposal/PrintPaymentProposal.vue?vue&type=style&index=0&id=784415fe&lang=css& ***!
+  \**********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_PrintPaymentProposal_vue_vue_type_style_index_0_id_784415fe_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--5-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--5-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./PrintPaymentProposal.vue?vue&type=style&index=0&id=784415fe&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/PaymentProposal/PrintPaymentProposal.vue?vue&type=style&index=0&id=784415fe&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_PrintPaymentProposal_vue_vue_type_style_index_0_id_784415fe_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_PrintPaymentProposal_vue_vue_type_style_index_0_id_784415fe_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_PrintPaymentProposal_vue_vue_type_style_index_0_id_784415fe_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_PrintPaymentProposal_vue_vue_type_style_index_0_id_784415fe_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
+/***/ "./wwwroot/Vue/components/PaymentProposal/PrintPaymentProposal.vue?vue&type=template&id=784415fe&":
+/*!********************************************************************************************************!*\
+  !*** ./wwwroot/Vue/components/PaymentProposal/PrintPaymentProposal.vue?vue&type=template&id=784415fe& ***!
+  \********************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PrintPaymentProposal_vue_vue_type_template_id_784415fe___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./PrintPaymentProposal.vue?vue&type=template&id=784415fe& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/PaymentProposal/PrintPaymentProposal.vue?vue&type=template&id=784415fe&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PrintPaymentProposal_vue_vue_type_template_id_784415fe___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PrintPaymentProposal_vue_vue_type_template_id_784415fe___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./wwwroot/Vue/components/Person/CreateNewPersonComponent.vue":
 /*!********************************************************************!*\
   !*** ./wwwroot/Vue/components/Person/CreateNewPersonComponent.vue ***!
@@ -73501,6 +75256,144 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./wwwroot/Vue/components/SchoolFee/CreateUpdateSchoolFee.vue":
+/*!********************************************************************!*\
+  !*** ./wwwroot/Vue/components/SchoolFee/CreateUpdateSchoolFee.vue ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _CreateUpdateSchoolFee_vue_vue_type_template_id_3e138024___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateUpdateSchoolFee.vue?vue&type=template&id=3e138024& */ "./wwwroot/Vue/components/SchoolFee/CreateUpdateSchoolFee.vue?vue&type=template&id=3e138024&");
+/* harmony import */ var _CreateUpdateSchoolFee_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateUpdateSchoolFee.vue?vue&type=script&lang=js& */ "./wwwroot/Vue/components/SchoolFee/CreateUpdateSchoolFee.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _CreateUpdateSchoolFee_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CreateUpdateSchoolFee_vue_vue_type_template_id_3e138024___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _CreateUpdateSchoolFee_vue_vue_type_template_id_3e138024___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "wwwroot/Vue/components/SchoolFee/CreateUpdateSchoolFee.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./wwwroot/Vue/components/SchoolFee/CreateUpdateSchoolFee.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************!*\
+  !*** ./wwwroot/Vue/components/SchoolFee/CreateUpdateSchoolFee.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateUpdateSchoolFee_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./CreateUpdateSchoolFee.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/SchoolFee/CreateUpdateSchoolFee.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateUpdateSchoolFee_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./wwwroot/Vue/components/SchoolFee/CreateUpdateSchoolFee.vue?vue&type=template&id=3e138024&":
+/*!***************************************************************************************************!*\
+  !*** ./wwwroot/Vue/components/SchoolFee/CreateUpdateSchoolFee.vue?vue&type=template&id=3e138024& ***!
+  \***************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateUpdateSchoolFee_vue_vue_type_template_id_3e138024___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./CreateUpdateSchoolFee.vue?vue&type=template&id=3e138024& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/SchoolFee/CreateUpdateSchoolFee.vue?vue&type=template&id=3e138024&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateUpdateSchoolFee_vue_vue_type_template_id_3e138024___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateUpdateSchoolFee_vue_vue_type_template_id_3e138024___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./wwwroot/Vue/components/SchoolFee/ViewSchoolFee.vue":
+/*!************************************************************!*\
+  !*** ./wwwroot/Vue/components/SchoolFee/ViewSchoolFee.vue ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ViewSchoolFee_vue_vue_type_template_id_3c19a564___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ViewSchoolFee.vue?vue&type=template&id=3c19a564& */ "./wwwroot/Vue/components/SchoolFee/ViewSchoolFee.vue?vue&type=template&id=3c19a564&");
+/* harmony import */ var _ViewSchoolFee_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ViewSchoolFee.vue?vue&type=script&lang=js& */ "./wwwroot/Vue/components/SchoolFee/ViewSchoolFee.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ViewSchoolFee_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ViewSchoolFee_vue_vue_type_template_id_3c19a564___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ViewSchoolFee_vue_vue_type_template_id_3c19a564___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "wwwroot/Vue/components/SchoolFee/ViewSchoolFee.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./wwwroot/Vue/components/SchoolFee/ViewSchoolFee.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************!*\
+  !*** ./wwwroot/Vue/components/SchoolFee/ViewSchoolFee.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewSchoolFee_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ViewSchoolFee.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/SchoolFee/ViewSchoolFee.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewSchoolFee_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./wwwroot/Vue/components/SchoolFee/ViewSchoolFee.vue?vue&type=template&id=3c19a564&":
+/*!*******************************************************************************************!*\
+  !*** ./wwwroot/Vue/components/SchoolFee/ViewSchoolFee.vue?vue&type=template&id=3c19a564& ***!
+  \*******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewSchoolFee_vue_vue_type_template_id_3c19a564___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./ViewSchoolFee.vue?vue&type=template&id=3c19a564& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/SchoolFee/ViewSchoolFee.vue?vue&type=template&id=3c19a564&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewSchoolFee_vue_vue_type_template_id_3c19a564___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewSchoolFee_vue_vue_type_template_id_3c19a564___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./wwwroot/Vue/components/SchoolRecord/CreateUpdateSchoolRecord.vue":
 /*!**************************************************************************!*\
   !*** ./wwwroot/Vue/components/SchoolRecord/CreateUpdateSchoolRecord.vue ***!
@@ -73636,6 +75529,212 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewSchoolRecord_vue_vue_type_template_id_4d804f70___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./wwwroot/Vue/components/StudentClaim/ClaimPaymentReport.vue":
+/*!********************************************************************!*\
+  !*** ./wwwroot/Vue/components/StudentClaim/ClaimPaymentReport.vue ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ClaimPaymentReport_vue_vue_type_template_id_82672980___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ClaimPaymentReport.vue?vue&type=template&id=82672980& */ "./wwwroot/Vue/components/StudentClaim/ClaimPaymentReport.vue?vue&type=template&id=82672980&");
+/* harmony import */ var _ClaimPaymentReport_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ClaimPaymentReport.vue?vue&type=script&lang=js& */ "./wwwroot/Vue/components/StudentClaim/ClaimPaymentReport.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _ClaimPaymentReport_vue_vue_type_style_index_0_id_82672980_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ClaimPaymentReport.vue?vue&type=style&index=0&id=82672980&lang=css& */ "./wwwroot/Vue/components/StudentClaim/ClaimPaymentReport.vue?vue&type=style&index=0&id=82672980&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _ClaimPaymentReport_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ClaimPaymentReport_vue_vue_type_template_id_82672980___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ClaimPaymentReport_vue_vue_type_template_id_82672980___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "wwwroot/Vue/components/StudentClaim/ClaimPaymentReport.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./wwwroot/Vue/components/StudentClaim/ClaimPaymentReport.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************!*\
+  !*** ./wwwroot/Vue/components/StudentClaim/ClaimPaymentReport.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ClaimPaymentReport_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ClaimPaymentReport.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/StudentClaim/ClaimPaymentReport.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ClaimPaymentReport_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./wwwroot/Vue/components/StudentClaim/ClaimPaymentReport.vue?vue&type=style&index=0&id=82672980&lang=css&":
+/*!*****************************************************************************************************************!*\
+  !*** ./wwwroot/Vue/components/StudentClaim/ClaimPaymentReport.vue?vue&type=style&index=0&id=82672980&lang=css& ***!
+  \*****************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ClaimPaymentReport_vue_vue_type_style_index_0_id_82672980_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--5-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--5-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./ClaimPaymentReport.vue?vue&type=style&index=0&id=82672980&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/StudentClaim/ClaimPaymentReport.vue?vue&type=style&index=0&id=82672980&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ClaimPaymentReport_vue_vue_type_style_index_0_id_82672980_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ClaimPaymentReport_vue_vue_type_style_index_0_id_82672980_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ClaimPaymentReport_vue_vue_type_style_index_0_id_82672980_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ClaimPaymentReport_vue_vue_type_style_index_0_id_82672980_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
+/***/ "./wwwroot/Vue/components/StudentClaim/ClaimPaymentReport.vue?vue&type=template&id=82672980&":
+/*!***************************************************************************************************!*\
+  !*** ./wwwroot/Vue/components/StudentClaim/ClaimPaymentReport.vue?vue&type=template&id=82672980& ***!
+  \***************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ClaimPaymentReport_vue_vue_type_template_id_82672980___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./ClaimPaymentReport.vue?vue&type=template&id=82672980& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/StudentClaim/ClaimPaymentReport.vue?vue&type=template&id=82672980&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ClaimPaymentReport_vue_vue_type_template_id_82672980___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ClaimPaymentReport_vue_vue_type_template_id_82672980___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./wwwroot/Vue/components/StudentClaim/ClaimReimbursment.vue":
+/*!*******************************************************************!*\
+  !*** ./wwwroot/Vue/components/StudentClaim/ClaimReimbursment.vue ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ClaimReimbursment_vue_vue_type_template_id_106ae653___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ClaimReimbursment.vue?vue&type=template&id=106ae653& */ "./wwwroot/Vue/components/StudentClaim/ClaimReimbursment.vue?vue&type=template&id=106ae653&");
+/* harmony import */ var _ClaimReimbursment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ClaimReimbursment.vue?vue&type=script&lang=js& */ "./wwwroot/Vue/components/StudentClaim/ClaimReimbursment.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _ClaimReimbursment_vue_vue_type_style_index_0_id_106ae653_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ClaimReimbursment.vue?vue&type=style&index=0&id=106ae653&lang=css& */ "./wwwroot/Vue/components/StudentClaim/ClaimReimbursment.vue?vue&type=style&index=0&id=106ae653&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _ClaimReimbursment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ClaimReimbursment_vue_vue_type_template_id_106ae653___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ClaimReimbursment_vue_vue_type_template_id_106ae653___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "wwwroot/Vue/components/StudentClaim/ClaimReimbursment.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./wwwroot/Vue/components/StudentClaim/ClaimReimbursment.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************!*\
+  !*** ./wwwroot/Vue/components/StudentClaim/ClaimReimbursment.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ClaimReimbursment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ClaimReimbursment.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/StudentClaim/ClaimReimbursment.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ClaimReimbursment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./wwwroot/Vue/components/StudentClaim/ClaimReimbursment.vue?vue&type=style&index=0&id=106ae653&lang=css&":
+/*!****************************************************************************************************************!*\
+  !*** ./wwwroot/Vue/components/StudentClaim/ClaimReimbursment.vue?vue&type=style&index=0&id=106ae653&lang=css& ***!
+  \****************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ClaimReimbursment_vue_vue_type_style_index_0_id_106ae653_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--5-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--5-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./ClaimReimbursment.vue?vue&type=style&index=0&id=106ae653&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/StudentClaim/ClaimReimbursment.vue?vue&type=style&index=0&id=106ae653&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ClaimReimbursment_vue_vue_type_style_index_0_id_106ae653_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ClaimReimbursment_vue_vue_type_style_index_0_id_106ae653_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ClaimReimbursment_vue_vue_type_style_index_0_id_106ae653_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ClaimReimbursment_vue_vue_type_style_index_0_id_106ae653_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
+/***/ "./wwwroot/Vue/components/StudentClaim/ClaimReimbursment.vue?vue&type=template&id=106ae653&":
+/*!**************************************************************************************************!*\
+  !*** ./wwwroot/Vue/components/StudentClaim/ClaimReimbursment.vue?vue&type=template&id=106ae653& ***!
+  \**************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ClaimReimbursment_vue_vue_type_template_id_106ae653___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./ClaimReimbursment.vue?vue&type=template&id=106ae653& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/StudentClaim/ClaimReimbursment.vue?vue&type=template&id=106ae653&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ClaimReimbursment_vue_vue_type_template_id_106ae653___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ClaimReimbursment_vue_vue_type_template_id_106ae653___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./wwwroot/Vue/components/StudentClaim/ClaimStatus.vue":
+/*!*************************************************************!*\
+  !*** ./wwwroot/Vue/components/StudentClaim/ClaimStatus.vue ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+var render, staticRenderFns
+var script = {}
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__["default"])(
+  script,
+  render,
+  staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+component.options.__file = "wwwroot/Vue/components/StudentClaim/ClaimStatus.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 

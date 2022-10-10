@@ -59,6 +59,7 @@ namespace NavyAccountCore.Core.Data
             trialBalanceReportView = new TrialBalanceReportView(context, configuration);
             student = new StudentRecordRepository(context);
             school = new SchoolRecordRepository(context);
+            schoolFee = new SchoolFeeRepository(context);
             payment = new PaymentRepository(context);
             schclaim = new ClaimRecordRepository(context);
             parent = new ParentGuardianRecordRepository(context);
@@ -116,6 +117,7 @@ namespace NavyAccountCore.Core.Data
 
         public IStudentRecordRepository student { get; }
         public ISchoolRecordRepository school { get; }
+        public ISchoolFeeRepository schoolFee { get; }
         public IPaymentRepository payment { get; }
         public IClaimRecordRepository schclaim { get; }
         public IParentGuardianRecordRepository parent { get; }

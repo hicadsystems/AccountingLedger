@@ -1,6 +1,8 @@
-﻿using NavyAccountCore.Core.Data;
+﻿using Dapper;
+using NavyAccountCore.Core.Data;
 using NavyAccountCore.Entities;
 using NavyAccountWeb.IServices;
+using NavyAccountWeb.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +13,11 @@ namespace NavyAccountWeb.Services
     public class ClaimRecordService:IClaimRecordService
     {
         private readonly IUnitOfWork _unitOfWork;
-        public ClaimRecordService(IUnitOfWork unitOfWork)
+        private readonly IDapper dapper;
+        public ClaimRecordService(IUnitOfWork unitOfWork, IDapper dapper)
         {
             _unitOfWork = unitOfWork;
+            this.dapper = dapper;
         }
 
         public async Task<bool> AddClaimRecord(sr_ClaimRecord value)
@@ -52,5 +56,40 @@ namespace NavyAccountWeb.Services
         {
             return _unitOfWork.schclaim.GetAmountPerSchoolType(studentNo,out amt);
         }
+
+        public async Task<List<ClaimPaymentReport>> GetStudentClaim()
+        {
+            var result = new List<ClaimPaymentReport>();
+            var param = new DynamicParameters();
+            result = dapper.GetAll<ClaimPaymentReport>("sr_GetClaimRecord", param, commandType: System.Data.CommandType.StoredProcedure);
+
+            return result;
+        }
+
+        public async Task<List<ClaimPaymentReport>> GetStudentClaimBySchool(string schoolname)
+        {
+            var result = new List<ClaimPaymentReport>();
+            var param = new DynamicParameters();
+            result = dapper.GetAll<ClaimPaymentReport>("sr_GetClaimRecord", param, commandType: System.Data.CommandType.StoredProcedure);
+            result = result.Where(x => x.Schoolname == schoolname).ToList();
+            return result;
+        }
+        public async Task<int> UpdateAllLedger()
+        {
+            var param = new DynamicParameters();
+            var result = dapper.Get<int>("sr_UpdateClaimLedger", param, commandType: System.Data.CommandType.StoredProcedure);
+            return result;
+        }
+        public async Task<int> UpdateStudentClaimLedgerBySchool(string schoolname,string VoucherNumber,string user)
+        {
+            int result = 0;
+            var param = new DynamicParameters();
+            param.Add("@schoolname", schoolname);
+            param.Add("@globaluser", user);
+            param.Add("@refno", VoucherNumber);
+            dapper.Execute("sr_UpdateClaimLedger", param, commandType: System.Data.CommandType.StoredProcedure);
+            return result;
+        }
+
     }
 }

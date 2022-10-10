@@ -35,7 +35,7 @@ namespace NavyAccountCore.Repositories
             if (per.SchoolCode == "Secondary")
                 amount = Convert.ToDecimal(400000);
 
-           decimal amount2 = (0.1M * amount) + amount;
+           decimal amount2 =  amount;
 
             amt = (0.1M * amount);
 

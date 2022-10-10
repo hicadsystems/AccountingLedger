@@ -22,6 +22,6 @@ namespace NavyAccountCore.IRepositories
         Task<sr_StudentRecord> getStudentById(int id);
         StudentRecordVM getStudentListByID(int id);
         StudentRecordVM getOldStudentListByID(int id);
-
+        Task<List<StudentRecordVM>> GetStudentListOnCliam();
     }
 }

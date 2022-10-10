@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using NavyAccountCore.Core.Data;
 using Microsoft.AspNetCore.Authorization;
 using NavyAccountCore.Core.Entities;
+using System;
 //using System.Collections.Generic;
 
 
@@ -36,6 +37,8 @@ namespace NavyAccountWeb.Controllers
         // GET: Authentication
         public async Task<IActionResult> Login(LoginViewModel login)
         {
+            try
+            {
             var auth = await authenticationService.SignInUserAsync(login.UserName, login.Password, "false");
             
             if (!auth.Success)
@@ -63,6 +66,13 @@ namespace NavyAccountWeb.Controllers
 
 
             return RedirectToAction("Index", "Home");
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
 
         //public async Task<IActionResult> ClientLogin(LoginViewModel login)

@@ -5,7 +5,7 @@
      <div class="row">
         <div class="col-12 col-xl-4">
                 <div class="form-group">
-                    <label class="form-label">Service Number</label>
+                    <label class="form-label">Student Number / Name</label>
                     <vuejsAutocomplete source="/api/StudentRecord/getAllOldStudentByNameLimited/"
                                        input-class="form-control"
                                        @selected="setValueStudent"
