@@ -34,7 +34,12 @@ namespace NavyAccountWeb.Controllers.Api.ReferenceTable
         {
             return _context.sr_lga.Where(s=>s.statecode== statecode).ToList();
         }
-
+        [Route("getallclass")]
+        [HttpGet]
+        public IEnumerable<sr_ClassRecord> GetClass(string statecode)
+        {
+            return _context.sr_ClassRecord.ToList();
+        }
         // POST api/<StaticTablesController>
         [HttpPost]
         public void Post([FromBody] string value)

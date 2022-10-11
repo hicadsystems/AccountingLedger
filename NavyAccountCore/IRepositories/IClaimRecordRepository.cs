@@ -11,5 +11,6 @@ namespace NavyAccountCore.IRepositories
     public interface IClaimRecordRepository:IRepository<sr_ClaimRecord>
     {
         Task<sr_ClaimRecord> GetClaimRecordByCode(Expression<Func<sr_ClaimRecord, bool>> predicate);
+        decimal GetAmountPerSchoolType(string studentNo, out decimal amt);
     }
 }

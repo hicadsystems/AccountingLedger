@@ -1,5 +1,6 @@
 ﻿using NavyAccountCore.Core.IRepositories;
 using NavyAccountCore.Entities;
+using NavyAccountCore.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -12,10 +13,15 @@ namespace NavyAccountCore.IRepositories
     {
         Task<sr_StudentRecord> GetStudentByCode(Expression<Func<sr_StudentRecord, bool>> predicate);
         Task<IEnumerable<sr_StudentRecord>> GetAllStudent();
-        Task<List<sr_StudentRecord>> getStudentList(int iDisplayStart, int iDisplayLength);
+        Task<List<StudentRecordVM>> getStudentList(int iDisplayStart, int iDisplayLength);
         Task<List<sr_StudentRecord>> getStudentListByName(string Studentname);
+        Task<List<sr_StudentRecord>> getOldStudentListByName(string Studentname);
         Task<int> getStudentListCount();
-        Task<List<sr_StudentRecord>> GetInactiveStudentList(int iDisplayStart, int iDisplayLength);
-
+        Task<int> getInactiveStudentListCount();
+        Task<List<StudentRecordVM>> GetInactiveStudentList(int iDisplayStart, int iDisplayLength);
+        Task<sr_StudentRecord> getStudentById(int id);
+        StudentRecordVM getStudentListByID(int id);
+        StudentRecordVM getOldStudentListByID(int id);
+        Task<List<StudentRecordVM>> GetStudentListOnCliam();
     }
 }

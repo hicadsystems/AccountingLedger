@@ -68,6 +68,8 @@ namespace NavyAccountWeb.Data
         public DbSet<sr_SchoolRecord> sr_SchoolRecord { get; set; }
         public DbSet<sr_StudentRecord> sr_StudentRecord { get; set; }
         public DbSet<sr_ClassRecord> sr_ClassRecord { get; set; }
+        public DbSet<sr_SchoolFeeTB> sr_SchoolFeeTB { get; set; }
+        public DbSet<sr_SchoolRecordControl> sr_SchoolRecordControl { get; set; }
         public DbSet<sr_state> sr_state{ get; set; }
         public DbSet<sr_lga> sr_lga { get; set; }
 
@@ -148,6 +150,14 @@ namespace NavyAccountWeb.Data
             builder.Entity<sr_PaymentRecord>()
              .Property(e => e.Amount)
               .HasColumnType("money");
+
+            builder.Entity<sr_StudentRecord>()
+            .Property(e => e.ClaimAmount)
+             .HasColumnType("money");
+
+            builder.Entity<sr_ClassRecord>()
+            .Property(e => e.Schoolfee)
+             .HasColumnType("money");
 
             builder.Entity<sr_ClaimRecord>()
              .Property(e => e.Amount)

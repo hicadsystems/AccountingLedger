@@ -1,0 +1,75 @@
+﻿@model NavyAccountWeb.Models.ClaimPaymentRecordReport
+
+@{
+    Layout = null;
+    decimal total = 0M;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ClaimPaymentReport</title>
+</head>
+<body>
+    <h6 style="text-align:center">RETRICTED</h6>
+    <h2 style="text-align:center">NIGERIAN NAVY DIRECTORATE OF NON-PUBLIC FUND</h2>
+    <h2 style="text-align:center">SCHOOL WALFARE SCHEME</h2>
+    Claim Payment Report: Produce On @DateTime.Now
+    <div class="card-body">
+        <table border="2" cellpadding="2" cellspacing="0" width="100%">
+            <tr>
+                <th>Reg number</th>
+                <th>Full Name</th>
+                <td>Sex</td>
+                <td>Age</td>
+                <th>School name</th>
+                <th>School Type</th>
+                <td>Class</td>
+                <th>Claim Amount</th>
+                <th>School Fee</th>
+
+            </tr>
+            @if (Model.distintrecord.Count == 0)
+            {
+                <tr>
+                    <td colspan="12"><b>No Record Found</b></td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var a in Model.distintrecord)
+                {
+
+                    @foreach (var b in Model.allRecord.Where(x=>x.Schoolname==a.Schoolname))
+                    {
+                    <tr>
+                        <td>@b.Reg_Number</td>
+                        <td>@b.Surname</td>
+                        <td>@b.Sex</td>
+                        <td>@b.Age</td>
+                        <td>@a.Schoolname</td>
+                        <td>@a.SchoolType</td>
+                        <td>@a.ClassName</td>
+                        <td>@Math.Round(a.ClaimAmount.Value,2)</td>
+                        <td>@Math.Round(a.FeeAmount.Value,2)</td>
+
+                    </tr> 
+
+                      total += (decimal)b.FeeAmount;
+                    
+                    }
+                    <tr>
+                       <td colspan="5" style="font-weight:bold">Total</td>
+                       <td style="font-weight:bold">@Math.Round(total,2)</td>
+
+                    </tr>
+                    total = 0;
+                    }
+                }
+        </table>
+        <h6 style="text-align:center">RETRICTED</h6>
+    </div>
+</body>
+</html>

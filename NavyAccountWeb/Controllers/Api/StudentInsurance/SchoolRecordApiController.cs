@@ -27,6 +27,7 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
             var po= await recordService.GetAllSchool();
             return po;
         }
+        
 
         // GET api/<SchoolRecordApiController>/5 
         [Route("GetRecordbyCode/{code}")]    //api/SchoolRecord/GetRecordbyCode/{code}
@@ -40,6 +41,18 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
            return Ok(new { responseCode = "200", responseDescription = "Successfull", data = result });
         }
 
+        [Route("GetschoolById/{schoolid}")]    //api/SchoolRecord/GetschoolByName/{school}
+        [HttpGet]
+        public async Task<sr_SchoolRecord> GetschoolById(int schoolid)
+        {
+            return await recordService.GetSchoolByid(schoolid);
+        }
+        [Route("GetschoolByClass/{classid}")]    //api/SchoolRecord/GetschoolByName/{school}
+        [HttpGet]
+        public async Task<List<sr_SchoolRecord>> GetschoolByClass(int classid)
+        {
+            return await recordService.GetSchoolByClass(classid);
+        }
         [Route("GetschoolByName/{school}")]    //api/SchoolRecord/GetschoolByName/{school}
         [HttpGet]
         public async Task<IActionResult> GetschoolByName(string school)
@@ -50,6 +63,7 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
             else
                 return Ok(new { responseCode = "200", responseDescription = "Successfull", data = result });
         }
+
 
         // POST api/<SchoolRecordApiController>
         [Route("AddSchool")]

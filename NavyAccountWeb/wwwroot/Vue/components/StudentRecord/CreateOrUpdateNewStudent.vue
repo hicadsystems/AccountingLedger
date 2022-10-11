@@ -57,9 +57,10 @@
                                     <vuejsAutocomplete source="/api/ParentRecord/getAllParentByNameLimited/"
                                                     input-class="form-control"
                                                     @selected="setValueParentID"
+                                                    name="parentid"
                                                     v-model="postBody.student.Parentid">
                                     </vuejsAutocomplete>
-
+ 
                                 </div>
                                 </div>
                                 <div class="col-12 col-xl-4">
@@ -68,6 +69,7 @@
                                     <vuejsAutocomplete source="/api/ParentRecord/getAllGuardianByNameLimited/"
                                                     input-class="form-control"
                                                     @selected="setValueGuardianID"
+                                                    name="guardianid"
                                                     v-model="postBody.student.Guardianid">
                                     </vuejsAutocomplete>
 
@@ -80,7 +82,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label>Sex</label>
-                                <select class="form-control" v-model="postBody.student.Sex" name="rank" required>
+                                <select class="form-control" v-model="postBody.student.Sex" name="sex" required>
                                     <option v-for="ge in gender" v-bind:value="ge.value" v-bind:key="ge.value"> {{ ge.text }} </option>
                                 </select>
                             </div>
@@ -98,13 +100,13 @@
                             
                             <div class="form-group col-md-4">
                                 <label>Class</label>
-                                <select class="form-control" v-model="postBody.student.Class" name="Class" required>
-                                    <option v-for="cls in classList" v-bind:value="cls.id" v-bind:key="cls.id"> {{ cls.ClassName }} </option>
+                                <select class="form-control" v-model="postBody.student.ClassId" name="classId" required>
+                                    <option v-for="cls in classList" v-bind:value="cls.id" v-bind:key="cls.id"> {{ cls.className }} </option>
                                 </select>
                             </div>
                             <div class="col-sm-4">
                                 <label>School</label>
-                                <select class="form-control" v-model="postBody.student.SchoolCode" name="SchoolCode" required>
+                                <select class="form-control" v-model="postBody.student.SchoolId" name="schoolId" required>
                                     <option v-for="sch in schoolList" v-bind:value="sch.id" v-bind:key="sch.id"> {{ sch.schoolname }} </option>
                                 </select>
                             </div>
@@ -118,23 +120,27 @@
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label>Status</label>
-                                <select class="form-control" v-model="postBody.student.Status" name="Status" required>
+                                <select class="form-control" v-model="postBody.student.Status" name="status" required>
                                     <option v-for="stu in statusList" v-bind:value="stu.value" v-bind:key="stu.value"> {{ stu.text }} </option>
                                 </select>
                             </div>
                             <div class="col-md-4">
                                 <label>Enrolment Date</label>
-                                <vuejsDatepicker v-model="postBody.student.CommencementDate" input-class="form-control" name="CommencementDate"></vuejsDatepicker>
+                                <vuejsDatepicker v-model="postBody.student.CommencementDate" input-class="form-control" name="commencementDate"></vuejsDatepicker>
                             </div>
 
                              <div class="col-md-4">
                                 <label>Exit Left</label>
-                                <vuejsDatepicker v-model="postBody.student.ExitDate" input-class="form-control" name="ExitDate"></vuejsDatepicker>
+                                <vuejsDatepicker v-model="postBody.student.ExitDate" input-class="form-control" name="cxitDate"></vuejsDatepicker>
                             </div>
                             <div class="col-md-4">
                                 <label>Exit Reason</label>
-                                <input class="form-control" name="ExitReason" v-model="postBody.student.ExitReason" />
+                                <input class="form-control" name="exitReason" v-model="postBody.student.ExitReason" />
                             </div>
+                            <!-- <div class="filter">
+                             <label for="autocomplete-dropdown">Autocomplete dropdown: </label>
+                             <autocomplete-dropdown id="autocomplete-dropdown" :options="fruitOptions" v-model="postBody.student.ExitReason"></autocomplete-dropdown>
+                            </div> -->
                         </div>
                       
                         
@@ -151,13 +157,15 @@
 
 
 <script>
+    import Axios from 'axios';
     import vuejsAutocomplete from 'vuejs-auto-complete'
     import vuejsDatepicker from 'vuejs-datepicker'
     export default {
         props:['studenttoeditid'],
         components: {
             vuejsDatepicker,
-            vuejsAutocomplete
+            vuejsAutocomplete,
+            Axios
         },
         data() {
             return {
@@ -174,24 +182,27 @@
                 postBody: {
                     student:
                     {
-                                    Reg_Number:'',
-                                    Surname:'',
-                                    FirstName:'',
-                                    MiddleName:'',
-                                    Sex:'',
-                                    SchoolCode:'',
-                                    CommencementDate:'',
-                                    Class:'',
-                                    PhoneNumber:'',
-                                    Email:'',
-                                    Status:'',
-                                    ExitDate:'',
-                                    ExitReason:'',
-                                    Age:'',
-                                    ClassCategory:'',
-                                    ParentalStatus:'',
-                                    Parentid:0,
-                                    Guardianid:0
+                        Reg_Number:'',
+                Surname:'',
+                FirstName:'',
+                MiddleName:'',
+                Sex:'',
+                SchoolCode:'',
+                CommencementDate:'',
+                Class:'',
+                PhoneNumber:'',
+                Email:'',
+                Status:'',
+                ExitDate:'',
+                ExitReason:'',
+                Age:'',
+                ClassCategory:'',
+                ParentalStatus:'',
+                Parentid:null,
+                Guardianid:null,
+                studentid:null,
+                ClassId:null,
+                SchoolId:null
                         
                     },
 
@@ -202,8 +213,17 @@
                     { value: 'F', text: 'Female' }
                 ],
                 statusList: [
-                    { value: '1', text: 'Active' },
-                    { value: '2', text: 'Inactive' }
+                    { value: 'Active', text: 'Active' },
+                    { value: 'On Claim', text: 'On Claim' },
+                    { value: 'Inactive', text: 'Inactive' }
+                ],
+                exitreasonList: [
+                    { value: 'Graduated', text: 'Graduated' },
+                    { value: 'Suspended', text: 'Suspended' },
+                    { value: 'Expelled', text: 'Expelled' },
+                    { value: 'Death', text: 'Death' },
+                    { value: 'Absconded', text: 'Absconded' }
+
                 ]
                 
             };
@@ -221,12 +241,12 @@
             },
             addOrEdit(actionToPerform) {
                
-                let uri = actionToPerform == 0 ? `/api/StudentRecord/Add` : `/api/StudentRecord/Update`;
+                let uri = actionToPerform == 0 ? `/api/StudentRecord/CreateStudent` : `/api/StudentRecord/Update`;
                 let message = actionToPerform == 0 ? `Created` : `Updated`;
-                alert(this.postBody.student.Reg_Number);
-                //alert(this.postBody.person);
+                console.log(this.postBody);
+                alert(this.postBody);
               
-                axios.post(uri,this.postBody)
+                Axios.post(uri,this.postBody)
                     .then(response => {
                         this.responseMessage = response.data.responseDescription; this.canProcess = true;
                         if (response.data.responseCode == '200') {
@@ -270,44 +290,49 @@
         
         
         mounted() {
-            this.objectToClear = this.postBody;
+            //this.objectToClear = this.postBody;
                 
-            axios
-                .get('/api/ParentReord/GetAll')
-                .then(response => (this.parentList = response.data));
+            // axios
+            //     .get('/api/ParentRecord/GetAll')
+            //     .then(response => (this.parentList = response.data));
                 axios
-                .get('/api/SchoolReord/GetAll')
+                .get('/api/SchoolRecord/GetAll')
                 .then(response => (this.schoolList = response.data));
                 axios
-                .get('/api/StaticTable/getAllClass')
+                .get('/api/statictable/getallclass')
                 .then(response => (this.classList = response.data));
 
-            if (this.studnettoeditid != 0) {
+            if (this.studenttoeditid != 0) {
+                alert(this.studenttoeditid)
                 axios
-                    .get(`/api/StudentRecord/getSTudentByID/${this.studenttoeditid}`)
+                    .get(`/api/StudentRecord/GetStudentById2/${this.studenttoeditid}`)
                     .then(response => {
-                        alert(response.data.id);
-                        this.postBody.student.Reg_Number= response.data.Reg_Number
-                        this.postBody.student.Surname= response.data.Surname
-                        this.postBody.student.FirstName= response.data.FirstName
-                        this.postBody.student.MiddleName= response.data.MiddleName
-                        this.postBody.student.Sex= response.data.Sex
-                        this.postBody.student.SchoolCode= response.data.SchoolCode
-                        this.postBody.student.CommencementDate= response.data.CommencementDate
+                        alert(response.data.reg_Number);
+                        this.postBody.student.Reg_Number= response.data.reg_Number
+                        this.postBody.student.Surname= response.data.surname
+                        this.postBody.student.FirstName= response.data.firstName
+                        this.postBody.student.MiddleName= response.data.middleName
+                        this.postBody.student.Sex= response.data.sex
+                        this.postBody.student.SchoolCode= response.data.schoolCode
+                        this.postBody.student.CommencementDate= response.data.commencementDate
                         this.postBody.student.Class= response.data.class
-                        this.postBody.student.PhoneNumber= response.data.PhoneNumber
-                        this.postBody.student.Email= response.data.Email
-                        this.postBody.student.Status= response.data.Status
-                        this.postBody.student.ExitDate= response.data.ExitDate
-                        this.postBody.student.ExitReason= response.data.ExitReason
-                        this.postBody.student.Age= response.data.Age
-                        this.postBody.student.ClassCategory= response.data.ClassCategory
-                        this.postBody.student.ParentalStatus= response.data.ParentalStatus
+                        this.postBody.student.ClassId= response.data.classid
+                        this.postBody.student.SchoolId= response.data.schoolId
+                        this.postBody.student.Parentid= response.data.parentid
+                        this.postBody.student.Guardianid= response.data.guardianid
+                        this.postBody.student.PhoneNumber= response.data.phoneNumber
+                        this.postBody.student.Email= response.data.email
+                        this.postBody.student.Status= response.data.status
+                        this.postBody.student.ExitDate= response.data.exitDate
+                        this.postBody.student.ExitReason= response.data.exitReason
+                        this.postBody.student.Age= response.data.age
+                        this.postBody.student.ClassCategory= response.data.classCategory
+                        this.postBody.student.ParentalStatus= response.data.parentalStatus
                                         
                     })
 
             }
 
         }
-    };
+    }
 </script>

@@ -57,6 +57,16 @@ namespace NavyAccountCore.Repositories
 
                           }).ToListAsync();
         }
+        public async Task<IEnumerable<sr_ParentRecord>> getAllParent()
+        {
+            //return await context.sr_ParentRecord.OrderByDescending(x=>x.Surname).ToListAsync();
+            return await (from pers in context.sr_ParentRecord
+                          select new sr_ParentRecord
+                          {
+                              id = pers.id,
+                              Surname = pers.Surname + " " + pers.OtherNames,
+                          }).OrderByDescending(x => x.Surname).ToListAsync();
+        }
         public async Task<int> getParentListCount()
         {
             return await context.sr_ParentRecord.CountAsync();

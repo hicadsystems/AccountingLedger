@@ -11,6 +11,7 @@ namespace NavyAccountCore.Entities
         public int id { get; set; }
         public string ClassName {get;set;}
         public string SchoolType { get; set; }
+        public decimal Schoolfee { get; set; }
 
     }
 }

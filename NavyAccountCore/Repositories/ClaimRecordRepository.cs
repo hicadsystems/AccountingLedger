@@ -26,5 +26,21 @@ namespace NavyAccountCore.Repositories
         {
             return await context.sr_ClaimRecord.FirstOrDefaultAsync(predicate);
         }
+        public decimal GetAmountPerSchoolType(string studentNo, out decimal amt)
+        {
+            var per = context.sr_StudentRecord.FirstOrDefault(x => x.id == int.Parse(studentNo));
+             decimal amount = 0M;
+            if (per.SchoolCode == "Primary")
+                amount =Convert.ToDecimal(200000);
+            if (per.SchoolCode == "Secondary")
+                amount = Convert.ToDecimal(400000);
+
+           decimal amount2 =  amount;
+
+            amt = (0.1M * amount);
+
+            return amount2;
+
+        }
     }
 }

@@ -40,9 +40,9 @@ namespace NavyAccountWeb.Services
         {
             return await _unitOfWork.parent.getParentListByName(parentname);
         }
-        public Task<IEnumerable<sr_ParentRecord>> GetAllParent()
+        public async Task<IEnumerable<sr_ParentRecord>> GetAllParent()
         {
-            throw new NotImplementedException();
+            return await _unitOfWork.parent.getAllParent();
         }
 
         public async Task<sr_ParentRecord> GetParentByCode(string code)

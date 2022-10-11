@@ -2,7 +2,7 @@
 @{ ViewData["Title"] = "ViewParent";
     Layout = "~/Views/Shared/_SchoolLayout.cshtml"; }
 
- <div class="header">
+<div class="header">
     <h1 class="header-title">
     </h1>
     <nav aria-label="breadcrumb">
@@ -31,12 +31,12 @@
                 <h5 class="card-title">Parent List</h5>
                 @using (Html.BeginForm("printfund2", "FundType", FormMethod.Get))
                 {
-    <div class="col-4">
-        <div class="form-group">
-            <input type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Print" />
-        </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <input type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Print" />
+                    </div>
 
-    </div>}
+                </div>}
             </div>
 
             <view-parent></view-parent>

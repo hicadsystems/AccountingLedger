@@ -117,12 +117,14 @@ namespace NavyAccountWeb
 
 
             services.AddScoped<ISchoolRecordService, SchoolRecordService>();
+            services.AddScoped<ISchoolFeeService, SchoolFeeService>();
             services.AddScoped<IStudentRecordService, StudentRecordService>();
             services.AddScoped<IParentRecordService, ParentRecordService>();
             services.AddScoped<IGuardianRecordService, GuardianRecordService>();
             services.AddScoped<IPaymentRecordService, PaymentRecordService>();
             services.AddScoped<IClaimRecordService, ClaimRecordService>();
             services.AddScoped<IDapper, Dapperr>();
+            services.AddScoped<ISessionService, SessionService>();
 
             services.ConfigureApplicationCookie(options =>
             {
