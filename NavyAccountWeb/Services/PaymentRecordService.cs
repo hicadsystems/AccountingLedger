@@ -38,11 +38,21 @@ namespace NavyAccountWeb.Services
             throw new NotImplementedException();
         }
 
-        public async Task<List<PaymentProposalRecord>> GetDiscrepancyRecord()
+        public async Task<Tuple<List<PaymentProposalRecord>,int>> GetDiscrepancyRecord(int iDisplayStart, int iDisplayLength)
         {
-            var result = new List<PaymentProposalRecord>();
+            
             var param = new DynamicParameters();
-            result = dapper.GetAll<PaymentProposalRecord>("sr_GetStudentDescrePancyReport", param, commandType:System.Data.CommandType.StoredProcedure);
+            var result = dapper.GetAll<PaymentProposalRecord>("sr_GetStudentDescrePancyReport", param, commandType:System.Data.CommandType.StoredProcedure);
+            int totalCount=result.Count();
+            var op=result.Skip(iDisplayStart).Take(iDisplayLength);
+
+            return new Tuple<List<PaymentProposalRecord>, int>(result, totalCount);
+        }
+
+        public async Task<List<PaymentProposalRecord>> GetDiscrepancyRecordAsExcel()
+        {
+            var param = new DynamicParameters();
+            var result = dapper.GetAll<PaymentProposalRecord>("sr_GetStudentDescrePancyReport", param, commandType: System.Data.CommandType.StoredProcedure);
             return result;
         }
 

@@ -35,11 +35,16 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
             return await recordService.GetStudentpaymentProposalbySchool(schoolName);
         }
 
-        [Route("GetDescrepancyRecord")]
+        [Route("GetDescrepancyRecord")]  //api/Payment/GetDescrepancyRecord
         [HttpGet]
-        public async Task<IEnumerable<PaymentProposalRecord>> Get()
+        public async Task<IActionResult> Get(int? pageno)
         {
-            return await recordService.GetDiscrepancyRecord();
+            int iDisplayLength = 10;
+            pageno = pageno == null ? 0 : (pageno--);
+            var paymentProposalList = await recordService.GetDiscrepancyRecord(((int)pageno * iDisplayLength), iDisplayLength);
+            //var countall = await recordService.getStudentListCount();
+            return Ok(new { responseCode = 200, paymentProposalList = paymentProposalList.Item1, totalCount = paymentProposalList.Item2 });
+           
         }
 
         // GET api/<SchoolRecordApiController>/5

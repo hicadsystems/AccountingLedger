@@ -112,6 +112,34 @@ namespace NavyAccountWeb.Controllers
             return View();
         }
 
+        [Route("SRPaymentRecord/PrintDescrepancyReportAsExcel")]
+        public async Task<IActionResult> PrintDescrepancyReportAsExcel(string schoolName)
+        {
+            var oq = await paymentRecordService.GetDiscrepancyRecordAsExcel();
+            var stream = new MemoryStream();
+
+            int row = 2;
+            using (var package = new ExcelPackage(stream))
+            {
+                var workSheet = package.Workbook.Worksheets.Add("Sheet2");
+                workSheet.Cells.LoadFromCollection(oq, true);
+                package.Save();
+            }
+
+            string excelname = "DecrepancyReport.xlsx";
+
+            stream.Position = 0;
+            string excelName = $"DecrepancyReport-{DateTime.Now.ToString("yyyyMMddHHmmssfff")}.xlsx";
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelname);
+
+        }
+
+
+        public IActionResult ViewDiscrepancyReport()
+        {
+            return View();
+        }
+
         [HttpPost]
         public async Task<IActionResult> PaymentProposalupload(IFormFile formFile, CancellationToken cancellationToken)
         {
