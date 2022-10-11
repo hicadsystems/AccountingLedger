@@ -69,6 +69,7 @@ namespace NavyAccountWeb.Data
         public DbSet<sr_StudentRecord> sr_StudentRecord { get; set; }
         public DbSet<sr_ClassRecord> sr_ClassRecord { get; set; }
         public DbSet<sr_SchoolFeeTB> sr_SchoolFeeTB { get; set; }
+        public DbSet<sr_StudentRecordHist> sr_StudentRecordHist { get; set; }
         public DbSet<sr_SchoolRecordControl> sr_SchoolRecordControl { get; set; }
         public DbSet<sr_state> sr_state{ get; set; }
         public DbSet<sr_lga> sr_lga { get; set; }

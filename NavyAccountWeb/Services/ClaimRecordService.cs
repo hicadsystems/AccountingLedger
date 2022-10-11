@@ -56,13 +56,21 @@ namespace NavyAccountWeb.Services
         {
             return _unitOfWork.schclaim.GetAmountPerSchoolType(studentNo,out amt);
         }
-
-        public async Task<List<ClaimPaymentReport>> GetStudentClaim()
+        
+         public async Task<List<ClaimPaymentReport>> GetStudentClaim()
         {
             var result = new List<ClaimPaymentReport>();
             var param = new DynamicParameters();
             result = dapper.GetAll<ClaimPaymentReport>("sr_GetClaimRecord", param, commandType: System.Data.CommandType.StoredProcedure);
 
+            return result;
+        }
+        public async Task<List<ClaimReport>> GetStudentReportClaim()
+        {
+            var result = new List<ClaimReport>();
+            var param = new DynamicParameters();
+            result = dapper.GetAll<ClaimReport>("sr_GetClaimReport", param, commandType: System.Data.CommandType.StoredProcedure);
+            
             return result;
         }
 

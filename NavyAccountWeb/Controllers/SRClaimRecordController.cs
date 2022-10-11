@@ -219,7 +219,7 @@ namespace NavyAccountWeb.Controllers
         [Route("SRClaimRecord/CLaimPaymentByExcel/{schoolname}")]
         public async Task<IActionResult> ClaimPaymentByExcel(string schoolname)
         {
-            if (schoolname == null)
+            if(schoolname == "NULL")
             {
                 var op = await clrecordService.GetStudentClaim();
                 var stream = new MemoryStream();

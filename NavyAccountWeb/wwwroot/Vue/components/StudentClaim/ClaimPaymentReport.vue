@@ -105,7 +105,7 @@
             if(schoolname===''){
                 schoolname='NULL'
             }
-           window.open(`/SRClaimRecord/CLaimPaymentByExcel/${postBody.schoolname}`)
+           window.open(`/SRClaimRecord/CLaimPaymentByExcel/${schoolname}`)
         },
        
       }

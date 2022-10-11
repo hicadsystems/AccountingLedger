@@ -9,6 +9,7 @@ namespace NavyAccountWeb.IServices
 {
    public interface IClaimRecordService
     {
+        Task<List<ClaimReport>> GetStudentReportClaim();
         Task<List<ClaimPaymentReport>> GetStudentClaim();
         Task<List<ClaimPaymentReport>> GetStudentClaimBySchool(string schoolname);
         Task<int> UpdateAllLedger();
