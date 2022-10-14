@@ -1,4 +1,5 @@
-﻿using NavyAccountCore.Core.Data;
+﻿using Dapper;
+using NavyAccountCore.Core.Data;
 using NavyAccountCore.Entities;
 using NavyAccountCore.Models;
 using NavyAccountWeb.IServices;
@@ -6,15 +7,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static NavyAccountWeb.Models.SchoolFilterModels;
 
 namespace NavyAccountWeb.Services
 {
     public class StudentRecordService:IStudentRecordService
     {
         private readonly IUnitOfWork _unitOfWork;
-        public StudentRecordService(IUnitOfWork unitOfWork)
+        private readonly IDapper dapper;
+        public StudentRecordService(IDapper dapper,IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
+            this.dapper = dapper;
         }
 
         public async Task<bool> AddStudent(sr_StudentRecord value)
@@ -50,6 +54,10 @@ namespace NavyAccountWeb.Services
         public async Task<List<StudentRecordVM>> GetStudentList(int iDisplayStart, int iDisplayLength)
         {
             return await _unitOfWork.student.getStudentList(iDisplayStart, iDisplayLength);
+        }
+        public async Task<List<StudentReport>> GetStudentList2(int iDisplayStart, int iDisplayLength)
+        {
+            return await _unitOfWork.student.getStudentList2(iDisplayStart, iDisplayLength);
         }
         public StudentRecordVM GetStudentListByID(int id)
         {
@@ -89,6 +97,40 @@ namespace NavyAccountWeb.Services
         public async Task<List<StudentRecordVM>> GetStudentListOnClaim()
         {
             return await _unitOfWork.student.GetStudentListOnCliam();
+        }
+
+        public async Task<List<StudentReport>> GetStudentReport(StudentFilterModel value)
+        {
+            var result = new List<StudentReport>();
+            var param = new DynamicParameters();
+            result = dapper.GetAll<StudentReport>("sr_GetStudentNominalRoll", param, commandType: System.Data.CommandType.StoredProcedure);
+            if(value.sortby=="School")
+            result = result.Where(x => ((value.SchoolId==0)|| (x.SchoolId == value.SchoolId)) 
+                        && ((value.ClassId == 0) || (x.ClassId == value.ClassId))
+                        && ((value.ParentalStatus == "0") || (x.ParentalStatus == value.ParentalStatus))
+                        && ((value.Status == "0") || (x.Status == value.Status))).OrderBy(x=>x.SchoolId).ToList();
+            else if (value.sortby == "Class")
+                result = result.Where(x => ((value.SchoolId == 0) || (x.SchoolId == value.SchoolId))
+                       && ((value.ClassId == 0) || (x.ClassId == value.ClassId))
+                       && ((value.ParentalStatus == "0") || (x.ParentalStatus == value.ParentalStatus))
+                       && ((value.Status == "0") || (x.Status == value.Status))).OrderBy(x => x.ClassId).ToList();
+            else if (value.sortby == "ParentialStatus")
+                result = result.Where(x => ((value.SchoolId == 0) || (x.SchoolId == value.SchoolId))
+                       && ((value.ClassId == 0) || (x.ClassId == value.ClassId))
+                       && ((value.ParentalStatus == "0") || (x.ParentalStatus == value.ParentalStatus))
+                       && ((value.Status == "0") || (x.Status == value.Status))).OrderBy(x => x.ParentalStatus).ToList();
+            else if (value.sortby == "Status")
+                result = result.Where(x => ((value.SchoolId == 0) || (x.SchoolId == value.SchoolId))
+                       && ((value.ClassId == 0) || (x.ClassId == value.ClassId))
+                       && ((value.ParentalStatus == "0") || (x.ParentalStatus == value.ParentalStatus))
+                       && ((value.Status == "0") || (x.Status == value.Status))).OrderBy(x => x.Status).ToList();
+            else 
+                result = result.Where(x => ((value.SchoolId == 0) || (x.SchoolId == value.SchoolId))
+                       && ((value.ClassId == 0) || (x.ClassId == value.ClassId))
+                       && ((value.ParentalStatus == "0") || (x.ParentalStatus == value.ParentalStatus))
+                       && ((value.Status == "0") || (x.Status == value.Status))).OrderBy(x => x.SchoolId).ToList();
+
+            return result;
         }
     }
 }

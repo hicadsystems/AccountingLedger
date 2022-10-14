@@ -13,9 +13,9 @@
     <div v-if="responseMessage" class="alert alert-primary alert-dismissible" role="alert"> <div class="alert-message"> {{ responseMessage }} </div> </div>
     <div class="card-body">
         <div class="form-group">
-        <label class="form-label">Registration Number</label>
+            <label class="form-label">Student Registration Number</label>
         <div class="row">
-            <div class="col-12 col-xl-4">                    
+            <div class="col-12 col-xl-4">
                     <vuejsAutocomplete source="/api/StudentRecord/getAllStudentByNameLimited/"
                                        input-class="form-control"
                                        @selected="setValueStudent"
@@ -27,7 +27,6 @@
                 <button class="btn btn-submit btn-primary" v-on:click="printClaim(studentid)" type="submit">Export to Pdf</button>
             </div>
         </div>
-
         <div></div>
         <div  v-if="StudentName">
         <div class="row">  <div class="col-12 col-xl-4"><strong> CLAIM HISTORY FOR {{StudentName.toUpperCase() }} </strong> </div>
@@ -53,17 +52,19 @@
                     <td>{{ claimsm.claimAmount }}</td>
                     <td>{{ claimsm.amountToDate }}</td>
 
-                 </tr>
+                    <!-- <td><button type="button" class="btn btn-submit btn-primary" @click="viewDetails(claimsm)">View Details</button></td> -->
+                </tr>
             </tbody>
 
         </table>
-
+</div>
     </div>
+<div v-if="studentid">
+<div class="row">  <div class="col-12 col-xl-4"><strong>PAYMENT HISTORY </strong> </div></div>
+    <payment-summary :refno="studentid" ></payment-summary>
 </div>
 </div>
-  
-</div>
-                        
+</div>                
 <!-- END WRAPPER -->
 </template>
 
@@ -111,7 +112,7 @@ data() {
        })
     },
     printClaim:function(studentid){
-            window.open(`/SRClaimRecord/CLaimSummaryByPdf/${studentid}`)
+            window.open(`/SRSchoolReport/CLaimAndPaymentSummaryByPdf/${studentid}`)
         },
         viewDetails(result) {
             this.refno = true

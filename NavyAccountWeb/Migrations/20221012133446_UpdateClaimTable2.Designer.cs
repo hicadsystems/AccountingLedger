@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NavyAccountWeb.Data;
 
 namespace NavyAccountWeb.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221012133446_UpdateClaimTable2")]
+    partial class UpdateClaimTable2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1504,8 +1506,6 @@ namespace NavyAccountWeb.Migrations
 
                     b.Property<decimal>("AmountToDate");
 
-                    b.Property<int?>("ClassId");
-
                     b.Property<string>("CreatedBy");
 
                     b.Property<DateTime?>("CreatedDate");
@@ -1517,8 +1517,6 @@ namespace NavyAccountWeb.Migrations
                     b.Property<string>("Period");
 
                     b.Property<string>("Reg_Number");
-
-                    b.Property<int?>("SchoolId");
 
                     b.Property<string>("Term");
 

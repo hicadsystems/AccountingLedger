@@ -4,11 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static NavyAccountWeb.Models.SchoolFilterModels;
 
 namespace NavyAccountWeb.IServices
 {
     public interface IStudentRecordService
     {
+        Task<List<StudentReport>> GetStudentList2(int iDisplayStart, int iDisplayLength);
+        Task<List<StudentReport>> GetStudentReport(StudentFilterModel value);
         Task<bool> AddStudent(sr_StudentRecord value);
         Task<bool> UpdateStudent(sr_StudentRecord value);
         void DeleteStudent(sr_StudentRecord value);

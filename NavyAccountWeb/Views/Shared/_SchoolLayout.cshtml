@@ -115,16 +115,16 @@
                                 <li class="sidebar-item">
                                     <a asp-controller="SRClaimRecord" class="sidebar-link" asp-action="CliamUpload">Cliam Upload</a>
                                 </li>
+
                                 <li class="sidebar-item">
-                                    <a asp-controller="SRClaimRecord" class="sidebar-link" asp-action="">Claim Status</a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a asp-controller="SRClaimRecord" class="sidebar-link" asp-action="ClaimPayment">Claim Payment Report</a>
+                                    <a asp-controller="SRClaimRecord" class="sidebar-link" asp-action="ClaimPayment">Claim Payment Proposal</a>
                                 </li>
                                 <li class="sidebar-item">
                                     <a asp-controller="SRClaimRecord" class="sidebar-link" asp-action="ClaimReimbursment">Claim School reimbursement</a>
                                 </li>
-
+                                <li class="sidebar-item">
+                                    <a asp-controller="SRClaimRecord" class="sidebar-link" asp-action="ClaimSummary">Claim Status</a>
+                                </li>
                             </ul>
                         </li>
 
@@ -132,9 +132,6 @@
                             <a href="#pages-5" data-toggle="collapse" class="sidebar-link collapsed"><i class="align-middle mr-2 fas fa-fw fa-file"></i> <span class="align-middle">UTILITY</span></a>
                             <ul id="pages-5" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
 
-                                <li class="sidebar-item">
-                                    <a asp-controller="" class="sidebar-link" asp-action="">Systems Control</a>
-                                </li>
                                 <li class="sidebar-item">
                                     <a asp-controller="SRSesssion" class="sidebar-link" asp-action="term">Initiate Term</a>
                                 </li>
@@ -174,10 +171,10 @@
                             <ul id="pages-7" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
 
                                 <li class="sidebar-item">
-                                    <a asp-controller="" class="sidebar-link" asp-action="">Nominal Role</a>
+                                    <a asp-controller="SRSchoolReport" class="sidebar-link" asp-action="NominalRoll">Nominal Role</a>
                                 </li>
                                 <li class="sidebar-item">
-                                    <a asp-controller="" class="sidebar-link" asp-action="">Students Reports </a>
+                                    <a asp-controller="SRSchoolReport" class="sidebar-link" asp-action="ClaimPaySummary">Students Fin Record </a>
                                 </li>
 
 

@@ -1,6 +1,7 @@
-﻿
+﻿@model List<NavyAccountCore.Entities.sr_SchoolRecordControl>
 @{ ViewData["Title"] = "ViewSchool";
-    Layout = "~/Views/Shared/_SchoolLayout.cshtml"; }
+    Layout = "~/Views/Shared/_SchoolLayout.cshtml";
+}
 
 < <div class="header">
     <h1 class="header-title">
@@ -32,21 +33,37 @@
                 <h5 class="card-title"> Migrate Session</h5>
 
             </div>
+            @if (TempData["returnMessage"] != null)
+            {
+            <h3 style="color:seagreen">@TempData["returnMessage"].ToString()</h3>         
+            }
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-2">
+                    <label>Current Session</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" value="@Model.FirstOrDefault().Period" readonly />
+                    </div>
 
-            <div class="card-body">
+                </div>
+                <div class="col-md-2">
+                    <label>Current Term</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" value="@Model.FirstOrDefault().term" readonly />
+                    </div>
 
-
-
-                @using (Html.BeginForm("MigrateToSession", "SRSession", FormMethod.Post))
-                {
-    <div class="col-md-1">
-        <div class="form-group">
-            <input type="submit" class="btn btn-lg btn-primary" value="Migreate To New Session" />
-        </div>
-
-    </div>}
-
+                </div>
             </div>
+            @using (Html.BeginForm("MigrateToSession", "SRSesssion", FormMethod.Post))
+            {
+        <div class="col-md-1">
+            <div class="form-group">
+                <input type="submit" class="btn btn-lg btn-primary" value="Migreate To New Session" />
+            </div>
+
+        </div>}
+
+        </div>
 
         </div>
     </div>

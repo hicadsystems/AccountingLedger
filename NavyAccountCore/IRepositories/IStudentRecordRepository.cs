@@ -11,6 +11,7 @@ namespace NavyAccountCore.IRepositories
 {
     public interface IStudentRecordRepository: IRepository<sr_StudentRecord>
     {
+        Task<List<StudentReport>> getStudentList2(int iDisplayStart, int iDisplayLength);
         Task<sr_StudentRecord> GetStudentByCode(Expression<Func<sr_StudentRecord, bool>> predicate);
         Task<IEnumerable<sr_StudentRecord>> GetAllStudent();
         Task<List<StudentRecordVM>> getStudentList(int iDisplayStart, int iDisplayLength);

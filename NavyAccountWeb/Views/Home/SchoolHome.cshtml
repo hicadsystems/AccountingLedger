@@ -1,9 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Http;
 @using NavyAccountCore.Core.Entities
-@{
-    ViewData["Title"] = "Home";
-    Layout = "~/Views/Shared/_SchoolLayout.cshtml";
-}
+@model IEnumerable<NavyAccountCore.Entities.sr_SchoolRecord>
+@{ ViewData["Title"] = "Home";
+                Layout = "~/Views/Shared/_SchoolLayout.cshtml"; }
 
 <div class="page-wrapper">
     <!-- ============================================================== -->
@@ -30,118 +29,13 @@
         <br />
         <div class="row">
 
-            <div class="col-lg-3">
+            <div class="col-lg-6">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex no-block">
                             <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
                             <div class="align-self-center">
-
-                                <h6 class="text-muted m-t-10 m-b-0">LAGOS</h6>
-                                0  10
-
-                                <h6 class="text-muted m-t-10 m-b-0">OKURA-ALAFIA</h6>
-
-                                1200     10
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="col-lg-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex no-block">
-                            <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
-                            <div class="align-self-center">
-
-                                <h6 class="text-muted m-t-10 m-b-0">
-                                    ABEOKUTA
-                                </h6>
-                                1200     10
-                                <h6 class="text-muted m-t-10 m-b-0">
-                                    CALABAR
-                                </h6>
-                                1200     10
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex no-block">
-                            <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
-                            <div class="align-self-center">
-                                <h6 class="text-muted m-t-10 m-b-0">
-                                    P/ HARCOURT
-                                </h6>
-                                1200     10
-                                <h6 class="text-muted m-t-10 m-b-0">
-                                    KUJE
-                                </h6>
-                                1200     10
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex no-block">
-                            <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
-                            <div class="align-self-center">
-                                <h6 class="text-muted m-t-10 m-b-0">
-                                    IMERI
-
-                                </h6>
-                                1200     10
-                                <h6 class="text-muted m-t-10 m-b-0">
-                                    NMS
-                                </h6>
-                                1200     10
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex no-block">
-                            <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
-                            <div class="align-self-center">
-                                <h6 class="text-muted m-t-10 m-b-0">
-                                    IMERI
-
-                                </h6>
-                                1200     10
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex no-block">
-                            <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
-                            <div class="align-self-center">
-                                <h6 class="text-muted m-t-10 m-b-0">
-                                    OGBOMOSHO
-
-                                </h6>
-                                1200     10
-
+                                <h3 class="text-muted m-t-10 m-b-0">SECONDARY SCHOOLS</h3>
                             </div>
                         </div>
                     </div>
@@ -149,91 +43,338 @@
             </div>
         </div>
 
-        <!--Primary School-->
-        <div class="row">
+        @*@foreach (var s in Model)
+        {*@
+    <div class="row">
 
-            <div class="col-lg-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex no-block">
-                            <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
-                            <div class="align-self-center">
-
-                                <h6 class="text-muted m-t-10 m-b-0">
-                                    OKOKOMAIKO
-                                </h6>
-                                1200     10
-                                <h6 class="text-muted m-t-10 m-b-0">
-                                    WARRI
-                                </h6>
-                                1200     10
-
-                            </div>
+        <div class="col-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex no-block">
+                        <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
+                        <div class="align-self-center">
+                            <h6 class="text-muted m-t-10 m-b-0">
+                                @Model.Where(s => s.Schoolname == "NNSS OJO").FirstOrDefault().Schoolname
+                            </h6>
+                            <strong>
+                                @Model.Where(s => s.Schoolname == "NNSS OJO").FirstOrDefault().SchoolCount
+                            </strong>
                         </div>
                     </div>
                 </div>
             </div>
-
-
-            <div class="col-lg-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex no-block">
-                            <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
-                            <div class="align-self-center">
-
-                                <h6 class="text-muted m-t-10 m-b-0">
-                                    OJO
-                                </h6>
-                                1200     10
-                                <h6 class="text-muted m-t-10 m-b-0">
-                                    BOROKIRI
-                                </h6>
-                                1200     10
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex no-block">
-                            <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
-                            <div class="align-self-center">
-                                <h6 class="text-muted m-t-10 m-b-0">
-                                    MOBIL ROAD
-                                </h6>
-                                1200     10
-                                <h6 class="text-muted m-t-10 m-b-0">
-                                    PATHFINDERS
-                                </h6>
-                                1200     10
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex no-block">
-                            <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
-                            <div class="align-self-center">
-
-                                <h6 class="text-muted m-t-10 m-b-0">
-                                    KUJE
-                                </h6>
-                                1200     10
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
         </div>
+
+
+        <div class="col-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex no-block">
+                        <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
+                        <div class="align-self-center">
+                            <h6 class="text-muted m-t-10 m-b-0">
+                                @Model.Where(s => s.Schoolname == "NNSS ABEOKUTA").FirstOrDefault().Schoolname
+                            </h6>
+                            <strong>
+                                @Model.Where(s => s.Schoolname == "NNSS ABEOKUTA").FirstOrDefault().SchoolCount
+                            </strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex no-block">
+                        <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
+                        <div class="align-self-center">
+                             <h6 class="text-muted m-t-10 m-b-0">
+                                @Model.Where(s => s.Schoolname == "NNSS PORT HARCOURT").FirstOrDefault().Schoolname
+                            </h6>
+                            <strong>
+                                @Model.Where(s => s.Schoolname == "NNSS PORT HARCOURT").FirstOrDefault().SchoolCount
+                            </strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex no-block">
+                        <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
+                        <div class="align-self-center">
+                            <h6 class="text-muted m-t-10 m-b-0">
+                                @Model.Where(s => s.Schoolname == "NNSS CALABAR").FirstOrDefault().Schoolname
+                            </h6>
+                            <strong>
+                                @Model.Where(s => s.Schoolname == "NNSS CALABAR").FirstOrDefault().SchoolCount
+                            </strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex no-block">
+                        <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
+                        <div class="align-self-center">
+                            <h6 class="text-muted m-t-10 m-b-0">
+                                @Model.Where(s => s.Schoolname == "NNSS OGBOMOSO").FirstOrDefault().Schoolname
+                            </h6>
+                            <strong>
+                                @Model.Where(s => s.Schoolname == "NNSS OGBOMOSO").FirstOrDefault().SchoolCount
+                            </strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex no-block">
+                            <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
+                            <div class="align-self-center">
+                                <h6 class="text-muted m-t-10 m-b-0">
+                                    @Model.Where(s => s.Schoolname == "NNSS IMERI").FirstOrDefault().Schoolname
+                                </h6>
+                                <strong>
+                                    @Model.Where(s => s.Schoolname == "NNSS IMERI").FirstOrDefault().SchoolCount
+                                </strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div class="col-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex no-block">
+                        <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
+                        <div class="align-self-center">
+                            <h6 class="text-muted m-t-10 m-b-0">
+                                @Model.Where(s => s.Schoolname == "NNSS OKURA").FirstOrDefault().Schoolname
+                            </h6>
+                            <strong>
+                                @Model.Where(s => s.Schoolname == "NNSS OKURA").FirstOrDefault().SchoolCount
+                            </strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex no-block">
+                        <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
+                        <div class="align-self-center">
+                            <h6 class="text-muted m-t-10 m-b-0">
+                                @Model.Where(s => s.Schoolname == "NNSS KUJE").FirstOrDefault().Schoolname
+                            </h6>
+                            <strong>
+                                @Model.Where(s => s.Schoolname == "NNSS KUJE").FirstOrDefault().SchoolCount
+                            </strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+    
+    <!--Primary School-->
+                                    <div class="row">
+
+                                        <div class="col-lg-6">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="d-flex no-block">
+                                                        <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
+                                                        <div class="align-self-center">
+                                                            <h3 class="text-muted m-t-10 m-b-0">PRIMARY SCHOOLS</h3>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                                    <div class="row">
+
+                                                        <div class="col-lg-3">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <div class="d-flex no-block">
+                                                                        <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
+                                                                        <div class="align-self-center">
+                                                                            <h6 class="text-muted m-t-10 m-b-0">
+                                                                                @Model.Where(s => s.Schoolname == "NNPS OJO").FirstOrDefault().Schoolname
+                                                                            </h6>
+                                                                            <strong>
+                                                                                @Model.Where(s => s.Schoolname == "NNPS OJO").FirstOrDefault().SchoolCount
+                                                                            </strong>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="col-lg-3">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <div class="d-flex no-block">
+                                                                        <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
+                                                                        <div class="align-self-center">
+                                                                                <h6 class="text-muted m-t-10 m-b-0">
+                                                                                    @Model.Where(s => s.Schoolname == "NNPS MOBIL ROAD").FirstOrDefault().Schoolname
+                                                                                </h6>
+                                                                                <strong>
+                                                                                    @Model.Where(s => s.Schoolname == "NNPS MOBIL ROAD").FirstOrDefault().SchoolCount
+                                                                                </strong>
+
+</div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-lg-3">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <div class="d-flex no-block">
+                                                                        <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
+                                                                        <div class="align-self-center">
+                                                                                <h6 class="text-muted m-t-10 m-b-0">
+                                                                                    @Model.Where(s => s.Schoolname == "NNPS OKOKOMAIKO").FirstOrDefault().Schoolname
+                                                                                </h6>
+                                                                                <strong>
+                                                                                    @Model.Where(s => s.Schoolname == "NNPS OKOKOMAIKO").FirstOrDefault().SchoolCount
+                                                                                </strong>
+                                                                            </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <div class="d-flex no-block">
+                                                                        <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
+                                                                        <div class="align-self-center">
+                                                                            <h6 class="text-muted m-t-10 m-b-0">
+                                                                                @Model.Where(s => s.Schoolname == "NNPS CALABAR").FirstOrDefault().Schoolname
+                                                                            </h6>
+                                                                            <strong>
+                                                                                @Model.Where(s => s.Schoolname == "NNPS CALABAR").FirstOrDefault().SchoolCount
+                                                                            </strong>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <div class="d-flex no-block">
+                                                                        <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
+                                                                        <div class="align-self-center">
+                                                                            <h6 class="text-muted m-t-10 m-b-0">
+                                                                                @Model.Where(s => s.Schoolname == "NNPS ONNE").FirstOrDefault().Schoolname
+                                                                            </h6>
+                                                                            <strong>
+                                                                                @Model.Where(s => s.Schoolname == "NNPS ONNE").FirstOrDefault().SchoolCount
+                                                                            </strong>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="col-lg-3">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <div class="d-flex no-block">
+                                                                        <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
+                                                                        <div class="align-self-center">
+                      
+                                                                            <h6 class="text-muted m-t-10 m-b-0">
+                                                                                @Model.Where(s => s.Schoolname == "NNPS BORIKIRI").FirstOrDefault().Schoolname
+                                                                            </h6>
+                                                                            <strong>
+                                                                                @Model.Where(s => s.Schoolname == "NNPS BORIKIRI").FirstOrDefault().SchoolCount
+                                                                            </strong>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <div class="d-flex no-block">
+                                                                        <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
+                                                                        <div class="align-self-center">
+            
+                                                                            <h6 class="text-muted m-t-10 m-b-0">
+                                                                                @Model.Where(s => s.Schoolname == "NNPS PATHFINDER").FirstOrDefault().Schoolname
+                                                                            </h6>
+                                                                            <strong>
+                                                                                @Model.Where(s => s.Schoolname == "NNPS PATHFINDER").FirstOrDefault().SchoolCount
+                                                                            </strong>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="col-lg-3">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <div class="d-flex no-block">
+                                                                        <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
+                                                                        <div class="align-self-center">
+                                                                            
+                                                                            <h6 class="text-muted m-t-10 m-b-0">
+                                                                                @Model.Where(s => s.Schoolname == "NNPS OGHARA").FirstOrDefault().Schoolname
+                                                                            </h6>
+                                                                            <strong>
+                                                                                @Model.Where(s => s.Schoolname == "NNPS OGHARA").FirstOrDefault().SchoolCount
+                                                                            </strong>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <div class="d-flex no-block">
+                                                                        <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span></div>
+                                                                        <div class="align-self-center">
+                                                                            <h6 class="text-muted m-t-10 m-b-0">
+                                                                                @Model.Where(s => s.Schoolname == "NNPS KUJE").FirstOrDefault().Schoolname
+                                                                            </h6>
+                                                                            <strong>
+                                                                                @Model.Where(s => s.Schoolname == "NNPS KUJE").FirstOrDefault().SchoolCount
+                                                                            </strong>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+
+                                                    </div>
     </div>
 </div>
 <div class="row">

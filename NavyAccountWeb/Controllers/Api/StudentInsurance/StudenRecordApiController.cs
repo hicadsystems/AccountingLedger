@@ -45,6 +45,16 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
             var countall = await recordService.getStudentListCount();
             return Ok(new { responseCode = 200, studentlist = _studentlist, total = countall });
         }
+        [Route("getAllSTudent2s")]
+        [HttpGet]
+        public async Task<IActionResult> Get2(int? pageno)
+        {
+            int iDisplayLength = 10;
+            pageno = pageno == null ? 0 : (pageno--);
+            var _studentlist = await recordService.GetStudentList2(((int)pageno * iDisplayLength), iDisplayLength);
+            var countall = await recordService.getStudentListCount();
+            return Ok(new { responseCode = 200, studentlist = _studentlist, total = countall });
+        }
         [Route("getAllInactivestudents")]
         [HttpGet]
         public async Task<IActionResult> Getinactive(int? pageno)
@@ -171,6 +181,48 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
             catch (Exception ex)
             {
                 return Ok(new { responseCode = 500, responseDescription = ex.Message });
+            }
+        }
+        [Route("getStudentNorminalRoll/{SchoolId}/{ClassId}/{Status}/{ParentalStatus}/{sortby}")]
+        [HttpGet]
+        public async Task<IEnumerable<StudentReport>> GetStudentReport(int SchoolId,int ClassId,string Status,string ParentalStatus, string sortby)
+        {
+            StudentFilterModel value = new StudentFilterModel();
+            value.SchoolId = SchoolId;
+            value.ClassId = ClassId;
+            value.Status = Status;
+            value.ParentalStatus = ParentalStatus;
+            value.sortby = sortby;
+
+            try
+            {
+                return await recordService.GetStudentReport(value);
+                
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+        [Route("getStudentNorminalRoll2/{SchoolId}/{ClassId}/{Status}/{ParentalStatus}/{sortby}")]
+        [HttpGet]
+        public async Task<IEnumerable<StudentReport>> GetStudentReport2(StudentFilterModel value)
+        {
+            //StudentFilterModel value = new StudentFilterModel();
+            //value.SchoolId = SchoolId;
+            //value.ClassId = ClassId;
+            //value.Status = Status;
+            //value.ParentalStatus = ParentalStatus;
+            //value.sortby = sortby;
+
+            try
+            {
+                return await recordService.GetStudentReport(value);
+
+            }
+            catch (Exception ex)
+            {
+                throw;
             }
         }
 

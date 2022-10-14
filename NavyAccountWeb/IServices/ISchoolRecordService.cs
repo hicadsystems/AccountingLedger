@@ -8,6 +8,7 @@ namespace NavyAccountWeb.IServices
 {
     public interface ISchoolRecordService
     {
+        Task<List<sr_SchoolRecord>> GetAllSchoolCount();
         Task<bool> AddSchool(sr_SchoolRecord value);
         Task<bool> UpdateSchool(sr_SchoolRecord value);
         Task<sr_SchoolRecord> GetAllSchoolByCode(string code);

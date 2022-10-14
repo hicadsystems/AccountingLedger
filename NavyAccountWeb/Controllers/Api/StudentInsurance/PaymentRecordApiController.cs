@@ -2,6 +2,7 @@
 using NavyAccountCore.Entities;
 using NavyAccountWeb.IServices;
 using NavyAccountWeb.Models;
+using NavyAccountWeb.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -113,7 +114,13 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
                 return Ok(new { respnseCode = 500, ResponseDescription = ex.Message });
             }
         }
-
+        [Route("getPaymentSummary/{id}")]
+        [HttpGet()]
+        public async Task<IEnumerable<StudentPayViewModel>> GetPaymentummary(int id)
+        {
+            var dd = await recordService.GetStudentPaySummary(id);
+            return dd;
+        }
         // DELETE api/<SchoolRecordApiController>/5
         [Route("Delete/{id}")]
         [HttpDelete]

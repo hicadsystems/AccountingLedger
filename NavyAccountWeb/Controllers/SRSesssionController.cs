@@ -16,11 +16,13 @@ namespace NavyAccountWeb.Controllers
         }
         public IActionResult session()
         {
-            return View();
+            var ses = sessionService.GetCurrentSession();
+            return View(ses);
         }
         public IActionResult term()
         {
-            return View();
+            var ses = sessionService.GetCurrentSession();
+            return View(ses);
         }
         [HttpPost]
         public IActionResult MigrateToSession()
@@ -35,7 +37,7 @@ namespace NavyAccountWeb.Controllers
                 TempData["returnMessage"] = ex.Message;
                 throw;
             }
-            return View();
+            return View("session");
         }
         [HttpPost]
         public IActionResult MigrateToTerm()
@@ -50,7 +52,7 @@ namespace NavyAccountWeb.Controllers
                 TempData["returnMessage"] = ex.Message;
                 throw;
             }
-            return View();
+            return View("term");
         }
     }
 }

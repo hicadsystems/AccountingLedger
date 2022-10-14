@@ -26,7 +26,8 @@ namespace NavyAccountCore.Repositories
         }
         public async Task<IEnumerable<sr_SchoolRecord>> GetAllSchool()
         {
-            return await context.sr_SchoolRecord.ToListAsync();
+            var dd= await context.sr_SchoolRecord.ToListAsync();
+            return dd;
                               
         }
 
