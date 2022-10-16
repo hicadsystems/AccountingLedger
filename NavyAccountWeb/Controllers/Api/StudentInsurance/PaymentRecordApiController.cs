@@ -20,6 +20,23 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
         {
             this.recordService = recordService;
         }
+
+        [Route("FilterPaymentProposal/{proposalValue}")] //api/Payment/FilterPaymentProposal/
+        [HttpGet]
+        public async Task<IEnumerable<PaymentProposalRecord2>> GetAll(string proposalValue)
+        {
+            var pp=await recordService.filteredPaymentProposal(proposalValue);
+            return pp;
+        }
+
+
+        [Route("GetPaymentProposalByReqNum/{reqNum}")] //api/Payment/GetPaymentProposalByReqNum/
+        [HttpGet]
+        public async Task<List<PaymentProposalRecord>> GetPaymentProposalByReqNum(string reqNum)
+        {
+            return await recordService.GetPaymentProposalByReq(reqNum);
+        }
+
         // GET: api/<PaymenRecordApiController>
         [Route("GetAllPaymentProposal")]
         [HttpGet]
@@ -46,6 +63,8 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
             return Ok(new { responseCode = 200, paymentProposalList = paymentProposalList.Item1, totalCount = paymentProposalList.Item2 });
            
         }
+
+        
 
         // GET api/<SchoolRecordApiController>/5
         [Route("GetRecordbyCode/{code}")]
@@ -112,6 +131,16 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
 
                 return Ok(new { respnseCode = 500, ResponseDescription = ex.Message });
             }
+        }
+
+        [Route("DeletePaymentRecord")] 
+        [HttpDelete]
+        public async  Task<IActionResult> DeletePaymentRecord(string reqnum)
+        {
+            var op = new DeleteStudentPaymentproposal { Req_Number= reqnum };
+            await recordService.DeletePaymentProposal(op);
+
+            return Ok(new { responseCode = 200, ResponseDescription = "Successfully Deleted" });
         }
 
         // DELETE api/<SchoolRecordApiController>/5

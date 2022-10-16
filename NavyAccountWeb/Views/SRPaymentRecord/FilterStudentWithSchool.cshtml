@@ -1,0 +1,59 @@
+﻿@model IEnumerable<NavyAccountWeb.Models.SchoolStudentRecord>
+
+@{
+    Layout = null;
+    int total = 0;
+    int total2 = 0;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>School Summary Report</title>
+</head>
+<body>
+    <h6 style="text-align:center">RETRICTED</h6>
+    <h2 style="text-align:center">NIGERIAN NAVY DIRECTORATE OF NON-PUBLIC FUND</h2>
+    <h2 style="text-align:center">NAVIP, DEPENDANT FUND AND WELFARE LOAN PORTFOLIOS</h2>
+    School Summary Report: Produce On @DateTime.Now
+    <div class="card-body">
+        <table border="2" cellpadding="2" cellspacing="0" width="100%">
+            <tr>
+                <th>School</th>
+                <th>Strength</th>
+                <th>No of Student</th>
+            </tr>
+            @if (Model.Count() == 0)
+            {
+                <tr>
+                    <td colspan="12"><b>No Record Found</b></td>
+                </tr>
+            }
+            else
+            {
+
+                @foreach (var b in Model)
+                {
+                    <tr>
+                        <td>@b.school</td>
+                        <td>@b.strength</td>
+                        <td>@b.studentCount</td>
+                    </tr>
+
+                    total += b.strength;
+                    total2 += b.studentCount;
+                }
+                <tr>
+                    <td style="font-weight:bold">Total</td>
+                    <td style="font-weight:bold">@total</td>
+                    <td style="font-weight:bold">@total2</td>
+                </tr>
+            }
+        </table>
+        <h6 style="text-align:center">RETRICTED</h6>
+    </div>
+</body>
+</html>
+

@@ -14,6 +14,13 @@ namespace NavyAccountWeb.Models
         public decimal? Amount { get; set; }
     }
 
+    public class PaymentProposalRecord2
+    {
+
+        public int id { get; set; }
+        public string name { get; set; }
+    }
+
     public class PaymentPoposalExcelRecord
     {
         public string Req_Number { get; set; }
@@ -29,4 +36,27 @@ namespace NavyAccountWeb.Models
         public List<PaymentProposalRecord> distintrecord { get; set; }
         public List<PaymentProposalRecord> studentRecord { get; set; }
     }
+
+    public class SchoolStudentRecord 
+    {
+        public string school { get; set; }
+        public int strength { get; set; }
+        public int studentCount  { get; set; }
+    }
+
+    public class SchoolStudentRecordModel
+    {
+        public string school { get; set; }
+        public int strength { get; set; }
+        public string Reg_Number { get; set; }
+    }
+
+
+
+
+    public class DeleteStudentPaymentproposal 
+    {
+        public string Req_Number { get; set; }
+    }
+
 }

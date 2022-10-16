@@ -16,6 +16,8 @@ using NavyAccountCore.Core.Data;
 using NavyAccountCore.Models;
 using NavyAccountWeb.Services;
 using System.Threading;
+using System.Data.SqlClient;
+using Dapper;
 
 namespace NavyAccountWeb.Controllers
 {
@@ -23,15 +25,17 @@ namespace NavyAccountWeb.Controllers
     {
         // GET: SRPaymentRecordController
         private readonly IPaymentRecordService paymentRecordService;
+        private readonly IDapper dapperService;
 
         private readonly IGeneratePdf GeneratePdf;
-        private readonly ILogger<SRPaymentRecordController> logger;
+       
 
-        public SRPaymentRecordController(IPaymentRecordService paymentRecordService, IGeneratePdf generatePdf, ILogger<SRPaymentRecordController> logger)
+        public SRPaymentRecordController(IPaymentRecordService paymentRecordService, IDapper dapperService, IGeneratePdf generatePdf)
         {
             this.paymentRecordService = paymentRecordService;
             GeneratePdf = generatePdf;
-            this.logger = logger;
+            this.dapperService = dapperService;
+
         }
 
         [Route("SRPaymentRecord/PrintPaymentProposalAsPdf")]
@@ -104,6 +108,56 @@ namespace NavyAccountWeb.Controllers
                 var op = await paymentRecordService.GetStudentpaymentProposalbySchool(schoolName);
                 var oq = await paymentRecordService.moveRecord(op);
                 return await GeneratePdf.GetPdf("Views/SRPaymentRecord/PaymentProposal.cshtml", oq);
+        }
+
+
+        [Route("SRPaymentRecord/PrintFilterSchoolWithStudentPdf")]
+        public async Task<IActionResult> PrintFilterSchoolWithStudentPdf()
+        {
+            var op = await paymentRecordService.filterSchoolWithStudent();
+            return await GeneratePdf.GetPdf("Views/SRPaymentRecord/FilterStudentWithSchool.cshtml", op);
+        }
+
+        [Route("SRPaymentRecord/PrintFilterSchoolWithStudentAsExcel")]
+        public async Task<IActionResult> PrintFilterSchoolWithStudentAsExcel()
+        {
+            var op = await paymentRecordService.filterSchoolWithStudent();
+            var stream = new MemoryStream();
+
+            int row = 2;
+            using (var package = new ExcelPackage(stream))
+            {
+                var workSheet = package.Workbook.Worksheets.Add("Sheet2");
+                workSheet.Cells.LoadFromCollection(op, true);
+                package.Save();
+            }
+
+            string excelname = "SchoolReport.xlsx";
+
+            stream.Position = 0;
+            string excelName = $"SchoolReport-{DateTime.Now.ToString("yyyyMMddHHmmssfff")}.xlsx";
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelname);
+        }
+
+        public ActionResult UpdatePaymentProposal()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdatePayment()
+        {
+
+            var param = new DynamicParameters();
+            param.Add("@username", User.Identity.Name);
+            dapperService.Execute("sp_UpdatePaymentProposal", param, commandType: System.Data.CommandType.StoredProcedure);
+
+            TempData["message"] = "Uploaded Successfully";
+
+            
+            return RedirectToAction("UpdatePaymentProposal");
+
+
         }
 
 
@@ -278,6 +332,12 @@ namespace NavyAccountWeb.Controllers
         }
 
         public ActionResult Index()
+        {
+
+            return View();
+        }
+
+        public ActionResult Index2()
         {
 
             return View();

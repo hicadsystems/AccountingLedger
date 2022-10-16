@@ -125,30 +125,30 @@ namespace NavyAccountWeb.Migrations
                     table.PrimaryKey("PK_sr_SchoolRecord", x => x.id);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "sr_StudentRecord",
-                columns: table => new
-                {
-                    id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Reg_Number = table.Column<string>(nullable: true),
-                    Surname = table.Column<string>(nullable: true),
-                    FirstName = table.Column<string>(nullable: true),
-                    MiddleName = table.Column<string>(nullable: true),
-                    Sex = table.Column<string>(nullable: true),
-                    SchoolCode = table.Column<string>(nullable: true),
-                    CommencementDate = table.Column<string>(nullable: true),
-                    Class = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
-                    Status = table.Column<string>(nullable: true),
-                    ExitDate = table.Column<string>(nullable: true),
-                    ExitReason = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_sr_StudentRecord", x => x.id);
-                });
+        //    migrationBuilder.CreateTable(
+        //        name: "sr_StudentRecord",
+        //        columns: table => new
+        //        {
+        //            id = table.Column<int>(nullable: false)
+        //                .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+        //            Reg_Number = table.Column<string>(nullable: true),
+        //            Surname = table.Column<string>(nullable: true),
+        //            FirstName = table.Column<string>(nullable: true),
+        //            MiddleName = table.Column<string>(nullable: true),
+        //            Sex = table.Column<string>(nullable: true),
+        //            SchoolCode = table.Column<string>(nullable: true),
+        //            CommencementDate = table.Column<string>(nullable: true),
+        //            Class = table.Column<string>(nullable: true),
+        //            PhoneNumber = table.Column<string>(nullable: true),
+        //            Email = table.Column<string>(nullable: true),
+        //            Status = table.Column<string>(nullable: true),
+        //            ExitDate = table.Column<string>(nullable: true),
+        //            ExitReason = table.Column<string>(nullable: true)
+        //        },
+        //        constraints: table =>
+        //        {
+        //            table.PrimaryKey("PK_sr_StudentRecord", x => x.id);
+        //        });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -168,8 +168,7 @@ namespace NavyAccountWeb.Migrations
             migrationBuilder.DropTable(
                 name: "sr_SchoolRecord");
 
-            migrationBuilder.DropTable(
-                name: "sr_StudentRecord");
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
 
             //migrationBuilder.AddColumn<string>(
             //    name: "batchno",

@@ -11,13 +11,12 @@ namespace NavyAccountCore.Entities
         public int id { get; set; }
         public string Reg_Number {get;set;}
         public string Period {get;set;}
-        public DateTime Transdate {get;set;}
+        public string Term { get; set; }
+        public DateTime? Transdate {get;set;}
         public decimal Amount {get;set;}
         public string DeletedBy {get;set;}
-        public DateTime DeletedDate {get;set;}
+        public DateTime? DeletedDate {get;set;}
         public string CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
-
-
     }
 }

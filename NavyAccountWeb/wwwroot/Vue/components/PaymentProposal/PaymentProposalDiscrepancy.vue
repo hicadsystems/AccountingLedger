@@ -3,11 +3,15 @@
 <div>
     <div class="card-body">
      <div class="row">
-        <div class="col-12 col-xl-4">
-                <div class="form-group">
-                   <button class="btn btn-primary" v-on:click="printDiscrepancyAsExcel"  type="submit">Export as Excel</button>
-
-                </div>
+            <div class="col-12 col-xl-4">
+                        <div class="form-group">
+                            <label class="form-label">Reg Number/Surname/Firstname</label>
+                            <vuejsAutocomplete source="/api/Payment/FilterPaymentProposal/"
+                                            input-class="form-control"
+                                            @selected="setPaymentProposal"
+                                            v-model="pp">
+                            </vuejsAutocomplete>
+                        </div>
             </div>
         </div>
         <table id="datatables-buttons" class="table table-striped" style="width:100%">
@@ -29,7 +33,7 @@
                     <td>{{ student.schoolCity }}</td>
                     <td>{{ student.schoolType }}</td>
                     <td>{{ student.amount }}</td>
-                   <td><a type="button"  class="btn btn-submit btn-primary">Actions</a></td>
+                   <td><button type="button" class="btn btn-submit btn-primary" @click="processDelete(student.req_Number)">Delete</button></td>
                 </tr>
             </tbody>
 
@@ -95,22 +99,43 @@ mounted () {
         .then(response => {
             
             this.paymentProposalList = response.data.paymentProposalList;
-            this.totalcount = response.data.total;
+            this.totalcount = response.data.totalcount;
         })
      },
-      setValueStudent: function(result) {
-          alert(result.value)
-         axios
-       .get(`/api/StudentRecord/getStudentById/${result.value}`)
-       .then(response => {this.studentList = response.data;
-      
-       })
-    },
-      printDiscrepancyAsExcel:function(){
-          window.open(`/SRPaymentRecord/PrintDescrepancyReportAsExcel`);
-       
-           
+       setPaymentProposal: function(result) {
+            this.paymentProposalList='';
+            axios
+           .get(`/api/Payment/GetPaymentProposalByReqNum/${result.display}`)
+           .then(response => {this.paymentProposalList=response.data
+          
+           })
         },
+      printDiscrepancyAsExcel:function(){
+          window.open(`/SRPaymentRecord/PrintDescrepancyReportAsExcel`);  
+        },
+       GetpaymentProposal:function(pageNo){
+            axios.get(`/api/Payment/GetDescrepancyRecord?pageno=${pageNo}`)
+           .then(response => {
+            this.paymentProposalList = response.data.paymentProposalList;
+            this.totalcount = response.data.totalcount;
+        })
+       },
+       processDelete:function(req){
+         axios.delete(`/api/Payment/DeletePaymentRecord?reqnum=${req}`)
+                 .then(response => {
+                     if (response.data.responseCode == '200') {
+                          axios.get(`/api/Payment/GetDescrepancyRecord?pageno=${this.pageno}`)
+                                 .then(response => {
+                                this.paymentProposalList = response.data.paymentProposalList;
+                                this.totalcount = response.data.totalcount;
+                       })
+                     }
+                 }).catch(e => {
+                            this.errors.push(e)
+                        });
+       }
+
+      
 }
 
 };

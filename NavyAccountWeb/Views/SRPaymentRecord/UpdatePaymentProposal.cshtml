@@ -1,0 +1,41 @@
+﻿@using Microsoft.AspNetCore.Http;
+@{
+    ViewData["Title"] = "UpdatePaymentProposal";
+    Layout = "~/Views/Shared/_SchoolLayout.cshtml";
+}
+
+<div class="header">
+<h1 class="header-title">
+        Update Payment Proposal Processing
+</h1>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="Home/Index">Main</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Update Payment Proposal</li>
+    </ol>
+</nav>
+</div>
+<div class="row">
+    <div class="col-12 col-xl-4">
+        <div class="card">
+            <div class="card-header">                                                                                                                                                                   
+                <h5 class="card-title">Update Payment Proposal</h5>
+            </div>
+
+            @TempData["message"]
+            <div class="card-body">
+                @using (Html.BeginForm("UpdatePayment", "SRPaymentRecord", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()                                                                                          
+
+                    <div class="form-group">
+                        <input type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Update" />
+                    </div>
+                }
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
