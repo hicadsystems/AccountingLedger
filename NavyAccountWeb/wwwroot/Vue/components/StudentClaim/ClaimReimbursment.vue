@@ -13,10 +13,8 @@
                                 </select>
                         </div>
                         <div class="col-md-4">
-                            <div class="form-group">
                                 <label class="form-label">Voucher Number</label>
                                 <input class="form-control" name="VoucherNumber" v-model="postBody.VoucherNumber" />
-                            </div>
                         </div>
                         <!-- <div class="col-12 col-xl-2">
                             
@@ -132,8 +130,6 @@
             if(schoolname===''){
                 schoolname='NULL'
             }
-            //alert(schoolname)
-            alert(VoucherNumber)
             Axios.get(`/api/StudentClaim/UpdateLedgerBySchool/${schoolname}/${VoucherNumber}`)
             .then(response=>{
                 if(response.data.responseCode='200'){

@@ -36,6 +36,22 @@ namespace NavyAccountWeb.Services
         {
             return await _unitOfWork.school.GetAllSchool(); 
         }
+        public async Task<List<sr_SchoolRecord>> GetAllSchoolCount()
+        {
+            try
+            {
+            var result = new List<sr_SchoolRecord>();
+            var param = new DynamicParameters();
+            result = dapper.GetAll<sr_SchoolRecord>("sr_getSchoolCount", param, commandType: System.Data.CommandType.StoredProcedure);
+            return result;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
         public void DeleteSchool(sr_SchoolRecord value)
         {
             _unitOfWork.school.Remove(value);

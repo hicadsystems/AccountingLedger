@@ -4,9 +4,9 @@
      <div class="row">
         <div class="col-12 col-xl-12">
                 <div class="form-group">
+                    <label class="form-label">School Name</label>
                     <div class="row">
                         <div class="col-sm-4">
-                            <label class="form-label">School Name</label>
                                 <select class="form-control" v-model="postBody.schoolname" name="schoolname" required>
                                     <option v-for="sch in schoolList" v-bind:value="sch.schoolname" v-bind:key="sch.schoolname"> {{ sch.schoolname }} </option>
                                 </select>
@@ -105,7 +105,7 @@
             if(schoolname===''){
                 schoolname='NULL'
             }
-           window.open(`/SRClaimRecord/CLaimPaymentByExcel/${postBody.schoolname}`)
+           window.open(`/SRClaimRecord/CLaimPaymentByExcel/${schoolname}`)
         },
        
       }

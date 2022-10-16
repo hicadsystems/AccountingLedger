@@ -57,6 +57,33 @@ namespace NavyAccountCore.Repositories
                       }).Skip(iDisplayStart).Take(iDisplayLength).ToListAsync();
             return await dd;
         }
+        public async Task<List<StudentReport>> getStudentList2(int iDisplayStart, int iDisplayLength)
+        {
+            var dd = (from pers in context.sr_StudentRecord
+                      join sch in context.sr_SchoolRecord on pers.SchoolId equals sch.id
+                      join gu in context.sr_GuardianRecord on pers.Guardianid equals gu.id
+                      join par in context.sr_ParentRecord on pers.Parentid equals par.id
+                      join cl in context.sr_ClassRecord on pers.ClassId equals cl.id
+                      select new StudentReport
+                      {
+
+                          studentid = pers.id,
+                          Reg_Number = pers.Reg_Number,
+                          StudentName = pers.Surname+" "+ pers.FirstName+" "+ pers.MiddleName,
+                          Email = pers.Email,
+                          Age = pers.Age,
+                          Sex = pers.Sex,
+                          ParentalStatus = pers.ParentalStatus,
+                          PhoneNumber = pers.PhoneNumber,
+                          SchoolCode = sch.SchoolType,
+                          SchoolName = sch.Schoolname,
+                          ClassName = cl.ClassName,
+                          ParentName = par.Surname + " " + par.OtherNames,
+                          GuardianName = gu.Surname + " " + gu.OtherNames,
+                          ClassCategory = pers.ClassCategory
+                      }).Skip(iDisplayStart).Take(iDisplayLength).ToListAsync();
+            return await dd;
+        }
         public StudentRecordVM getStudentListByID(int id)
         {
             var dd = (from pers in context.sr_StudentRecord

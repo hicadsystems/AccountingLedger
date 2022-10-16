@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using NavyAccountCore.Entities;
 using NavyAccountWeb.IServices;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,13 @@ namespace NavyAccountWeb.Services
         {
             var param = new DynamicParameters();
             dapper.Execute("sr_MigrateToNewTerm", param, commandType: System.Data.CommandType.StoredProcedure);
+        }
+        public List<sr_SchoolRecordControl> GetCurrentSession()
+        {
+            var result = new List<sr_SchoolRecordControl>();
+            var param = new DynamicParameters();
+             result= dapper.GetAll<sr_SchoolRecordControl>("sr_GetSession", param, commandType: System.Data.CommandType.StoredProcedure);
+            return result;
         }
     }
 

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NavyAccountWeb.Data;
 
 namespace NavyAccountWeb.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221011094258_addStudentHist")]
+    partial class addStudentHist
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1502,10 +1504,6 @@ namespace NavyAccountWeb.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("money");
 
-                    b.Property<decimal>("AmountToDate");
-
-                    b.Property<int?>("ClassId");
-
                     b.Property<string>("CreatedBy");
 
                     b.Property<DateTime?>("CreatedDate");
@@ -1517,10 +1515,6 @@ namespace NavyAccountWeb.Migrations
                     b.Property<string>("Period");
 
                     b.Property<string>("Reg_Number");
-
-                    b.Property<int?>("SchoolId");
-
-                    b.Property<string>("Term");
 
                     b.Property<DateTime?>("Transdate");
 
@@ -1634,15 +1628,13 @@ namespace NavyAccountWeb.Migrations
 
                     b.Property<string>("DeletedBy");
 
-                    b.Property<DateTime?>("DeletedDate");
+                    b.Property<DateTime>("DeletedDate");
 
                     b.Property<string>("Period");
 
                     b.Property<string>("Reg_Number");
 
-                    b.Property<string>("Term");
-
-                    b.Property<DateTime?>("Transdate");
+                    b.Property<DateTime>("Transdate");
 
                     b.HasKey("id");
 
@@ -1800,25 +1792,25 @@ namespace NavyAccountWeb.Migrations
 
                     b.Property<string>("ClassCategory");
 
-                    b.Property<int?>("ClassId");
+                    b.Property<int>("ClassId");
 
-                    b.Property<DateTime?>("CommencementDate");
+                    b.Property<DateTime>("CommencementDate");
 
                     b.Property<string>("Email");
 
-                    b.Property<DateTime?>("ExitDate");
+                    b.Property<DateTime>("ExitDate");
 
                     b.Property<string>("ExitReason");
 
                     b.Property<string>("FirstName");
 
-                    b.Property<int?>("Guardianid");
+                    b.Property<int>("Guardianid");
 
                     b.Property<string>("MiddleName");
 
                     b.Property<string>("ParentalStatus");
 
-                    b.Property<int?>("Parentid");
+                    b.Property<int>("Parentid");
 
                     b.Property<string>("Period");
 
@@ -1828,7 +1820,7 @@ namespace NavyAccountWeb.Migrations
 
                     b.Property<string>("SchoolCode");
 
-                    b.Property<int?>("SchoolId");
+                    b.Property<int>("SchoolId");
 
                     b.Property<string>("Sex");
 

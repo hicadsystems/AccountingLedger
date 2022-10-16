@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using MoreLinq;
 using NavyAccountCore.Entities;
 using NavyAccountWeb.IServices;
 using NavyAccountWeb.Models;
+using NavyAccountWeb.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -148,6 +150,21 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
                 return Ok(new { respnseCode = 500, ResponseDescription = ex.Message });
             }
         }
+        [Route("GetClaimStatus")]
+        [HttpGet()]
+        public async Task<IEnumerable<ClaimReport>> GetClaimByStatus()
+        {
+            var result = await recordService.GetStudentReportClaim();
+            result = result.DistinctBy(x => x.Reg_Number).ToList();
+            return result; 
+        }
+        [Route("getclaimsummary/{id}")]
+        [HttpGet()]
+        public async Task<IEnumerable<StudentClaimViewModel>> GetClaimSummary(int id)
+        {
+            var dd= await recordService.GetStudentSummary(id);
+            return dd;
+        }
 
 
         // DELETE api/<SchoolRecordApiController>/5
@@ -163,6 +180,8 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
             recordService.DeleteClaimRecord(sch);
             return Ok(new { respnseCode = 200, ResponseDescription = "Successfully Deleted" });
         }
+
+
     }
 }
 

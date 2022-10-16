@@ -6,6 +6,7 @@ using NavyAccountCore.Core.Entities;
 using NavyAccountCore.Entities;
 using NavyAccountWeb.IServices;
 using NavyAccountWeb.Models;
+using NavyAccountWeb.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -183,6 +184,15 @@ namespace NavyAccountWeb.Services
 
             dapper.Execute("sr_UpdatePaymentProposal", param, commandType:System.Data.CommandType.StoredProcedure);
 
+        }
+        public async Task<List<StudentPayViewModel>> GetStudentPaySummary(int id)
+        {
+            var result = new List<StudentPayViewModel>();
+            var param = new DynamicParameters();
+            param.Add("@id", id);
+            result = dapper.GetAll<StudentPayViewModel>("sr_GetPaymentSummary", param, commandType: System.Data.CommandType.StoredProcedure);
+
+            return result;
         }
 
         public async Task<List<PaymentProposalRecord>> GetpaymentProposalByValue(string paymentProposalValue)

@@ -1,5 +1,6 @@
 ﻿using NavyAccountCore.Entities;
 using NavyAccountWeb.Models;
+using NavyAccountWeb.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace NavyAccountWeb.IServices
 {
     public interface IPaymentRecordService
     {
+        Task<List<StudentPayViewModel>> GetStudentPaySummary(int id);
         Task<List<SchoolStudentRecord>> filterSchoolWithStudent();
         Task<List<PaymentProposalRecord>> GetStudentpaymentProposal();
         Task<List<PaymentProposalRecord>> GetStudentpaymentProposalbySchool(string schoolname);

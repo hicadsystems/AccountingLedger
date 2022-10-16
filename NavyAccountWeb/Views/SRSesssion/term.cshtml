@@ -1,11 +1,11 @@
-﻿
+﻿@model List<NavyAccountCore.Entities.sr_SchoolRecordControl>
 @{ ViewData["Title"] = "ViewSchool";
     Layout = "~/Views/Shared/_SchoolLayout.cshtml"; }
 
 < <div class="header">
-      <h1 class="header-title">
-          School Portal
-      </h1>
+    <h1 class="header-title">
+        School Portal
+    </h1>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/Home/Index">Main</a></li>
@@ -20,7 +20,7 @@
                 <h5 class="card-title"></h5>
             </div>
 
-            
+
         </div>
     </div>
 </div>
@@ -32,22 +32,35 @@
                 <h5 class="card-title"> Migrate Term</h5>
 
             </div>
-
+            @if (TempData["returnMessage"] != null)
+            {
+<h3 style="color:seagreen">@TempData["returnMessage"].ToString()</h3>            }
             <div class="card-body">
+                <div class="row">
+                    <div class="col-md-2">
+                        <label>Current Session</label>
+                        <div class="form-group">
+                            <input type="text" class="form-control" value="@Model.FirstOrDefault().Period" readonly />
+                        </div>
 
+                    </div>
+                    <div class="col-md-2">
+                        <label>Current Term</label>
+                        <div class="form-group">
+                            <input type="text" class="form-control" value="@Model.FirstOrDefault().term" readonly />
+                        </div>
 
-
-                @using (Html.BeginForm("term", "SRSession", FormMethod.Post))
+                    </div>
+                </div>
+                @using (Html.BeginForm("MigrateToTerm", "SRSesssion", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
-                            <div class="col-md-1">
-                                <div class="form-group">
-                                    <input type="submit" class="btn btn-lg btn-primary" value="Migreate To New Term" />
-                                </div>
+    @Html.AntiForgeryToken()
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <input type="submit" name="Submit" id="Submit" class="btn btn-lg btn-primary" value="Migreate To New Term" />
+                        </div>
 
-                            </div>
-                      
-                        
-                   }
+                    </div>}
 
             </div>
 

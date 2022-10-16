@@ -19,43 +19,28 @@ namespace NavyAccountWeb.Controllers
 
         private readonly IUserService userService;
         private readonly IConfiguration config;
-        public HomeController(IUserService userService, IConfiguration config) : base(userService)
+        private readonly ISchoolRecordService schoolRecordService;
+        public HomeController(ISchoolRecordService schoolRecordService,IUserService userService, IConfiguration config) : base(userService)
         {
+            this.schoolRecordService = schoolRecordService;
             this.userService = userService;
             this.config = config;
         }
         public async Task<IActionResult> SchoolHome()
         {
-            int rd;
+            try
+            {
+                var dah = await schoolRecordService.GetAllSchoolCount();
+                return View(dah);
 
-            var currentUser = await GetCurrentUser();
-
-
-            if (currentUser == null)
+            }
+            catch (Exception ex)
             {
 
-                if (HttpContext.Session.GetString("Message") != null)
-                {
-                    ViewBag.message = HttpContext.Session.GetString("Message");
-                }
-
-                return View("Login");
+                throw;
             }
-            var role = currentUser.UserRoles;
-            foreach (var r in role)
-            {
-                rd = r.RoleId;
-                HttpContext.Session.SetInt32("roleid", rd);
-            }
-            //Get session FundType
-            ViewBag.Category = HttpContext.Session.GetString("fundtypedescription");
-
-
-            return View();
-            //return Redirect("User/index");
 
         }
-
         public async Task<IActionResult> Index()
         {
             int rd;

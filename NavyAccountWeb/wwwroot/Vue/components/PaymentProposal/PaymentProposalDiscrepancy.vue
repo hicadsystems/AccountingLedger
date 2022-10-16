@@ -69,7 +69,7 @@ components:{
 data() {
     return {
     paymentProposalList:null,
-    pageno:0,
+    pageno:0, 
     totalcount:0,
     ID:0,
     pp:''

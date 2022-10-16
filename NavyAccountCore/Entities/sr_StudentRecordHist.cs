@@ -33,5 +33,6 @@ namespace NavyAccountCore.Entities
         public decimal ClaimAmount { set; get; }
         public DateTime ClaimDate { set; get; }
 
+
     }
 }

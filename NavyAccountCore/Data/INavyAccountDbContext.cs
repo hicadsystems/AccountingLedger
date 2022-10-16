@@ -63,6 +63,7 @@ namespace NavyAccountCore.Core.Data
         DbSet<sr_SchoolRecordControl> sr_SchoolRecordControl { get; set; }
         DbSet<sr_SchoolFeeTB> sr_SchoolFeeTB { get; set; }
         DbSet<sr_StudentRecord> sr_StudentRecord { get; set; }
+        DbSet<sr_StudentRecordHist> sr_StudentRecordHist { get; set; }
         DbSet<sr_ClassRecord> sr_ClassRecord { get; set; }
         DbSet<sr_state> sr_state{ get; set; }
         DbSet<sr_lga> sr_lga { get; set; }
