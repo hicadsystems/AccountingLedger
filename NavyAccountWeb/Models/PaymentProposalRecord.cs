@@ -12,6 +12,8 @@ namespace NavyAccountWeb.Models
         public string SchoolCity { get; set; }
         public string SchoolType { get; set; }
         public decimal? Amount { get; set; }
+        public string Period { get; set; }
+        public string Term { get; set; }
     }
 
     public class PaymentProposalRecord2

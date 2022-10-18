@@ -139,7 +139,9 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
         public async  Task<IActionResult> DeletePaymentRecord(string reqnum)
         {
             var op = new DeleteStudentPaymentproposal { Req_Number= reqnum };
+            await recordService.AddRecordToDefaulter(reqnum, User.Identity.Name);
             await recordService.DeletePaymentProposal(op);
+            
 
             return Ok(new { responseCode = 200, ResponseDescription = "Successfully Deleted" });
         }
@@ -162,6 +164,16 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
             }
             recordService.DeletePayment(sch);
             return Ok(new { respnseCode = 200, ResponseDescription = "Successfully Deleted" });
+        }
+
+
+        [Route("GetStudentUnderDescrepancyCount")]
+        [HttpGet]
+        public async Task<IActionResult> GetStudentUnderDescrepancyCount()
+        {
+            var sch = await recordService.GetStudentCountUnderDescrepancy();
+            
+            return Ok(new { responseCode = 200, totalcount = sch });
         }
     }
 }

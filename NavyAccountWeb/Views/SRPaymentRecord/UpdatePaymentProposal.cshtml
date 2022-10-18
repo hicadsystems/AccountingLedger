@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "UpdatePaymentProposal";
     Layout = "~/Views/Shared/_SchoolLayout.cshtml";
+    int count = int.Parse(TempData["count"].ToString());
 }
 
 <div class="header">
@@ -27,6 +28,22 @@
                 @using (Html.BeginForm("UpdatePayment", "SRPaymentRecord", FormMethod.Post))
                 {
                     @Html.AntiForgeryToken()                                                                                          
+
+                    @if(count>0)
+                    {
+                        <div>
+                           <script>
+                               alert('You need to treat all the descrepancy before you can update');
+                           </script>
+                          
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-group">
+                            <input type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Update" />
+                        </div>
+                    }
 
                     <div class="form-group">
                         <input type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Update" />

@@ -73,6 +73,7 @@ namespace NavyAccountWeb.Data
         public DbSet<sr_SchoolRecordControl> sr_SchoolRecordControl { get; set; }
         public DbSet<sr_state> sr_state{ get; set; }
         public DbSet<sr_lga> sr_lga { get; set; }
+        public DbSet<sr_Defaulter> sr_Defaulter { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)

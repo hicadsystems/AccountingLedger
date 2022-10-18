@@ -139,22 +139,28 @@ namespace NavyAccountWeb.Controllers
             return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelname);
         }
 
-        public ActionResult UpdatePaymentProposal()
+        public async Task<ActionResult> UpdatePaymentProposal()
         {
+            TempData["count"] = await paymentRecordService.GetStudentCountUnderDescrepancy();
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> UpdatePayment()
         {
-
-            var param = new DynamicParameters();
-            param.Add("@username", User.Identity.Name);
-            dapperService.Execute("sp_UpdatePaymentProposal", param, commandType: System.Data.CommandType.StoredProcedure);
-
-            TempData["message"] = "Uploaded Successfully";
-
             
+            int count = await paymentRecordService.GetStudentCountUnderDescrepancy();
+            if (count == 0)
+            {
+                var param = new DynamicParameters();
+                param.Add("@username", User.Identity.Name);
+                dapperService.Execute("sp_UpdatePaymentProposal", param, commandType: System.Data.CommandType.StoredProcedure);
+
+                TempData["message"] = "Uploaded Successfully";
+            }
+           
+
+            TempData["count"] = count;
             return RedirectToAction("UpdatePaymentProposal");
 
 

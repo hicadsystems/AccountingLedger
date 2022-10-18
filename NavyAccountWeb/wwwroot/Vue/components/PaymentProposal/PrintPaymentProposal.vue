@@ -8,7 +8,6 @@
                     <div class="row">
                           <div class="col-xl-4">
                                   <select class="form-control" v-model="postBody.schoolName" name="schoolName" required>
-                                    <!-- <option value="All" selected>All</option> -->
                                     <option v-for="loantype in SchoolList" v-bind:value="loantype.schoolname" v-bind:key="loantype.schoolname"> {{ loantype.schoolname }} </option>
                                   </select>
 
@@ -89,7 +88,7 @@
         pp:'',
         SchoolList:null,
         postBody: {
-                schoolName:'all'
+                schoolName:''
            }
         };
     },

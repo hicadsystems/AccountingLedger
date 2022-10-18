@@ -12532,7 +12532,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -12549,7 +12548,7 @@ __webpack_require__.r(__webpack_exports__);
       pp: '',
       SchoolList: null,
       postBody: {
-        schoolName: 'all'
+        schoolName: ''
       }
     };
   },
@@ -51672,7 +51671,7 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("Delete")]
+                      [_vm._v("Trash")]
                     )
                   ])
                 ])

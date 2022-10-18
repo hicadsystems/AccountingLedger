@@ -10,6 +10,7 @@ namespace NavyAccountWeb.IServices
 {
     public interface IPaymentRecordService
     {
+        Task AddRecordToDefaulter(string regNumer, string createdBy);
         Task<List<StudentPayViewModel>> GetStudentPaySummary(int id);
         Task<List<SchoolStudentRecord>> filterSchoolWithStudent();
         Task<List<PaymentProposalRecord>> GetStudentpaymentProposal();
@@ -21,6 +22,7 @@ namespace NavyAccountWeb.IServices
         Task<List<PaymentProposalRecord>> moveRecord(List<PaymentProposalRecord> record);
         Task<List<PaymentProposalRecord2>> filteredPaymentProposal(string proposalValue);
         Task<List<PaymentProposalRecord>> GetPaymentProposalByReq(string reqNum);
+        Task<int> GetStudentCountUnderDescrepancy();
 
         Task UpdatePaymentProposal();
 
