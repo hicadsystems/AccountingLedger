@@ -2,8 +2,15 @@
     <!-- WRAPPER -->
 <div>
     <div class="card-body">
-     <div class="row">
-        <div class="col-12 col-xl-4">
+        <div class="row">
+            <div class="col-sm-4" v-if="schcheck">
+                                <label>School</label>
+                                <select class="form-control" v-model="SchoolId" name="schoolId" @change="getstudents(SchoolId)"  required>
+                                    <option v-for="sch in schoolList" v-bind:value="sch.id" v-bind:key="sch.id"> {{ sch.schoolname }} </option>
+                                </select>
+
+                            </div>  
+             <div class="col-12 col-xl-4" v-if="SchoolId">
                 <div class="form-group">
                     <label class="form-label">Student Number</label>
                     <vuejsAutocomplete source="/api/StudentRecord/getAllStudentByNameLimited/"
@@ -15,6 +22,7 @@
                 </div>
             </div>
         </div>
+    <div v-if="SchoolId">
         <table id="datatables-buttons" class="table table-striped" style="width:100%">
             <thead>
                 <tr>
@@ -55,6 +63,7 @@
             :page-class="'page-item'">
         </paginate>
     </div>
+    </div>
     
 
 </div>
@@ -73,10 +82,14 @@ components:{
 data() {
     return {
     studentList:null,
+    schoolList:null,
+    schcheck:true,
     pageno:0,
     totalcount:0,
       id:0,
+      SchoolId:null,
      pp:''
+     
     };
 },
  created() {
@@ -89,19 +102,33 @@ computed: {
 },
 mounted () {
     axios
-    .get(`/api/StudentRecord/getAllStudents?pageno=${this.pageno}`)
+        .get('/api/SchoolRecord/GetAll')
+        .then(response => (this.schoolList = response.data));
+    axios
+    .get(`/api/StudentRecord/getAllStudents/${this.SchoolId}?pageno=${this.pageno}`)
     .then(response => {
         this.studentList =  response.data.studentlist;
         this.totalcount = response.data.total;
+        this.schcheck=false;
     })
  },
    
  methods: {
+    getstudents:function(SchoolId){
+        if(SchoolId>0){
+        axios
+        .get(`/api/StudentRecord/getAllStudents/${SchoolId}?pageno=${this.pageno}`)
+        .then(response => {
+            this.studentList =  response.data.studentlist;
+            this.totalcount = response.data.total;
+    })
+    }
+    },
      clickCallback: function (pageNum) {
          this.pageno = pageNum;
-         axios.get(`/api/StudentRecord/getAllStudents?pageno=${this.pageno}`)
+         alert(this.SchoolId)
+         axios.get(`/api/StudentRecord/getAllStudents/${this.SchoolId}?pageno=${this.pageno}`)
         .then(response => {
-            
             this.studentList = response.data.studentlist;
             this.totalcount = response.data.total;
         })

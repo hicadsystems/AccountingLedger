@@ -3,17 +3,26 @@
     ViewData["Title"] = "ViewDiscrepancyReport";
     Layout = "~/Views/Shared/_SchoolLayout.cshtml";
 }
+<div class="header">
+    <h1 class="header-title">
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Home/Index">Main</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Payment Discrepancy</li>
+        </ol>
+    </nav>
+</div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Discrepancy Report</h5>
 
-<div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title">Discrepancy Report</h5>
+                </div>
 
+                <payment-proposal-discrepancy></payment-proposal-discrepancy>
             </div>
-
-            <payment-proposal-discrepancy></payment-proposal-discrepancy>
         </div>
     </div>
-</div>
 

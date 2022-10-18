@@ -12,5 +12,6 @@ namespace NavyAccountCore.IRepositories
     {
         Task<sr_SchoolFeeTB> GetSchoolFeeByCode(Expression<Func<sr_SchoolFeeTB, bool>> predicate);
         Task<List<SchoolFeeVM>> GetAllSchoolFee();
+        Task<List<SchoolFeeVM2>> GetAllSchoolFeeByPeriod(string period);
     }
 }

@@ -27,32 +27,32 @@ namespace NavyAccountWeb.Services
         public int Execute(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
         {
             IDbConnection db = new SqlConnection(constring);
-            var response = db.Execute(sp, param: parms, commandType: CommandType.StoredProcedure);
+            var response = db.Execute(sp, param: parms, commandTimeout: 4000, commandType: CommandType.StoredProcedure) ;
             return response;
         }
 
         public string ExecuteString(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
         {
             IDbConnection db = new SqlConnection(constring);
-            var response = db.Query(sp, param: parms, commandType: CommandType.StoredProcedure);
+            var response = db.Query(sp, param: parms, commandTimeout: 4000, commandType: CommandType.StoredProcedure);
             return response.ToString();
         }
         public T Get<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
         {
             IDbConnection db = new SqlConnection(constring);
-            return db.Query<T>(sp, parms, commandType: commandType).FirstOrDefault();
+            return db.Query<T>(sp, parms, commandTimeout: 4000, commandType: commandType).FirstOrDefault();
         }
 
         public List<T> GetAll<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
         {
             IDbConnection db = new SqlConnection(constring);
-            return db.Query<T>(sp, parms, commandType: commandType).ToList();
+            return db.Query<T>(sp, parms, commandTimeout: 4000, commandType: commandType).ToList();
         }
 
         public async Task<List<T>> GetAllAsync<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
         {
             IDbConnection db = new SqlConnection(constring);
-            var result = await db.QueryAsync<T>(sp, parms, commandType: commandType);
+            var result = await db.QueryAsync<T>(sp, parms, commandTimeout: 4000, commandType: commandType);
             return result.ToList();
         }
 
@@ -73,7 +73,7 @@ namespace NavyAccountWeb.Services
                 var tran = db.BeginTransaction();
                 try
                 {
-                    result = db.Query<T>(sp, parms, commandType: commandType, transaction: tran).FirstOrDefault();
+                    result = db.Query<T>(sp, parms, commandTimeout: 4000, commandType: commandType, transaction: tran).FirstOrDefault();
                     tran.Commit();
                 }
                 catch (Exception ex)
@@ -109,7 +109,7 @@ namespace NavyAccountWeb.Services
                 var tran = db.BeginTransaction();
                 try
                 {
-                    result = db.Query<T>(sp, parms, commandType: commandType, transaction: tran).FirstOrDefault();
+                    result = db.Query<T>(sp, parms, commandTimeout: 4000, commandType: commandType, transaction: tran).FirstOrDefault();
                     tran.Commit();
                 }
                 catch (Exception ex)

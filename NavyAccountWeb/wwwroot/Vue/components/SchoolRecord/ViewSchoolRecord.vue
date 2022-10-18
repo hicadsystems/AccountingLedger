@@ -2,6 +2,14 @@
     <div>
         
         <div class="card-body">
+              <div class="row">
+                        <div class="col-12 col-xl-2">
+                            <button class="btn btn-submit btn-primary" v-on:click="printSchoolReportAsPdf" type="submit">Export to Pdf</button>
+                        </div>
+                        <div class="col-12 col-xl-2">
+                            <button class="btn btn-submit btn-success" v-on:click="printSchoolReportAsExcel" type="submit">Export to Excel</button>
+                        </div>
+                    </div>
             <table id="datatables-buttons" class="table table-striped" style="width:100%">
                 <thead>
                     <tr>
@@ -53,7 +61,15 @@
     methods:{
         processRetrieve:function(school){
         this.$store.state.objectToUpdate=school; 
-      },
+        },
+        printSchoolReportAsPdf:function(){
+         window.open('/SRPaymentRecord/PrintFilterSchoolWithStudentPdf')
+        },
+     printSchoolReportAsExcel:function(){
+     window.open('/SRPaymentRecord/PrintFilterSchoolWithStudentAsExcel')
+
+},
+
       getAllSchool:function(){
         axios.get('/api/SchoolRecord/GetAll')
         .then(respose=>

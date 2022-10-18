@@ -36,6 +36,10 @@ namespace NavyAccountWeb.Services
         {
             return await _unitOfWork.schoolFee.GetAllSchoolFee(); 
         }
+        public async Task<List<SchoolFeeVM2>> GetAllSchoolFeeByPeriod(string period)
+        {
+            return await _unitOfWork.schoolFee.GetAllSchoolFeeByPeriod(period);
+        }
         public void DeleteSchoolFee(sr_SchoolFeeTB value)
         {
             _unitOfWork.schoolFee.Remove(value);

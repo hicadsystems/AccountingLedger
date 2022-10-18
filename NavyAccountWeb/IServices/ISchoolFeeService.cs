@@ -15,5 +15,6 @@ namespace NavyAccountWeb.IServices
         Task<List<SchoolFeeVM>> GetAllSchoolFee();
         Task<sr_SchoolFeeTB> GetSchoolFeeByid(int id);
         void DeleteSchoolFee(sr_SchoolFeeTB value);
+        Task<List<SchoolFeeVM2>> GetAllSchoolFeeByPeriod(string period);
     }
 }

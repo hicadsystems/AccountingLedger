@@ -58,14 +58,14 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
         {
             try
             {
-                if (recordService.GetAllSchoolFeeByCode(value.Period).Result!=null){
-                    return Ok(new { responseCode = 400, responseDescription = "School Name Already Exist" });
-                }
+                //if (recordService.GetAllSchoolFeeByCode(value.Period).Result!=null){
+                //    return Ok(new { responseCode = 400, responseDescription = "School Name Already Exist" });
+                //}
                 value.CreatedDate = DateTime.Now;
                 value.CreatedBy = User.Identity.Name;
                 recordService.AddSchoolFee(value);
 
-                return Ok(new { respnseCode = 200, ResponseDescription = "School Successfully Added" });
+                return Ok(new { responseCode = 200, ResponseDescription = "School Successfully Added" });
             }
             catch (Exception ex)
             {
@@ -91,7 +91,7 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
                 sch.ClassCategory = value.ClassCategory;
                 sch.Amount = value.Amount;
                 recordService.UpdateSchoolFee(sch);
-                return Ok(new { respnseCode = 200, ResponseDescription = "School Successfully Updated" });
+                return Ok(new { responseCode = 200, ResponseDescription = "School Successfully Updated" });
 
 
             }

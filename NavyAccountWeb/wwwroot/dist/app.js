@@ -13409,6 +13409,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -13424,7 +13431,8 @@ __webpack_require__.r(__webpack_exports__);
         SchoolId: 0,
         ClassId: 0,
         ClassCategory: '',
-        Amount: 0
+        Amount: 0,
+        term: ''
       },
       ClasscatList: [{
         value: 'Primary',
@@ -13447,7 +13455,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   watch: {
     '$store.state.objectToUpdate': function $storeStateObjectToUpdate(newval, oldval) {
-      this.postBody.Period = this.$store.state.objectToUpdate.period, this.postBody.SchoolId = this.$store.state.objectToUpdate.schoolId, this.postBody.ClassId = this.$store.state.objectToUpdate.classId, this.postBody.ClassCategory = this.$store.state.objectToUpdate.classCategory, this.postBody.Amount = this.$store.state.objectToUpdate.amount, this.submitorUpdate = 'Update';
+      this.postBody.Period = this.$store.state.objectToUpdate.period, this.postBody.SchoolId = this.$store.state.objectToUpdate.schoolId, this.postBody.ClassId = this.$store.state.objectToUpdate.classId, this.postBody.ClassCategory = this.$store.state.objectToUpdate.classCategory, this.postBody.Amount = this.$store.state.objectToUpdate.amount, this.postBody.term = this.$store.state.objectToUpdate.term, this.submitorUpdate = 'Update';
     }
   },
   methods: {
@@ -13475,6 +13483,7 @@ __webpack_require__.r(__webpack_exports__);
             _this2.postBody.Amount = '';
             _this2.postBody.ClassId = '';
             _this2.postBody.ClassCategory = '';
+            _this2.postBody.term = '';
             _this2.$store.state.objectToUpdate = 'create';
           }
         })["catch"](function (e) {
@@ -13493,6 +13502,7 @@ __webpack_require__.r(__webpack_exports__);
             _this2.postBody.Amount = '';
             _this2.postBody.ClassId = '';
             _this2.postBody.ClassCategory = '';
+            _this2.postBody.term = '';
             _this2.$store.state.objectToUpdate = 'update';
           }
         })["catch"](function (e) {
@@ -13507,6 +13517,7 @@ __webpack_require__.r(__webpack_exports__);
 
       if (objectToUpdate.period) {
         this.postBody.Period = objectToUpdate.period, this.postBody.SchoolId = objectToUpdate.schoolId, this.postBody.ClassId = objectToUpdate.classId, this.postBody.ClassCategory = objectToUpdate.classCategory, this.postBody.Amount = objectToUpdate.amount;
+        this.postBody.term = objectToUpdate.term;
       }
 
       ;
@@ -13525,6 +13536,14 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -13600,6 +13619,12 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (e) {
         _this2.error.push(e);
       });
+    },
+    printSchoolFeeToPDF: function printSchoolFeeToPDF() {
+      window.open('SRSchoolFee/SchoolFeeByPdf');
+    },
+    printSchoolFeeToExcel: function printSchoolFeeToExcel() {
+      window.open('SRSchoolFee/SchoolFeeByExcel');
     }
   }
 });
@@ -13952,6 +13977,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -13972,6 +14005,12 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     processRetrieve: function processRetrieve(school) {
       this.$store.state.objectToUpdate = school;
+    },
+    printSchoolReportAsPdf: function printSchoolReportAsPdf() {
+      window.open('/SRPaymentRecord/PrintFilterSchoolWithStudentPdf');
+    },
+    printSchoolReportAsExcel: function printSchoolReportAsExcel() {
+      window.open('/SRPaymentRecord/PrintFilterSchoolWithStudentAsExcel');
     },
     getAllSchool: function getAllSchool() {
       var _this = this;
@@ -14603,6 +14642,7 @@ __webpack_require__.r(__webpack_exports__);
         schoolname = 'NULL';
       }
 
+      alert('i am here');
       window.open("/SRClaimRecord/CLaimPaymentByPdf/".concat(schoolname));
     },
     printProposalAsExcel: function printProposalAsExcel(schoolname) {
@@ -15889,6 +15929,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -15899,9 +15948,12 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       studentList: null,
+      schoolList: null,
+      schcheck: true,
       pageno: 0,
       totalcount: 0,
       id: 0,
+      SchoolId: null,
       pp: ''
     };
   },
@@ -15916,27 +15968,42 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    axios.get("/api/StudentRecord/getAllStudents?pageno=".concat(this.pageno)).then(function (response) {
+    axios.get('/api/SchoolRecord/GetAll').then(function (response) {
+      return _this.schoolList = response.data;
+    });
+    axios.get("/api/StudentRecord/getAllStudents/".concat(this.SchoolId, "?pageno=").concat(this.pageno)).then(function (response) {
       _this.studentList = response.data.studentlist;
       _this.totalcount = response.data.total;
+      _this.schcheck = false;
     });
   },
   methods: {
-    clickCallback: function clickCallback(pageNum) {
+    getstudents: function getstudents(SchoolId) {
       var _this2 = this;
 
+      if (SchoolId > 0) {
+        axios.get("/api/StudentRecord/getAllStudents/".concat(SchoolId, "?pageno=").concat(this.pageno)).then(function (response) {
+          _this2.studentList = response.data.studentlist;
+          _this2.totalcount = response.data.total;
+        });
+      }
+    },
+    clickCallback: function clickCallback(pageNum) {
+      var _this3 = this;
+
       this.pageno = pageNum;
-      axios.get("/api/StudentRecord/getAllStudents?pageno=".concat(this.pageno)).then(function (response) {
-        _this2.studentList = response.data.studentlist;
-        _this2.totalcount = response.data.total;
+      alert(this.SchoolId);
+      axios.get("/api/StudentRecord/getAllStudents/".concat(this.SchoolId, "?pageno=").concat(this.pageno)).then(function (response) {
+        _this3.studentList = response.data.studentlist;
+        _this3.totalcount = response.data.total;
       });
     },
     setValueStudent: function setValueStudent(result) {
-      var _this3 = this;
+      var _this4 = this;
 
       alert(result.value);
       axios.get("/api/StudentRecord/getStudentByID/".concat(result.value)).then(function (response) {
-        _this3.studentList = response.data;
+        _this4.studentList = response.data;
       });
     },
     processRetrieve: function processRetrieve(mainAccount) {//this.$store.state.objectToUpdate = mainAccount;
@@ -52898,6 +52965,34 @@ var render = function () {
           _vm._v(" "),
           _c("div", { staticClass: "col-12 col-xl-4" }, [
             _c("div", { staticClass: "form-group" }, [
+              _c("label", { staticClass: "form-label" }, [_vm._v("Term")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.postBody.term,
+                    expression: "postBody.term",
+                  },
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", name: "term" },
+                domProps: { value: _vm.postBody.term },
+                on: {
+                  input: function ($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.postBody, "term", $event.target.value)
+                  },
+                },
+              }),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-12 col-xl-4" }, [
+            _c("div", { staticClass: "form-group" }, [
               _c("label", { staticClass: "form-label" }, [
                 _vm._v("School Fee"),
               ]),
@@ -52925,7 +53020,9 @@ var render = function () {
               }),
             ]),
           ]),
-          _vm._v(" "),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "form-group col-md-4" }, [
             _c("label", { staticClass: "form-label" }, [
               _vm._v("Class Category"),
@@ -52972,9 +53069,7 @@ var render = function () {
               0
             ),
           ]),
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "row" }, [
+          _vm._v(" "),
           _c("div", { staticClass: "col-md-4" }, [
             _c("label", [_vm._v("Class")]),
             _vm._v(" "),
@@ -53118,6 +53213,40 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "card-body" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-12 col-xl-2" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-submit btn-primary",
+              attrs: { type: "button" },
+              on: {
+                click: function ($event) {
+                  return _vm.printSchoolFeeToPDF()
+                },
+              },
+            },
+            [_vm._v("Export to PDF")]
+          ),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-12 col-xl-2" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-submit btn-primary",
+              attrs: { type: "button" },
+              on: {
+                click: function ($event) {
+                  return _vm.printSchoolFeeToExcel()
+                },
+              },
+            },
+            [_vm._v("Export to Excel")]
+          ),
+        ]),
+      ]),
+      _vm._v(" "),
       _c(
         "table",
         {
@@ -53554,6 +53683,32 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "card-body" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-12 col-xl-2" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-submit btn-primary",
+              attrs: { type: "submit" },
+              on: { click: _vm.printSchoolReportAsPdf },
+            },
+            [_vm._v("Export to Pdf")]
+          ),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-12 col-xl-2" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-submit btn-success",
+              attrs: { type: "submit" },
+              on: { click: _vm.printSchoolReportAsExcel },
+            },
+            [_vm._v("Export to Excel")]
+          ),
+        ]),
+      ]),
+      _vm._v(" "),
       _c(
         "table",
         {
@@ -56710,114 +56865,169 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c(
-      "div",
-      { staticClass: "card-body" },
-      [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-12 col-xl-4" }, [
-            _c(
-              "div",
-              { staticClass: "form-group" },
-              [
-                _c("label", { staticClass: "form-label" }, [
-                  _vm._v("Student Number"),
-                ]),
-                _vm._v(" "),
-                _c("vuejsAutocomplete", {
-                  attrs: {
-                    source: "/api/StudentRecord/getAllStudentByNameLimited/",
-                    "input-class": "form-control",
-                  },
-                  on: { selected: _vm.setValueStudent },
-                  model: {
-                    value: _vm.pp,
-                    callback: function ($$v) {
-                      _vm.pp = $$v
+    _c("div", { staticClass: "card-body" }, [
+      _c("div", { staticClass: "row" }, [
+        _vm.schcheck
+          ? _c("div", { staticClass: "col-sm-4" }, [
+              _c("label", [_vm._v("School")]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.SchoolId,
+                      expression: "SchoolId",
                     },
-                    expression: "pp",
-                  },
-                }),
-              ],
-              1
-            ),
-          ]),
-        ]),
-        _vm._v(" "),
-        _c(
-          "table",
-          {
-            staticClass: "table table-striped",
-            staticStyle: { width: "100%" },
-            attrs: { id: "datatables-buttons" },
-          },
-          [
-            _vm._m(0),
-            _vm._v(" "),
-            _c(
-              "tbody",
-              _vm._l(_vm.studentList, function (student) {
-                return _c("tr", [
-                  _c("td", [_vm._v(_vm._s(student.reg_Number))]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _vm._v(
-                      _vm._s(student.surname) +
-                        "  " +
-                        _vm._s(student.firstName) +
-                        "  " +
-                        _vm._s(student.middleName)
-                    ),
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(student.parentName))]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _vm._v(_vm._s(_vm.getAppropriateGender(student.sex))),
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(student.age))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(student.className))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(student.schoolCode))]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "btn btn-submit btn-primary",
-                        attrs: {
-                          type: "button",
-                          href: "Create?id=" + student.id,
-                        },
+                  ],
+                  staticClass: "form-control",
+                  attrs: { name: "schoolId", required: "" },
+                  on: {
+                    change: [
+                      function ($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function (o) {
+                            return o.selected
+                          })
+                          .map(function (o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.SchoolId = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
                       },
-                      [_vm._v("Edit")]
-                    ),
-                  ]),
-                ])
-              }),
-              0
-            ),
-          ]
-        ),
+                      function ($event) {
+                        return _vm.getstudents(_vm.SchoolId)
+                      },
+                    ],
+                  },
+                },
+                _vm._l(_vm.schoolList, function (sch) {
+                  return _c(
+                    "option",
+                    { key: sch.id, domProps: { value: sch.id } },
+                    [_vm._v(" " + _vm._s(sch.schoolname) + " ")]
+                  )
+                }),
+                0
+              ),
+            ])
+          : _vm._e(),
         _vm._v(" "),
-        _c("paginate", {
-          staticClass: "pagination",
-          attrs: {
-            "page-count": _vm.getPageCount,
-            "page-range": 3,
-            "margin-pages": 2,
-            "click-handler": _vm.clickCallback,
-            "prev-text": "Prev",
-            "next-text": "Next",
-            "container-class": "pagination",
-            "page-class": "page-item",
-          },
-        }),
-      ],
-      1
-    ),
+        _vm.SchoolId
+          ? _c("div", { staticClass: "col-12 col-xl-4" }, [
+              _c(
+                "div",
+                { staticClass: "form-group" },
+                [
+                  _c("label", { staticClass: "form-label" }, [
+                    _vm._v("Student Number"),
+                  ]),
+                  _vm._v(" "),
+                  _c("vuejsAutocomplete", {
+                    attrs: {
+                      source: "/api/StudentRecord/getAllStudentByNameLimited/",
+                      "input-class": "form-control",
+                    },
+                    on: { selected: _vm.setValueStudent },
+                    model: {
+                      value: _vm.pp,
+                      callback: function ($$v) {
+                        _vm.pp = $$v
+                      },
+                      expression: "pp",
+                    },
+                  }),
+                ],
+                1
+              ),
+            ])
+          : _vm._e(),
+      ]),
+      _vm._v(" "),
+      _vm.SchoolId
+        ? _c(
+            "div",
+            [
+              _c(
+                "table",
+                {
+                  staticClass: "table table-striped",
+                  staticStyle: { width: "100%" },
+                  attrs: { id: "datatables-buttons" },
+                },
+                [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    _vm._l(_vm.studentList, function (student) {
+                      return _c("tr", [
+                        _c("td", [_vm._v(_vm._s(student.reg_Number))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(
+                            _vm._s(student.surname) +
+                              "  " +
+                              _vm._s(student.firstName) +
+                              "  " +
+                              _vm._s(student.middleName)
+                          ),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(student.parentName))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(_vm._s(_vm.getAppropriateGender(student.sex))),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(student.age))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(student.className))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(student.schoolCode))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-submit btn-primary",
+                              attrs: {
+                                type: "button",
+                                href: "Create?id=" + student.id,
+                              },
+                            },
+                            [_vm._v("Edit")]
+                          ),
+                        ]),
+                      ])
+                    }),
+                    0
+                  ),
+                ]
+              ),
+              _vm._v(" "),
+              _c("paginate", {
+                staticClass: "pagination",
+                attrs: {
+                  "page-count": _vm.getPageCount,
+                  "page-range": 3,
+                  "margin-pages": 2,
+                  "click-handler": _vm.clickCallback,
+                  "prev-text": "Prev",
+                  "next-text": "Next",
+                  "container-class": "pagination",
+                  "page-class": "page-item",
+                },
+              }),
+            ],
+            1
+          )
+        : _vm._e(),
+    ]),
   ])
 }
 var staticRenderFns = [

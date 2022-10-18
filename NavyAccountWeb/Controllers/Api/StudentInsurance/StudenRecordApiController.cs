@@ -35,13 +35,14 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
             return recordService.GetAllStudentByID(id).Result;
 
         }
-        [Route("getAllSTudents")]
+        [Route("getAllSTudents/{schoolid}")]
         [HttpGet]
-        public async Task<IActionResult> Get(int? pageno)
+        public async Task<IActionResult> Get(int schoolid,int? pageno)
         {
             int iDisplayLength = 10;
             pageno = pageno == null ? 0 : (pageno--);
-            var _studentlist = await recordService.GetStudentList(((int)pageno * iDisplayLength), iDisplayLength);
+            var _studentlist = await recordService.GetStudentList(schoolid,((int)pageno * iDisplayLength), iDisplayLength);
+            //var _studentlist = await recordService.GetStudentList(((int)pageno * iDisplayLength), iDisplayLength);
             var countall = await recordService.getStudentListCount();
             return Ok(new { responseCode = 200, studentlist = _studentlist, total = countall });
         }

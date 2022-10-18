@@ -15,6 +15,17 @@ namespace NavyAccountCore.Entities
         public string ClassName { get; set; }
         public string SchoolName { get; set; }
         public decimal Amount { get; set; }
+        public string term { get; set; }
+
+    }
+    public class SchoolFeeVM2
+    {
+        public string Period { get; set; }
+        public string SchoolType { get; set; }
+        public string ClassName { get; set; }
+        public string SchoolName { get; set; }
+        public decimal Amount { get; set; }
+        public string Term { get; set; }
 
     }
 }

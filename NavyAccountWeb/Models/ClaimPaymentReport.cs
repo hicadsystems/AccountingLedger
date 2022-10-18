@@ -13,8 +13,8 @@ namespace NavyAccountWeb.Models
         public string ClassName { get; set; }
         public string Schoolname { get; set; }
         public string SchoolType { get; set; }
-        public decimal? ClaimAmount { get; set; }
-        public decimal? FeeAmount { get; set; }
+        public decimal? ClaimAmount { get; set; } = 0M;
+        public decimal? FeeAmount { get; set; } = 0M;
         public string Period { get; set; }
     }
 
@@ -28,8 +28,8 @@ namespace NavyAccountWeb.Models
         public string ClassName { get; set; }
         public string Schoolname { get; set; }
         public string SchoolType { get; set; }
-        public decimal? ClaimAmount { get; set; }
-        public decimal? FeeAmount { get; set; }
+        public decimal? ClaimAmount { get; set; } = 0M;
+        public decimal? FeeAmount { get; set; } = 0M;
         public string Period { get; set; }
     }
 
@@ -50,8 +50,8 @@ namespace NavyAccountWeb.Models
         public string Schoolname { get; set; }
         public string SchoolType { get; set; }
         public string ClassName { get; set; }
-        public decimal? ClaimAmount { get; set; }
-        public decimal? FeeAmount { get; set; }
+        public decimal? ClaimAmount { get; set; } = 0M;
+        public decimal? FeeAmount { get; set; } = 0M;
         public DateTime? Transdate { get; set; }
         public string Period { get; set; }
     }

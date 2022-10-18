@@ -13,18 +13,25 @@
                     </div>
                     <div class="col-12 col-xl-4">
                         <div class="form-group">
+                            <label class="form-label">Term</label>
+                            <input type="text" class="form-control" name="term" v-model="postBody.term" />
+                        </div>
+                    </div>
+                    <div class="col-12 col-xl-4">
+                        <div class="form-group">
                             <label class="form-label">School Fee</label>
                             <input class="form-control" name="amount" v-model="postBody.Amount" />
                         </div>
                     </div>
-                    <div class="form-group col-md-4">
+                    
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-4">
                         <label class="form-label">Class Category</label>
                                 <select class="form-control" v-model="postBody.ClassCategory" name="classCategory" required>
                                     <option v-for="ge in ClasscatList" v-bind:value="ge.value" v-bind:key="ge.value"> {{ ge.text }} </option>
                                 </select>
                             </div>
-                    </div>
-                    <div class="row">
                           <div class="col-md-4">
                                 <label>Class</label>
                                 <select class="form-control" v-model="postBody.ClassId" name="classId" required>
@@ -67,7 +74,8 @@ export default {
                 SchoolId :0,
                 ClassId :0,
                 ClassCategory :'',
-                Amount :0
+                Amount :0,
+                term :''
 
             },
             ClasscatList: [
@@ -93,6 +101,7 @@ export default {
             this.postBody.ClassId=this.$store.state.objectToUpdate.classId,
             this.postBody.ClassCategory=this.$store.state.objectToUpdate.classCategory,
             this.postBody.Amount=this.$store.state.objectToUpdate.amount,
+            this.postBody.term=this.$store.state.objectToUpdate.term,
             this.submitorUpdate='Update';
         }
 
@@ -120,7 +129,7 @@ export default {
                 if(response.data.responseCode=='200'){
                     this.postBody.Period='';this.postBody.SchoolId='';
                     this.postBody.Amount='';this.postBody.ClassId='';
-                    this.postBody.ClassCategory='';
+                    this.postBody.ClassCategory='';this.postBody.term='';
                     this.$store.state.objectToUpdate='create'; 
                 }
             }).catch(e=>{
@@ -135,15 +144,15 @@ export default {
                     this.submitorUpdate='Submit';
                     this.postBody.Period='';this.postBody.SchoolId='';
                     this.postBody.Amount='';this.postBody.ClassId='';
-                    this.postBody.ClassCategory='';
+                    this.postBody.ClassCategory='';this.postBody.term='';
                     this.$store.state.objectToUpdate='update'; 
                 }
             }).catch(e=>{
                 this.errors.push(e);
             })
             }
+           
         }
-
     },
     computed:{
 
@@ -155,6 +164,7 @@ export default {
                 this.postBody.ClassId=objectToUpdate.classId,
                 this.postBody.ClassCategory=objectToUpdate.classCategory,
                 this.postBody.Amount=objectToUpdate.amount
+                this.postBody.term=objectToUpdate.term
             };
         }
     }

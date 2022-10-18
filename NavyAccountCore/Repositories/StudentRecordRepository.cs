@@ -31,10 +31,11 @@ namespace NavyAccountCore.Repositories
         }
         public async Task<List<StudentRecordVM>> getStudentList(int iDisplayStart, int iDisplayLength)
         {
+
             var dd = (from pers in context.sr_StudentRecord
                       join sch in context.sr_SchoolRecord on pers.SchoolId equals sch.id
-                      join gu in context.sr_GuardianRecord on pers.Guardianid equals gu.id
-                      join par in context.sr_ParentRecord on pers.Parentid equals par.id
+                      //join gu in context.sr_GuardianRecord on pers.Guardianid equals gu.id
+                      //join par in context.sr_ParentRecord on pers.Parentid.Has equals par.id
                       join cl in context.sr_ClassRecord on pers.ClassId equals cl.id
                       select new StudentRecordVM
                       {
@@ -51,8 +52,8 @@ namespace NavyAccountCore.Repositories
                           PhoneNumber = pers.PhoneNumber,
                           SchoolCode = sch.Schoolname,
                           ClassName = cl.ClassName,
-                          ParentName=par.Surname +" "+par.OtherNames,
-                          GuardianName = gu.Surname + " " + gu.OtherNames,
+                          //ParentName=par.Surname +" "+par.OtherNames,
+                          //GuardianName = gu.Surname + " " + gu.OtherNames,
                           ClassCategory =pers.ClassCategory
                       }).Skip(iDisplayStart).Take(iDisplayLength).ToListAsync();
             return await dd;

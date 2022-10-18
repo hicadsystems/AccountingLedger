@@ -2,7 +2,15 @@
     <div>
         
         <div class="card-body">
-            <table id="datatables-buttons" class="table table-striped" style="width:100%">
+            <div class="row">
+                <div class="col-12 col-xl-2">
+                <button type="button" class="btn btn-submit btn-primary" @click="printSchoolFeeToPDF()">Export to PDF</button>
+            </div>
+            <div class="col-12 col-xl-2">
+                <button type="button" class="btn btn-submit btn-primary" @click="printSchoolFeeToExcel()">Export to Excel</button>
+            </div>
+        </div>
+                <table id="datatables-buttons" class="table table-striped" style="width:100%">
                 <thead>
                     <tr>
                         <td>School Session</td>
@@ -72,7 +80,13 @@
         }).catch(e=>{
             this.error.push(e);
         });
-      }
+      },
+      printSchoolFeeToPDF:function(){
+                window.open('SRSchoolFee/SchoolFeeByPdf');
+            },
+            printSchoolFeeToExcel:function(){
+                window.open('SRSchoolFee/SchoolFeeByExcel');
+            }
    }
 }
 
