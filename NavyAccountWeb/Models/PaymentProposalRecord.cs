@@ -48,9 +48,11 @@ namespace NavyAccountWeb.Models
 
     public class SchoolStudentRecordModel
     {
-        public string school { get; set; }
-        public int strength { get; set; }
-        public string Reg_Number { get; set; }
+        public string schoolName { get; set; }
+        public string schoolType { get; set; }
+        public int SchoolCount { get; set; }
+        public int ClaimCount { get; set; }
+        public string session { get; set; }
     }
 
     public class DefaulterModel 

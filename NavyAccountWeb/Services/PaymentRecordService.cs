@@ -24,33 +24,12 @@ namespace NavyAccountWeb.Services
             this.dapper = dapper;
         }
 
-        public async Task<List<SchoolStudentRecord>> filterSchoolWithStudent()
+        public async Task<List<SchoolStudentRecordModel>> filterSchoolWithStudent()
         {
-            var op = new List<SchoolStudentRecord>();
+            var result = new List<SchoolStudentRecordModel>();
             var param = new DynamicParameters();
-            var result = dapper.GetAll<SchoolStudentRecordModel>("sr_FilterSchoolByStudent", param, commandType: System.Data.CommandType.StoredProcedure);
-            var distinctSchoolRecord = result.DistinctBy(x => x.school);
-            int count = 0;
-            foreach(var j in distinctSchoolRecord)
-            {
-                foreach(var k in result)
-                {
-                    if (j.school.ToUpper() == k.school.ToUpper())
-                    {
-                        count++;
-                    }
-                }
-                op.Add(new SchoolStudentRecord {
-                    school=j.school,
-                    strength=j.strength,
-                    studentCount=count
-                });
-
-                count = 0;
-
-            }
-
-            return op;
+            result = dapper.GetAll<SchoolStudentRecordModel>("sr_FilterSchoolByStudent", param, commandType: System.Data.CommandType.StoredProcedure);
+            return result;
         }
 
         public async Task<bool> AddPayment(sr_PaymentRecord value)

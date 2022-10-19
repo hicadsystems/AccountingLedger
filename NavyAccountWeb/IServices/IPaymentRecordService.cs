@@ -13,7 +13,7 @@ namespace NavyAccountWeb.IServices
         Task AddRecordToDefaulter(string regNumer, string createdBy);
         Task<List<DefaulterModel>> GetdefaulterRecord();
         Task<List<StudentPayViewModel>> GetStudentPaySummary(int id);
-        Task<List<SchoolStudentRecord>> filterSchoolWithStudent();
+        Task<List<SchoolStudentRecordModel>> filterSchoolWithStudent();
         Task<List<PaymentProposalRecord>> GetStudentpaymentProposal();
         Task<List<PaymentProposalRecord>> GetStudentpaymentProposalbySchool(string schoolname);
         Task<Tuple<List<PaymentProposalRecord>,int>> GetDiscrepancyRecord(int iDisplayStart, int iDisplayLength);

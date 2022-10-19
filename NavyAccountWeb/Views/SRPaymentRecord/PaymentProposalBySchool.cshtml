@@ -15,7 +15,7 @@
 <body>
     <h6 style="text-align:center">RETRICTED</h6>
     <h2 style="text-align:center">NIGERIAN NAVY DIRECTORATE OF NON-PUBLIC FUND</h2>
-    <h2 style="text-align:center">NAVIP, DEPENDANT FUND AND WELFARE LOAN PORTFOLIOS</h2>
+    <h2 style="text-align:center">SCHOOL WALFARE SCHEME</h2>
     Payment Proposal: Produce On @DateTime.Now
     <div class="card-body">
         <table border="2" cellpadding="2" cellspacing="0" width="100%">
@@ -35,24 +35,24 @@
             }
             else
             {
-                
-                    @foreach (var b in Model)
-                    {
-                        <tr>
-                            <td>@b.Req_Number</td>
-                            <td>@b.Surname+" "+@b.FirstName+ " "+@b.MiddleName</td>
-                            <td>@b.Schoolname</td>
-                            <td>@b.SchoolCity</td>
-                            <td>@b.SchoolType</td>
-                            <td>@b.Amount</td>
-                        </tr>
 
-                        total += (decimal)b.Amount;
-                    }
+                @foreach (var b in Model)
+                {
                     <tr>
-                        <td colspan="5" style="font-weight:bold">Total</td>
-                        <td style="font-weight:bold">@total</td>
+                        <td>@b.Req_Number</td>
+                        <td>@b.Surname+" "+@b.FirstName+ " "+@b.MiddleName</td>
+                        <td>@b.Schoolname</td>
+                        <td>@b.SchoolCity</td>
+                        <td>@b.SchoolType</td>
+                        <td>@b.Amount</td>
                     </tr>
+
+                    total += (decimal)b.Amount;
+                }
+                <tr>
+                    <td colspan="5" style="font-weight:bold">Total</td>
+                    <td style="font-weight:bold">@total</td>
+                </tr>
             }
         </table>
         <h6 style="text-align:center">RETRICTED</h6>

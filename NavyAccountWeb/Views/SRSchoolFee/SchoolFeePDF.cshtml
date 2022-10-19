@@ -1,0 +1,45 @@
+﻿@model IEnumerable<NavyAccountCore.Entities.SchoolFeeVM2>
+
+@{
+    Layout = null;
+    decimal total = 0M;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>School Fee Table</title>
+</head>
+<body>
+    <h6 style="text-align:center">RETRICTED</h6>
+    <h2 style="text-align:center">NIGERIAN NAVY DIRECTORATE OF NON-PUBLIC FUND</h2>
+    <h2 style="text-align:center">SCHOOL WALFARE SCHEME</h2>
+    School Fee Table: Produce On @DateTime.Now
+    <div class="card-body">
+        <table border="2" cellpadding="2" cellspacing="0" width="100%">
+            <tr>
+                <th>Session</th>
+                <th>Term</th>
+                <th>School</th>
+                <th>Class</th>
+                <th>School Type</th>
+                <th>Amount</th>
+            </tr>
+                   @foreach(var b in Model)
+                    {
+                        <tr>
+                            <td>@b.Period</td>
+                            <td>@b.Term</td>
+                            <td>@b.SchoolName</td>
+                            <td>@b.ClassName</td>
+                            <td>@b.SchoolType</td>
+                            <td>@b.Amount</td>
+                        </tr>
+            }
+        </table>
+        <h6 style="text-align:center">RETRICTED</h6>
+    </div>
+</body>
+</html>

@@ -39,7 +39,27 @@ namespace NavyAccountCore.Repositories
                           SchoolName = sch.Schoolname,
                           ClassName = cl.ClassName,
                           ClassCategory = pers.ClassCategory,
-                          Amount=pers.Amount
+                          Amount=pers.Amount,
+                          term=pers.term
+                      }).ToListAsync();
+            return await dd;
+
+        }
+        public async Task<List<SchoolFeeVM2>> GetAllSchoolFeeByPeriod(string period)
+        {
+            var dd = (from pers in context.sr_SchoolFeeTB
+                      join sch in context.sr_SchoolRecord on pers.SchoolId equals sch.id
+                      join cl in context.sr_ClassRecord on pers.ClassId equals cl.id
+                      where (pers.Period==period)
+                      select new SchoolFeeVM2
+                      {
+
+                          Period = pers.Period,
+                          SchoolName = sch.Schoolname,
+                          ClassName = cl.ClassName,
+                          SchoolType = pers.ClassCategory,
+                          Amount = pers.Amount,
+                          Term = pers.term
                       }).ToListAsync();
             return await dd;
 

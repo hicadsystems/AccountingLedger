@@ -18,7 +18,8 @@ namespace NavyAccountWeb.IServices
         Task<IEnumerable<sr_StudentRecord>> GetAllStudent();
         Task<sr_StudentRecord> GetStudentByCode(string code);
         Task<sr_StudentRecord> GetStudentByid(int id);
-        Task<List<StudentRecordVM>> GetStudentList(int iDisplayStart, int iDisplayLength);
+        //Task<List<StudentRecordVM>> GetStudentList(int iDisplayStart, int iDisplayLength);
+        Task<List<StudentRecordVM>> GetStudentList(int schoolid, int iDisplayStart, int iDisplayLength);
         Task<List<StudentRecordVM>> GetInactiveStudentList(int iDisplayStart, int iDisplayLength);
         Task<int> getStudentListCount();
         Task<int> getInactiveStudentListCount();

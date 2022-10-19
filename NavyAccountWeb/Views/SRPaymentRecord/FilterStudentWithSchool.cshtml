@@ -1,9 +1,13 @@
-﻿@model IEnumerable<NavyAccountWeb.Models.SchoolStudentRecord>
+﻿@model IEnumerable<NavyAccountWeb.Models.SchoolStudentRecordModel>
 
 @{
     Layout = null;
     int total = 0;
     int total2 = 0;
+    int total3 = 0;
+    int total4 = 0;
+    int serialno = 1;
+    int serialno2 = 1;
 }
 
 <!DOCTYPE html>
@@ -16,41 +20,71 @@
 <body>
     <h6 style="text-align:center">RETRICTED</h6>
     <h2 style="text-align:center">NIGERIAN NAVY DIRECTORATE OF NON-PUBLIC FUND</h2>
-    <h2 style="text-align:center">NAVIP, DEPENDANT FUND AND WELFARE LOAN PORTFOLIOS</h2>
-    School Summary Report: Produce On @DateTime.Now
+    <h2 style="text-align:center">SCHOOL WALFARE SCHEME</h2>
+    <div class="row">ANALYSIS OF NIGERIAN NAVY WELFARE SCHOOLS INSURANCE SCHEME FOR @Model.FirstOrDefault().session ACADEMIC SESSION</div>
+    Produce On @DateTime.Now
     <div class="card-body">
+        <div class="row"><h3>NNSS</h3></div>
         <table border="2" cellpadding="2" cellspacing="0" width="100%">
             <tr>
+                <th>SN</th>
                 <th>School</th>
                 <th>Strength</th>
-                <th>No of Student</th>
+                <th>No of Students On Insurance</th>
             </tr>
-            @if (Model.Count() == 0)
+
+            @foreach (var b in Model.Where(x => x.schoolType == "SECONDARY"))
             {
                 <tr>
-                    <td colspan="12"><b>No Record Found</b></td>
+                    <td>
+                        @serialno
+                    </td>
+                    @{ serialno++; }
+                    <td>@b.schoolName</td>
+                    <td>@b.SchoolCount</td>
+                    <td>@b.ClaimCount</td>
                 </tr>
+
+                total += b.SchoolCount;
+                total2 += b.ClaimCount;
             }
-            else
+        <tr>
+            <td style="font-weight:bold"></td>
+            <td style="font-weight:bold">Total</td>
+            <td style="font-weight:bold">@total</td>
+            <td style="font-weight:bold">@total2</td>
+        </tr>
+        </table>
+        <div class="row"><h3>NNPS</h3></div>
+        <table border="2" cellpadding="2" cellspacing="0" width="100%">
+            <tr>
+                <th>SN</th>
+                <th>School</th>
+                <th>Strength</th>
+                <th>No of Students On Insurance</th>
+            </tr>
+
+            @foreach (var b in Model.Where(x => x.schoolType == "PRIMARY"))
             {
-
-                @foreach (var b in Model)
-                {
-                    <tr>
-                        <td>@b.school</td>
-                        <td>@b.strength</td>
-                        <td>@b.studentCount</td>
-                    </tr>
-
-                    total += b.strength;
-                    total2 += b.studentCount;
-                }
                 <tr>
-                    <td style="font-weight:bold">Total</td>
-                    <td style="font-weight:bold">@total</td>
-                    <td style="font-weight:bold">@total2</td>
+                    <td>
+                        @serialno2
+                    </td>
+                    @{ serialno2++; }
+                    <td>@b.schoolName</td>
+                    <td>@b.SchoolCount</td>
+                    <td>@b.ClaimCount</td>
                 </tr>
+
+                total3 += b.SchoolCount;
+                total4 += b.ClaimCount;
             }
+        <tr>
+            <td style="font-weight:bold"></td>
+            <td style="font-weight:bold">Total</td>
+            <td style="font-weight:bold">@total3</td>
+            <td style="font-weight:bold">@total4</td>
+        </tr>
         </table>
         <h6 style="text-align:center">RETRICTED</h6>
     </div>
