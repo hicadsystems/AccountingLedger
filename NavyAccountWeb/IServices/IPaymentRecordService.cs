@@ -11,6 +11,7 @@ namespace NavyAccountWeb.IServices
     public interface IPaymentRecordService
     {
         Task AddRecordToDefaulter(string regNumer, string createdBy);
+        Task<List<DefaulterModel>> GetdefaulterRecord();
         Task<List<StudentPayViewModel>> GetStudentPaySummary(int id);
         Task<List<SchoolStudentRecord>> filterSchoolWithStudent();
         Task<List<PaymentProposalRecord>> GetStudentpaymentProposal();

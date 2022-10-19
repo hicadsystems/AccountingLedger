@@ -259,5 +259,14 @@ namespace NavyAccountWeb.Services
 
             return result;
         }
+
+        public async Task<List<DefaulterModel>> GetdefaulterRecord()
+        {
+            var result = new List<DefaulterModel>();
+            var param = new DynamicParameters();
+            result = dapper.GetAll<DefaulterModel>("sp_GetDefaulter", param, commandType: System.Data.CommandType.StoredProcedure);
+
+            return result;
+        }
     }
 }

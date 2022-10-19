@@ -53,6 +53,27 @@ namespace NavyAccountWeb.Models
         public string Reg_Number { get; set; }
     }
 
+    public class DefaulterModel 
+    {
+        public string Reg_Number { get; set; }
+        public string Surname { get; set; }
+        public string FirstName { get; set; }
+        public string MiddleName { get; set; }
+        public string SchoolName { get; set; }
+        public string Period { get; set; }
+        public string Term { get; set; }
+        public decimal Amount { get; set; }
+    }
+
+
+    public class DefaulterViewModel 
+    {
+        public List<DefaulterModel> distinctRecord { get; set; }
+        public List<DefaulterModel> data { get; set; }
+    }
+
+
+
 
 
 
