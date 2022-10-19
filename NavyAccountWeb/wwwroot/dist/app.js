@@ -13621,10 +13621,10 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     printSchoolFeeToPDF: function printSchoolFeeToPDF() {
-      window.open('SRSchoolFee/SchoolFeeByPdf');
+      window.open('/SRSchoolFee/SchoolFeeByPdf');
     },
     printSchoolFeeToExcel: function printSchoolFeeToExcel() {
-      window.open('SRSchoolFee/SchoolFeeByExcel');
+      window.open('/SRSchoolFee/SchoolFeeByExcel');
     }
   }
 });
@@ -14642,7 +14642,6 @@ __webpack_require__.r(__webpack_exports__);
         schoolname = 'NULL';
       }
 
-      alert('i am here');
       window.open("/SRClaimRecord/CLaimPaymentByPdf/".concat(schoolname));
     },
     printProposalAsExcel: function printProposalAsExcel(schoolname) {

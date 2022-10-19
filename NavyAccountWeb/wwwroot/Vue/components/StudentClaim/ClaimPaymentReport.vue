@@ -99,7 +99,6 @@
             if(schoolname===''){
                 schoolname='NULL'
             }
-            alert('i am here');
             window.open(`/SRClaimRecord/CLaimPaymentByPdf/${schoolname}`)
         },
         printProposalAsExcel:function(schoolname){

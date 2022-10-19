@@ -82,10 +82,10 @@
         });
       },
       printSchoolFeeToPDF:function(){
-                window.open('SRSchoolFee/SchoolFeeByPdf');
+                window.open('/SRSchoolFee/SchoolFeeByPdf');
             },
             printSchoolFeeToExcel:function(){
-                window.open('SRSchoolFee/SchoolFeeByExcel');
+                window.open('/SRSchoolFee/SchoolFeeByExcel');
             }
    }
 }

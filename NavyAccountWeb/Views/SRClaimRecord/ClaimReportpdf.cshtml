@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width" />
     <title>ClaimPaymentReport</title>
 </head>
-<body>
+<body style="width:1200px">
     <h6 style="text-align:center">RETRICTED</h6>
     <h2 style="text-align:center">NIGERIAN NAVY DIRECTORATE OF NON-PUBLIC FUND</h2>
     <h2 style="text-align:center">SCHOOL WALFARE SCHEME</h2>
@@ -41,33 +41,39 @@
             {
                 @foreach (var a in Model.distintrecord)
                 {
+                    <tr style="align-content:center">
+                        <td colspan="9" style="font-weight:bold">@a.Schoolname.ToUpper()</td>
 
-                    @foreach (var b in Model.allRecord.Where(x=>x.Schoolname==a.Schoolname))
+                    </tr>
+
+                    @foreach (var b in Model.allRecord.Where(x => x.Schoolname == a.Schoolname))
                     {
-                    <tr>
-                        <td>@b.Reg_Number</td>
-                        <td>@b.Surname</td>
-                        <td>@b.Sex</td>
-                        <td>@b.Age</td>
-                        <td>@a.Schoolname</td>
-                        <td>@a.SchoolType</td>
-                        <td>@a.ClassName</td>
-                        <td>@Math.Round(a.ClaimAmount.Value,2)</td>
-                        <td>@Math.Round(a.FeeAmount.Value,2)</td>
+                        <tr>
+                            <td>@b.Reg_Number</td>
+                            <td>@b.Surname</td>
+                            <td>@b.Sex</td>
+                            <td>@b.Age</td>
+                            <td>@a.Schoolname</td>
+                            <td>@a.SchoolType</td>
+                            <td>@a.ClassName</td>
+                            <td>@Math.Round(a.ClaimAmount.Value, 2)</td>
+                            <td>@Math.Round(a.FeeAmount.Value, 2)</td>
 
-                    </tr> 
+                        </tr>
 
-                      total += (decimal)b.FeeAmount;
-                    
+
+
+                        total += (decimal)b.FeeAmount;
+
                     }
                     <tr>
-                       <td colspan="5" style="font-weight:bold">Total</td>
-                       <td style="font-weight:bold">@Math.Round(total,2)</td>
+                        <td colspan="8" style="font-weight:bold">Total</td>
+                        <td style="font-weight:bold">@Math.Round(total, 2)</td>
 
                     </tr>
                     total = 0;
-                    }
                 }
+            }
         </table>
         <h6 style="text-align:center">RETRICTED</h6>
     </div>
