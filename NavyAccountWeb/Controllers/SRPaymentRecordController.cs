@@ -78,6 +78,76 @@ namespace NavyAccountWeb.Controllers
 
         }
 
+        [Route("SRPaymentRecord/PrintDefaultersAsExcel")]
+        public async Task<IActionResult> PrintDefaultersAsExcel()
+        {
+
+            var op = await paymentRecordService.GetdefaulterRecord();
+            var oq = op.OrderBy(x => x.Term);
+
+            var stream = new MemoryStream();
+            int row = 2;
+            using (var package = new ExcelPackage(stream))
+            {
+                var workSheet = package.Workbook.Worksheets.Add("Sheet2");
+                workSheet.Cells.LoadFromCollection(oq, true);
+                package.Save();
+            }
+
+            string excelname = "Defaulters.xlsx";
+
+            stream.Position = 0;
+            string excelName = $"Defaulters-{DateTime.Now.ToString("yyyyMMddHHmmssfff")}.xlsx";
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelname);
+
+        }
+
+        [Route("SRPaymentRecord/PrintDefaultersAsExcel/{period}")]
+        public async Task<IActionResult> PrintDefaultersAsExcel(string period)
+        {
+
+            var op = await paymentRecordService.GetdefaulterRecord();
+            var oq = op.Where(x=>x.Period==period).OrderBy(x => x.Term);
+
+            var stream = new MemoryStream();
+            int row = 2;
+            using (var package = new ExcelPackage(stream))
+            {
+                var workSheet = package.Workbook.Worksheets.Add("Sheet2");
+                workSheet.Cells.LoadFromCollection(oq, true);
+                package.Save();
+            }
+
+            string excelname = "Defaulters.xlsx";
+
+            stream.Position = 0;
+            string excelName = $"Defaulters-{DateTime.Now.ToString("yyyyMMddHHmmssfff")}.xlsx";
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelname);
+
+        }
+
+        [Route("SRPaymentRecord/PrintDefaultersAsPdf")]
+        public async Task<IActionResult> PrintDefaultersAsPdf()
+        {
+            var result = new DefaulterViewModel();
+            var op = await paymentRecordService.GetdefaulterRecord();
+            var oq = op.DistinctBy(x => x.Period);
+            result.distinctRecord = oq.ToList();
+            result.data = op.OrderBy(x => x.Term).ToList();
+
+            return await GeneratePdf.GetPdf("Views/SRPaymentRecord/DefaultersReport.cshtml",result);
+        }
+
+        [Route("SRPaymentRecord/PrintDefaultersAsPdf/{period}")]
+        public async Task<IActionResult> PrintDefaultersAsPdf(string period)
+        {
+            var result = new DefaulterViewModel();
+            var op = await paymentRecordService.GetdefaulterRecord();
+            op = op.Where(x => x.Period == period).ToList();
+         
+            return await GeneratePdf.GetPdf("Views/SRPaymentRecord/DefaultersReport2.cshtml", op);
+        }
+
         [Route("SRPaymentRecord/PrintPaymentProposalAsExcelBySchool/{schoolName}")]
         public async Task<IActionResult> PrintPaymentProposalAsExcel(string schoolName)
         {
@@ -139,22 +209,28 @@ namespace NavyAccountWeb.Controllers
             return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelname);
         }
 
-        public ActionResult UpdatePaymentProposal()
+        public async Task<ActionResult> UpdatePaymentProposal()
         {
+            TempData["count"] = await paymentRecordService.GetStudentCountUnderDescrepancy();
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> UpdatePayment()
         {
-
-            var param = new DynamicParameters();
-            param.Add("@username", User.Identity.Name);
-            dapperService.Execute("sp_UpdatePaymentProposal", param, commandType: System.Data.CommandType.StoredProcedure);
-
-            TempData["message"] = "Uploaded Successfully";
-
             
+            int count = await paymentRecordService.GetStudentCountUnderDescrepancy();
+            if (count == 0)
+            {
+                var param = new DynamicParameters();
+                param.Add("@username", User.Identity.Name);
+                dapperService.Execute("sp_UpdatePaymentProposal", param, commandType: System.Data.CommandType.StoredProcedure);
+
+                TempData["message"] = "Uploaded Successfully";
+            }
+           
+
+            TempData["count"] = count;
             return RedirectToAction("UpdatePaymentProposal");
 
 
@@ -338,6 +414,13 @@ namespace NavyAccountWeb.Controllers
         }
 
         public ActionResult Index2()
+        {
+
+            return View();
+        }
+
+
+        public ActionResult Index3()
         {
 
             return View();

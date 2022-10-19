@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NavyAccountWeb.Data;
 
 namespace NavyAccountWeb.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221018123159_add-sr_defaulter")]
+    partial class addsr_defaulter
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1570,8 +1572,6 @@ namespace NavyAccountWeb.Migrations
                     b.Property<string>("Reg_Number");
 
                     b.Property<string>("Remarks");
-
-                    b.Property<string>("SchoolName");
 
                     b.Property<string>("Surname");
 

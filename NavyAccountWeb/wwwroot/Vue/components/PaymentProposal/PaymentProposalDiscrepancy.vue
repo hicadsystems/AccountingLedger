@@ -33,7 +33,7 @@
                     <td>{{ student.schoolCity }}</td>
                     <td>{{ student.schoolType }}</td>
                     <td>{{ student.amount }}</td>
-                   <td><button type="button" class="btn btn-submit btn-primary" @click="processDelete(student.req_Number)">Delete</button></td>
+                   <td><button type="button" class="btn btn-submit btn-primary" @click="processDelete(student.req_Number)">Trash</button></td>
                 </tr>
             </tbody>
 

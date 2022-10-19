@@ -120,9 +120,9 @@ namespace NavyAccountWeb.Services
         {
             var result = new List<PaymentProposalRecord>();
             var param = new DynamicParameters();
-            result = dapper.GetAll<PaymentProposalRecord>("sr_GetActiveStudentPaymentProposalRecord", param, commandType: System.Data.CommandType.StoredProcedure);
-            result = result.Where(x => x.Schoolname.ToUpper() == schoolname.ToUpper()).ToList();
-
+            param.Add("@school", schoolname.ToUpper());
+            result = dapper.GetAll<PaymentProposalRecord>("sr_GetActiveStudentPaymentProposalRecordBySchool", param, commandType: System.Data.CommandType.StoredProcedure);
+           
             return result;
         }
 
@@ -194,6 +194,58 @@ namespace NavyAccountWeb.Services
         public async Task UpdatePaymentProposal()
         {
             
+        }
+
+        public async Task AddRecordToDefaulter(string regNumer,string createdBy)
+        {
+            //get payment proposal record
+            var result = new PaymentProposalRecord();
+            var param = new DynamicParameters();
+            param.Add("@RegNum",regNumer);
+            result = dapper.Get<PaymentProposalRecord>("sp_getPaymentproposalByregNum", param, commandType: System.Data.CommandType.StoredProcedure);
+
+            if (result.SchoolType.ToUpper() == "PRIMARY")
+            {
+                result.Amount = 500;
+            }
+
+            if (result.SchoolType.ToUpper() == "SECONDARY")
+            {
+                result.Amount = 1000;
+            }
+
+            //add record to defaulter table
+
+            var param2 = new DynamicParameters();
+            param2.Add("@Reg_Number", result.Req_Number);
+            param2.Add("@Surname", result.Surname);
+            param2.Add("@FirstName", result.FirstName);
+            param2.Add("@MiddleName", result.MiddleName);
+            param2.Add("@Schoolname", result.Schoolname);
+            param2.Add("@period", result.Period);
+            param2.Add("@term", result.Term);
+            param2.Add("@Amount", result.Amount);
+            param2.Add("@createdby", createdBy);
+
+            dapper.Execute("sr_AddToDefaulter", param2, commandType: System.Data.CommandType.StoredProcedure);
+
+        }
+
+        public async Task<int> GetStudentCountUnderDescrepancy()
+        {
+            var param = new DynamicParameters();
+            int result = dapper.Get<int>("sr_GetStudentCountUnderDescrepancy", param, commandType: System.Data.CommandType.StoredProcedure);
+
+            return result;
+        }
+
+        public async Task<List<DefaulterModel>> GetdefaulterRecord()
+        {
+            var result = new List<DefaulterModel>();
+            var param = new DynamicParameters();
+            result = dapper.GetAll<DefaulterModel>("sp_GetDefaulter", param, commandType: System.Data.CommandType.StoredProcedure);
+
+            return result;
         }
     }
 }

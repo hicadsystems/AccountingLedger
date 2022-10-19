@@ -4,25 +4,19 @@
      <div class="row">
         <div class="col-12 col-xl-12">
                 <div class="form-group">
-                    <label class="form-label">School Name</label>
+                    <label class="form-label">Period</label>
                     <div class="row">
-                          <div class="col-xl-4">
-                                  <select class="form-control" v-model="postBody.schoolName" name="schoolName" required>
-                                    <option v-for="loantype in SchoolList" v-bind:value="loantype.schoolname" v-bind:key="loantype.schoolname"> {{ loantype.schoolname }} </option>
+                        <div class="col-xl-4">
+                                  <select class="form-control" v-model="postBody.schoolName" name="schoolName">
+                                    <option v-for="loantype in SchoolList" v-bind:value="loantype.period" v-bind:key="loantype.period"> {{ loantype.period }} </option>
                                   </select>
-
-                                <!-- <vuejsAutocomplete source="/api/SchoolRecord/GetschoolByName/"
-                                            input-class="form-control"
-                                            @selected="setValueStudent"
-                                            v-model="pp">
-                                </vuejsAutocomplete> -->
                           </div>
-                                
+                          
                         <div class="col-12 col-xl-2">
-                            <button class="btn btn-submit btn-primary" v-on:click="printProposal" type="submit">Export to Pdf</button>
+                            <button class="btn btn-submit btn-primary" v-on:click="printDefaulterAsPDf" type="submit">Export to Pdf</button>
                         </div>
                         <div class="col-12 col-xl-2">
-                            <button class="btn btn-submit btn-success" v-on:click="printProposalAsExcel" type="submit">Export to Excel</button>
+                            <button class="btn btn-submit btn-success" v-on:click="printDefaulterAsExcel" type="submit">Export to Excel</button>
                         </div>
                     </div>
                 </div>
@@ -95,26 +89,29 @@
      mounted() {
             this.$store.state.objectToUpdate = null, 
          axios
-            .get('/api/SchoolRecord/GetAll')
+            .get('/api/Payment/GetDistinctPeriod')
             .then(response => (this.SchoolList = response.data))
      },
     methods: {
 
-        printProposal:function(){
-            if(this.postBody.schoolName){
-               window.open(`/SRPaymentRecord/PrintPaymentProposalAsPdf/${this.postBody.schoolName}`)
+        printDefaulterAsPDf:function(){
+            if(this.postBody.schoolName)
+            {
+               window.open(`/SRPaymentRecord/PrintDefaultersAsPdf/${this.postBody.schoolName}`);
             }
-            else{
-               window.open('/SRPaymentRecord/PrintPaymentProposalAsPdf')
-         }
+            else
+            {
+               window.open('/SRPaymentRecord/PrintDefaultersAsPdf');
+            }
+            
         },
-        printProposalAsExcel:function(){
-           if(this.postBody.schoolName){
-              window.open(`/SRPaymentRecord/PrintPaymentProposalAsExcelBySchool/${this.postBody.schoolName}`);
-           }else{
-              window.open('/SRPaymentRecord/PrintPaymentProposalAsExcel');
-           }
-       
+        printDefaulterAsExcel:function(){
+            if(this.postBody.schoolName){
+                window.open(`/SRPaymentRecord/PrintDefaultersAsExcel/${this.postBody.schoolName}`);
+            }else{
+                window.open('/SRPaymentRecord/PrintDefaultersAsExcel');
+            }
+            
            
         },
         setValueStudent: function(result) {

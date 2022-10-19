@@ -1,0 +1,56 @@
+﻿@model IEnumerable<NavyAccountWeb.Models.DefaulterModel>
+
+@{
+    Layout = null;
+    string name = "";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>DefaultersReport</title>
+</head>
+<body>
+    <h6 style="text-align:center">RETRICTED</h6>
+    <h2 style="text-align:center">NIGERIAN NAVY DIRECTORATE OF NON-PUBLIC FUND</h2>
+    <h2 style="text-align:center">NAVIP, DEPENDANT FUND AND WELFARE LOAN PORTFOLIOS</h2>
+    Defaulter Report: Produce On @DateTime.Now
+    <div class="card-body">
+        <table border="2" cellpadding="2" cellspacing="0" width="100%">
+            <tr>
+                <th>Reg number</th>
+                <th>Full Name</th>
+                <th>School name</th>
+                <th>Period</th>
+                <th>Term</th>
+                <th>Amount</th>
+            </tr>
+            @if (Model.Count() == 0)
+            {
+                <tr>
+                    <td colspan="12"><b>No Record Found</b></td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var b in Model)
+                {
+                    name = b.Surname + " " + b.FirstName + " " + b.MiddleName;
+                    <tr>
+                        <td>@b.Reg_Number</td>
+                        <td>@name</td>
+                        <td>@b.SchoolName</td>
+                        <td>@b.Period</td>
+                        <td>@b.Term</td>
+                        <td>@b.Amount</td>
+                    </tr>
+                }
+            }
+        </table>
+        <h6 style="text-align:center">RETRICTED</h6>
+    </div>
+</body>
+</html>
+
