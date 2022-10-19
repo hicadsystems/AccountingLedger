@@ -102,6 +102,30 @@ namespace NavyAccountWeb.Controllers
 
         }
 
+        [Route("SRPaymentRecord/PrintDefaultersAsExcel/{period}")]
+        public async Task<IActionResult> PrintDefaultersAsExcel(string period)
+        {
+
+            var op = await paymentRecordService.GetdefaulterRecord();
+            var oq = op.Where(x=>x.Period==period).OrderBy(x => x.Term);
+
+            var stream = new MemoryStream();
+            int row = 2;
+            using (var package = new ExcelPackage(stream))
+            {
+                var workSheet = package.Workbook.Worksheets.Add("Sheet2");
+                workSheet.Cells.LoadFromCollection(oq, true);
+                package.Save();
+            }
+
+            string excelname = "Defaulters.xlsx";
+
+            stream.Position = 0;
+            string excelName = $"Defaulters-{DateTime.Now.ToString("yyyyMMddHHmmssfff")}.xlsx";
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelname);
+
+        }
+
         [Route("SRPaymentRecord/PrintDefaultersAsPdf")]
         public async Task<IActionResult> PrintDefaultersAsPdf()
         {
@@ -114,6 +138,15 @@ namespace NavyAccountWeb.Controllers
             return await GeneratePdf.GetPdf("Views/SRPaymentRecord/DefaultersReport.cshtml",result);
         }
 
+        [Route("SRPaymentRecord/PrintDefaultersAsPdf/{period}")]
+        public async Task<IActionResult> PrintDefaultersAsPdf(string period)
+        {
+            var result = new DefaulterViewModel();
+            var op = await paymentRecordService.GetdefaulterRecord();
+            op = op.Where(x => x.Period == period).ToList();
+         
+            return await GeneratePdf.GetPdf("Views/SRPaymentRecord/DefaultersReport2.cshtml", op);
+        }
 
         [Route("SRPaymentRecord/PrintPaymentProposalAsExcelBySchool/{schoolName}")]
         public async Task<IActionResult> PrintPaymentProposalAsExcel(string schoolName)

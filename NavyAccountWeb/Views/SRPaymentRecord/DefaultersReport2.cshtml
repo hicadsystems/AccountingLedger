@@ -1,4 +1,4 @@
-﻿@model NavyAccountWeb.Models.DefaulterViewModel
+﻿@model IEnumerable<NavyAccountWeb.Models.DefaulterModel>
 
 @{
     Layout = null;
@@ -27,7 +27,7 @@
                 <th>Term</th>
                 <th>Amount</th>
             </tr>
-            @if (Model.distinctRecord.Count == 0)
+            @if (Model.Count() == 0)
             {
                 <tr>
                     <td colspan="12"><b>No Record Found</b></td>
@@ -35,27 +35,17 @@
             }
             else
             {
-                @foreach (var a in Model.distinctRecord)
+                @foreach (var b in Model)
                 {
+                    name = b.Surname + " " + b.FirstName + " " + b.MiddleName;
                     <tr>
-                        <td colspan="6" style="font-weight:bold">@a.Period</td>
-                        
+                        <td>@b.Reg_Number</td>
+                        <td>@name</td>
+                        <td>@b.SchoolName</td>
+                        <td>@b.Period</td>
+                        <td>@b.Term</td>
+                        <td>@b.Amount</td>
                     </tr>
-
-                    @foreach (var b in Model.data)
-                    {
-                        <tr>
-                            <td>@b.Reg_Number</td>
-                            <td>@name</td>
-                            <td>@b.SchoolName</td>
-                            <td>@a.Period</td>
-                            <td>@a.Term</td>
-                            <td>@a.Amount</td>
-                        </tr>
-
-                    }
-                   
-
                 }
             }
         </table>
@@ -63,3 +53,4 @@
     </div>
 </body>
 </html>
+

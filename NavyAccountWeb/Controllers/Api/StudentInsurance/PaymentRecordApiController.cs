@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Internal;
+using MoreLinq;
 using NavyAccountCore.Entities;
 using NavyAccountWeb.IServices;
 using NavyAccountWeb.Models;
@@ -28,6 +30,16 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
         {
             var pp=await recordService.filteredPaymentProposal(proposalValue);
             return pp;
+        }
+
+        [Route("GetDistinctPeriod")] //api/Payment/GetDistinctPeriod
+        [HttpGet]
+        public async Task<IEnumerable<DefaulterModel>> GetDistinctPeriod()
+        {
+            var pp = await recordService.GetdefaulterRecord();
+            var result = pp.DistinctBy(x => x.Period);
+
+            return result;
         }
 
 

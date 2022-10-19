@@ -4,8 +4,13 @@
      <div class="row">
         <div class="col-12 col-xl-12">
                 <div class="form-group">
-                    <label class="form-label">School Name</label>
+                    <label class="form-label">Period</label>
                     <div class="row">
+                        <div class="col-xl-4">
+                                  <select class="form-control" v-model="postBody.schoolName" name="schoolName">
+                                    <option v-for="loantype in SchoolList" v-bind:value="loantype.period" v-bind:key="loantype.period"> {{ loantype.period }} </option>
+                                  </select>
+                          </div>
                           
                         <div class="col-12 col-xl-2">
                             <button class="btn btn-submit btn-primary" v-on:click="printDefaulterAsPDf" type="submit">Export to Pdf</button>
@@ -84,16 +89,29 @@
      mounted() {
             this.$store.state.objectToUpdate = null, 
          axios
-            .get('/api/SchoolRecord/GetAll')
+            .get('/api/Payment/GetDistinctPeriod')
             .then(response => (this.SchoolList = response.data))
      },
     methods: {
 
         printDefaulterAsPDf:function(){
-            window.open('/SRPaymentRecord/PrintDefaultersAsPdf');
+            if(this.postBody.schoolName)
+            {
+               window.open(`/SRPaymentRecord/PrintDefaultersAsPdf/${this.postBody.schoolName}`);
+            }
+            else
+            {
+               window.open('/SRPaymentRecord/PrintDefaultersAsPdf');
+            }
+            
         },
         printDefaulterAsExcel:function(){
-            window.open('/SRPaymentRecord/PrintDefaultersAsExcel');
+            if(this.postBody.schoolName){
+                window.open(`/SRPaymentRecord/PrintDefaultersAsExcel/${this.postBody.schoolName}`);
+            }else{
+                window.open('/SRPaymentRecord/PrintDefaultersAsExcel');
+            }
+            
            
         },
         setValueStudent: function(result) {
