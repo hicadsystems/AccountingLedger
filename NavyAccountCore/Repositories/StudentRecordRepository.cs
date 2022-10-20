@@ -176,10 +176,11 @@ namespace NavyAccountCore.Repositories
         {
             return await (from pers in context.sr_StudentRecord
                               //join npfranks in context.ranks on pers.rank equals npfranks.Id
-                          where pers.Surname.Contains(Studentname) || pers.FirstName.Contains(Studentname)|| pers.Reg_Number.Contains(Studentname)
+                          where pers.Surname.Contains(Studentname) || pers.FirstName.Contains(Studentname)|| pers.Reg_Number.Replace("/","").Contains(Studentname)
                           select new sr_StudentRecord
                           {
                               id = pers.id,
+                              Reg_Number=pers.Reg_Number,
                               Surname = pers.Surname,
                               FirstName = pers.FirstName,
                               MiddleName = pers.MiddleName,

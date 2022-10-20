@@ -66,6 +66,15 @@ namespace NavyAccountWeb.Services
 
             return result;
         }
+        
+        public async Task<List<ClaimPaymentReport>> GetStudentCurrentClaim()
+        {
+            var result = new List<ClaimPaymentReport>();
+            var param = new DynamicParameters();
+            result = dapper.GetAll<ClaimPaymentReport>("getproposeclaim", param, commandType: System.Data.CommandType.StoredProcedure);
+
+            return result;
+        }
         public async Task<List<ClaimPaymentReport>> GetStudentClaim()
         {
             var result = new List<ClaimPaymentReport>();
@@ -87,7 +96,9 @@ namespace NavyAccountWeb.Services
         {
             var result = new List<ClaimPaymentReport>();
             var param = new DynamicParameters();
-            result = dapper.GetAll<ClaimPaymentReport>("sr_GetClaimRecord", param, commandType: System.Data.CommandType.StoredProcedure);
+            param.Add("@school", schoolname);
+
+            result = dapper.GetAll<ClaimPaymentReport>("sr_GetClaimRecordBySchool", param, commandType: System.Data.CommandType.StoredProcedure);
             result = result.Where(x => x.Schoolname == schoolname).ToList();
             return result;
         }

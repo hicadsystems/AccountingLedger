@@ -66,7 +66,7 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
         [HttpGet()]
         public async Task<IEnumerable<ClaimPaymentReport>> GetByCode()
         {
-          return await recordService.GetStudentClaim();
+          return await recordService.GetStudentCurrentClaim();
            //return Ok(new { responseCode = "200", responseDescription = "Successfull", data = result });
         }
         
@@ -85,10 +85,17 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
         }
         [Route("UpdateLedgerBySchool/{schoolname}/{VoucherNumber}")]
         [HttpGet()]
-        public async Task<int> UpdateAllLedgerBySchool(string schoolname,string VoucherNumber)
+        public async Task<IActionResult> UpdateAllLedgerBySchool(string schoolname,string VoucherNumber)
         {
-
-            return await recordService.UpdateStudentClaimLedgerBySchool(schoolname, VoucherNumber,User.Identity.Name);
+            try
+            { 
+            await recordService.UpdateStudentClaimLedgerBySchool(schoolname, VoucherNumber,User.Identity.Name);
+            return Ok(new { respnseCode = 200, ResponseDescription = "Successfully Updateded" });
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { responseCode = 500, responseDescription = ex.Message });
+            }
         }
 
         // POST api/<SchoolRecordApiController>

@@ -108,7 +108,7 @@ namespace NavyAccountWeb.Services
             {
                 op.Add(new PaymentProposalRecord2() { 
                     id=jp,
-                    name=j.Surname+" "+j.FirstName+" "+j.MiddleName+"_"+j.Req_Number
+                    name=j.Surname+"_"+j.Req_Number
                 });
                 jp++;
 
@@ -199,10 +199,10 @@ namespace NavyAccountWeb.Services
         public async Task AddRecordToDefaulter(string regNumer,string createdBy)
         {
             //get payment proposal record
-            var result = new PaymentProposalRecord();
+            var result = new PaymentProposalRecord22();
             var param = new DynamicParameters();
             param.Add("@RegNum",regNumer);
-            result = dapper.Get<PaymentProposalRecord>("sp_getPaymentproposalByregNum", param, commandType: System.Data.CommandType.StoredProcedure);
+            result = dapper.Get<PaymentProposalRecord22>("sp_getPaymentproposalByregNum", param, commandType: System.Data.CommandType.StoredProcedure);
 
             if (result.SchoolType.ToUpper() == "PRIMARY")
             {

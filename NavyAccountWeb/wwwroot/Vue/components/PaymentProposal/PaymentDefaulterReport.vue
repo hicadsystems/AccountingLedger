@@ -97,7 +97,7 @@
         printDefaulterAsPDf:function(){
             if(this.postBody.schoolName)
             {
-               window.open(`/SRPaymentRecord/PrintDefaultersAsPdf/${this.postBody.schoolName}`);
+               window.open(`/SRPaymentRecord/PrintDefaultersAsPdf/${this.postBody.schoolName.replace('/','')}`);
             }
             else
             {
@@ -107,7 +107,7 @@
         },
         printDefaulterAsExcel:function(){
             if(this.postBody.schoolName){
-                window.open(`/SRPaymentRecord/PrintDefaultersAsExcel/${this.postBody.schoolName}`);
+                window.open(`/SRPaymentRecord/PrintDefaultersAsExcel/${this.postBody.schoolName.replace('/','')}`);
             }else{
                 window.open('/SRPaymentRecord/PrintDefaultersAsExcel');
             }

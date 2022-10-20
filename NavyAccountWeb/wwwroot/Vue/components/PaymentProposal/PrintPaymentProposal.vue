@@ -102,7 +102,7 @@
 
         printProposal:function(){
             if(this.postBody.schoolName){
-               window.open(`/SRPaymentRecord/PrintPaymentProposalAsPdf/${this.postBody.schoolName}`)
+               window.open(`/SRPaymentRecord/PrintPaymentProposalAsPdfBySchool/${this.postBody.schoolName}`)
             }
             else{
                window.open('/SRPaymentRecord/PrintPaymentProposalAsPdf')

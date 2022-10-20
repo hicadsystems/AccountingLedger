@@ -53,7 +53,6 @@ namespace NavyAccountWeb.Controllers
                 return await GeneratePdf.GetPdf("Views/SRPaymentRecord/PaymentProposal.cshtml", oq);
         }
 
-
         [Route("SRPaymentRecord/PrintPaymentProposalAsExcel")]
         public async Task<IActionResult> PrintPaymentProposalAsExcel()
         {
@@ -105,7 +104,7 @@ namespace NavyAccountWeb.Controllers
         [Route("SRPaymentRecord/PrintDefaultersAsExcel/{period}")]
         public async Task<IActionResult> PrintDefaultersAsExcel(string period)
         {
-
+            period = period.Substring(0, 4) + '/' + period.Substring(period.Length - 4, 4);
             var op = await paymentRecordService.GetdefaulterRecord();
             var oq = op.Where(x=>x.Period==period).OrderBy(x => x.Term);
 
@@ -141,6 +140,8 @@ namespace NavyAccountWeb.Controllers
         [Route("SRPaymentRecord/PrintDefaultersAsPdf/{period}")]
         public async Task<IActionResult> PrintDefaultersAsPdf(string period)
         {
+            
+            period = period.Substring(0,4) + '/' + period.Substring(period.Length - 4, 4);
             var result = new DefaulterViewModel();
             var op = await paymentRecordService.GetdefaulterRecord();
             op = op.Where(x => x.Period == period).ToList();
@@ -175,9 +176,19 @@ namespace NavyAccountWeb.Controllers
         [Route("SRPaymentRecord/PrintPaymentProposalAsPdfBySchool/{schoolName}")]
         public async Task<IActionResult> PrintPaymentProposalAsPdf(string schoolName)
         {
+            try
+            {
+
                 var op = await paymentRecordService.GetStudentpaymentProposalbySchool(schoolName);
                 var oq = await paymentRecordService.moveRecord(op);
-                return await GeneratePdf.GetPdf("Views/SRPaymentRecord/PaymentProposal.cshtml", oq);
+                return await GeneratePdf.GetPdf("Views/SRPaymentRecord/PaymentProposalBySchool.cshtml", oq);
+
+            }
+            catch (Exception ex)
+            {
+                string error = ex.Message;
+                throw;
+            }
         }
 
 

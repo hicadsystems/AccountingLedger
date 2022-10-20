@@ -6,6 +6,17 @@ namespace NavyAccountWeb.Models
     {
         public string Req_Number { get; set; }
         public string Surname { get; set; }
+        public string Schoolname { get; set; }
+        public string SchoolCity { get; set; }
+        public string SchoolType { get; set; }
+        public decimal? Amount { get; set; }
+        public string Period { get; set; }
+        public string Term { get; set; }
+    }
+    public class PaymentProposalRecord22
+    {
+        public string Req_Number { get; set; }
+        public string Surname { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string Schoolname { get; set; }
@@ -27,8 +38,6 @@ namespace NavyAccountWeb.Models
     {
         public string Req_Number { get; set; }
         public string Surname { get; set; }
-        public string FirstName { get; set; }
-        public string MiddleName { get; set; }
         public string Schoolname { get; set; }
         public decimal? Amount { get; set; }
     }
