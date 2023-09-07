@@ -27,17 +27,15 @@ namespace NavyAccountCore.Repositories
         public async Task<List<SchoolFeeVM>> GetAllSchoolFee()
         {
             var dd = (from pers in context.sr_SchoolFeeTB
-                      join sch in context.sr_SchoolRecord on pers.SchoolId equals sch.id
-                      join cl in context.sr_ClassRecord on pers.ClassId equals cl.id
                       select new SchoolFeeVM
                       {
 
                           id = pers.id,
                           Period=pers.Period,
-                          ClassId=pers.ClassId,
-                          SchoolId=pers.SchoolId,
-                          SchoolName = sch.Schoolname,
-                          ClassName = cl.ClassName,
+                          Class=pers.Class,
+                          School=pers.School,
+                          ParentStatus=pers.ParentStatus,
+                          Type=pers.Type,
                           ClassCategory = pers.ClassCategory,
                           Amount=pers.Amount,
                           term=pers.term
@@ -48,15 +46,15 @@ namespace NavyAccountCore.Repositories
         public async Task<List<SchoolFeeVM2>> GetAllSchoolFeeByPeriod(string period)
         {
             var dd = (from pers in context.sr_SchoolFeeTB
-                      join sch in context.sr_SchoolRecord on pers.SchoolId equals sch.id
-                      join cl in context.sr_ClassRecord on pers.ClassId equals cl.id
                       where (pers.Period==period)
                       select new SchoolFeeVM2
                       {
 
                           Period = pers.Period,
-                          SchoolName = sch.Schoolname,
-                          ClassName = cl.ClassName,
+                          Class = pers.Class,
+                          School = pers.School,
+                          ParentStatus = pers.ParentStatus,
+                          Type = pers.Type,
                           SchoolType = pers.ClassCategory,
                           Amount = pers.Amount,
                           Term = pers.term

@@ -22,9 +22,9 @@
             <tr>
                 <th>Session</th>
                 <th>Term</th>
-                <th>School</th>
-                <th>Class</th>
-                <th>School Type</th>
+                <th>Parent Status</th>
+                <th>Type</th>
+                <th>Category</th>
                 <th>Amount</th>
             </tr>
                    @foreach(var b in Model)
@@ -32,8 +32,8 @@
                         <tr>
                             <td>@b.Period</td>
                             <td>@b.Term</td>
-                            <td>@b.SchoolName</td>
-                            <td>@b.ClassName</td>
+                            <td>@b.ParentStatus</td>
+                            <td>@b.Type</td>
                             <td>@b.SchoolType</td>
                             <td>@b.Amount</td>
                         </tr>

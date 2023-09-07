@@ -59,9 +59,13 @@ namespace NavyAccountWeb.Services
             return  result.Where(x=>x.SchoolId==schoolid).Skip(iDisplayStart).Take(iDisplayLength).ToList();
           //  return await _unitOfWork.student.getStudentList(iDisplayStart, iDisplayLength);
         }
-        public async Task<List<StudentReport>> GetStudentList2(int iDisplayStart, int iDisplayLength)
+        public async Task<List<StudentRecordVM>> GetStudentList2(int iDisplayStart, int iDisplayLength)
         {
-            return await _unitOfWork.student.getStudentList2(iDisplayStart, iDisplayLength);
+            var result = new List<StudentRecordVM>();
+            var param = new DynamicParameters();
+            result = dapper.GetAll<StudentRecordVM>("sr_GetAllStudent", param, commandType: System.Data.CommandType.StoredProcedure);
+            return result.Skip(iDisplayStart).Take(iDisplayLength).ToList();
+
         }
         public StudentRecordVM GetStudentListByID(int id)
         {

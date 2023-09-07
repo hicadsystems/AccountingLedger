@@ -32,16 +32,16 @@
                                     <option v-for="ge in ClasscatList" v-bind:value="ge.value" v-bind:key="ge.value"> {{ ge.text }} </option>
                                 </select>
                             </div>
-                          <div class="col-md-4">
-                                <label>Class</label>
-                                <select class="form-control" v-model="postBody.ClassId" name="classId" required>
-                                    <option v-for="cls in classList" v-bind:value="cls.id" v-bind:key="cls.id"> {{ cls.className }} </option>
+                            <div class="form-group col-md-4">
+                                <label>Parental Status</label>
+                                <select class="form-control" v-model="postBody.ParentStatus" name="ParentStatus" required>
+                                    <option v-for="st in ParentalStatusList" v-bind:value="st.value" v-bind:key="st.value"> {{ st.text }} </option>
                                 </select>
                             </div>
                             <div class="col-sm-4">
-                                <label>School</label>
-                                <select class="form-control" v-model="postBody.SchoolId" name="schoolId" required>
-                                    <option v-for="sch in schoolList" v-bind:value="sch.id" v-bind:key="sch.id"> {{ sch.schoolname }} </option>
+                                <label>Type</label>
+                                <select class="form-control" v-model="postBody.Type" name="Type" required>
+                                    <option v-for="st in TypeList" v-bind:value="st.value" v-bind:key="st.value"> {{ st.text }} </option>
                                 </select>
                             </div>
                     </div>
@@ -67,12 +67,12 @@ export default {
             responseMessage:'',
             submitorUpdate:'Submit',
             canProcess: true,
-            classList: null,
-            schoolList: null,
+            TypeList: null,
+            ParentalStatusList: null,
             postBody:{
                 Period :'',
-                SchoolId :0,
-                ClassId :0,
+                Type :'',
+                ParentStatus :'',
                 ClassCategory :'',
                 Amount :0,
                 term :''
@@ -82,23 +82,33 @@ export default {
                     { value: 'Primary', text: 'Primary' },
                     { value: 'Secondary', text: 'Secondary' }
                 ],
+                ParentalStatusList: [
+                    { value: 'Rating', text: 'Rating' },
+                    { value: 'Officer', text: 'Officer' },
+                    { value: 'Civilian', text: 'Civilian' }
+                ],
+                TypeList: [
+                    { value: 'Day', text: 'Day' },
+                    { value: 'Boarding', text: 'Boarding' }
+                   
+                ]
         };
         
     },
-    mounted(){
-        Axios
-        .get('/api/SchoolRecord/GetAll')
-        .then(response => (this.schoolList = response.data));
-        Axios
-        .get('/api/statictable/getallclass')
-        .then(response => (this.classList = response.data));
+    // mounted(){
+    //     Axios
+    //     .get('/api/SchoolRecord/GetAll')
+    //     .then(response => (this.schoolList = response.data));
+    //     Axios
+    //     .get('/api/statictable/getallclass')
+    //     .then(response => (this.classList = response.data));
 
-    },
+    // },
     watch:{
         '$store.state.objectToUpdate':function(newval,oldval){
             this.postBody.Period=this.$store.state.objectToUpdate.period,
-            this.postBody.SchoolId=this.$store.state.objectToUpdate.schoolId,
-            this.postBody.ClassId=this.$store.state.objectToUpdate.classId,
+            this.postBody.ParentStatus=this.$store.state.objectToUpdate.parentStatus,
+            this.postBody.Type=this.$store.state.objectToUpdate.type,
             this.postBody.ClassCategory=this.$store.state.objectToUpdate.classCategory,
             this.postBody.Amount=this.$store.state.objectToUpdate.amount,
             this.postBody.term=this.$store.state.objectToUpdate.term,
@@ -127,8 +137,8 @@ export default {
                 this.responseMessage=response.data.responseDescription;
                 this.canProcess = true;
                 if(response.data.responseCode=='200'){
-                    this.postBody.Period='';this.postBody.SchoolId='';
-                    this.postBody.Amount='';this.postBody.ClassId='';
+                    this.postBody.Period='';this.postBody.ParentStatus='';
+                    this.postBody.Amount='';this.postBody.Type='';
                     this.postBody.ClassCategory='';this.postBody.term='';
                     this.$store.state.objectToUpdate='create'; 
                 }
@@ -142,8 +152,8 @@ export default {
                 this.responseMessage=response.data.responseDescription;
                 if(response.data.responseCode=='200'){
                     this.submitorUpdate='Submit';
-                    this.postBody.Period='';this.postBody.SchoolId='';
-                    this.postBody.Amount='';this.postBody.ClassId='';
+                    this.postBody.Period='';this.postBody.ParentStatus='';
+                    this.postBody.Amount='';this.postBody.Type='';
                     this.postBody.ClassCategory='';this.postBody.term='';
                     this.$store.state.objectToUpdate='update'; 
                 }
@@ -160,8 +170,8 @@ export default {
             let objectToUpdate=this.$store.state.objectToUpdate;
             if(objectToUpdate.period){
                 this.postBody.Period=objectToUpdate.period,
-                this.postBody.SchoolId=objectToUpdate.schoolId,
-                this.postBody.ClassId=objectToUpdate.classId,
+                this.postBody.ParentStatus=objectToUpdate.parentStatus,
+                this.postBody.Type=objectToUpdate.type,
                 this.postBody.ClassCategory=objectToUpdate.classCategory,
                 this.postBody.Amount=objectToUpdate.amount
                 this.postBody.term=objectToUpdate.term

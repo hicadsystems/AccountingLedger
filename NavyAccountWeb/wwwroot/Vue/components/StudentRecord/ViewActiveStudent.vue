@@ -40,7 +40,7 @@
                 <tr v-for="student in studentList">
                     <td>{{ student.reg_Number }}</td>
                     <td>{{ student.surname}}  {{ student.firstName }}  {{ student.middleName }}</td>
-                    <td>{{ student.parentName }}</td>
+                    <td>{{ student.parentStatus }}</td>
                     <td>{{ getAppropriateGender(student.sex) }}</td>
                     <td>{{ student.age }}</td>
                     <td>{{ student.className }}</td>
@@ -126,7 +126,7 @@ mounted () {
     },
      clickCallback: function (pageNum) {
          this.pageno = pageNum;
-         alert(this.SchoolId)
+        //  alert(this.SchoolId)
          axios.get(`/api/StudentRecord/getAllStudents/${this.SchoolId}?pageno=${this.pageno}`)
         .then(response => {
             this.studentList = response.data.studentlist;
@@ -134,7 +134,7 @@ mounted () {
         })
      },
       setValueStudent: function(result) {
-          alert(result.value)
+        //   alert(result.value)
          axios
        .get(`/api/StudentRecord/getStudentByID/${result.value}`)
        .then(response => {this.studentList = response.data;

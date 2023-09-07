@@ -86,8 +86,8 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
                     return Ok(new { responseCode = 400, responseDescription = "School Not Found" });
                 }
                 sch.Period = value.Period;
-                sch.SchoolId = value.SchoolId;
-                sch.ClassId = value.ClassId;
+                sch.ParentStatus = value.ParentStatus;
+                sch.Type = value.Type;
                 sch.ClassCategory = value.ClassCategory;
                 sch.Amount = value.Amount;
                 recordService.UpdateSchoolFee(sch);

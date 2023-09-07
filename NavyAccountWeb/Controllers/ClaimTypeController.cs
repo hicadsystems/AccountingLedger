@@ -248,124 +248,126 @@ namespace NavyAccountWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index2(IFormFile formFile, CancellationToken cancellationToken)
         {
-            if (formFile == null || formFile.Length <= 0)
+            try
             {
-                TempData["message"] = "No File Uploaded";
-
-                return View();
-            }
-
-            if (!Path.GetExtension(formFile.FileName).Equals(".xlsx", StringComparison.OrdinalIgnoreCase))
-            {
-                TempData["message"] = "File not an Excel Format";
-
-                return View();
-            }
-
-            string user = User.Identity.Name;
-
-            var listApplication = new List<ClaimCapture>();
-            int fundTypeId = (int)HttpContext.Session.GetInt32("fundtypeid");
-            string fundTypeCode = HttpContext.Session.GetString("fundtypecode");
-            using (var stream = new MemoryStream())
-            {
-                await formFile.CopyToAsync(stream, cancellationToken);
-
-                using (var package = new ExcelPackage(stream))
+                if (formFile == null || formFile.Length <= 0)
                 {
+                    TempData["message"] = "No File Uploaded";
 
-                    ExcelWorksheet worksheet = package.Workbook.Worksheets["Sheet1"];
-                    var rowCount = worksheet.Dimension.Rows;
-                    string Rank = String.IsNullOrEmpty(worksheet.Cells[1, 1].ToString()) ? "" : worksheet.Cells[1, 1].Value.ToString().Trim();
-                    string SvcNo = String.IsNullOrEmpty(worksheet.Cells[1, 2].ToString()) ? "" : worksheet.Cells[1, 2].Value.ToString().Trim();
-                    string AccountName = String.IsNullOrEmpty(worksheet.Cells[1, 3].ToString()) ? "" : worksheet.Cells[1, 3].Value.ToString().Trim();
-                    string Bank = String.IsNullOrEmpty(worksheet.Cells[1, 4].ToString()) ? "" : worksheet.Cells[1, 4].Value.ToString().Trim();
-                    string AccountNo = String.IsNullOrEmpty(worksheet.Cells[1, 5].ToString()) ? "" : worksheet.Cells[1, 5].Value.ToString().Trim();
-                    string Amount = String.IsNullOrEmpty(worksheet.Cells[1, 6].ToString()) ? "" : worksheet.Cells[1, 6].Value.ToString().Trim();
-                    string Remark = String.IsNullOrEmpty(worksheet.Cells[1, 7].ToString()) ? "" : worksheet.Cells[1, 7].Value.ToString().Trim();
-                    string BatchNo = String.IsNullOrEmpty(worksheet.Cells[1, 8].ToString()) ? "" : worksheet.Cells[1, 8].Value.ToString().Trim();
-                    string Type = String.IsNullOrEmpty(worksheet.Cells[1, 9].ToString()) ? "" : worksheet.Cells[1, 9].Value.ToString().Trim();
+                    return View();
+                }
 
+                if (!Path.GetExtension(formFile.FileName).Equals(".xlsx", StringComparison.OrdinalIgnoreCase))
+                {
+                    TempData["message"] = "File not an Excel Format";
 
+                    return View();
+                }
 
-                    if (AccountName != "AccountName" || Bank != "Bank" || AccountNo != "AccountNo" || Remark != "Remark")
+                string user = User.Identity.Name;
+
+                var listApplication = new List<ClaimCapture>();
+                int fundTypeId = (int)HttpContext.Session.GetInt32("fundtypeid");
+                string fundTypeCode = HttpContext.Session.GetString("fundtypecode");
+                using (var stream = new MemoryStream())
+                {
+                    await formFile.CopyToAsync(stream, cancellationToken);
+
+                    using (var package = new ExcelPackage(stream))
                     {
-                        return BadRequest("File not in the Right format");
-                    }
 
-                  
-
-
-
-                    for (int j = 2; j <= rowCount; j++)
-                    {
-                        var jp = new ClaimCapture();
-                        string rank = String.IsNullOrEmpty(worksheet.Cells[j, 1].Value.ToString()) ? "" : worksheet.Cells[j, 1].Value.ToString().Trim();
-                        string svcno = String.IsNullOrEmpty(worksheet.Cells[j, 2].Value.ToString()) ? "" : worksheet.Cells[j, 2].Value.ToString().Trim();
-                        string accountname = String.IsNullOrEmpty(worksheet.Cells[j, 3].Value.ToString()) ? "" : worksheet.Cells[j, 3].Value.ToString().Trim();
-                        string bank = String.IsNullOrEmpty(worksheet.Cells[j, 4].Value.ToString()) ? "" : worksheet.Cells[j, 4].Value.ToString().Trim();
-                        string accountno = String.IsNullOrEmpty(worksheet.Cells[j, 5].Value.ToString()) ? "" : worksheet.Cells[j, 5].Value.ToString().Trim();
-
-                        decimal amount =Convert.ToDecimal(String.IsNullOrEmpty(worksheet.Cells[j, 6].Value.ToString()) ? "" : worksheet.Cells[j, 6].Value.ToString().Trim());
-                        string remark = String.IsNullOrEmpty(worksheet.Cells[j, 7].Value.ToString()) ? "" : worksheet.Cells[j, 7].Value.ToString().Trim();
-                        string batchno = String.IsNullOrEmpty(worksheet.Cells[j, 8].Value.ToString()) ? "" : worksheet.Cells[j, 8].Value.ToString().Trim();
-                        string type = String.IsNullOrEmpty(worksheet.Cells[j, 9].Value.ToString()) ? "" : worksheet.Cells[j, 9].Value.ToString().Trim();
+                        ExcelWorksheet worksheet = package.Workbook.Worksheets["Sheet1"];
+                        var rowCount = worksheet.Dimension.Rows;
+                        string Rank = String.IsNullOrEmpty(worksheet.Cells[1, 1].ToString()) ? "" : worksheet.Cells[1, 1].Value.ToString().Trim();
+                        string SvcNo = String.IsNullOrEmpty(worksheet.Cells[1, 2].ToString()) ? "" : worksheet.Cells[1, 2].Value.ToString().Trim();
+                        string AccountName = String.IsNullOrEmpty(worksheet.Cells[1, 3].ToString()) ? "" : worksheet.Cells[1, 3].Value.ToString().Trim();
+                        string Bank = String.IsNullOrEmpty(worksheet.Cells[1, 4].ToString()) ? "" : worksheet.Cells[1, 4].Value.ToString().Trim();
+                        string AccountNo = String.IsNullOrEmpty(worksheet.Cells[1, 5].ToString()) ? "" : worksheet.Cells[1, 5].Value.ToString().Trim();
+                        string Amount = String.IsNullOrEmpty(worksheet.Cells[1, 6].ToString()) ? "" : worksheet.Cells[1, 6].Value.ToString().Trim();
+                        string Remark = String.IsNullOrEmpty(worksheet.Cells[1, 7].ToString()) ? "" : worksheet.Cells[1, 7].Value.ToString().Trim();
+                        string BatchNo = String.IsNullOrEmpty(worksheet.Cells[1, 8].ToString()) ? "" : worksheet.Cells[1, 8].Value.ToString().Trim();
+                        string Type = String.IsNullOrEmpty(worksheet.Cells[1, 9].ToString()) ? "" : worksheet.Cells[1, 9].Value.ToString().Trim();
 
 
-                        if (String.IsNullOrEmpty(worksheet.Cells[j, 1].Value.ToString()) ||
-                          String.IsNullOrEmpty(worksheet.Cells[j, 2].Value.ToString()) ||
-                          String.IsNullOrEmpty(worksheet.Cells[j, 3].Value.ToString()) ||
-                          String.IsNullOrEmpty(worksheet.Cells[j, 4].Value.ToString())||
-                          String.IsNullOrEmpty(worksheet.Cells[j, 5].Value.ToString()) ||
-                          String.IsNullOrEmpty(worksheet.Cells[j, 6].Value.ToString()) ||
-                          String.IsNullOrEmpty(worksheet.Cells[j, 7].Value.ToString())||
-                          String.IsNullOrEmpty(worksheet.Cells[j, 8].Value.ToString()))
+
+                        if (AccountName != "AccountName" || Bank != "Bank" || AccountNo != "AccountNo" || Remark != "Remark")
                         {
-                            jp.rank = rank;
-                            jp.svcno = svcno;
-                            jp.accountname = accountname;
-                            jp.bank = bank;
-                            jp.accountno = accountno;
-                            jp.amount = amount;
-                            jp.remark = remark;
-                            jp.batchno = batchno;
-                            jp.type = type;
-
+                            return BadRequest("File not in the Right format");
                         }
 
 
-                        if (worksheet.Cells[j, 1].Value.ToString().Trim() != null)
-                        {
-                            jp.rank = worksheet.Cells[j, 1].Value.ToString().Trim();
-                            jp.svcno = worksheet.Cells[j, 2].Value.ToString().Trim();
-                            jp.accountname = worksheet.Cells[j, 3].Value.ToString().Trim();
-                            jp.bank = worksheet.Cells[j, 4].Value.ToString().Trim();
-                            jp.accountno = worksheet.Cells[j, 5].Value.ToString().Trim();
-                            jp.amount =Convert.ToDecimal(worksheet.Cells[j, 6].Value.ToString().Trim());
-                            jp.remark = worksheet.Cells[j, 7].Value.ToString().Trim();
-                            jp.batchno = worksheet.Cells[j, 8].Value.ToString().Trim();
-                            jp.type = worksheet.Cells[j, 9].Value.ToString().Trim();
 
+
+
+                        for (int j = 2; j <= rowCount; j++)
+                        {
+                            var jp = new ClaimCapture();
+                            string rank = String.IsNullOrEmpty(worksheet.Cells[j, 1].Value.ToString()) ? "" : worksheet.Cells[j, 1].Value.ToString().Trim();
+                            string svcno = String.IsNullOrEmpty(worksheet.Cells[j, 2].Value.ToString()) ? "" : worksheet.Cells[j, 2].Value.ToString().Trim();
+                            string accountname = String.IsNullOrEmpty(worksheet.Cells[j, 3].Value.ToString()) ? "" : worksheet.Cells[j, 3].Value.ToString().Trim();
+                            string bank = String.IsNullOrEmpty(worksheet.Cells[j, 4].Value.ToString()) ? "" : worksheet.Cells[j, 4].Value.ToString().Trim();
+                            string accountno = String.IsNullOrEmpty(worksheet.Cells[j, 5].Value.ToString()) ? "" : worksheet.Cells[j, 5].Value.ToString().Trim();
+
+                            decimal amount = Convert.ToDecimal(String.IsNullOrEmpty(worksheet.Cells[j, 6].Value.ToString()) ? "" : worksheet.Cells[j, 6].Value.ToString().Trim());
+                            string remark = String.IsNullOrEmpty(worksheet.Cells[j, 7].Value.ToString()) ? "" : worksheet.Cells[j, 7].Value.ToString().Trim();
+                            string batchno = String.IsNullOrEmpty(worksheet.Cells[j, 8].Value.ToString()) ? "" : worksheet.Cells[j, 8].Value.ToString().Trim();
+                            string type = String.IsNullOrEmpty(worksheet.Cells[j, 9].Value.ToString()) ? "" : worksheet.Cells[j, 9].Value.ToString().Trim();
+
+
+                            if (String.IsNullOrEmpty(worksheet.Cells[j, 1].Value.ToString()) ||
+                              String.IsNullOrEmpty(worksheet.Cells[j, 2].Value.ToString()) ||
+                              String.IsNullOrEmpty(worksheet.Cells[j, 3].Value.ToString()) ||
+                              String.IsNullOrEmpty(worksheet.Cells[j, 4].Value.ToString()) ||
+                              String.IsNullOrEmpty(worksheet.Cells[j, 5].Value.ToString()) ||
+                              String.IsNullOrEmpty(worksheet.Cells[j, 6].Value.ToString()) ||
+                              String.IsNullOrEmpty(worksheet.Cells[j, 7].Value.ToString()) ||
+                              String.IsNullOrEmpty(worksheet.Cells[j, 8].Value.ToString()))
+                            {
+                                jp.rank = rank;
+                                jp.svcno = svcno;
+                                jp.accountname = accountname;
+                                jp.bank = bank;
+                                jp.accountno = accountno;
+                                jp.amount = amount;
+                                jp.remark = remark;
+                                jp.batchno = batchno;
+                                jp.type = type;
+
+                            }
+
+
+                            if (worksheet.Cells[j, 1].Value.ToString().Trim() != null)
+                            {
+                                jp.rank = worksheet.Cells[j, 1].Value.ToString().Trim();
+                                jp.svcno = worksheet.Cells[j, 2].Value.ToString().Trim();
+                                jp.accountname = worksheet.Cells[j, 3].Value.ToString().Trim();
+                                jp.bank = worksheet.Cells[j, 4].Value.ToString().Trim();
+                                jp.accountno = worksheet.Cells[j, 5].Value.ToString().Trim();
+                                jp.amount = Convert.ToDecimal(worksheet.Cells[j, 6].Value.ToString().Trim());
+                                jp.remark = worksheet.Cells[j, 7].Value.ToString().Trim();
+                                jp.batchno = worksheet.Cells[j, 8].Value.ToString().Trim();
+                                jp.type = worksheet.Cells[j, 9].Value.ToString().Trim();
+
+
+                            }
+
+
+                            listApplication.Add(jp);
 
                         }
 
+                        var p = fundService.GetFundTypeCodeByCode(fundTypeCode);
 
-                        listApplication.Add(jp);
-                       
-                    }
-
-                    var p = fundService.GetFundTypeCodeByCode(fundTypeCode);
-
-                    List<Npf_ClaimRegister> successRecord = new List<Npf_ClaimRegister>();
-                    List<ClaimCapture> errorRecord = new List<ClaimCapture>();
-                    string batch = listApplication.FirstOrDefault().batchno;
-                    //if (claimTypeService.checkClaimBatchnoExist(batch))
-                    //{
-                    //    TempData["message"] = "Batch number exist";
-                    //}
-                    //else
-                    //{
-                        ClaimProcessUpload upload = new ClaimProcessUpload(listApplication,unitOfWork , claimTypeService, fundTypeService);
+                        List<Npf_ClaimRegister> successRecord = new List<Npf_ClaimRegister>();
+                        List<ClaimCapture> errorRecord = new List<ClaimCapture>();
+                        string batch = listApplication.FirstOrDefault().batchno;
+                        //if (claimTypeService.checkClaimBatchnoExist(batch))
+                        //{
+                        //    TempData["message"] = "Batch number exist";
+                        //}
+                        //else
+                        //{
+                        ClaimProcessUpload upload = new ClaimProcessUpload(listApplication, unitOfWork, claimTypeService, fundTypeService);
                         errorRecord = await upload.claimUploadInThread();
 
                         if (errorRecord.Count > 0)
@@ -383,49 +385,57 @@ namespace NavyAccountWeb.Controllers
 
                             return File(stream2, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
                         }
-                        else 
+                        else
                         {
                             //successRecord = await upload.claimProcessUploadInThread();
-                            TempData["message"]="Successfully Uploaded";
+                            TempData["message"] = "Successfully Uploaded";
                         }
-                       
-                   // }
-                  
+
+                        // }
 
 
-                 
-
-                    //TrialBalanceUpload upk = new TrialBalanceUpload(listApplication, unitOfWork, fundTypeCode, fundTypeId, user, m, year);
-                    //var listapplicationofrecordnotavailable = await upk.UploadHistoryInThread();
-                    //await upk.TrialbalanceUploadInThread();
-
-                    //TempData["message"] = "Uploaded Successfully";
 
 
-                    //if (listapplicationofrecordnotavailable.Count > 0)
-                    //{
 
-                    //    var stream2 = new MemoryStream();
+                        //TrialBalanceUpload upk = new TrialBalanceUpload(listApplication, unitOfWork, fundTypeCode, fundTypeId, user, m, year);
+                        //var listapplicationofrecordnotavailable = await upk.UploadHistoryInThread();
+                        //await upk.TrialbalanceUploadInThread();
 
-                    //    using (var package2 = new ExcelPackage(stream2))
-                    //    {
-                    //        var workSheet = package2.Workbook.Worksheets.Add("Sheet2");
-                    //        workSheet.Cells.LoadFromCollection(listapplicationofrecordnotavailable, true);
-                    //        package2.Save();
-                    //    }
-                    //    stream2.Position = 0;
-                    //    string excelName = $"Trialbalance-{DateTime.Now.ToString("yyyyMMddHHmmssfff")}.xlsx";
+                        //TempData["message"] = "Uploaded Successfully";
 
-                    //    //return File(stream, "application/octet-stream", excelName);  
-                    //    return File(stream2, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
-                    //}
+
+                        //if (listapplicationofrecordnotavailable.Count > 0)
+                        //{
+
+                        //    var stream2 = new MemoryStream();
+
+                        //    using (var package2 = new ExcelPackage(stream2))
+                        //    {
+                        //        var workSheet = package2.Workbook.Worksheets.Add("Sheet2");
+                        //        workSheet.Cells.LoadFromCollection(listapplicationofrecordnotavailable, true);
+                        //        package2.Save();
+                        //    }
+                        //    stream2.Position = 0;
+                        //    string excelName = $"Trialbalance-{DateTime.Now.ToString("yyyyMMddHHmmssfff")}.xlsx";
+
+                        //    //return File(stream, "application/octet-stream", excelName);  
+                        //    return File(stream2, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
+                        //}
+                    }
+
+
+
                 }
-
-
 
             }
 
 
+            
+            catch (Exception ex)
+            {
+                TempData["message"] = ex.Message;
+                return RedirectToAction("Index2");
+            }
             return RedirectToAction("Index2");
         }
         public ActionResult Index4()

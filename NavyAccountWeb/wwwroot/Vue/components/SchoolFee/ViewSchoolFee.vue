@@ -14,9 +14,9 @@
                 <thead>
                     <tr>
                         <td>School Session</td>
-                        <td>School Name</td>
-                        <td>Class</td>
-                        <td>Class Category</td>
+                        <td>School Type</td>
+                        <td>Parent Status</td>
+                        <td>Category</td>
                         <td>Amount</td>
                         
                         <td></td>
@@ -25,8 +25,8 @@
                 <tbody>
                     <tr v-for="sch in schoolFeeList">
                         <td>{{sch.period}}</td>
-                        <td>{{sch.schoolName}}</td>
-                        <td>{{sch.className}}</td>
+                        <td>{{sch.type}}</td>
+                        <td>{{sch.parentStatus}}</td>
                         <td>{{sch.classCategory}}</td>
                         <td>{{sch.amount}}</td>
                         <td><button type="button" class="btn btn-submit btn-primary" @click="processRetrieve(sch)">Edit</button></td>

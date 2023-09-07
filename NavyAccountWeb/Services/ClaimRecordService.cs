@@ -118,6 +118,20 @@ namespace NavyAccountWeb.Services
             dapper.Execute("sr_UpdateClaimLedger", param, commandType: System.Data.CommandType.StoredProcedure);
             return result;
         }
+        public async Task<int> UpdateClaimReinBySchool(string reg_num, string school, string classs, decimal amount, string remark, string user)
+        {
+           
+            int result = 0;
+            var param = new DynamicParameters();
+            param.Add("@reg_num", reg_num);
+            param.Add("@school", school);
+            param.Add("@classs", classs);
+            param.Add("@amount", amount);
+            param.Add("@refno", remark);
+            param.Add("@globaluser", user);
+            dapper.Execute("sr_UpdateClaimRein", param, commandType: System.Data.CommandType.StoredProcedure);
+            return result;
+        }
 
     }
 }

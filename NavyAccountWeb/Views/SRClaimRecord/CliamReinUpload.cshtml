@@ -17,16 +17,16 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h5 class="card-title">Student Claim Batch Upload</h5>
+                <h5 class="card-title">Claim Payment Batch Upload</h5>
             </div>
 
             @TempData["message"]
             <div class="card-body">
 
-                <a href="~/uploads/SchoolClaimUploadSample.xlsx">Download Sample</a>
-                @using (Html.BeginForm("CliamUpload", "SRClaimRecord", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                <a href="~/uploads/SchoolClaimPaymentUploadSample.xlsx">Download Sample</a>
+                @using (Html.BeginForm("CliamRenUpload", "SRClaimRecord", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
-                @Html.AntiForgeryToken()
+    @Html.AntiForgeryToken()
                     <div class="form-group">
                         <input type="file" name="formFile" class="form-control" required />
                     </div>

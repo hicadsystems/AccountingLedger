@@ -13489,6 +13489,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -13551,17 +13553,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return {
+    var _ref;
+
+    return _ref = {
       errors: null,
       responseMessage: '',
       submitorUpdate: 'Submit',
       canProcess: true,
-      classList: null,
-      schoolList: null,
+      TypeList: null,
+      ParentalStatusList: null,
       postBody: {
         Period: '',
-        SchoolId: 0,
-        ClassId: 0,
+        Type: '',
+        ParentStatus: '',
         ClassCategory: '',
         Amount: 0,
         term: ''
@@ -13573,21 +13577,34 @@ __webpack_require__.r(__webpack_exports__);
         value: 'Secondary',
         text: 'Secondary'
       }]
-    };
+    }, _defineProperty(_ref, "ParentalStatusList", [{
+      value: 'Rating',
+      text: 'Rating'
+    }, {
+      value: 'Officer',
+      text: 'Officer'
+    }, {
+      value: 'Civilian',
+      text: 'Civilian'
+    }]), _defineProperty(_ref, "TypeList", [{
+      value: 'Day',
+      text: 'Day'
+    }, {
+      value: 'Boarding',
+      text: 'Boarding'
+    }]), _ref;
   },
-  mounted: function mounted() {
-    var _this = this;
-
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/SchoolRecord/GetAll').then(function (response) {
-      return _this.schoolList = response.data;
-    });
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/statictable/getallclass').then(function (response) {
-      return _this.classList = response.data;
-    });
-  },
+  // mounted(){
+  //     Axios
+  //     .get('/api/SchoolRecord/GetAll')
+  //     .then(response => (this.schoolList = response.data));
+  //     Axios
+  //     .get('/api/statictable/getallclass')
+  //     .then(response => (this.classList = response.data));
+  // },
   watch: {
     '$store.state.objectToUpdate': function $storeStateObjectToUpdate(newval, oldval) {
-      this.postBody.Period = this.$store.state.objectToUpdate.period, this.postBody.SchoolId = this.$store.state.objectToUpdate.schoolId, this.postBody.ClassId = this.$store.state.objectToUpdate.classId, this.postBody.ClassCategory = this.$store.state.objectToUpdate.classCategory, this.postBody.Amount = this.$store.state.objectToUpdate.amount, this.postBody.term = this.$store.state.objectToUpdate.term, this.submitorUpdate = 'Update';
+      this.postBody.Period = this.$store.state.objectToUpdate.period, this.postBody.ParentStatus = this.$store.state.objectToUpdate.parentStatus, this.postBody.Type = this.$store.state.objectToUpdate.type, this.postBody.ClassCategory = this.$store.state.objectToUpdate.classCategory, this.postBody.Amount = this.$store.state.objectToUpdate.amount, this.postBody.term = this.$store.state.objectToUpdate.term, this.submitorUpdate = 'Update';
     }
   },
   methods: {
@@ -13602,43 +13619,43 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     postData: function postData() {
-      var _this2 = this;
+      var _this = this;
 
       if (this.submitorUpdate == 'Submit') {
         axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/api/SchoolFee/AddSchoolFee", this.postBody).then(function (response) {
-          _this2.responseMessage = response.data.responseDescription;
-          _this2.canProcess = true;
+          _this.responseMessage = response.data.responseDescription;
+          _this.canProcess = true;
 
           if (response.data.responseCode == '200') {
-            _this2.postBody.Period = '';
-            _this2.postBody.SchoolId = '';
-            _this2.postBody.Amount = '';
-            _this2.postBody.ClassId = '';
-            _this2.postBody.ClassCategory = '';
-            _this2.postBody.term = '';
-            _this2.$store.state.objectToUpdate = 'create';
+            _this.postBody.Period = '';
+            _this.postBody.ParentStatus = '';
+            _this.postBody.Amount = '';
+            _this.postBody.Type = '';
+            _this.postBody.ClassCategory = '';
+            _this.postBody.term = '';
+            _this.$store.state.objectToUpdate = 'create';
           }
         })["catch"](function (e) {
-          _this2.errors.push(e);
+          _this.errors.push(e);
         });
       }
 
       if (this.submitorUpdate == 'update') {
         axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/api/SchoolFee/UpdateSchoolFee", this.postBody).then(function (response) {
-          _this2.responseMessage = response.data.responseDescription;
+          _this.responseMessage = response.data.responseDescription;
 
           if (response.data.responseCode == '200') {
-            _this2.submitorUpdate = 'Submit';
-            _this2.postBody.Period = '';
-            _this2.postBody.SchoolId = '';
-            _this2.postBody.Amount = '';
-            _this2.postBody.ClassId = '';
-            _this2.postBody.ClassCategory = '';
-            _this2.postBody.term = '';
-            _this2.$store.state.objectToUpdate = 'update';
+            _this.submitorUpdate = 'Submit';
+            _this.postBody.Period = '';
+            _this.postBody.ParentStatus = '';
+            _this.postBody.Amount = '';
+            _this.postBody.Type = '';
+            _this.postBody.ClassCategory = '';
+            _this.postBody.term = '';
+            _this.$store.state.objectToUpdate = 'update';
           }
         })["catch"](function (e) {
-          _this2.errors.push(e);
+          _this.errors.push(e);
         });
       }
     }
@@ -13648,7 +13665,7 @@ __webpack_require__.r(__webpack_exports__);
       var objectToUpdate = this.$store.state.objectToUpdate;
 
       if (objectToUpdate.period) {
-        this.postBody.Period = objectToUpdate.period, this.postBody.SchoolId = objectToUpdate.schoolId, this.postBody.ClassId = objectToUpdate.classId, this.postBody.ClassCategory = objectToUpdate.classCategory, this.postBody.Amount = objectToUpdate.amount;
+        this.postBody.Period = objectToUpdate.period, this.postBody.ParentStatus = objectToUpdate.parentStatus, this.postBody.Type = objectToUpdate.type, this.postBody.ClassCategory = objectToUpdate.classCategory, this.postBody.Amount = objectToUpdate.amount;
         this.postBody.term = objectToUpdate.term;
       }
 
@@ -13873,8 +13890,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     checkForm: function checkForm(e) {
-      alert('i am here ooo');
-
       if (this.postBody.schoolCode) {
         e.preventDefault();
         this.canProcess = false;
@@ -14468,25 +14483,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         Status: '0',
         CommencementDate: null,
         ParentalStatus: '0',
-        ClassId: 0,
-        SchoolId: 0,
+        ClassId: '0',
+        SchoolId: '0',
         sortby: '0'
       }
     }, _defineProperty(_ref, "parentalStatusList", [{
-      value: 'Military',
-      text: 'Military'
+      value: 'RATING',
+      text: 'RATING'
     }, {
-      value: 'Civilian',
-      text: 'Civilian'
+      value: 'OFFICER',
+      text: 'OFFICER'
+    }, {
+      value: 'CIVILIAN',
+      text: 'CIVILIAN'
     }]), _defineProperty(_ref, "statusList", [{
-      value: 'Active',
-      text: 'Active'
+      value: 'ACTIVE',
+      text: 'ACTIVE'
     }, {
-      value: 'OnClaim',
-      text: 'On Claim'
+      value: 'ONCLAIM',
+      text: 'ON CLAIM'
     }, {
-      value: 'Inactive',
-      text: 'Inactive'
+      value: 'INACTIVE',
+      text: 'INACTIVE'
     }]), _defineProperty(_ref, "exitreasonList", [{
       value: 'School',
       text: 'School'
@@ -14529,6 +14547,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     printAsPdf: function printAsPdf(schoolId, classId, Status, ParentalStatus, sortby) {
+      alert(schoolId);
+      alert(classId);
       window.open("/SRSchoolReport/PrintStudentByPdf/".concat(schoolId, "/").concat(classId, "/").concat(Status, "/").concat(ParentalStatus, "/").concat(sortby));
     },
     printAsExcel: function printAsExcel(schoolId, classId, Status, ParentalStatus, sortby) {
@@ -15280,6 +15300,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuejs_auto_complete__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuejs-auto-complete */ "./node_modules/vuejs-auto-complete/dist/build.js");
 /* harmony import */ var vuejs_auto_complete__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuejs_auto_complete__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var vuejs_datepicker__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuejs-datepicker */ "./node_modules/vuejs-datepicker/dist/vuejs-datepicker.esm.js");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -15453,7 +15481,7 @@ __webpack_require__.r(__webpack_exports__);
     Axios: axios__WEBPACK_IMPORTED_MODULE_0___default.a
   },
   data: function data() {
-    return {
+    return _defineProperty({
       errors: null,
       responseMessage: '',
       submitorUpdate: 'Submit',
@@ -15464,6 +15492,7 @@ __webpack_require__.r(__webpack_exports__);
       guardianList: null,
       classList: null,
       schoolList: null,
+      ParentalStatusList: null,
       postBody: {
         Reg_Number: '',
         Surname: '',
@@ -15495,14 +15524,14 @@ __webpack_require__.r(__webpack_exports__);
         text: 'Female'
       }],
       statusList: [{
-        value: 'Active',
-        text: 'Active'
+        value: 'ACTIVE',
+        text: 'ACTIVE'
       }, {
-        value: 'On Claim',
-        text: 'On Claim'
+        value: 'ONCLAIM',
+        text: 'ON CLAIM'
       }, {
-        value: 'Inactive',
-        text: 'Inactive'
+        value: 'INACTIVE',
+        text: 'INACTIVE'
       }],
       exitreasonList: [{
         value: 'Graduated',
@@ -15520,7 +15549,16 @@ __webpack_require__.r(__webpack_exports__);
         value: 'Absconded',
         text: 'Absconded'
       }]
-    };
+    }, "ParentalStatusList", [{
+      value: 'RATING',
+      text: 'RATING'
+    }, {
+      value: 'OFFICER',
+      text: 'OFFICER'
+    }, {
+      value: 'CIVILIAN',
+      text: 'CIVILIAN'
+    }]);
   },
   mounted: function mounted() {
     var _this = this;
@@ -15540,7 +15578,7 @@ __webpack_require__.r(__webpack_exports__);
 
     if (this.studenttoeditid != 0) {
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/StudentRecord/GetStudentById2/".concat(this.studenttoeditid)).then(function (response) {
-        alert(response.data.reg_Number);
+        //alert(response.data.parentalStatus);
         _this.postBody.Reg_Number = response.data.reg_Number;
         _this.postBody.Surname = response.data.surname;
         _this.postBody.FirstName = response.data.firstName;
@@ -16122,8 +16160,8 @@ __webpack_require__.r(__webpack_exports__);
     clickCallback: function clickCallback(pageNum) {
       var _this3 = this;
 
-      this.pageno = pageNum;
-      alert(this.SchoolId);
+      this.pageno = pageNum; //  alert(this.SchoolId)
+
       axios.get("/api/StudentRecord/getAllStudents/".concat(this.SchoolId, "?pageno=").concat(this.pageno)).then(function (response) {
         _this3.studentList = response.data.studentlist;
         _this3.totalcount = response.data.total;
@@ -16132,7 +16170,7 @@ __webpack_require__.r(__webpack_exports__);
     setValueStudent: function setValueStudent(result) {
       var _this4 = this;
 
-      alert(result.value);
+      //   alert(result.value)
       axios.get("/api/StudentRecord/getStudentByID/".concat(result.value)).then(function (response) {
         _this4.studentList = response.data;
       });
@@ -53358,8 +53396,8 @@ var render = function () {
             ),
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-md-4" }, [
-            _c("label", [_vm._v("Class")]),
+          _c("div", { staticClass: "form-group col-md-4" }, [
+            _c("label", [_vm._v("Parental Status")]),
             _vm._v(" "),
             _c(
               "select",
@@ -53368,12 +53406,12 @@ var render = function () {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.postBody.ClassId,
-                    expression: "postBody.ClassId",
+                    value: _vm.postBody.ParentStatus,
+                    expression: "postBody.ParentStatus",
                   },
                 ],
                 staticClass: "form-control",
-                attrs: { name: "classId", required: "" },
+                attrs: { name: "ParentStatus", required: "" },
                 on: {
                   change: function ($event) {
                     var $$selectedVal = Array.prototype.filter
@@ -53386,17 +53424,17 @@ var render = function () {
                       })
                     _vm.$set(
                       _vm.postBody,
-                      "ClassId",
+                      "ParentStatus",
                       $event.target.multiple ? $$selectedVal : $$selectedVal[0]
                     )
                   },
                 },
               },
-              _vm._l(_vm.classList, function (cls) {
+              _vm._l(_vm.ParentalStatusList, function (st) {
                 return _c(
                   "option",
-                  { key: cls.id, domProps: { value: cls.id } },
-                  [_vm._v(" " + _vm._s(cls.className) + " ")]
+                  { key: st.value, domProps: { value: st.value } },
+                  [_vm._v(" " + _vm._s(st.text) + " ")]
                 )
               }),
               0
@@ -53404,7 +53442,7 @@ var render = function () {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-sm-4" }, [
-            _c("label", [_vm._v("School")]),
+            _c("label", [_vm._v("Type")]),
             _vm._v(" "),
             _c(
               "select",
@@ -53413,12 +53451,12 @@ var render = function () {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.postBody.SchoolId,
-                    expression: "postBody.SchoolId",
+                    value: _vm.postBody.Type,
+                    expression: "postBody.Type",
                   },
                 ],
                 staticClass: "form-control",
-                attrs: { name: "schoolId", required: "" },
+                attrs: { name: "Type", required: "" },
                 on: {
                   change: function ($event) {
                     var $$selectedVal = Array.prototype.filter
@@ -53431,17 +53469,17 @@ var render = function () {
                       })
                     _vm.$set(
                       _vm.postBody,
-                      "SchoolId",
+                      "Type",
                       $event.target.multiple ? $$selectedVal : $$selectedVal[0]
                     )
                   },
                 },
               },
-              _vm._l(_vm.schoolList, function (sch) {
+              _vm._l(_vm.TypeList, function (st) {
                 return _c(
                   "option",
-                  { key: sch.id, domProps: { value: sch.id } },
-                  [_vm._v(" " + _vm._s(sch.schoolname) + " ")]
+                  { key: st.value, domProps: { value: st.value } },
+                  [_vm._v(" " + _vm._s(st.text) + " ")]
                 )
               }),
               0
@@ -53551,9 +53589,9 @@ var render = function () {
               return _c("tr", [
                 _c("td", [_vm._v(_vm._s(sch.period))]),
                 _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(sch.schoolName))]),
+                _c("td", [_vm._v(_vm._s(sch.type))]),
                 _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(sch.className))]),
+                _c("td", [_vm._v(_vm._s(sch.parentStatus))]),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(sch.classCategory))]),
                 _vm._v(" "),
@@ -53608,11 +53646,11 @@ var staticRenderFns = [
       _c("tr", [
         _c("td", [_vm._v("School Session")]),
         _vm._v(" "),
-        _c("td", [_vm._v("School Name")]),
+        _c("td", [_vm._v("School Type")]),
         _vm._v(" "),
-        _c("td", [_vm._v("Class")]),
+        _c("td", [_vm._v("Parent Status")]),
         _vm._v(" "),
-        _c("td", [_vm._v("Class Category")]),
+        _c("td", [_vm._v("Category")]),
         _vm._v(" "),
         _c("td", [_vm._v("Amount")]),
         _vm._v(" "),
@@ -54697,9 +54735,17 @@ var render = function () {
                   return _c("tr", [
                     _c("td", [_vm._v(_vm._s(student.reg_Number))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(student.studentName))]),
+                    _c("td", [
+                      _vm._v(
+                        _vm._s(student.surname) +
+                          "  " +
+                          _vm._s(student.firstName) +
+                          "  " +
+                          _vm._s(student.middleName)
+                      ),
+                    ]),
                     _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(student.parentName))]),
+                    _c("td", [_vm._v(_vm._s(student.parentalStatus))]),
                     _vm._v(" "),
                     _c("td", [
                       _vm._v(_vm._s(_vm.getAppropriateGender(student.sex))),
@@ -54707,7 +54753,7 @@ var render = function () {
                     _vm._v(" "),
                     _c("td", [_vm._v(_vm._s(student.age))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(student.schoolName))]),
+                    _c("td", [_vm._v(_vm._s(student.schoolname))]),
                     _vm._v(" "),
                     _c("td", [_vm._v(_vm._s(student.schoolCode))]),
                     _vm._v(" "),
@@ -55907,31 +55953,48 @@ var render = function () {
               _c("div", { staticClass: "form-group col-md-4" }, [
                 _c("label", [_vm._v("Parental Status")]),
                 _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.postBody.ParentalStatus,
-                      expression: "postBody.ParentalStatus",
-                    },
-                  ],
-                  staticClass: "form-control",
-                  attrs: { name: "parentalStatus", required: "" },
-                  domProps: { value: _vm.postBody.ParentalStatus },
-                  on: {
-                    input: function ($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(
-                        _vm.postBody,
-                        "ParentalStatus",
-                        $event.target.value
-                      )
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.postBody.ParentalStatus,
+                        expression: "postBody.ParentalStatus",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    attrs: { name: "ParentalStatus", required: "" },
+                    on: {
+                      change: function ($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function (o) {
+                            return o.selected
+                          })
+                          .map(function (o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.postBody,
+                          "ParentalStatus",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      },
                     },
                   },
-                }),
+                  _vm._l(_vm.ParentalStatusList, function (st) {
+                    return _c(
+                      "option",
+                      { key: st.value, domProps: { value: st.value } },
+                      [_vm._v(" " + _vm._s(st.text) + " ")]
+                    )
+                  }),
+                  0
+                ),
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "form-group col-md-4" }, [
@@ -56281,7 +56344,7 @@ var render = function () {
                       },
                     ],
                     staticClass: "form-control",
-                    attrs: { name: "status", required: "" },
+                    attrs: { name: "Status", required: "" },
                     on: {
                       change: function ($event) {
                         var $$selectedVal = Array.prototype.filter
@@ -57266,7 +57329,7 @@ var render = function () {
                           ),
                         ]),
                         _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(student.parentName))]),
+                        _c("td", [_vm._v(_vm._s(student.parentStatus))]),
                         _vm._v(" "),
                         _c("td", [
                           _vm._v(_vm._s(_vm.getAppropriateGender(student.sex))),

@@ -12,10 +12,13 @@ namespace NavyAccountCore.Entities
         public string Period { get; set; }
         public string term { get; set; }
         public string ClassCategory { get; set; }
-        public int ClassId { get; set; }
-        public int SchoolId { get; set; }
+        public string Class { get; set; }
+        public string School { get; set; }
+        public string Type { get; set; }
+        public string ParentStatus { get; set; }
         public decimal Amount { get; set; }
         public string CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
+
     }
 }

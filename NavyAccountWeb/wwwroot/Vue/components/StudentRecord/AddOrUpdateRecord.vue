@@ -47,10 +47,16 @@
                                         <option v-for="pr in parentList" v-bind:value="pr.id" v-bind:key="pr.id"> {{ pr.surname }} </option>
                                     </select>
                                 </div>
-                                <div class="form-group col-md-4">
-                                    <label>Parental Status</label>
+                                <!-- <div class="form-group col-md-4">
+                                    <label> Status</label>
                                     <input class="form-control" name="parentalStatus" v-model="postBody.ParentalStatus" required />
-                                 </div>
+                                 </div> -->
+                            <div class="form-group col-md-4">
+                                <label>Parental Status</label>
+                                <select class="form-control" v-model="postBody.ParentalStatus" name="ParentalStatus" required>
+                                    <option v-for="st in ParentalStatusList" v-bind:value="st.value" v-bind:key="st.value"> {{ st.text }} </option>
+                                </select>
+                            </div>
                                 <div class="form-group col-md-4">
                                <label class="form-label">Guardian Name</label>
                                 <select class="form-control" v-model="postBody.Guardianid" name="guardianid" required>
@@ -119,7 +125,7 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <label>Status</label>
-                                <select class="form-control" v-model="postBody.Status" name="status" required>
+                                <select class="form-control" v-model="postBody.Status" name="Status" required>
                                     <option v-for="stu in statusList" v-bind:value="stu.value" v-bind:key="stu.value"> {{ stu.text }} </option>
                                 </select>
                             </div>
@@ -183,6 +189,7 @@ export default {
             guardianList: null,
             classList: null,
             schoolList: null,
+            ParentalStatusList:null,
             postBody:{
                 Reg_Number:'',
                 Surname:'',
@@ -211,9 +218,9 @@ export default {
                     { value: 'F', text: 'Female' }
                 ],
                 statusList: [
-                    { value: 'Active', text: 'Active' },
-                    { value: 'On Claim', text: 'On Claim' },
-                    { value: 'Inactive', text: 'Inactive' }
+                    { value: 'ACTIVE', text: 'ACTIVE' },
+                    { value: 'ONCLAIM', text: 'ON CLAIM' },
+                    { value: 'INACTIVE', text: 'INACTIVE' }
                 ],
                 exitreasonList: [
                     { value: 'Graduated', text: 'Graduated' },
@@ -222,8 +229,12 @@ export default {
                     { value: 'Death', text: 'Death' },
                     { value: 'Absconded', text: 'Absconded' }
 
+                ],
+                ParentalStatusList: [
+                    { value: 'RATING', text: 'RATING' },
+                    { value: 'OFFICER', text: 'OFFICER' },
+                    { value: 'CIVILIAN', text: 'CIVILIAN' }
                 ]
-
         };
         
     },
@@ -245,7 +256,7 @@ export default {
                 Axios
                     .get(`/api/StudentRecord/GetStudentById2/${this.studenttoeditid}`)
                     .then(response => {
-                        alert(response.data.reg_Number);
+                        //alert(response.data.parentalStatus);
                         this.postBody.Reg_Number= response.data.reg_Number
                         this.postBody.Surname= response.data.surname
                         this.postBody.FirstName= response.data.firstName

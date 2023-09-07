@@ -10,8 +10,10 @@ namespace NavyAccountCore.Entities
         public int id { get; set; }
         public string Period { get; set; }
         public string ClassCategory { get; set; }
-        public int ClassId { get; set; }
-        public int SchoolId { get; set; }
+        public string Class { get; set; }
+        public string School { get; set; }
+        public string Type { get; set; }
+        public string ParentStatus { get; set; }
         public string ClassName { get; set; }
         public string SchoolName { get; set; }
         public decimal Amount { get; set; }
@@ -22,8 +24,10 @@ namespace NavyAccountCore.Entities
     {
         public string Period { get; set; }
         public string SchoolType { get; set; }
-        public string ClassName { get; set; }
-        public string SchoolName { get; set; }
+        public string Class { get; set; }
+        public string School { get; set; }
+        public string Type { get; set; }
+        public string ParentStatus { get; set; }
         public decimal Amount { get; set; }
         public string Term { get; set; }
 

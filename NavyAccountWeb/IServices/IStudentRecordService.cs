@@ -10,7 +10,7 @@ namespace NavyAccountWeb.IServices
 {
     public interface IStudentRecordService
     {
-        Task<List<StudentReport>> GetStudentList2(int iDisplayStart, int iDisplayLength);
+        Task<List<StudentRecordVM>> GetStudentList2(int iDisplayStart, int iDisplayLength);
         Task<List<StudentReport>> GetStudentReport(StudentFilterModel value);
         Task<bool> AddStudent(sr_StudentRecord value);
         Task<bool> UpdateStudent(sr_StudentRecord value);

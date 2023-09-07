@@ -65,7 +65,7 @@
                             <ul id="pages-2" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
 
                                 <li class="sidebar-item">
-                                    <a asp-controller="SRStudentRecord" class="sidebar-link" asp-action="Create">New Student</a> 
+                                    <a asp-controller="SRStudentRecord" class="sidebar-link" asp-action="Create">New Student</a>
                                 </li>
                                 <li class="sidebar-item">
                                     <a asp-controller="SRStudentRecord" class="sidebar-link" asp-action="studentupload">New Student Upload</a>
@@ -82,7 +82,7 @@
 
                             </ul>
                         </li>
-                        
+
                         <li class="sidebar-item">
                             <a href="#pages-3" data-toggle="collapse" class="sidebar-link collapsed"><i class="align-middle mr-2 fas fa-fw fa-cash-register"></i> <span class="align-middle">Payment Processing</span></a>
                             <ul id="pages-3" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
@@ -116,8 +116,12 @@
                                 <li class="sidebar-item">
                                     <a asp-controller="SRClaimRecord" class="sidebar-link" asp-action="ClaimPayment">Claim Payment Proposal</a>
                                 </li>
+                                
                                 <li class="sidebar-item">
-                                    <a asp-controller="SRClaimRecord" class="sidebar-link" asp-action="ClaimReimbursment">Claim School reimbursement</a>
+                                    <a asp-controller="SRClaimRecord" class="sidebar-link" asp-action="CliamReinUpload">Reimbursement Upload</a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a asp-controller="SRClaimRecord" class="sidebar-link" asp-action="ClaimReimbursment">Claim School Reimbursement</a>
                                 </li>
                                 <li class="sidebar-item">
                                     <a asp-controller="SRClaimRecord" class="sidebar-link" asp-action="ClaimSummary">Claim Status</a>
@@ -172,15 +176,18 @@
                                 </li>
                                 <li class="sidebar-item">
                                     <a asp-controller="SRSchoolReport" class="sidebar-link" asp-action="ClaimPaySummary">Students Fin Record </a>
-                                    
+
                                 </li>
-                                 <li class="sidebar-item">
+                                <li class="sidebar-item">
                                     <a asp-controller="SRPaymentRecord" class="sidebar-link" asp-action="Index2">School summary Reports </a>
                                 </li>
 
 
 
                             </ul>
+                        </li>
+                        <li class="sidebar-item">
+                            <a asp-controller="Home" class="sidebar-link" asp-action="Index"><i class="align-middle mr-2 fas fa-fw fa-arrow-alt-circle-left"></i><span class="align-middle"> Back To Main Page</span> </a>
                         </li>
                         @*<li class="sidebar-item">
             <a asp-controller="" class="sidebar-link" asp-action="">Log Out </a>

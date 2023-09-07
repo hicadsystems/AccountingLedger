@@ -27,8 +27,7 @@ namespace NavyAccountWeb.Services
 
         public async Task<List<ClaimCapture>> claimUploadInThread()
         {
-            try
-            {
+
             List<ClaimCapture> result = new List<ClaimCapture>();
             foreach(var j in Captures)
             {
@@ -152,12 +151,6 @@ namespace NavyAccountWeb.Services
 
             return result;
 
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
 
         }
 

@@ -105,7 +105,6 @@ export default {
     },
     methods:{
         checkForm: function (e) {
-            alert('i am here ooo')
             if (this.postBody.schoolCode) {
                  e.preventDefault();
                  this.canProcess = false;

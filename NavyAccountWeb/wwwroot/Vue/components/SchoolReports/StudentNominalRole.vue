@@ -83,11 +83,11 @@
             <tbody>
                 <tr v-for="student in studentList">
                     <td>{{ student.reg_Number }}</td>
-                    <td>{{ student.studentName}}</td>
-                    <td>{{ student.parentName }}</td>
+                    <td>{{ student.surname}}  {{ student.firstName }}  {{ student.middleName }}</td>
+                    <td>{{ student.parentalStatus }}</td>
                     <td>{{ getAppropriateGender(student.sex) }}</td>
                     <td>{{ student.age }}</td>
-                    <td>{{ student.schoolName }}</td>
+                    <td>{{ student.schoolname }}</td>
                     <td>{{ student.schoolCode }}</td>
                     <td>{{ student.className }}</td>
                     
@@ -141,18 +141,19 @@ data() {
                 Status:'0',
                 CommencementDate:null,
                 ParentalStatus:'0',
-                ClassId:0,
-                SchoolId:0,
+                ClassId:'0',
+                SchoolId:'0',
                 sortby:'0'
             },
             parentalStatusList: [
-                    { value: 'Military', text: 'Military' },
-                    { value: 'Civilian', text: 'Civilian' }
+                    { value: 'RATING', text: 'RATING' },
+                    { value: 'OFFICER', text: 'OFFICER' },
+                    { value: 'CIVILIAN', text: 'CIVILIAN' }
                 ],
                 statusList: [
-                    { value: 'Active', text: 'Active' },
-                    { value: 'OnClaim', text: 'On Claim' },
-                    { value: 'Inactive', text: 'Inactive' }
+                { value: 'ACTIVE', text: 'ACTIVE' },
+                    { value: 'ONCLAIM', text: 'ON CLAIM' },
+                    { value: 'INACTIVE', text: 'INACTIVE' }
                 ],
                 exitreasonList: [
                     { value: 'School', text: 'School' },
@@ -191,6 +192,7 @@ mounted () {
             })
         },
         printAsPdf:function(schoolId,classId,Status,ParentalStatus,sortby){
+            alert(schoolId); alert(classId);
             window.open(`/SRSchoolReport/PrintStudentByPdf/${schoolId}/${classId}/${Status}/${ParentalStatus}/${sortby}`)
         },
         printAsExcel:function(schoolId,classId,Status,ParentalStatus,sortby){

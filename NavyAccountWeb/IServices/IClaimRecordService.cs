@@ -25,6 +25,7 @@ namespace NavyAccountWeb.IServices
         Task<sr_ClaimRecord> GetClaimRecordByCode(string code);
         Task<sr_ClaimRecord> GetClaimByid(int id);
         decimal GetAmountPerSchoolType(string studentNo, out decimal amt);
+        Task<int> UpdateClaimReinBySchool(string reg_num, string school, string classs, decimal amount,string remark, string user);
 
 
     }

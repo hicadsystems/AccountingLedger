@@ -17,7 +17,9 @@ namespace NavyAccountCore.Models
         public string ClassCategory { get; set; }
         public string ParentalStatus { get; set; }
         public string SchoolCode { set; get; }
+        public string Schoolname { set; get; }
         public int SchoolId { set; get; }
+        public int ClassId { set; get; }
         public string CommencementDate { set; get; }
         public string ClassName { set; get; }
         public string PhoneNumber { set; get; }

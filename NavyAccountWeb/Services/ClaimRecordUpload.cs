@@ -16,12 +16,13 @@ namespace NavyAccountWeb.Services
         private readonly IUnitOfWork unitOfWork;
         private readonly INavyAccountDbContext context;
         private readonly IStudentRecordService strecordService;
+        private readonly IClaimRecordService claimrecordService;
         private string user;
         public string errormessage;
 
 
 
-        public ClaimRecordUpload(List<ClaimRecordVM> claimRecords, IUnitOfWork unitOfWork, INavyAccountDbContext context, IStudentRecordService strecordService, string user,string errormessage)
+        public ClaimRecordUpload(List<ClaimRecordVM> claimRecords, IUnitOfWork unitOfWork, INavyAccountDbContext context, IStudentRecordService strecordService, IClaimRecordService claimrecordService, string user,string errormessage)
         {
 
             this.claimRecords = claimRecords;
@@ -30,6 +31,7 @@ namespace NavyAccountWeb.Services
             this.context = context;
             this.errormessage=errormessage;
             this.strecordService = strecordService;
+            this.claimrecordService = claimrecordService;
         }
 
         public async Task<string> processUploadInThread()
@@ -76,6 +78,31 @@ namespace NavyAccountWeb.Services
             catch (Exception)
             {
 
+                throw;
+            }
+        }
+        public async Task<string> reinUploadInThread()
+        {
+            try
+            {
+
+                foreach (var s in claimRecords)
+                {
+                    var getstudent = unitOfWork.student.GetStudentByCode(x => x.Reg_Number == s.Reg_Number).Result;
+                    if (getstudent != null)
+                    {
+                      await claimrecordService.UpdateClaimReinBySchool(s.Reg_Number, s.School, s.Class, s.amount,s.remark, user);
+                    }
+                    else
+                    {
+                        return errormessage = "Student Record Not Found or Student alrady on claim";
+                    }
+                }
+                return errormessage = "Claim Deduction Uploaded";
+            }
+            catch (Exception ex)
+            {
+                return errormessage = "Error";
                 throw;
             }
         }
