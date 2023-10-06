@@ -43,6 +43,7 @@ namespace NavyAccountWeb.Services
             {
                 var getstudent= unitOfWork.student.GetStudentByCode(x => x.Reg_Number == s.Reg_Number).Result;
                 var getclaim = unitOfWork.schclaim.GetClaimRecordByCode(x => x.Reg_Number == s.Reg_Number).Result;
+
                 if (getstudent != null && getclaim == null)
                 {
                     decimal ClaimAmount = 0M;
@@ -50,11 +51,12 @@ namespace NavyAccountWeb.Services
                         ClaimAmount = Convert.ToDecimal(200000);
                     if (getstudent.SchoolCode == "Secondary")
                          ClaimAmount = Convert.ToDecimal(400000);
-
-                    unitOfWork.schclaim.Create(new sr_ClaimRecord()
+                        unitOfWork.schclaim.Create(new sr_ClaimRecord()
                     {
                         Reg_Number = s.Reg_Number,
                         Amount = ClaimAmount,
+                        Period=s.Period,
+                        Term=s.Term,
                         Transdate = DateTime.Now,
                         CreatedBy = user,
                         CreatedDate=DateTime.Now
@@ -75,7 +77,7 @@ namespace NavyAccountWeb.Services
             }
                 return errormessage = "Student Record Uploaded";
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;

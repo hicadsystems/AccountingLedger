@@ -13462,7 +13462,7 @@ __webpack_require__.r(__webpack_exports__);
     setValuePersonID: function setValuePersonID(result) {
       var _this3 = this;
 
-      alert(result.value);
+      //   alert(result.value)
       axios.get("/api/PersonAPI/getPersonByID2/".concat(result.value)).then(function (response) {
         _this3.personelList = response.data;
       });
@@ -15102,8 +15102,11 @@ __webpack_require__.r(__webpack_exports__);
     setValueStudent: function setValueStudent(result) {
       var _this = this;
 
+      // alert(result.value);
+      this.studentid = result.value;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/StudentClaim/getclaimsummary/".concat(result.value)).then(function (response) {
-        _this.cliamSummaryList = response.data;
+        _this.cliamSummaryList = response.data; // alert(response.data[0].studentid);
+
         _this.studentid = response.data[0].studentid;
         _this.StudentName = response.data[0].studentName;
         _this.Reg_Number = response.data[0].reg_Number;
