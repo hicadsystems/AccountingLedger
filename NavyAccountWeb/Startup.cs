@@ -113,7 +113,7 @@ namespace NavyAccountWeb
             services.AddScoped<IClaimTypeServices, ClaimTypeServices>();
             services.AddScoped <INavipService, NavipService>();
             services.AddScoped<ILoantypeReviewService, LoantypeReviewService>();
-
+            services.AddScoped<IStockService, StockService>();
 
 
             services.AddScoped<ISchoolRecordService, SchoolRecordService>();

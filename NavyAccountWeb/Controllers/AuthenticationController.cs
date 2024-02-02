@@ -40,7 +40,11 @@ namespace NavyAccountWeb.Controllers
             try
             {
             var auth = await authenticationService.SignInUserAsync(login.UserName, login.Password, "false");
-            
+                if(auth.Data.IsActive==false)
+                {
+                    TempData["ErrorMessage"] = auth.Message;
+                    return new RedirectResult(RefererUrl());
+                }
             if (!auth.Success)
             {
                 TempData["ErrorMessage"] = auth.Message;

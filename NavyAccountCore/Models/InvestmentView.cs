@@ -13,6 +13,7 @@ namespace NavyAccountCore.Models
         public string issuancebank { get; set; }
         public string receivingbank { get; set; }
         public string Company { get; set; }
-        
+        public string StockName { get; set; }
+
     }
 }

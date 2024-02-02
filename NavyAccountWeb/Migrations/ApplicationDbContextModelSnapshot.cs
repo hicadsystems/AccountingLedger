@@ -452,7 +452,11 @@ namespace NavyAccountWeb.Migrations
 
                     b.Property<DateTime?>("Maturingdate");
 
+                    b.Property<int?>("StockId");
+
                     b.Property<string>("Tenure");
+
+                    b.Property<string>("TransactionType");
 
                     b.Property<string>("Voucher");
 
@@ -1295,6 +1299,25 @@ namespace NavyAccountWeb.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("npf_navip");
+                });
+
+            modelBuilder.Entity("NavyAccountCore.Core.Entities.npf_stock", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("createdby");
+
+                    b.Property<DateTime?>("datecreated");
+
+                    b.Property<string>("description");
+
+                    b.Property<string>("stockname");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("npf_Stocks");
                 });
 
             modelBuilder.Entity("NavyAccountCore.Core.Entities.py_bank", b =>

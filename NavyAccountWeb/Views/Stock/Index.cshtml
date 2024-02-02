@@ -1,0 +1,58 @@
+﻿@model IEnumerable<NavyAccountCore.Core.Entities.npf_stock>
+
+@{
+    ViewBag.Title = "Stock";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="header">
+    <h1 class="header-title">
+        Stock 
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Home/Index">Main</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Stock</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Create Stock</h5>
+            </div>
+            @using (Html.BeginForm("CreateStock", "Stock", FormMethod.Post))
+            {
+
+                @Html.AntiForgeryToken()
+
+                <create-stock-component></create-stock-component>
+            }
+
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Stock List</h5>
+                @using (Html.BeginForm("printStock", "Stock", FormMethod.Get))
+                {
+                    <div class="col-4">
+                        <div class="form-group">
+                            <input type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Print" />
+                        </div>
+
+                    </div>
+
+                }
+            </div>
+            <view-stock-component></view-stock-component>
+        </div>
+    </div>
+</div>
+
+

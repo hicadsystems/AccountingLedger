@@ -11,7 +11,7 @@ namespace NavyAccountWeb.IServices
     public interface IInvestmentRegisterServices
     {
         IEnumerable<InvestmentView> GetAllInvestRegister();
-        IEnumerable<InvestmentView> GetAllInvestRegisterOST(DateTime startdate,DateTime enddate);
+        List<InvestmentView> GetAllInvestRegisterOST(DateTime startdate,DateTime enddate);
         IEnumerable<InvestmentView> GetAllInvestRegister2();
         Task<Pf_InvestRegister> GetinvestRegisterById(int id);
         Task<Pf_InvestRegister> GetInvestRegisterByCompanyId(int companyId);
@@ -20,5 +20,7 @@ namespace NavyAccountWeb.IServices
         Task<List<PersonView>> GetAllCompany();
         Task<List<BankView>> GetBanKRecord();
         List<InvestmentView> GetALLInvestListOT();
+        List<InvestmentView> GetALLInvestListCapitalMk();
+        List<InvestmentView> GetALLInvestListCapitalMk(DateTime startdate, DateTime enddate);
     }
 }

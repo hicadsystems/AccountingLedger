@@ -28,7 +28,7 @@ namespace NavyAccountWeb.Services
         {
             return unitOfWork.register.GetInvestList().ToList();
         }
-        public IEnumerable<InvestmentView> GetAllInvestRegisterOST(DateTime startdate, DateTime enddate)
+        public List<InvestmentView> GetAllInvestRegisterOST(DateTime startdate, DateTime enddate)
         {
             return unitOfWork.register.GetInvestListOST(startdate,enddate).ToList();
         }
@@ -39,6 +39,14 @@ namespace NavyAccountWeb.Services
         public List<InvestmentView> GetALLInvestListOT()
         {
             return unitOfWork.register.GetALLInvestListOT().ToList();
+        }
+        public List<InvestmentView> GetALLInvestListCapitalMk()
+        {
+            return unitOfWork.register.GetALLInvestListCapitalMk().ToList();
+        }
+        public List<InvestmentView> GetALLInvestListCapitalMk(DateTime startdate, DateTime enddate)
+        {
+            return unitOfWork.register.GetALLInvestListCapitalMk(startdate, enddate).ToList();
         }
 
         public Task<List<PersonView>> GetAllCompany()

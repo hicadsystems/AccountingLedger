@@ -18,9 +18,12 @@
                     <div class="col-12 col-xl-3">
                         <div class="form-group">
                             <label class="form-label">Deposit Bank</label>
-                            <select class="form-control" v-model="postBody.IssuanceBankId" name="IssuanceBankId">
+                            <!-- <select class="form-control" v-model="postBody.IssuanceBankId" name="IssuanceBankId">
                                 <option v-for="bk in bankList" v-bind:value="bk.id" v-bind:key="bk.id">{{ bk.bankname }}</option>
-                            </select>
+                            </select> -->
+                            <select class="form-control" v-model="postBody.IssuanceBankId" name="id" required>
+                                    <option v-for="coa in chartofAccountList" v-bind:value="coa.id" v-bind:key="coa.id"> {{ coa.description }} </option>
+                                </select>
                         </div>
                     </div>
 
@@ -100,9 +103,12 @@
                     <div class="col-12 col-xl-3">
                         <div class="form-group">
                             <label v-if="readonly" class="form-label">Receiving Bank</label>
-                            <select v-if="readonly" class="form-control" v-model="postBody.receivingbankid" name="receivingbankid">
+                            <!-- <select v-if="readonly" class="form-control" v-model="postBody.receivingbankid" name="receivingbankid">
                                 <option v-for="bk in bankList" v-bind:value="bk.id" v-bind:key="bk.id">{{ bk.bankname }}</option>
-                            </select>
+                            </select> -->
+                            <select class="form-control" v-model="postBody.receivingbankid" name="id" required>
+                                    <option v-for="coa in chartofAccountList" v-bind:value="coa.id" v-bind:key="coa.id"> {{ coa.description }} </option>
+                                </select>
                         </div>
                     </div>
                 </div>
@@ -136,6 +142,7 @@
             userList: null,
             bankList: null,
             InvestTypeList: null,
+            chartofAccountList: null,
             readonly:true,
             postBody: {
               
@@ -191,6 +198,17 @@
 
         }
     },
+    mounted() {
+            axios
+                .get('/api/ChartofAccount/getAllChartofAccounts')
+                .then(response => {
+
+                    this.chartofAccountList = response.data
+                    this.chartofAccountsStandBy = response.data
+
+                })
+                
+        },
         methods: {
             onChange(event) {
                 if (event.target.value == 'Money Market') {
