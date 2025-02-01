@@ -14,7 +14,7 @@ namespace NavyAccountCore.Core.Data
         IFundType FundType { get; }
         IAccountType actType { get; }
         IBalsheet balSheet { get; }
-        IStock stock { get; }
+
         IPfundrate pfundrate { get; }
         ILedgerRepository npf_Ledgers { get; }
 

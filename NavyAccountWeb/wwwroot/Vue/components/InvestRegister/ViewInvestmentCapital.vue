@@ -7,7 +7,6 @@
                 <thead>
                     <tr>
                         <th>Company</th>
-                        <th>Stock Name</th>
                         <th>Registra</th>
                         <th>Voucher</th>
                         <th>Description</th>
@@ -23,13 +22,15 @@
                 <tbody>
                     <tr v-for="fundrate in  InvestList">
                         <td>{{ fundrate.company }}</td>
-                        <td>{{ fundrate.stockName }}</td>
                         <td>{{ fundrate.issuancebank }}</td>
                         <td>{{ fundrate.voucher }}</td>
-                        <td>{{ fundrate.description}}</td>
+                        <td> {{ fundrate.description}}</td>
                         <td>{{ fundrate.amount }}</td>
-                        <td>{{ fundrate.date}}</td>
-                        <td>{{ fundrate.unit}}</td>
+                        <td> {{ fundrate.date}}</td>
+                        <td> {{ fundrate.unit}}</td>
+
+
+
                         <td><button type="button" class="btn btn-submit btn-primary" @click="processRetrieve(fundrate)">Edit</button></td>
                     </tr>
                 </tbody>

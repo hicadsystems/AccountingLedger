@@ -5616,6 +5616,274 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    vuejsDatepicker: vuejs_datepicker__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      errors: null,
+      responseMessage: '',
+      submitorUpdate: 'Submit',
+      canProcess: true,
+      userList: null,
+      bankList: null,
+      InvestTypeList: null,
+      readonly: true,
+      postBody: {
+        companyid: '',
+        IssuanceBankId: '',
+        interest: '',
+        tenure: '',
+        voucher: '',
+        description: '',
+        amount: 0,
+        date: '',
+        duedate: '',
+        investmenttype: '',
+        chequeno: '',
+        maturedamt: 0,
+        unit: ''
+      },
+      invest: [{
+        value: 'Money Market',
+        text: 'Money Market'
+      }, {
+        value: 'Capital Market',
+        text: 'Capital Market'
+      }]
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get('/api/Bank/getAllBanks').then(function (response) {
+      return _this.bankList = response.data;
+    }), axios.get('/api/PfInvest/LoadAllPersonnel').then(function (response) {
+      return _this.userList = response.data;
+    });
+  },
+  watch: {
+    '$store.state.objectToUpdate': function $storeStateObjectToUpdate(FundCode, Rate, Period, Intrest) {
+      this.postBody.company = this.$store.state.objectToUpdate.company, this.postBody.IssuanceBankId = this.$store.state.objectToUpdate.issuanceBankId, this.postBody.voucher = this.$store.state.objectToUpdate.voucher, this.postBody.description = this.$store.state.objectToUpdate.description, this.postBody.amount = this.$store.state.objectToUpdate.amount, this.postBody.date = this.$store.state.objectToUpdate.date, this.postBody.InvestmentType = this.$store.state.objectToUpdate.investmentType, this.postBody.chequeno = this.$store.state.objectToUpdate.chequeno, this.postBody.tenure = this.$store.state.objectToUpdate.tenure, this.postBody.interest = this.$store.state.objectToUpdate.interest, this.postBody.receivingbankid = this.$store.state.objectToUpdate.receivingbankid, this.postBody.unit = this.$store.state.objectToUpdate.unit, this.postBody.Id = this.$store.state.objectToUpdate.id;
+      this.submitorUpdate = 'Update';
+    }
+  },
+  methods: {
+    onChange: function onChange(event) {
+      if (event.target.value == 'Money Market') {
+        this.readonly = false;
+      } else {
+        this.readonly = true;
+      }
+    },
+    checkForm: function checkForm(e) {
+      e.preventDefault();
+
+      if (this.postBody.company) {
+        e.preventDefault();
+        this.canProcess = false;
+        this.postPost();
+      } else {
+        this.errors = [];
+        this.errors.push('company is Required');
+      }
+    },
+    postPost: function postPost() {
+      var _this2 = this;
+
+      if (this.submitorUpdate == 'Submit') {
+        axios.post("/api/PfInvest/createInvestCapitalMarket", this.postBody).then(function (response) {
+          _this2.responseMessage = response.data.responseDescription;
+          _this2.canProcess = true;
+
+          if (response.data.responseCode == '200') {
+            // this.$store.state.objectToUpdate = "create";
+            _this2.postBody.company = '';
+            _this2.postBody.issuanceBankId = '';
+            _this2.postBody.receivingbankid = '';
+            _this2.postBody.voucher = '';
+            _this2.postBody.description = '';
+            _this2.postBody.amount = 0;
+            _this2.postBody.date = '';
+            _this2.postBody.investmenttype = '';
+            _this2.postBody.closecode = '';
+            _this2.postBody.chequeno = '';
+            _this2.unit = '';
+            _this2.interest = '';
+            _this2.tenure = '';
+          }
+        })["catch"](function (e) {
+          _this2.errors.push(e);
+        });
+      }
+
+      if (this.submitorUpdate == 'Update') {
+        axios.put("/api/PfInvest/updateInvestCapitalMarket", this.postBody).then(function (response) {
+          _this2.responseMessage = response.data.responseDescription;
+          _this2.canProcess = true;
+
+          if (response.data.responseCode == '200') {
+            _this2.submitorUpdate = 'Submit';
+            _this2.$store.state.objectToUpdate = "Update";
+            _this2.postBody.companyid = '';
+            _this2.postBody.issuanceBankId = '';
+            _this2.postBody.voucher = '';
+            _this2.postBody.description = '';
+            _this2.postBody.amount = 0;
+            _this2.postBody.date = '';
+            _this2.postBody.investmenttype = '';
+            _this2.postBody.closecode = '';
+            _this2.postBody.chequeno = '';
+            _this2.unit = '';
+            _this2.interest = '';
+            _this2.tenure = '';
+          }
+        })["catch"](function (e) {
+          _this2.errors.push(e);
+        });
+      }
+    }
+  },
+  computed: {
+    setter: function setter() {
+      var objecttoedit = this.$store.state.objectToUpdate;
+
+      if (objecttoedit.Id) {
+        this.postBody.company = objecttoedit.company;
+        this.postBody.issuanceBankId = objecttoedit.issuanceBankId;
+        this.postBody.voucher = objecttoedit.voucher;
+        this.postBody.description = objecttoedit.description;
+        this.postBody.amount = objecttoedit.amount;
+        this.postBody.date = objecttoedit.date;
+        this.postBody.investmenttype = objecttoedit.investmenttype;
+        this.postBody.closecode = objecttoedit.closecode;
+        this.postBody.chequeno = objecttoedit.chequeno;
+        this.postBody.unit = objecttoedit.unit;
+        this.postBody.tenure = objecttoedit.tenure;
+        this.postBody.interest = objecttoedit.interest;
+      }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/InvestRegister/CreateInvestment.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/InvestRegister/CreateInvestment.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuejs_datepicker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuejs-datepicker */ "./node_modules/vuejs-datepicker/dist/vuejs-datepicker.esm.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -5646,321 +5914,7 @@ __webpack_require__.r(__webpack_exports__);
       canProcess: true,
       userList: null,
       bankList: null,
-      StockList: null,
       InvestTypeList: null,
-      chartofAccountList: null,
-      readonly: true,
-      postBody: {
-        companyid: '',
-        IssuanceBankId: '',
-        interest: '',
-        tenure: '',
-        voucher: '',
-        description: '',
-        amount: 0,
-        date: '',
-        duedate: '',
-        investmenttype: '',
-        transactionType: '',
-        chequeno: '',
-        maturedamt: 0,
-        unit: '',
-        StockId: ''
-      },
-      invest: [{
-        value: 'Money Market',
-        text: 'Money Market'
-      }, {
-        value: 'Capital Market',
-        text: 'Capital Market'
-      }]
-    };
-  },
-  mounted: function mounted() {
-    var _this = this;
-
-    axios.get('/api/Bank/getAllBanks').then(function (response) {
-      return _this.bankList = response.data;
-    }), axios.get('/api/Stock/getAllStocks').then(function (response) {
-      return _this.StockList = response.data;
-    }), axios.get('/api/PfInvest/LoadAllPersonnel').then(function (response) {
-      return _this.userList = response.data;
-    });
-    axios.get('/api/ChartofAccount/getAllChartofAccounts').then(function (response) {
-      _this.chartofAccountList = response.data;
-      _this.chartofAccountsStandBy = response.data;
-    });
-  },
-  watch: {
-    '$store.state.objectToUpdate': function $storeStateObjectToUpdate(FundCode, Rate, Period, Intrest) {
-      this.postBody.company = this.$store.state.objectToUpdate.company, this.postBody.IssuanceBankId = this.$store.state.objectToUpdate.issuanceBankId, this.postBody.voucher = this.$store.state.objectToUpdate.voucher, this.postBody.description = this.$store.state.objectToUpdate.description, this.postBody.amount = this.$store.state.objectToUpdate.amount, this.postBody.date = this.$store.state.objectToUpdate.date, this.postBody.InvestmentType = this.$store.state.objectToUpdate.investmentType, this.postBody.chequeno = this.$store.state.objectToUpdate.chequeno, this.postBody.tenure = this.$store.state.objectToUpdate.tenure, this.postBody.interest = this.$store.state.objectToUpdate.interest, this.postBody.receivingbankid = this.$store.state.objectToUpdate.receivingbankid, this.postBody.unit = this.$store.state.objectToUpdate.unit, this.postBody.transactionType = this.$store.state.objectToUpdate.transactionType, this.postBody.StockId = this.$store.state.objectToUpdate.stockId;
-      this.postBody.Id = this.$store.state.objectToUpdate.id;
-      this.submitorUpdate = 'Update';
-    }
-  },
-  methods: {
-    onChange: function onChange(event) {
-      if (event.target.value == 'Money Market') {
-        this.readonly = false;
-      } else {
-        this.readonly = true;
-      }
-    },
-    checkForm: function checkForm(e) {
-      e.preventDefault();
-
-      if (this.postBody.company) {
-        e.preventDefault();
-        this.canProcess = false;
-        this.postPost();
-      } else {
-        this.errors = [];
-        this.errors.push('company is Required');
-      }
-    },
-    postPost: function postPost() {
-      var _this2 = this;
-
-      if (this.submitorUpdate == 'Submit') {
-        alert(this.postBody);
-        axios.post("/api/PfInvest/createInvestCapitalMarket", this.postBody).then(function (response) {
-          _this2.responseMessage = response.data.responseDescription;
-          _this2.canProcess = true;
-
-          if (response.data.responseCode == '200') {
-            // this.$store.state.objectToUpdate = "create";
-            _this2.postBody.company = '';
-            _this2.postBody.issuanceBankId = '';
-            _this2.postBody.receivingbankid = '';
-            _this2.postBody.voucher = '';
-            _this2.postBody.description = '';
-            _this2.postBody.amount = 0;
-            _this2.postBody.date = '';
-            _this2.postBody.investmenttype = '';
-            _this2.postBody.closecode = '';
-            _this2.postBody.chequeno = '';
-            _this2.unit = '';
-            _this2.interest = '';
-            _this2.tenure = '';
-            _this2.postBody.transactionType = '';
-            _this2.postBody.stockId = '';
-          }
-        })["catch"](function (e) {
-          _this2.errors.push(e);
-        });
-      }
-
-      if (this.submitorUpdate == 'Update') {
-        axios.put("/api/PfInvest/updateInvestCapitalMarket", this.postBody).then(function (response) {
-          _this2.responseMessage = response.data.responseDescription;
-          _this2.canProcess = true;
-
-          if (response.data.responseCode == '200') {
-            _this2.submitorUpdate = 'Submit';
-            _this2.$store.state.objectToUpdate = "Update";
-            _this2.postBody.companyid = '';
-            _this2.postBody.issuanceBankId = '';
-            _this2.postBody.voucher = '';
-            _this2.postBody.description = '';
-            _this2.postBody.amount = 0;
-            _this2.postBody.date = '';
-            _this2.postBody.investmenttype = '';
-            _this2.postBody.closecode = '';
-            _this2.postBody.chequeno = '';
-            _this2.postBody.transactionType = '';
-            _this2.postBody.stockId = '';
-            _this2.unit = '';
-            _this2.interest = '';
-            _this2.tenure = '';
-          }
-        })["catch"](function (e) {
-          _this2.errors.push(e);
-        });
-      }
-    }
-  },
-  computed: {
-    setter: function setter() {
-      var objecttoedit = this.$store.state.objectToUpdate;
-
-      if (objecttoedit.Id) {
-        this.postBody.company = objecttoedit.company;
-        this.postBody.issuanceBankId = objecttoedit.issuanceBankId;
-        this.postBody.voucher = objecttoedit.voucher;
-        this.postBody.description = objecttoedit.description;
-        this.postBody.amount = objecttoedit.amount;
-        this.postBody.date = objecttoedit.date;
-        this.postBody.investmenttype = objecttoedit.investmenttype;
-        this.postBody.closecode = objecttoedit.closecode;
-        this.postBody.chequeno = objecttoedit.chequeno;
-        this.postBody.unit = objecttoedit.unit;
-        this.postBody.tenure = objecttoedit.tenure;
-        this.postBody.interest = objecttoedit.interest;
-        this.postBody.transactionType = objecttoedit.transactionType;
-        this.postBody.stockId = objecttoedit.stockId;
-      }
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/InvestRegister/CreateInvestment.vue?vue&type=script&lang=js&":
-/*!*****************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/InvestRegister/CreateInvestment.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuejs_datepicker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuejs-datepicker */ "./node_modules/vuejs-datepicker/dist/vuejs-datepicker.esm.js");
-var _components$data$moun;
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = (_components$data$moun = {
-  components: {
-    vuejsDatepicker: vuejs_datepicker__WEBPACK_IMPORTED_MODULE_0__["default"]
-  },
-  data: function data() {
-    return {
-      errors: null,
-      responseMessage: '',
-      submitorUpdate: 'Submit',
-      canProcess: true,
-      userList: null,
-      bankList: null,
-      InvestTypeList: null,
-      chartofAccountList: null,
       readonly: true,
       postBody: {
         IssuanceBankId: '',
@@ -6000,113 +5954,108 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.postBody.IssuanceBankId = this.$store.state.objectToUpdate.issuanceBankId, this.postBody.voucher = this.$store.state.objectToUpdate.voucher, this.postBody.description = this.$store.state.objectToUpdate.description, this.postBody.amount = this.$store.state.objectToUpdate.amount, this.postBody.date = this.$store.state.objectToUpdate.date, this.postBody.duedate = this.$store.state.objectToUpdate.dueDate, this.postBody.InvestmentType = this.$store.state.objectToUpdate.investmentType, this.postBody.chequeno = this.$store.state.objectToUpdate.chequeno, this.postBody.maturedamt = this.$store.state.objectToUpdate.maturedamt, this.postBody.tenure = this.$store.state.objectToUpdate.tenure, this.postBody.interest = this.$store.state.objectToUpdate.interest, this.postBody.maturingdate = this.$store.state.objectToUpdate.maturingdate, this.postBody.receivingbankid = this.$store.state.objectToUpdate.receivingbankid, this.postBody.Id = this.$store.state.objectToUpdate.id;
       this.submitorUpdate = 'Update';
     }
-  }
-}, _defineProperty(_components$data$moun, "mounted", function mounted() {
-  var _this2 = this;
-
-  axios.get('/api/ChartofAccount/getAllChartofAccounts').then(function (response) {
-    _this2.chartofAccountList = response.data;
-    _this2.chartofAccountsStandBy = response.data;
-  });
-}), _defineProperty(_components$data$moun, "methods", {
-  onChange: function onChange(event) {
-    if (event.target.value == 'Money Market') {
-      this.readonly = false;
-    } else {
-      this.readonly = true;
-    }
   },
-  checkForm: function checkForm(e) {
-    e.preventDefault();
-
-    if (this.postBody.IssuanceBankId) {
+  methods: {
+    onChange: function onChange(event) {
+      if (event.target.value == 'Money Market') {
+        this.readonly = false;
+      } else {
+        this.readonly = true;
+      }
+    },
+    checkForm: function checkForm(e) {
       e.preventDefault();
-      this.canProcess = false;
-      this.postPost();
-    } else {
-      this.errors = [];
-      this.errors.push('issuanceBank is Required');
+
+      if (this.postBody.IssuanceBankId) {
+        e.preventDefault();
+        this.canProcess = false;
+        this.postPost();
+      } else {
+        this.errors = [];
+        this.errors.push('issuanceBank is Required');
+      }
+    },
+    postPost: function postPost() {
+      var _this2 = this;
+
+      if (this.submitorUpdate == 'Submit') {
+        axios.post("/api/PfInvest/createInvestRegister", this.postBody).then(function (response) {
+          _this2.responseMessage = response.data.responseDescription;
+          _this2.canProcess = true;
+
+          if (response.data.responseCode == '200') {
+            _this2.$store.state.objectToUpdate = "create";
+            _this2.postBody.issuanceBankId = '';
+            _this2.postBody.receivingbankid = '';
+            _this2.postBody.voucher = '';
+            _this2.postBody.description = '';
+            _this2.postBody.amount = 0;
+            _this2.postBody.date = '';
+            _this2.postBody.duedate = '';
+            _this2.postBody.investmenttype = '';
+            _this2.postBody.closecode = '';
+            _this2.postBody.chequeno = '';
+            _this2.postBody.maturedamt = 0;
+            _this2.maturingdate = '';
+            _this2.interest = '';
+            _this2.tenure = '';
+          }
+        })["catch"](function (e) {
+          _this2.errors.push(e);
+        });
+      }
+
+      if (this.submitorUpdate == 'Update') {
+        axios.put("/api/PfInvest/updateInvestRegister", this.postBody).then(function (response) {
+          _this2.responseMessage = response.data.responseDescription;
+          _this2.canProcess = true;
+
+          if (response.data.responseCode == '200') {
+            _this2.submitorUpdate = 'Submit';
+            _this2.$store.state.objectToUpdate = "Update";
+            _this2.postBody.issuanceBankId = '';
+            _this2.postBody.receivingbankid = '';
+            _this2.postBody.voucher = '';
+            _this2.postBody.description = '';
+            _this2.postBody.amount = 0;
+            _this2.postBody.date = '';
+            _this2.postBody.duedate = '';
+            _this2.postBody.investmenttype = '';
+            _this2.postBody.closecode = '';
+            _this2.postBody.chequeno = '';
+            _this2.postBody.maturedamt = 0;
+            _this2.maturingdate = '';
+            _this2.interest = '';
+            _this2.tenure = '';
+          }
+        })["catch"](function (e) {
+          _this2.errors.push(e);
+        });
+      }
     }
   },
-  postPost: function postPost() {
-    var _this3 = this;
+  computed: {
+    setter: function setter() {
+      var objecttoedit = this.$store.state.objectToUpdate;
 
-    if (this.submitorUpdate == 'Submit') {
-      axios.post("/api/PfInvest/createInvestRegister", this.postBody).then(function (response) {
-        _this3.responseMessage = response.data.responseDescription;
-        _this3.canProcess = true;
-
-        if (response.data.responseCode == '200') {
-          _this3.$store.state.objectToUpdate = "create";
-          _this3.postBody.issuanceBankId = '';
-          _this3.postBody.receivingbankid = '';
-          _this3.postBody.voucher = '';
-          _this3.postBody.description = '';
-          _this3.postBody.amount = 0;
-          _this3.postBody.date = '';
-          _this3.postBody.duedate = '';
-          _this3.postBody.investmenttype = '';
-          _this3.postBody.closecode = '';
-          _this3.postBody.chequeno = '';
-          _this3.postBody.maturedamt = 0;
-          _this3.maturingdate = '';
-          _this3.interest = '';
-          _this3.tenure = '';
-        }
-      })["catch"](function (e) {
-        _this3.errors.push(e);
-      });
-    }
-
-    if (this.submitorUpdate == 'Update') {
-      axios.put("/api/PfInvest/updateInvestRegister", this.postBody).then(function (response) {
-        _this3.responseMessage = response.data.responseDescription;
-        _this3.canProcess = true;
-
-        if (response.data.responseCode == '200') {
-          _this3.submitorUpdate = 'Submit';
-          _this3.$store.state.objectToUpdate = "Update";
-          _this3.postBody.issuanceBankId = '';
-          _this3.postBody.receivingbankid = '';
-          _this3.postBody.voucher = '';
-          _this3.postBody.description = '';
-          _this3.postBody.amount = 0;
-          _this3.postBody.date = '';
-          _this3.postBody.duedate = '';
-          _this3.postBody.investmenttype = '';
-          _this3.postBody.closecode = '';
-          _this3.postBody.chequeno = '';
-          _this3.postBody.maturedamt = 0;
-          _this3.maturingdate = '';
-          _this3.interest = '';
-          _this3.tenure = '';
-        }
-      })["catch"](function (e) {
-        _this3.errors.push(e);
-      });
+      if (objecttoedit != null) {
+        this.postBody.issuanceBankId = objecttoedit.issuanceBankId;
+        this.postBody.receivingbankid = objecttoedit.receivingbankid;
+        this.postBody.voucher = objecttoedit.voucher;
+        this.postBody.description = objecttoedit.description;
+        this.postBody.amount = objecttoedit.amount;
+        this.postBody.date = objecttoedit.date;
+        this.postBody.duedate = objecttoedit.duedate;
+        this.postBody.investmenttype = objecttoedit.investmenttype;
+        this.postBody.closecode = objecttoedit.closecode;
+        this.postBody.chequeno = objecttoedit.chequeno;
+        this.postBody.maturedamt = objecttoedit.maturedamt;
+        this.postBody.tenure = objecttoedit.tenure;
+        this.postBody.interest = objecttoedit.interest;
+      }
     }
   }
-}), _defineProperty(_components$data$moun, "computed", {
-  setter: function setter() {
-    var objecttoedit = this.$store.state.objectToUpdate;
-
-    if (objecttoedit != null) {
-      this.postBody.issuanceBankId = objecttoedit.issuanceBankId;
-      this.postBody.receivingbankid = objecttoedit.receivingbankid;
-      this.postBody.voucher = objecttoedit.voucher;
-      this.postBody.description = objecttoedit.description;
-      this.postBody.amount = objecttoedit.amount;
-      this.postBody.date = objecttoedit.date;
-      this.postBody.duedate = objecttoedit.duedate;
-      this.postBody.investmenttype = objecttoedit.investmenttype;
-      this.postBody.closecode = objecttoedit.closecode;
-      this.postBody.chequeno = objecttoedit.chequeno;
-      this.postBody.maturedamt = objecttoedit.maturedamt;
-      this.postBody.tenure = objecttoedit.tenure;
-      this.postBody.interest = objecttoedit.interest;
-    }
-  }
-}), _components$data$moun);
+});
 
 /***/ }),
 
@@ -6254,6 +6203,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -6273,190 +6223,6 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     processRetrieve: function processRetrieve(invest) {
       this.$store.state.objectToUpdate = invest;
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/InvestRegister/ViewInvestmentCapitalReport.vue?vue&type=script&lang=js&":
-/*!****************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/InvestRegister/ViewInvestmentCapitalReport.vue?vue&type=script&lang=js& ***!
-  \****************************************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuejs_datepicker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuejs-datepicker */ "./node_modules/vuejs-datepicker/dist/vuejs-datepicker.esm.js");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  components: {
-    vuejsDatepicker: vuejs_datepicker__WEBPACK_IMPORTED_MODULE_0__["default"]
-  },
-  data: function data() {
-    return {
-      InvestList: null,
-      startDate: '',
-      endDate: ''
-    };
-  },
-  created: function created() {
-    this.$store.state.objectToUpdate = null;
-  },
-  mounted: function mounted() {
-    var _this = this;
-
-    axios.get("/api/PfInvest/getAllCapital2/".concat(this.startDate, "/").concat(this.endDate)).then(function (response) {
-      return _this.InvestList = response.data;
-    });
-  },
-  methods: {
-    processRetrieve: function processRetrieve(invest) {
-      this.$store.state.objectToUpdate = invest;
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/InvestRegister/ViewInvestmentReport.vue?vue&type=script&lang=js&":
-/*!*********************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/InvestRegister/ViewInvestmentReport.vue?vue&type=script&lang=js& ***!
-  \*********************************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      InvestList: null
-    };
-  },
-  created: function created() {
-    this.$store.state.objectToUpdate = null;
-  },
-  watch: {
-    '$store.state.objectToUpdate': function $storeStateObjectToUpdate(newVal, oldVal) {
-      this.getAllInvestment();
-    }
-  },
-  mounted: function mounted() {
-    this.getAllInvestment();
-  },
-  methods: {
-    processRetrieve: function processRetrieve(invest) {
-      this.$store.state.objectToUpdate = invest;
-    },
-    getAllInvestment: function getAllInvestment() {
-      var _this = this;
-
-      axios.get('/api/PfInvest/getAllRegister').then(function (response) {
-        return _this.InvestList = response.data;
-      });
     }
   }
 });
@@ -12786,10 +12552,10 @@ __webpack_require__.r(__webpack_exports__);
       errors: null,
       searchData: '',
       paymentList: null,
-      canProcess: true,
-      postBody: {
-        studentid: 0
-      }
+      canProcess: true // postBody: {
+      //      studentid:0
+      //  }
+
     };
   },
   mounted: function mounted() {
@@ -13371,8 +13137,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var uri = actionToPerform == 0 ? "/api/PersonAPI/createPerson" : "/api/PersonAPI/updatePerson";
-      var message = actionToPerform == 0 ? "Created" : "Updated";
-      alert(this.postBody.person.PersonID); //alert(this.postBody.person);
+      var message = actionToPerform == 0 ? "Created" : "Updated"; // alert(this.postBody.person.PersonID);
+      //alert(this.postBody.person);
 
       axios.post(uri, this.postBody).then(function (response) {
         _this.responseMessage = response.data.responseDescription;
@@ -13696,7 +13462,7 @@ __webpack_require__.r(__webpack_exports__);
     setValuePersonID: function setValuePersonID(result) {
       var _this3 = this;
 
-      //   alert(result.value)
+      alert(result.value);
       axios.get("/api/PersonAPI/getPersonByID2/".concat(result.value)).then(function (response) {
         _this3.personelList = response.data;
       });
@@ -14816,216 +14582,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/StockTable/CreateStockComponent.vue?vue&type=script&lang=js&":
-/*!*****************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/StockTable/CreateStockComponent.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      errors: null,
-      responseMessage: '',
-      submitorUpdate: 'Submit',
-      canProcess: true,
-      postBody: {
-        stockname: '',
-        description: ''
-      }
-    };
-  },
-  watch: {
-    '$store.state.objectToUpdate': function $storeStateObjectToUpdate(newVal, oldVal) {
-      this.postBody.stockname = this.$store.state.objectToUpdate.stockname, this.postBody.description = this.$store.state.objectToUpdate.description;
-      this.submitorUpdate = 'Update';
-    }
-  },
-  methods: {
-    checkForm: function checkForm(e) {
-      if (this.postBody.stockname) {
-        e.preventDefault();
-        this.canProcess = false;
-        this.postPost();
-      } else {
-        this.errors = [];
-        this.errors.push('Balance Sheet Code is Required');
-      }
-    },
-    postPost: function postPost() {
-      var _this = this;
-
-      if (this.submitorUpdate == 'Submit') {
-        axios.post("/api/Stock/createStock", this.postBody).then(function (response) {
-          _this.responseMessage = response.data.responseDescription;
-          _this.canProcess = true;
-
-          if (response.data.responseCode == '200') {
-            _this.postBody.stockname = '';
-            _this.postBody.description = '';
-            _this.$store.state.objectToUpdate = "create";
-          }
-        })["catch"](function (e) {
-          _this.errors.push(e);
-        });
-      }
-
-      if (this.submitorUpdate == 'Update') {
-        axios.put("/api/Stock/updateStock", this.postBody).then(function (response) {
-          _this.responseMessage = response.data.responseDescription;
-          _this.canProcess = true;
-
-          if (response.data.responseCode == '200') {
-            _this.submitorUpdate = 'Submit';
-            _this.postBody.stockname = '';
-            _this.postBody.description = '';
-            _this.$store.state.objectToUpdate = "update";
-          }
-        })["catch"](function (e) {
-          _this.errors.push(e);
-        });
-      }
-    }
-  },
-  computed: {
-    setter: function setter() {
-      var objecttoedit = this.$store.state.objectToUpdate;
-
-      if (objecttoedit.stockname) {
-        this.postBody.stockname = objecttoedit.stockname;
-        this.postBody.description = objecttoedit.description;
-      }
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/StockTable/ViewStockComponent.vue?vue&type=script&lang=js&":
-/*!***************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/StockTable/ViewStockComponent.vue?vue&type=script&lang=js& ***!
-  \***************************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      stockList: null,
-      responseMessage: ''
-    };
-  },
-  created: function created() {
-    this.$store.state.objectToUpdate = null;
-  },
-  watch: {
-    '$store.state.objectToUpdate': function $storeStateObjectToUpdate(newVal, oldVal) {
-      this.getAllStocks();
-      this.processDelete();
-    }
-  },
-  mounted: function mounted() {
-    this.getAllStocks();
-    this.processDelete();
-  },
-  methods: {
-    processRetrieve: function processRetrieve(stock) {
-      this.$store.state.objectToUpdate = stock;
-    },
-    processDelete: function processDelete(id) {
-      var _this = this;
-
-      axios.get("/api/Stock/RemoveStock/".concat(id)).then(function (response) {
-        if (response.data.responseCode == '200') {
-          alert("Stock successfully deleted");
-
-          _this.getAllBalanceSheets();
-        }
-      })["catch"](function (e) {
-        _this.errors.push(e);
-      });
-    },
-    getAllStocks: function getAllStocks() {
-      var _this2 = this;
-
-      axios.get('/api/Stock/getAllStocks').then(function (response) {
-        return _this2.stockList = response.data;
-      });
-    }
-  }
-});
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/StudentClaim/ClaimHistory.vue?vue&type=script&lang=js&":
 /*!***********************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/StudentClaim/ClaimHistory.vue?vue&type=script&lang=js& ***!
@@ -15546,11 +15102,8 @@ __webpack_require__.r(__webpack_exports__);
     setValueStudent: function setValueStudent(result) {
       var _this = this;
 
-      // alert(result.value);
-      this.studentid = result.value;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/StudentClaim/getclaimsummary/".concat(result.value)).then(function (response) {
-        _this.cliamSummaryList = response.data; // alert(response.data[0].studentid);
-
+        _this.cliamSummaryList = response.data;
         _this.studentid = response.data[0].studentid;
         _this.StudentName = response.data[0].studentName;
         _this.Reg_Number = response.data[0].reg_Number;
@@ -17058,7 +16611,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.pagination{display:inline-block;padding-left:0;margin:20px 0;border-radius:4px}.pagination>li{display:inline}.pagination>li>a,.pagination>li>span{position:relative;float:left;padding:6px 12px;margin-left:-1px;line-height:1.42857143;color:#337ab7;text-decoration:none;background-color:#fff;border:1px solid #ddd}.pagination>li>a:focus,.pagination>li>a:hover,.pagination>li>span:focus,.pagination>li>span:hover{z-index:2;color:#23527c;background-color:#eee;border-color:#ddd}.pagination>li:first-child>a,.pagination>li:first-child>span{margin-left:0;border-top-left-radius:4px;border-bottom-left-radius:4px}.pagination>li:last-child>a,.pagination>li:last-child>span{border-top-right-radius:4px;border-bottom-right-radius:4px}.pagination>.active>a,.pagination>.active>a:focus,.pagination>.active>a:hover,.pagination>.active>span,.pagination>.active>span:focus,.pagination>.active>span:hover{z-index:3;color:#fff;cursor:default;background-color:#337ab7;border-color:#337ab7}.pagination>.disabled>a,.pagination>.disabled>a:focus,.pagination>.disabled>a:hover,.pagination>.disabled>span,.pagination>.disabled>span:focus,.pagination>.disabled>span:hover{color:#777;cursor:not-allowed;background-color:#fff;border-color:#ddd}.pagination-lg>li>a,.pagination-lg>li>span{padding:10px 16px;font-size:18px;line-height:1.3333333}.pagination-lg>li:first-child>a,.pagination-lg>li:first-child>span{border-top-left-radius:6px;border-bottom-left-radius:6px}.pagination-lg>li:last-child>a,.pagination-lg>li:last-child>span{border-top-right-radius:6px;border-bottom-right-radius:6px}.pagination-sm>li>a,.pagination-sm>li>span{padding:5px 10px;font-size:12px;line-height:1.5}.pagination-sm>li:first-child>a,.pagination-sm>li:first-child>span{border-top-left-radius:3px;border-bottom-left-radius:3px}.pagination-sm>li:last-child>a,.pagination-sm>li:last-child>span{border-top-right-radius:3px;border-bottom-right-radius:3px}.pager{padding-left:0;margin:20px 0;text-align:center;list-style:none}.pager li{display:inline}.pager li>a,.pager li>span{display:inline-block;padding:5px 14px;background-color:#fff;border:1px solid #ddd;border-radius:15px}.pager li>a:focus,.pager li>a:hover{text-decoration:none;background-color:#eee}.pager .next>a,.pager .next>span{float:right}.pager .previous>a,.pager .previous>span{float:left}.pager .disabled>a,.pager .disabled>a:focus,.pager .disabled>a:hover,.pager .disabled>span{color:#777;cursor:not-allowed;background-color:#fff}\r\n\r\n", ""]);
+exports.push([module.i, "\n.pagination{display:inline-block;padding-left:0;margin:20px 0;border-radius:4px}.pagination>li{display:inline}.pagination>li>a,.pagination>li>span{position:relative;float:left;padding:6px 12px;margin-left:-1px;line-height:1.42857143;color:#337ab7;text-decoration:none;background-color:#fff;border:1px solid #ddd}.pagination>li>a:focus,.pagination>li>a:hover,.pagination>li>span:focus,.pagination>li>span:hover{z-index:2;color:#23527c;background-color:#eee;border-color:#ddd}.pagination>li:first-child>a,.pagination>li:first-child>span{margin-left:0;border-top-left-radius:4px;border-bottom-left-radius:4px}.pagination>li:last-child>a,.pagination>li:last-child>span{border-top-right-radius:4px;border-bottom-right-radius:4px}.pagination>.active>a,.pagination>.active>a:focus,.pagination>.active>a:hover,.pagination>.active>span,.pagination>.active>span:focus,.pagination>.active>span:hover{z-index:3;color:#fff;cursor:default;background-color:#337ab7;border-color:#337ab7}.pagination>.disabled>a,.pagination>.disabled>a:focus,.pagination>.disabled>a:hover,.pagination>.disabled>span,.pagination>.disabled>span:focus,.pagination>.disabled>span:hover{color:#777;cursor:not-allowed;background-color:#fff;border-color:#ddd}.pagination-lg>li>a,.pagination-lg>li>span{padding:10px 16px;font-size:18px;line-height:1.3333333}.pagination-lg>li:first-child>a,.pagination-lg>li:first-child>span{border-top-left-radius:6px;border-bottom-left-radius:6px}.pagination-lg>li:last-child>a,.pagination-lg>li:last-child>span{border-top-right-radius:6px;border-bottom-right-radius:6px}.pagination-sm>li>a,.pagination-sm>li>span{padding:5px 10px;font-size:12px;line-height:1.5}.pagination-sm>li:first-child>a,.pagination-sm>li:first-child>span{border-top-left-radius:3px;border-bottom-left-radius:3px}.pagination-sm>li:last-child>a,.pagination-sm>li:last-child>span{border-top-right-radius:3px;border-bottom-right-radius:3px}.pager{padding-left:0;margin:20px 0;text-align:center;list-style:none}.pager li{display:inline}.pager li>a,.pager li>span{display:inline-block;padding:5px 14px;background-color:#fff;border:1px solid #ddd;border-radius:15px}.pager li>a:focus,.pager li>a:hover{text-decoration:none;background-color:#eee}.pager .next>a,.pager .next>span{float:right}.pager .previous>a,.pager .previous>span{float:left}.pager .disabled>a,.pager .disabled>a:focus,.pager .disabled>a:hover,.pager .disabled>span{color:#777;cursor:not-allowed;background-color:#fff}\n\n", ""]);
 
 // exports
 
@@ -17077,7 +16630,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.pagination{display:inline-block;padding-left:0;margin:20px 0;border-radius:4px}.pagination>li{display:inline}.pagination>li>a,.pagination>li>span{position:relative;float:left;padding:6px 12px;margin-left:-1px;line-height:1.42857143;color:#337ab7;text-decoration:none;background-color:#fff;border:1px solid #ddd}.pagination>li>a:focus,.pagination>li>a:hover,.pagination>li>span:focus,.pagination>li>span:hover{z-index:2;color:#23527c;background-color:#eee;border-color:#ddd}.pagination>li:first-child>a,.pagination>li:first-child>span{margin-left:0;border-top-left-radius:4px;border-bottom-left-radius:4px}.pagination>li:last-child>a,.pagination>li:last-child>span{border-top-right-radius:4px;border-bottom-right-radius:4px}.pagination>.active>a,.pagination>.active>a:focus,.pagination>.active>a:hover,.pagination>.active>span,.pagination>.active>span:focus,.pagination>.active>span:hover{z-index:3;color:#fff;cursor:default;background-color:#337ab7;border-color:#337ab7}.pagination>.disabled>a,.pagination>.disabled>a:focus,.pagination>.disabled>a:hover,.pagination>.disabled>span,.pagination>.disabled>span:focus,.pagination>.disabled>span:hover{color:#777;cursor:not-allowed;background-color:#fff;border-color:#ddd}.pagination-lg>li>a,.pagination-lg>li>span{padding:10px 16px;font-size:18px;line-height:1.3333333}.pagination-lg>li:first-child>a,.pagination-lg>li:first-child>span{border-top-left-radius:6px;border-bottom-left-radius:6px}.pagination-lg>li:last-child>a,.pagination-lg>li:last-child>span{border-top-right-radius:6px;border-bottom-right-radius:6px}.pagination-sm>li>a,.pagination-sm>li>span{padding:5px 10px;font-size:12px;line-height:1.5}.pagination-sm>li:first-child>a,.pagination-sm>li:first-child>span{border-top-left-radius:3px;border-bottom-left-radius:3px}.pagination-sm>li:last-child>a,.pagination-sm>li:last-child>span{border-top-right-radius:3px;border-bottom-right-radius:3px}.pager{padding-left:0;margin:20px 0;text-align:center;list-style:none}.pager li{display:inline}.pager li>a,.pager li>span{display:inline-block;padding:5px 14px;background-color:#fff;border:1px solid #ddd;border-radius:15px}.pager li>a:focus,.pager li>a:hover{text-decoration:none;background-color:#eee}.pager .next>a,.pager .next>span{float:right}.pager .previous>a,.pager .previous>span{float:left}.pager .disabled>a,.pager .disabled>a:focus,.pager .disabled>a:hover,.pager .disabled>span{color:#777;cursor:not-allowed;background-color:#fff}\r\n\r\n", ""]);
+exports.push([module.i, "\n.pagination{display:inline-block;padding-left:0;margin:20px 0;border-radius:4px}.pagination>li{display:inline}.pagination>li>a,.pagination>li>span{position:relative;float:left;padding:6px 12px;margin-left:-1px;line-height:1.42857143;color:#337ab7;text-decoration:none;background-color:#fff;border:1px solid #ddd}.pagination>li>a:focus,.pagination>li>a:hover,.pagination>li>span:focus,.pagination>li>span:hover{z-index:2;color:#23527c;background-color:#eee;border-color:#ddd}.pagination>li:first-child>a,.pagination>li:first-child>span{margin-left:0;border-top-left-radius:4px;border-bottom-left-radius:4px}.pagination>li:last-child>a,.pagination>li:last-child>span{border-top-right-radius:4px;border-bottom-right-radius:4px}.pagination>.active>a,.pagination>.active>a:focus,.pagination>.active>a:hover,.pagination>.active>span,.pagination>.active>span:focus,.pagination>.active>span:hover{z-index:3;color:#fff;cursor:default;background-color:#337ab7;border-color:#337ab7}.pagination>.disabled>a,.pagination>.disabled>a:focus,.pagination>.disabled>a:hover,.pagination>.disabled>span,.pagination>.disabled>span:focus,.pagination>.disabled>span:hover{color:#777;cursor:not-allowed;background-color:#fff;border-color:#ddd}.pagination-lg>li>a,.pagination-lg>li>span{padding:10px 16px;font-size:18px;line-height:1.3333333}.pagination-lg>li:first-child>a,.pagination-lg>li:first-child>span{border-top-left-radius:6px;border-bottom-left-radius:6px}.pagination-lg>li:last-child>a,.pagination-lg>li:last-child>span{border-top-right-radius:6px;border-bottom-right-radius:6px}.pagination-sm>li>a,.pagination-sm>li>span{padding:5px 10px;font-size:12px;line-height:1.5}.pagination-sm>li:first-child>a,.pagination-sm>li:first-child>span{border-top-left-radius:3px;border-bottom-left-radius:3px}.pagination-sm>li:last-child>a,.pagination-sm>li:last-child>span{border-top-right-radius:3px;border-bottom-right-radius:3px}.pager{padding-left:0;margin:20px 0;text-align:center;list-style:none}.pager li{display:inline}.pager li>a,.pager li>span{display:inline-block;padding:5px 14px;background-color:#fff;border:1px solid #ddd;border-radius:15px}.pager li>a:focus,.pager li>a:hover{text-decoration:none;background-color:#eee}.pager .next>a,.pager .next>span{float:right}.pager .previous>a,.pager .previous>span{float:left}.pager .disabled>a,.pager .disabled>a:focus,.pager .disabled>a:hover,.pager .disabled>span{color:#777;cursor:not-allowed;background-color:#fff}\n\n", ""]);
 
 // exports
 
@@ -17096,7 +16649,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.pagination{display:inline-block;padding-left:0;margin:20px 0;border-radius:4px}.pagination>li{display:inline}.pagination>li>a,.pagination>li>span{position:relative;float:left;padding:6px 12px;margin-left:-1px;line-height:1.42857143;color:#337ab7;text-decoration:none;background-color:#fff;border:1px solid #ddd}.pagination>li>a:focus,.pagination>li>a:hover,.pagination>li>span:focus,.pagination>li>span:hover{z-index:2;color:#23527c;background-color:#eee;border-color:#ddd}.pagination>li:first-child>a,.pagination>li:first-child>span{margin-left:0;border-top-left-radius:4px;border-bottom-left-radius:4px}.pagination>li:last-child>a,.pagination>li:last-child>span{border-top-right-radius:4px;border-bottom-right-radius:4px}.pagination>.active>a,.pagination>.active>a:focus,.pagination>.active>a:hover,.pagination>.active>span,.pagination>.active>span:focus,.pagination>.active>span:hover{z-index:3;color:#fff;cursor:default;background-color:#337ab7;border-color:#337ab7}.pagination>.disabled>a,.pagination>.disabled>a:focus,.pagination>.disabled>a:hover,.pagination>.disabled>span,.pagination>.disabled>span:focus,.pagination>.disabled>span:hover{color:#777;cursor:not-allowed;background-color:#fff;border-color:#ddd}.pagination-lg>li>a,.pagination-lg>li>span{padding:10px 16px;font-size:18px;line-height:1.3333333}.pagination-lg>li:first-child>a,.pagination-lg>li:first-child>span{border-top-left-radius:6px;border-bottom-left-radius:6px}.pagination-lg>li:last-child>a,.pagination-lg>li:last-child>span{border-top-right-radius:6px;border-bottom-right-radius:6px}.pagination-sm>li>a,.pagination-sm>li>span{padding:5px 10px;font-size:12px;line-height:1.5}.pagination-sm>li:first-child>a,.pagination-sm>li:first-child>span{border-top-left-radius:3px;border-bottom-left-radius:3px}.pagination-sm>li:last-child>a,.pagination-sm>li:last-child>span{border-top-right-radius:3px;border-bottom-right-radius:3px}.pager{padding-left:0;margin:20px 0;text-align:center;list-style:none}.pager li{display:inline}.pager li>a,.pager li>span{display:inline-block;padding:5px 14px;background-color:#fff;border:1px solid #ddd;border-radius:15px}.pager li>a:focus,.pager li>a:hover{text-decoration:none;background-color:#eee}.pager .next>a,.pager .next>span{float:right}.pager .previous>a,.pager .previous>span{float:left}.pager .disabled>a,.pager .disabled>a:focus,.pager .disabled>a:hover,.pager .disabled>span{color:#777;cursor:not-allowed;background-color:#fff}\r\n\r\n", ""]);
+exports.push([module.i, "\n.pagination{display:inline-block;padding-left:0;margin:20px 0;border-radius:4px}.pagination>li{display:inline}.pagination>li>a,.pagination>li>span{position:relative;float:left;padding:6px 12px;margin-left:-1px;line-height:1.42857143;color:#337ab7;text-decoration:none;background-color:#fff;border:1px solid #ddd}.pagination>li>a:focus,.pagination>li>a:hover,.pagination>li>span:focus,.pagination>li>span:hover{z-index:2;color:#23527c;background-color:#eee;border-color:#ddd}.pagination>li:first-child>a,.pagination>li:first-child>span{margin-left:0;border-top-left-radius:4px;border-bottom-left-radius:4px}.pagination>li:last-child>a,.pagination>li:last-child>span{border-top-right-radius:4px;border-bottom-right-radius:4px}.pagination>.active>a,.pagination>.active>a:focus,.pagination>.active>a:hover,.pagination>.active>span,.pagination>.active>span:focus,.pagination>.active>span:hover{z-index:3;color:#fff;cursor:default;background-color:#337ab7;border-color:#337ab7}.pagination>.disabled>a,.pagination>.disabled>a:focus,.pagination>.disabled>a:hover,.pagination>.disabled>span,.pagination>.disabled>span:focus,.pagination>.disabled>span:hover{color:#777;cursor:not-allowed;background-color:#fff;border-color:#ddd}.pagination-lg>li>a,.pagination-lg>li>span{padding:10px 16px;font-size:18px;line-height:1.3333333}.pagination-lg>li:first-child>a,.pagination-lg>li:first-child>span{border-top-left-radius:6px;border-bottom-left-radius:6px}.pagination-lg>li:last-child>a,.pagination-lg>li:last-child>span{border-top-right-radius:6px;border-bottom-right-radius:6px}.pagination-sm>li>a,.pagination-sm>li>span{padding:5px 10px;font-size:12px;line-height:1.5}.pagination-sm>li:first-child>a,.pagination-sm>li:first-child>span{border-top-left-radius:3px;border-bottom-left-radius:3px}.pagination-sm>li:last-child>a,.pagination-sm>li:last-child>span{border-top-right-radius:3px;border-bottom-right-radius:3px}.pager{padding-left:0;margin:20px 0;text-align:center;list-style:none}.pager li{display:inline}.pager li>a,.pager li>span{display:inline-block;padding:5px 14px;background-color:#fff;border:1px solid #ddd;border-radius:15px}.pager li>a:focus,.pager li>a:hover{text-decoration:none;background-color:#eee}.pager .next>a,.pager .next>span{float:right}.pager .previous>a,.pager .previous>span{float:left}.pager .disabled>a,.pager .disabled>a:focus,.pager .disabled>a:hover,.pager .disabled>span{color:#777;cursor:not-allowed;background-color:#fff}\n\n", ""]);
 
 // exports
 
@@ -17115,7 +16668,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.pagination{display:inline-block;padding-left:0;margin:20px 0;border-radius:4px}.pagination>li{display:inline}.pagination>li>a,.pagination>li>span{position:relative;float:left;padding:6px 12px;margin-left:-1px;line-height:1.42857143;color:#337ab7;text-decoration:none;background-color:#fff;border:1px solid #ddd}.pagination>li>a:focus,.pagination>li>a:hover,.pagination>li>span:focus,.pagination>li>span:hover{z-index:2;color:#23527c;background-color:#eee;border-color:#ddd}.pagination>li:first-child>a,.pagination>li:first-child>span{margin-left:0;border-top-left-radius:4px;border-bottom-left-radius:4px}.pagination>li:last-child>a,.pagination>li:last-child>span{border-top-right-radius:4px;border-bottom-right-radius:4px}.pagination>.active>a,.pagination>.active>a:focus,.pagination>.active>a:hover,.pagination>.active>span,.pagination>.active>span:focus,.pagination>.active>span:hover{z-index:3;color:#fff;cursor:default;background-color:#337ab7;border-color:#337ab7}.pagination>.disabled>a,.pagination>.disabled>a:focus,.pagination>.disabled>a:hover,.pagination>.disabled>span,.pagination>.disabled>span:focus,.pagination>.disabled>span:hover{color:#777;cursor:not-allowed;background-color:#fff;border-color:#ddd}.pagination-lg>li>a,.pagination-lg>li>span{padding:10px 16px;font-size:18px;line-height:1.3333333}.pagination-lg>li:first-child>a,.pagination-lg>li:first-child>span{border-top-left-radius:6px;border-bottom-left-radius:6px}.pagination-lg>li:last-child>a,.pagination-lg>li:last-child>span{border-top-right-radius:6px;border-bottom-right-radius:6px}.pagination-sm>li>a,.pagination-sm>li>span{padding:5px 10px;font-size:12px;line-height:1.5}.pagination-sm>li:first-child>a,.pagination-sm>li:first-child>span{border-top-left-radius:3px;border-bottom-left-radius:3px}.pagination-sm>li:last-child>a,.pagination-sm>li:last-child>span{border-top-right-radius:3px;border-bottom-right-radius:3px}.pager{padding-left:0;margin:20px 0;text-align:center;list-style:none}.pager li{display:inline}.pager li>a,.pager li>span{display:inline-block;padding:5px 14px;background-color:#fff;border:1px solid #ddd;border-radius:15px}.pager li>a:focus,.pager li>a:hover{text-decoration:none;background-color:#eee}.pager .next>a,.pager .next>span{float:right}.pager .previous>a,.pager .previous>span{float:left}.pager .disabled>a,.pager .disabled>a:focus,.pager .disabled>a:hover,.pager .disabled>span{color:#777;cursor:not-allowed;background-color:#fff}\r\n\r\n", ""]);
+exports.push([module.i, "\n.pagination{display:inline-block;padding-left:0;margin:20px 0;border-radius:4px}.pagination>li{display:inline}.pagination>li>a,.pagination>li>span{position:relative;float:left;padding:6px 12px;margin-left:-1px;line-height:1.42857143;color:#337ab7;text-decoration:none;background-color:#fff;border:1px solid #ddd}.pagination>li>a:focus,.pagination>li>a:hover,.pagination>li>span:focus,.pagination>li>span:hover{z-index:2;color:#23527c;background-color:#eee;border-color:#ddd}.pagination>li:first-child>a,.pagination>li:first-child>span{margin-left:0;border-top-left-radius:4px;border-bottom-left-radius:4px}.pagination>li:last-child>a,.pagination>li:last-child>span{border-top-right-radius:4px;border-bottom-right-radius:4px}.pagination>.active>a,.pagination>.active>a:focus,.pagination>.active>a:hover,.pagination>.active>span,.pagination>.active>span:focus,.pagination>.active>span:hover{z-index:3;color:#fff;cursor:default;background-color:#337ab7;border-color:#337ab7}.pagination>.disabled>a,.pagination>.disabled>a:focus,.pagination>.disabled>a:hover,.pagination>.disabled>span,.pagination>.disabled>span:focus,.pagination>.disabled>span:hover{color:#777;cursor:not-allowed;background-color:#fff;border-color:#ddd}.pagination-lg>li>a,.pagination-lg>li>span{padding:10px 16px;font-size:18px;line-height:1.3333333}.pagination-lg>li:first-child>a,.pagination-lg>li:first-child>span{border-top-left-radius:6px;border-bottom-left-radius:6px}.pagination-lg>li:last-child>a,.pagination-lg>li:last-child>span{border-top-right-radius:6px;border-bottom-right-radius:6px}.pagination-sm>li>a,.pagination-sm>li>span{padding:5px 10px;font-size:12px;line-height:1.5}.pagination-sm>li:first-child>a,.pagination-sm>li:first-child>span{border-top-left-radius:3px;border-bottom-left-radius:3px}.pagination-sm>li:last-child>a,.pagination-sm>li:last-child>span{border-top-right-radius:3px;border-bottom-right-radius:3px}.pager{padding-left:0;margin:20px 0;text-align:center;list-style:none}.pager li{display:inline}.pager li>a,.pager li>span{display:inline-block;padding:5px 14px;background-color:#fff;border:1px solid #ddd;border-radius:15px}.pager li>a:focus,.pager li>a:hover{text-decoration:none;background-color:#eee}.pager .next>a,.pager .next>span{float:right}.pager .previous>a,.pager .previous>span{float:left}.pager .disabled>a,.pager .disabled>a:focus,.pager .disabled>a:hover,.pager .disabled>span{color:#777;cursor:not-allowed;background-color:#fff}\n\n", ""]);
 
 // exports
 
@@ -17134,7 +16687,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.pagination{display:inline-block;padding-left:0;margin:20px 0;border-radius:4px}.pagination>li{display:inline}.pagination>li>a,.pagination>li>span{position:relative;float:left;padding:6px 12px;margin-left:-1px;line-height:1.42857143;color:#337ab7;text-decoration:none;background-color:#fff;border:1px solid #ddd}.pagination>li>a:focus,.pagination>li>a:hover,.pagination>li>span:focus,.pagination>li>span:hover{z-index:2;color:#23527c;background-color:#eee;border-color:#ddd}.pagination>li:first-child>a,.pagination>li:first-child>span{margin-left:0;border-top-left-radius:4px;border-bottom-left-radius:4px}.pagination>li:last-child>a,.pagination>li:last-child>span{border-top-right-radius:4px;border-bottom-right-radius:4px}.pagination>.active>a,.pagination>.active>a:focus,.pagination>.active>a:hover,.pagination>.active>span,.pagination>.active>span:focus,.pagination>.active>span:hover{z-index:3;color:#fff;cursor:default;background-color:#337ab7;border-color:#337ab7}.pagination>.disabled>a,.pagination>.disabled>a:focus,.pagination>.disabled>a:hover,.pagination>.disabled>span,.pagination>.disabled>span:focus,.pagination>.disabled>span:hover{color:#777;cursor:not-allowed;background-color:#fff;border-color:#ddd}.pagination-lg>li>a,.pagination-lg>li>span{padding:10px 16px;font-size:18px;line-height:1.3333333}.pagination-lg>li:first-child>a,.pagination-lg>li:first-child>span{border-top-left-radius:6px;border-bottom-left-radius:6px}.pagination-lg>li:last-child>a,.pagination-lg>li:last-child>span{border-top-right-radius:6px;border-bottom-right-radius:6px}.pagination-sm>li>a,.pagination-sm>li>span{padding:5px 10px;font-size:12px;line-height:1.5}.pagination-sm>li:first-child>a,.pagination-sm>li:first-child>span{border-top-left-radius:3px;border-bottom-left-radius:3px}.pagination-sm>li:last-child>a,.pagination-sm>li:last-child>span{border-top-right-radius:3px;border-bottom-right-radius:3px}.pager{padding-left:0;margin:20px 0;text-align:center;list-style:none}.pager li{display:inline}.pager li>a,.pager li>span{display:inline-block;padding:5px 14px;background-color:#fff;border:1px solid #ddd;border-radius:15px}.pager li>a:focus,.pager li>a:hover{text-decoration:none;background-color:#eee}.pager .next>a,.pager .next>span{float:right}.pager .previous>a,.pager .previous>span{float:left}.pager .disabled>a,.pager .disabled>a:focus,.pager .disabled>a:hover,.pager .disabled>span{color:#777;cursor:not-allowed;background-color:#fff}\r\n\r\n", ""]);
+exports.push([module.i, "\n.pagination{display:inline-block;padding-left:0;margin:20px 0;border-radius:4px}.pagination>li{display:inline}.pagination>li>a,.pagination>li>span{position:relative;float:left;padding:6px 12px;margin-left:-1px;line-height:1.42857143;color:#337ab7;text-decoration:none;background-color:#fff;border:1px solid #ddd}.pagination>li>a:focus,.pagination>li>a:hover,.pagination>li>span:focus,.pagination>li>span:hover{z-index:2;color:#23527c;background-color:#eee;border-color:#ddd}.pagination>li:first-child>a,.pagination>li:first-child>span{margin-left:0;border-top-left-radius:4px;border-bottom-left-radius:4px}.pagination>li:last-child>a,.pagination>li:last-child>span{border-top-right-radius:4px;border-bottom-right-radius:4px}.pagination>.active>a,.pagination>.active>a:focus,.pagination>.active>a:hover,.pagination>.active>span,.pagination>.active>span:focus,.pagination>.active>span:hover{z-index:3;color:#fff;cursor:default;background-color:#337ab7;border-color:#337ab7}.pagination>.disabled>a,.pagination>.disabled>a:focus,.pagination>.disabled>a:hover,.pagination>.disabled>span,.pagination>.disabled>span:focus,.pagination>.disabled>span:hover{color:#777;cursor:not-allowed;background-color:#fff;border-color:#ddd}.pagination-lg>li>a,.pagination-lg>li>span{padding:10px 16px;font-size:18px;line-height:1.3333333}.pagination-lg>li:first-child>a,.pagination-lg>li:first-child>span{border-top-left-radius:6px;border-bottom-left-radius:6px}.pagination-lg>li:last-child>a,.pagination-lg>li:last-child>span{border-top-right-radius:6px;border-bottom-right-radius:6px}.pagination-sm>li>a,.pagination-sm>li>span{padding:5px 10px;font-size:12px;line-height:1.5}.pagination-sm>li:first-child>a,.pagination-sm>li:first-child>span{border-top-left-radius:3px;border-bottom-left-radius:3px}.pagination-sm>li:last-child>a,.pagination-sm>li:last-child>span{border-top-right-radius:3px;border-bottom-right-radius:3px}.pager{padding-left:0;margin:20px 0;text-align:center;list-style:none}.pager li{display:inline}.pager li>a,.pager li>span{display:inline-block;padding:5px 14px;background-color:#fff;border:1px solid #ddd;border-radius:15px}.pager li>a:focus,.pager li>a:hover{text-decoration:none;background-color:#eee}.pager .next>a,.pager .next>span{float:right}.pager .previous>a,.pager .previous>span{float:left}.pager .disabled>a,.pager .disabled>a:focus,.pager .disabled>a:hover,.pager .disabled>span{color:#777;cursor:not-allowed;background-color:#fff}\n\n", ""]);
 
 // exports
 
@@ -17172,7 +16725,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.pagination{display:inline-block;padding-left:0;margin:20px 0;border-radius:4px}.pagination>li{display:inline}.pagination>li>a,.pagination>li>span{position:relative;float:left;padding:6px 12px;margin-left:-1px;line-height:1.42857143;color:#337ab7;text-decoration:none;background-color:#fff;border:1px solid #ddd}.pagination>li>a:focus,.pagination>li>a:hover,.pagination>li>span:focus,.pagination>li>span:hover{z-index:2;color:#23527c;background-color:#eee;border-color:#ddd}.pagination>li:first-child>a,.pagination>li:first-child>span{margin-left:0;border-top-left-radius:4px;border-bottom-left-radius:4px}.pagination>li:last-child>a,.pagination>li:last-child>span{border-top-right-radius:4px;border-bottom-right-radius:4px}.pagination>.active>a,.pagination>.active>a:focus,.pagination>.active>a:hover,.pagination>.active>span,.pagination>.active>span:focus,.pagination>.active>span:hover{z-index:3;color:#fff;cursor:default;background-color:#337ab7;border-color:#337ab7}.pagination>.disabled>a,.pagination>.disabled>a:focus,.pagination>.disabled>a:hover,.pagination>.disabled>span,.pagination>.disabled>span:focus,.pagination>.disabled>span:hover{color:#777;cursor:not-allowed;background-color:#fff;border-color:#ddd}.pagination-lg>li>a,.pagination-lg>li>span{padding:10px 16px;font-size:18px;line-height:1.3333333}.pagination-lg>li:first-child>a,.pagination-lg>li:first-child>span{border-top-left-radius:6px;border-bottom-left-radius:6px}.pagination-lg>li:last-child>a,.pagination-lg>li:last-child>span{border-top-right-radius:6px;border-bottom-right-radius:6px}.pagination-sm>li>a,.pagination-sm>li>span{padding:5px 10px;font-size:12px;line-height:1.5}.pagination-sm>li:first-child>a,.pagination-sm>li:first-child>span{border-top-left-radius:3px;border-bottom-left-radius:3px}.pagination-sm>li:last-child>a,.pagination-sm>li:last-child>span{border-top-right-radius:3px;border-bottom-right-radius:3px}.pager{padding-left:0;margin:20px 0;text-align:center;list-style:none}.pager li{display:inline}.pager li>a,.pager li>span{display:inline-block;padding:5px 14px;background-color:#fff;border:1px solid #ddd;border-radius:15px}.pager li>a:focus,.pager li>a:hover{text-decoration:none;background-color:#eee}.pager .next>a,.pager .next>span{float:right}.pager .previous>a,.pager .previous>span{float:left}.pager .disabled>a,.pager .disabled>a:focus,.pager .disabled>a:hover,.pager .disabled>span{color:#777;cursor:not-allowed;background-color:#fff}\r\n\r\n", ""]);
+exports.push([module.i, "\n.pagination{display:inline-block;padding-left:0;margin:20px 0;border-radius:4px}.pagination>li{display:inline}.pagination>li>a,.pagination>li>span{position:relative;float:left;padding:6px 12px;margin-left:-1px;line-height:1.42857143;color:#337ab7;text-decoration:none;background-color:#fff;border:1px solid #ddd}.pagination>li>a:focus,.pagination>li>a:hover,.pagination>li>span:focus,.pagination>li>span:hover{z-index:2;color:#23527c;background-color:#eee;border-color:#ddd}.pagination>li:first-child>a,.pagination>li:first-child>span{margin-left:0;border-top-left-radius:4px;border-bottom-left-radius:4px}.pagination>li:last-child>a,.pagination>li:last-child>span{border-top-right-radius:4px;border-bottom-right-radius:4px}.pagination>.active>a,.pagination>.active>a:focus,.pagination>.active>a:hover,.pagination>.active>span,.pagination>.active>span:focus,.pagination>.active>span:hover{z-index:3;color:#fff;cursor:default;background-color:#337ab7;border-color:#337ab7}.pagination>.disabled>a,.pagination>.disabled>a:focus,.pagination>.disabled>a:hover,.pagination>.disabled>span,.pagination>.disabled>span:focus,.pagination>.disabled>span:hover{color:#777;cursor:not-allowed;background-color:#fff;border-color:#ddd}.pagination-lg>li>a,.pagination-lg>li>span{padding:10px 16px;font-size:18px;line-height:1.3333333}.pagination-lg>li:first-child>a,.pagination-lg>li:first-child>span{border-top-left-radius:6px;border-bottom-left-radius:6px}.pagination-lg>li:last-child>a,.pagination-lg>li:last-child>span{border-top-right-radius:6px;border-bottom-right-radius:6px}.pagination-sm>li>a,.pagination-sm>li>span{padding:5px 10px;font-size:12px;line-height:1.5}.pagination-sm>li:first-child>a,.pagination-sm>li:first-child>span{border-top-left-radius:3px;border-bottom-left-radius:3px}.pagination-sm>li:last-child>a,.pagination-sm>li:last-child>span{border-top-right-radius:3px;border-bottom-right-radius:3px}.pager{padding-left:0;margin:20px 0;text-align:center;list-style:none}.pager li{display:inline}.pager li>a,.pager li>span{display:inline-block;padding:5px 14px;background-color:#fff;border:1px solid #ddd;border-radius:15px}.pager li>a:focus,.pager li>a:hover{text-decoration:none;background-color:#eee}.pager .next>a,.pager .next>span{float:right}.pager .previous>a,.pager .previous>span{float:left}.pager .disabled>a,.pager .disabled>a:focus,.pager .disabled>a:hover,.pager .disabled>span{color:#777;cursor:not-allowed;background-color:#fff}\n\n", ""]);
 
 // exports
 
@@ -17191,7 +16744,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.pagination{display:inline-block;padding-left:0;margin:20px 0;border-radius:4px}.pagination>li{display:inline}.pagination>li>a,.pagination>li>span{position:relative;float:left;padding:6px 12px;margin-left:-1px;line-height:1.42857143;color:#337ab7;text-decoration:none;background-color:#fff;border:1px solid #ddd}.pagination>li>a:focus,.pagination>li>a:hover,.pagination>li>span:focus,.pagination>li>span:hover{z-index:2;color:#23527c;background-color:#eee;border-color:#ddd}.pagination>li:first-child>a,.pagination>li:first-child>span{margin-left:0;border-top-left-radius:4px;border-bottom-left-radius:4px}.pagination>li:last-child>a,.pagination>li:last-child>span{border-top-right-radius:4px;border-bottom-right-radius:4px}.pagination>.active>a,.pagination>.active>a:focus,.pagination>.active>a:hover,.pagination>.active>span,.pagination>.active>span:focus,.pagination>.active>span:hover{z-index:3;color:#fff;cursor:default;background-color:#337ab7;border-color:#337ab7}.pagination>.disabled>a,.pagination>.disabled>a:focus,.pagination>.disabled>a:hover,.pagination>.disabled>span,.pagination>.disabled>span:focus,.pagination>.disabled>span:hover{color:#777;cursor:not-allowed;background-color:#fff;border-color:#ddd}.pagination-lg>li>a,.pagination-lg>li>span{padding:10px 16px;font-size:18px;line-height:1.3333333}.pagination-lg>li:first-child>a,.pagination-lg>li:first-child>span{border-top-left-radius:6px;border-bottom-left-radius:6px}.pagination-lg>li:last-child>a,.pagination-lg>li:last-child>span{border-top-right-radius:6px;border-bottom-right-radius:6px}.pagination-sm>li>a,.pagination-sm>li>span{padding:5px 10px;font-size:12px;line-height:1.5}.pagination-sm>li:first-child>a,.pagination-sm>li:first-child>span{border-top-left-radius:3px;border-bottom-left-radius:3px}.pagination-sm>li:last-child>a,.pagination-sm>li:last-child>span{border-top-right-radius:3px;border-bottom-right-radius:3px}.pager{padding-left:0;margin:20px 0;text-align:center;list-style:none}.pager li{display:inline}.pager li>a,.pager li>span{display:inline-block;padding:5px 14px;background-color:#fff;border:1px solid #ddd;border-radius:15px}.pager li>a:focus,.pager li>a:hover{text-decoration:none;background-color:#eee}.pager .next>a,.pager .next>span{float:right}.pager .previous>a,.pager .previous>span{float:left}.pager .disabled>a,.pager .disabled>a:focus,.pager .disabled>a:hover,.pager .disabled>span{color:#777;cursor:not-allowed;background-color:#fff}\r\n\r\n", ""]);
+exports.push([module.i, "\n.pagination{display:inline-block;padding-left:0;margin:20px 0;border-radius:4px}.pagination>li{display:inline}.pagination>li>a,.pagination>li>span{position:relative;float:left;padding:6px 12px;margin-left:-1px;line-height:1.42857143;color:#337ab7;text-decoration:none;background-color:#fff;border:1px solid #ddd}.pagination>li>a:focus,.pagination>li>a:hover,.pagination>li>span:focus,.pagination>li>span:hover{z-index:2;color:#23527c;background-color:#eee;border-color:#ddd}.pagination>li:first-child>a,.pagination>li:first-child>span{margin-left:0;border-top-left-radius:4px;border-bottom-left-radius:4px}.pagination>li:last-child>a,.pagination>li:last-child>span{border-top-right-radius:4px;border-bottom-right-radius:4px}.pagination>.active>a,.pagination>.active>a:focus,.pagination>.active>a:hover,.pagination>.active>span,.pagination>.active>span:focus,.pagination>.active>span:hover{z-index:3;color:#fff;cursor:default;background-color:#337ab7;border-color:#337ab7}.pagination>.disabled>a,.pagination>.disabled>a:focus,.pagination>.disabled>a:hover,.pagination>.disabled>span,.pagination>.disabled>span:focus,.pagination>.disabled>span:hover{color:#777;cursor:not-allowed;background-color:#fff;border-color:#ddd}.pagination-lg>li>a,.pagination-lg>li>span{padding:10px 16px;font-size:18px;line-height:1.3333333}.pagination-lg>li:first-child>a,.pagination-lg>li:first-child>span{border-top-left-radius:6px;border-bottom-left-radius:6px}.pagination-lg>li:last-child>a,.pagination-lg>li:last-child>span{border-top-right-radius:6px;border-bottom-right-radius:6px}.pagination-sm>li>a,.pagination-sm>li>span{padding:5px 10px;font-size:12px;line-height:1.5}.pagination-sm>li:first-child>a,.pagination-sm>li:first-child>span{border-top-left-radius:3px;border-bottom-left-radius:3px}.pagination-sm>li:last-child>a,.pagination-sm>li:last-child>span{border-top-right-radius:3px;border-bottom-right-radius:3px}.pager{padding-left:0;margin:20px 0;text-align:center;list-style:none}.pager li{display:inline}.pager li>a,.pager li>span{display:inline-block;padding:5px 14px;background-color:#fff;border:1px solid #ddd;border-radius:15px}.pager li>a:focus,.pager li>a:hover{text-decoration:none;background-color:#eee}.pager .next>a,.pager .next>span{float:right}.pager .previous>a,.pager .previous>span{float:left}.pager .disabled>a,.pager .disabled>a:focus,.pager .disabled>a:hover,.pager .disabled>span{color:#777;cursor:not-allowed;background-color:#fff}\n\n", ""]);
 
 // exports
 
@@ -17210,7 +16763,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.pagination{display:inline-block;padding-left:0;margin:20px 0;border-radius:4px}.pagination>li{display:inline}.pagination>li>a,.pagination>li>span{position:relative;float:left;padding:6px 12px;margin-left:-1px;line-height:1.42857143;color:#337ab7;text-decoration:none;background-color:#fff;border:1px solid #ddd}.pagination>li>a:focus,.pagination>li>a:hover,.pagination>li>span:focus,.pagination>li>span:hover{z-index:2;color:#23527c;background-color:#eee;border-color:#ddd}.pagination>li:first-child>a,.pagination>li:first-child>span{margin-left:0;border-top-left-radius:4px;border-bottom-left-radius:4px}.pagination>li:last-child>a,.pagination>li:last-child>span{border-top-right-radius:4px;border-bottom-right-radius:4px}.pagination>.active>a,.pagination>.active>a:focus,.pagination>.active>a:hover,.pagination>.active>span,.pagination>.active>span:focus,.pagination>.active>span:hover{z-index:3;color:#fff;cursor:default;background-color:#337ab7;border-color:#337ab7}.pagination>.disabled>a,.pagination>.disabled>a:focus,.pagination>.disabled>a:hover,.pagination>.disabled>span,.pagination>.disabled>span:focus,.pagination>.disabled>span:hover{color:#777;cursor:not-allowed;background-color:#fff;border-color:#ddd}.pagination-lg>li>a,.pagination-lg>li>span{padding:10px 16px;font-size:18px;line-height:1.3333333}.pagination-lg>li:first-child>a,.pagination-lg>li:first-child>span{border-top-left-radius:6px;border-bottom-left-radius:6px}.pagination-lg>li:last-child>a,.pagination-lg>li:last-child>span{border-top-right-radius:6px;border-bottom-right-radius:6px}.pagination-sm>li>a,.pagination-sm>li>span{padding:5px 10px;font-size:12px;line-height:1.5}.pagination-sm>li:first-child>a,.pagination-sm>li:first-child>span{border-top-left-radius:3px;border-bottom-left-radius:3px}.pagination-sm>li:last-child>a,.pagination-sm>li:last-child>span{border-top-right-radius:3px;border-bottom-right-radius:3px}.pager{padding-left:0;margin:20px 0;text-align:center;list-style:none}.pager li{display:inline}.pager li>a,.pager li>span{display:inline-block;padding:5px 14px;background-color:#fff;border:1px solid #ddd;border-radius:15px}.pager li>a:focus,.pager li>a:hover{text-decoration:none;background-color:#eee}.pager .next>a,.pager .next>span{float:right}.pager .previous>a,.pager .previous>span{float:left}.pager .disabled>a,.pager .disabled>a:focus,.pager .disabled>a:hover,.pager .disabled>span{color:#777;cursor:not-allowed;background-color:#fff}\r\n\r\n", ""]);
+exports.push([module.i, "\n.pagination{display:inline-block;padding-left:0;margin:20px 0;border-radius:4px}.pagination>li{display:inline}.pagination>li>a,.pagination>li>span{position:relative;float:left;padding:6px 12px;margin-left:-1px;line-height:1.42857143;color:#337ab7;text-decoration:none;background-color:#fff;border:1px solid #ddd}.pagination>li>a:focus,.pagination>li>a:hover,.pagination>li>span:focus,.pagination>li>span:hover{z-index:2;color:#23527c;background-color:#eee;border-color:#ddd}.pagination>li:first-child>a,.pagination>li:first-child>span{margin-left:0;border-top-left-radius:4px;border-bottom-left-radius:4px}.pagination>li:last-child>a,.pagination>li:last-child>span{border-top-right-radius:4px;border-bottom-right-radius:4px}.pagination>.active>a,.pagination>.active>a:focus,.pagination>.active>a:hover,.pagination>.active>span,.pagination>.active>span:focus,.pagination>.active>span:hover{z-index:3;color:#fff;cursor:default;background-color:#337ab7;border-color:#337ab7}.pagination>.disabled>a,.pagination>.disabled>a:focus,.pagination>.disabled>a:hover,.pagination>.disabled>span,.pagination>.disabled>span:focus,.pagination>.disabled>span:hover{color:#777;cursor:not-allowed;background-color:#fff;border-color:#ddd}.pagination-lg>li>a,.pagination-lg>li>span{padding:10px 16px;font-size:18px;line-height:1.3333333}.pagination-lg>li:first-child>a,.pagination-lg>li:first-child>span{border-top-left-radius:6px;border-bottom-left-radius:6px}.pagination-lg>li:last-child>a,.pagination-lg>li:last-child>span{border-top-right-radius:6px;border-bottom-right-radius:6px}.pagination-sm>li>a,.pagination-sm>li>span{padding:5px 10px;font-size:12px;line-height:1.5}.pagination-sm>li:first-child>a,.pagination-sm>li:first-child>span{border-top-left-radius:3px;border-bottom-left-radius:3px}.pagination-sm>li:last-child>a,.pagination-sm>li:last-child>span{border-top-right-radius:3px;border-bottom-right-radius:3px}.pager{padding-left:0;margin:20px 0;text-align:center;list-style:none}.pager li{display:inline}.pager li>a,.pager li>span{display:inline-block;padding:5px 14px;background-color:#fff;border:1px solid #ddd;border-radius:15px}.pager li>a:focus,.pager li>a:hover{text-decoration:none;background-color:#eee}.pager .next>a,.pager .next>span{float:right}.pager .previous>a,.pager .previous>span{float:left}.pager .disabled>a,.pager .disabled>a:focus,.pager .disabled>a:hover,.pager .disabled>span{color:#777;cursor:not-allowed;background-color:#fff}\n\n", ""]);
 
 // exports
 
@@ -17229,7 +16782,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.pagination{display:inline-block;padding-left:0;margin:20px 0;border-radius:4px}.pagination>li{display:inline}.pagination>li>a,.pagination>li>span{position:relative;float:left;padding:6px 12px;margin-left:-1px;line-height:1.42857143;color:#337ab7;text-decoration:none;background-color:#fff;border:1px solid #ddd}.pagination>li>a:focus,.pagination>li>a:hover,.pagination>li>span:focus,.pagination>li>span:hover{z-index:2;color:#23527c;background-color:#eee;border-color:#ddd}.pagination>li:first-child>a,.pagination>li:first-child>span{margin-left:0;border-top-left-radius:4px;border-bottom-left-radius:4px}.pagination>li:last-child>a,.pagination>li:last-child>span{border-top-right-radius:4px;border-bottom-right-radius:4px}.pagination>.active>a,.pagination>.active>a:focus,.pagination>.active>a:hover,.pagination>.active>span,.pagination>.active>span:focus,.pagination>.active>span:hover{z-index:3;color:#fff;cursor:default;background-color:#337ab7;border-color:#337ab7}.pagination>.disabled>a,.pagination>.disabled>a:focus,.pagination>.disabled>a:hover,.pagination>.disabled>span,.pagination>.disabled>span:focus,.pagination>.disabled>span:hover{color:#777;cursor:not-allowed;background-color:#fff;border-color:#ddd}.pagination-lg>li>a,.pagination-lg>li>span{padding:10px 16px;font-size:18px;line-height:1.3333333}.pagination-lg>li:first-child>a,.pagination-lg>li:first-child>span{border-top-left-radius:6px;border-bottom-left-radius:6px}.pagination-lg>li:last-child>a,.pagination-lg>li:last-child>span{border-top-right-radius:6px;border-bottom-right-radius:6px}.pagination-sm>li>a,.pagination-sm>li>span{padding:5px 10px;font-size:12px;line-height:1.5}.pagination-sm>li:first-child>a,.pagination-sm>li:first-child>span{border-top-left-radius:3px;border-bottom-left-radius:3px}.pagination-sm>li:last-child>a,.pagination-sm>li:last-child>span{border-top-right-radius:3px;border-bottom-right-radius:3px}.pager{padding-left:0;margin:20px 0;text-align:center;list-style:none}.pager li{display:inline}.pager li>a,.pager li>span{display:inline-block;padding:5px 14px;background-color:#fff;border:1px solid #ddd;border-radius:15px}.pager li>a:focus,.pager li>a:hover{text-decoration:none;background-color:#eee}.pager .next>a,.pager .next>span{float:right}.pager .previous>a,.pager .previous>span{float:left}.pager .disabled>a,.pager .disabled>a:focus,.pager .disabled>a:hover,.pager .disabled>span{color:#777;cursor:not-allowed;background-color:#fff}\r\n\r\n", ""]);
+exports.push([module.i, "\n.pagination{display:inline-block;padding-left:0;margin:20px 0;border-radius:4px}.pagination>li{display:inline}.pagination>li>a,.pagination>li>span{position:relative;float:left;padding:6px 12px;margin-left:-1px;line-height:1.42857143;color:#337ab7;text-decoration:none;background-color:#fff;border:1px solid #ddd}.pagination>li>a:focus,.pagination>li>a:hover,.pagination>li>span:focus,.pagination>li>span:hover{z-index:2;color:#23527c;background-color:#eee;border-color:#ddd}.pagination>li:first-child>a,.pagination>li:first-child>span{margin-left:0;border-top-left-radius:4px;border-bottom-left-radius:4px}.pagination>li:last-child>a,.pagination>li:last-child>span{border-top-right-radius:4px;border-bottom-right-radius:4px}.pagination>.active>a,.pagination>.active>a:focus,.pagination>.active>a:hover,.pagination>.active>span,.pagination>.active>span:focus,.pagination>.active>span:hover{z-index:3;color:#fff;cursor:default;background-color:#337ab7;border-color:#337ab7}.pagination>.disabled>a,.pagination>.disabled>a:focus,.pagination>.disabled>a:hover,.pagination>.disabled>span,.pagination>.disabled>span:focus,.pagination>.disabled>span:hover{color:#777;cursor:not-allowed;background-color:#fff;border-color:#ddd}.pagination-lg>li>a,.pagination-lg>li>span{padding:10px 16px;font-size:18px;line-height:1.3333333}.pagination-lg>li:first-child>a,.pagination-lg>li:first-child>span{border-top-left-radius:6px;border-bottom-left-radius:6px}.pagination-lg>li:last-child>a,.pagination-lg>li:last-child>span{border-top-right-radius:6px;border-bottom-right-radius:6px}.pagination-sm>li>a,.pagination-sm>li>span{padding:5px 10px;font-size:12px;line-height:1.5}.pagination-sm>li:first-child>a,.pagination-sm>li:first-child>span{border-top-left-radius:3px;border-bottom-left-radius:3px}.pagination-sm>li:last-child>a,.pagination-sm>li:last-child>span{border-top-right-radius:3px;border-bottom-right-radius:3px}.pager{padding-left:0;margin:20px 0;text-align:center;list-style:none}.pager li{display:inline}.pager li>a,.pager li>span{display:inline-block;padding:5px 14px;background-color:#fff;border:1px solid #ddd;border-radius:15px}.pager li>a:focus,.pager li>a:hover{text-decoration:none;background-color:#eee}.pager .next>a,.pager .next>span{float:right}.pager .previous>a,.pager .previous>span{float:left}.pager .disabled>a,.pager .disabled>a:focus,.pager .disabled>a:hover,.pager .disabled>span{color:#777;cursor:not-allowed;background-color:#fff}\n\n", ""]);
 
 // exports
 
@@ -17248,7 +16801,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.pagination{display:inline-block;padding-left:0;margin:20px 0;border-radius:4px}.pagination>li{display:inline}.pagination>li>a,.pagination>li>span{position:relative;float:left;padding:6px 12px;margin-left:-1px;line-height:1.42857143;color:#337ab7;text-decoration:none;background-color:#fff;border:1px solid #ddd}.pagination>li>a:focus,.pagination>li>a:hover,.pagination>li>span:focus,.pagination>li>span:hover{z-index:2;color:#23527c;background-color:#eee;border-color:#ddd}.pagination>li:first-child>a,.pagination>li:first-child>span{margin-left:0;border-top-left-radius:4px;border-bottom-left-radius:4px}.pagination>li:last-child>a,.pagination>li:last-child>span{border-top-right-radius:4px;border-bottom-right-radius:4px}.pagination>.active>a,.pagination>.active>a:focus,.pagination>.active>a:hover,.pagination>.active>span,.pagination>.active>span:focus,.pagination>.active>span:hover{z-index:3;color:#fff;cursor:default;background-color:#337ab7;border-color:#337ab7}.pagination>.disabled>a,.pagination>.disabled>a:focus,.pagination>.disabled>a:hover,.pagination>.disabled>span,.pagination>.disabled>span:focus,.pagination>.disabled>span:hover{color:#777;cursor:not-allowed;background-color:#fff;border-color:#ddd}.pagination-lg>li>a,.pagination-lg>li>span{padding:10px 16px;font-size:18px;line-height:1.3333333}.pagination-lg>li:first-child>a,.pagination-lg>li:first-child>span{border-top-left-radius:6px;border-bottom-left-radius:6px}.pagination-lg>li:last-child>a,.pagination-lg>li:last-child>span{border-top-right-radius:6px;border-bottom-right-radius:6px}.pagination-sm>li>a,.pagination-sm>li>span{padding:5px 10px;font-size:12px;line-height:1.5}.pagination-sm>li:first-child>a,.pagination-sm>li:first-child>span{border-top-left-radius:3px;border-bottom-left-radius:3px}.pagination-sm>li:last-child>a,.pagination-sm>li:last-child>span{border-top-right-radius:3px;border-bottom-right-radius:3px}.pager{padding-left:0;margin:20px 0;text-align:center;list-style:none}.pager li{display:inline}.pager li>a,.pager li>span{display:inline-block;padding:5px 14px;background-color:#fff;border:1px solid #ddd;border-radius:15px}.pager li>a:focus,.pager li>a:hover{text-decoration:none;background-color:#eee}.pager .next>a,.pager .next>span{float:right}.pager .previous>a,.pager .previous>span{float:left}.pager .disabled>a,.pager .disabled>a:focus,.pager .disabled>a:hover,.pager .disabled>span{color:#777;cursor:not-allowed;background-color:#fff}\r\n\r\n", ""]);
+exports.push([module.i, "\n.pagination{display:inline-block;padding-left:0;margin:20px 0;border-radius:4px}.pagination>li{display:inline}.pagination>li>a,.pagination>li>span{position:relative;float:left;padding:6px 12px;margin-left:-1px;line-height:1.42857143;color:#337ab7;text-decoration:none;background-color:#fff;border:1px solid #ddd}.pagination>li>a:focus,.pagination>li>a:hover,.pagination>li>span:focus,.pagination>li>span:hover{z-index:2;color:#23527c;background-color:#eee;border-color:#ddd}.pagination>li:first-child>a,.pagination>li:first-child>span{margin-left:0;border-top-left-radius:4px;border-bottom-left-radius:4px}.pagination>li:last-child>a,.pagination>li:last-child>span{border-top-right-radius:4px;border-bottom-right-radius:4px}.pagination>.active>a,.pagination>.active>a:focus,.pagination>.active>a:hover,.pagination>.active>span,.pagination>.active>span:focus,.pagination>.active>span:hover{z-index:3;color:#fff;cursor:default;background-color:#337ab7;border-color:#337ab7}.pagination>.disabled>a,.pagination>.disabled>a:focus,.pagination>.disabled>a:hover,.pagination>.disabled>span,.pagination>.disabled>span:focus,.pagination>.disabled>span:hover{color:#777;cursor:not-allowed;background-color:#fff;border-color:#ddd}.pagination-lg>li>a,.pagination-lg>li>span{padding:10px 16px;font-size:18px;line-height:1.3333333}.pagination-lg>li:first-child>a,.pagination-lg>li:first-child>span{border-top-left-radius:6px;border-bottom-left-radius:6px}.pagination-lg>li:last-child>a,.pagination-lg>li:last-child>span{border-top-right-radius:6px;border-bottom-right-radius:6px}.pagination-sm>li>a,.pagination-sm>li>span{padding:5px 10px;font-size:12px;line-height:1.5}.pagination-sm>li:first-child>a,.pagination-sm>li:first-child>span{border-top-left-radius:3px;border-bottom-left-radius:3px}.pagination-sm>li:last-child>a,.pagination-sm>li:last-child>span{border-top-right-radius:3px;border-bottom-right-radius:3px}.pager{padding-left:0;margin:20px 0;text-align:center;list-style:none}.pager li{display:inline}.pager li>a,.pager li>span{display:inline-block;padding:5px 14px;background-color:#fff;border:1px solid #ddd;border-radius:15px}.pager li>a:focus,.pager li>a:hover{text-decoration:none;background-color:#eee}.pager .next>a,.pager .next>span{float:right}.pager .previous>a,.pager .previous>span{float:left}.pager .disabled>a,.pager .disabled>a:focus,.pager .disabled>a:hover,.pager .disabled>span{color:#777;cursor:not-allowed;background-color:#fff}\n\n", ""]);
 
 // exports
 
@@ -17267,7 +16820,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.pagination{display:inline-block;padding-left:0;margin:20px 0;border-radius:4px}.pagination>li{display:inline}.pagination>li>a,.pagination>li>span{position:relative;float:left;padding:6px 12px;margin-left:-1px;line-height:1.42857143;color:#337ab7;text-decoration:none;background-color:#fff;border:1px solid #ddd}.pagination>li>a:focus,.pagination>li>a:hover,.pagination>li>span:focus,.pagination>li>span:hover{z-index:2;color:#23527c;background-color:#eee;border-color:#ddd}.pagination>li:first-child>a,.pagination>li:first-child>span{margin-left:0;border-top-left-radius:4px;border-bottom-left-radius:4px}.pagination>li:last-child>a,.pagination>li:last-child>span{border-top-right-radius:4px;border-bottom-right-radius:4px}.pagination>.active>a,.pagination>.active>a:focus,.pagination>.active>a:hover,.pagination>.active>span,.pagination>.active>span:focus,.pagination>.active>span:hover{z-index:3;color:#fff;cursor:default;background-color:#337ab7;border-color:#337ab7}.pagination>.disabled>a,.pagination>.disabled>a:focus,.pagination>.disabled>a:hover,.pagination>.disabled>span,.pagination>.disabled>span:focus,.pagination>.disabled>span:hover{color:#777;cursor:not-allowed;background-color:#fff;border-color:#ddd}.pagination-lg>li>a,.pagination-lg>li>span{padding:10px 16px;font-size:18px;line-height:1.3333333}.pagination-lg>li:first-child>a,.pagination-lg>li:first-child>span{border-top-left-radius:6px;border-bottom-left-radius:6px}.pagination-lg>li:last-child>a,.pagination-lg>li:last-child>span{border-top-right-radius:6px;border-bottom-right-radius:6px}.pagination-sm>li>a,.pagination-sm>li>span{padding:5px 10px;font-size:12px;line-height:1.5}.pagination-sm>li:first-child>a,.pagination-sm>li:first-child>span{border-top-left-radius:3px;border-bottom-left-radius:3px}.pagination-sm>li:last-child>a,.pagination-sm>li:last-child>span{border-top-right-radius:3px;border-bottom-right-radius:3px}.pager{padding-left:0;margin:20px 0;text-align:center;list-style:none}.pager li{display:inline}.pager li>a,.pager li>span{display:inline-block;padding:5px 14px;background-color:#fff;border:1px solid #ddd;border-radius:15px}.pager li>a:focus,.pager li>a:hover{text-decoration:none;background-color:#eee}.pager .next>a,.pager .next>span{float:right}.pager .previous>a,.pager .previous>span{float:left}.pager .disabled>a,.pager .disabled>a:focus,.pager .disabled>a:hover,.pager .disabled>span{color:#777;cursor:not-allowed;background-color:#fff}\r\n\r\n", ""]);
+exports.push([module.i, "\n.pagination{display:inline-block;padding-left:0;margin:20px 0;border-radius:4px}.pagination>li{display:inline}.pagination>li>a,.pagination>li>span{position:relative;float:left;padding:6px 12px;margin-left:-1px;line-height:1.42857143;color:#337ab7;text-decoration:none;background-color:#fff;border:1px solid #ddd}.pagination>li>a:focus,.pagination>li>a:hover,.pagination>li>span:focus,.pagination>li>span:hover{z-index:2;color:#23527c;background-color:#eee;border-color:#ddd}.pagination>li:first-child>a,.pagination>li:first-child>span{margin-left:0;border-top-left-radius:4px;border-bottom-left-radius:4px}.pagination>li:last-child>a,.pagination>li:last-child>span{border-top-right-radius:4px;border-bottom-right-radius:4px}.pagination>.active>a,.pagination>.active>a:focus,.pagination>.active>a:hover,.pagination>.active>span,.pagination>.active>span:focus,.pagination>.active>span:hover{z-index:3;color:#fff;cursor:default;background-color:#337ab7;border-color:#337ab7}.pagination>.disabled>a,.pagination>.disabled>a:focus,.pagination>.disabled>a:hover,.pagination>.disabled>span,.pagination>.disabled>span:focus,.pagination>.disabled>span:hover{color:#777;cursor:not-allowed;background-color:#fff;border-color:#ddd}.pagination-lg>li>a,.pagination-lg>li>span{padding:10px 16px;font-size:18px;line-height:1.3333333}.pagination-lg>li:first-child>a,.pagination-lg>li:first-child>span{border-top-left-radius:6px;border-bottom-left-radius:6px}.pagination-lg>li:last-child>a,.pagination-lg>li:last-child>span{border-top-right-radius:6px;border-bottom-right-radius:6px}.pagination-sm>li>a,.pagination-sm>li>span{padding:5px 10px;font-size:12px;line-height:1.5}.pagination-sm>li:first-child>a,.pagination-sm>li:first-child>span{border-top-left-radius:3px;border-bottom-left-radius:3px}.pagination-sm>li:last-child>a,.pagination-sm>li:last-child>span{border-top-right-radius:3px;border-bottom-right-radius:3px}.pager{padding-left:0;margin:20px 0;text-align:center;list-style:none}.pager li{display:inline}.pager li>a,.pager li>span{display:inline-block;padding:5px 14px;background-color:#fff;border:1px solid #ddd;border-radius:15px}.pager li>a:focus,.pager li>a:hover{text-decoration:none;background-color:#eee}.pager .next>a,.pager .next>span{float:right}.pager .previous>a,.pager .previous>span{float:left}.pager .disabled>a,.pager .disabled>a:focus,.pager .disabled>a:hover,.pager .disabled>span{color:#777;cursor:not-allowed;background-color:#fff}\n\n", ""]);
 
 // exports
 
@@ -39117,7 +38670,17 @@ var render = function () {
                     attrs: { id: "datatables-buttons" },
                   },
                   [
-                    _vm._m(1),
+                    _c("thead", [
+                      _c("tr", [
+                        _c("th", [_vm._v("Contribution Amount")]),
+                        _vm._v(" "),
+                        _vm.postBody.FundTypeID
+                          ? _c("th", [_vm._v("Loan Amount")])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Amount Due")]),
+                      ]),
+                    ]),
                     _vm._v(" "),
                     _c(
                       "tbody",
@@ -39126,6 +38689,12 @@ var render = function () {
                           discharges.totalContribution
                             ? _c("td", [
                                 _vm._v(_vm._s(discharges.totalContribution)),
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          discharges.amountReceived
+                            ? _c("td", [
+                                _vm._v(_vm._s(discharges.amountReceived)),
                               ])
                             : _vm._e(),
                           _vm._v(" "),
@@ -39477,18 +39046,6 @@ var staticRenderFns = [
       },
       [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("�")])]
     )
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("Contribution Amount")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Amount Due")]),
-      ]),
-    ])
   },
 ]
 render._withStripped = true
@@ -41049,7 +40606,7 @@ var render = function () {
                       },
                     ],
                     staticClass: "form-control",
-                    attrs: { name: "IssuanceBankId", required: "" },
+                    attrs: { name: "IssuanceBankId" },
                     on: {
                       change: function ($event) {
                         var $$selectedVal = Array.prototype.filter
@@ -41070,115 +40627,14 @@ var render = function () {
                       },
                     },
                   },
-                  _vm._l(_vm.chartofAccountList, function (coa) {
+                  _vm._l(_vm.bankList, function (bk) {
                     return _c(
                       "option",
-                      { key: coa.id, domProps: { value: coa.id } },
-                      [_vm._v(" " + _vm._s(coa.description) + " ")]
+                      { key: bk.id, domProps: { value: bk.id } },
+                      [_vm._v(_vm._s(bk.bankname))]
                     )
                   }),
                   0
-                ),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-12 col-xl-3" }, [
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { staticClass: "form-label" }, [_vm._v("Stock")]),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.postBody.StockId,
-                        expression: "postBody.StockId",
-                      },
-                    ],
-                    staticClass: "form-control",
-                    attrs: { name: "StockId", required: "" },
-                    on: {
-                      change: function ($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function (o) {
-                            return o.selected
-                          })
-                          .map(function (o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.postBody,
-                          "StockId",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      },
-                    },
-                  },
-                  _vm._l(_vm.StockList, function (coa) {
-                    return _c(
-                      "option",
-                      { key: coa.id, domProps: { value: coa.id } },
-                      [_vm._v(" " + _vm._s(coa.description) + " ")]
-                    )
-                  }),
-                  0
-                ),
-              ]),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-12 col-xl-3" }, [
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { staticClass: "form-label" }, [
-                  _vm._v("Transaction Type"),
-                ]),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.postBody.transactionType,
-                        expression: "postBody.transactionType",
-                      },
-                    ],
-                    staticClass: "form-control",
-                    attrs: { name: "transactionType", required: "" },
-                    on: {
-                      change: function ($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function (o) {
-                            return o.selected
-                          })
-                          .map(function (o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.postBody,
-                          "transactionType",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      },
-                    },
-                  },
-                  [
-                    _c("option", { attrs: { value: "Buy" } }, [_vm._v("Buy")]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "Sell" } }, [
-                      _vm._v("Sell"),
-                    ]),
-                  ]
                 ),
               ]),
             ]),
@@ -41205,6 +40661,36 @@ var render = function () {
                         return
                       }
                       _vm.$set(_vm.postBody, "voucher", $event.target.value)
+                    },
+                  },
+                }),
+              ]),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-12 col-xl-3" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { staticClass: "form-label" }, [_vm._v("Remark")]),
+                _vm._v(" "),
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.postBody.description,
+                      expression: "postBody.description",
+                    },
+                  ],
+                  staticClass: "form-control",
+                  attrs: { name: "description", placeholder: "" },
+                  domProps: { value: _vm.postBody.description },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.postBody, "description", $event.target.value)
                     },
                   },
                 }),
@@ -41261,36 +40747,6 @@ var render = function () {
                         return
                       }
                       _vm.$set(_vm.postBody, "unit", $event.target.value)
-                    },
-                  },
-                }),
-              ]),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-12 col-x1-6" }, [
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { staticClass: "form-label" }, [_vm._v("Remark")]),
-                _vm._v(" "),
-                _c("textarea", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.postBody.description,
-                      expression: "postBody.description",
-                    },
-                  ],
-                  staticClass: "form-control",
-                  attrs: { name: "description", placeholder: "" },
-                  domProps: { value: _vm.postBody.description },
-                  on: {
-                    input: function ($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.postBody, "description", $event.target.value)
                     },
                   },
                 }),
@@ -41433,7 +40889,7 @@ var render = function () {
                       },
                     ],
                     staticClass: "form-control",
-                    attrs: { name: "id", required: "" },
+                    attrs: { name: "IssuanceBankId" },
                     on: {
                       change: function ($event) {
                         var $$selectedVal = Array.prototype.filter
@@ -41454,11 +40910,11 @@ var render = function () {
                       },
                     },
                   },
-                  _vm._l(_vm.chartofAccountList, function (coa) {
+                  _vm._l(_vm.bankList, function (bk) {
                     return _c(
                       "option",
-                      { key: coa.id, domProps: { value: coa.id } },
-                      [_vm._v(" " + _vm._s(coa.description) + " ")]
+                      { key: bk.id, domProps: { value: bk.id } },
+                      [_vm._v(_vm._s(bk.bankname))]
                     )
                   }),
                   0
@@ -41766,48 +41222,50 @@ var render = function () {
                     ])
                   : _vm._e(),
                 _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
+                _vm.readonly
+                  ? _c(
+                      "select",
                       {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.postBody.receivingbankid,
-                        expression: "postBody.receivingbankid",
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.postBody.receivingbankid,
+                            expression: "postBody.receivingbankid",
+                          },
+                        ],
+                        staticClass: "form-control",
+                        attrs: { name: "receivingbankid" },
+                        on: {
+                          change: function ($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function (o) {
+                                return o.selected
+                              })
+                              .map(function (o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.postBody,
+                              "receivingbankid",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          },
+                        },
                       },
-                    ],
-                    staticClass: "form-control",
-                    attrs: { name: "id", required: "" },
-                    on: {
-                      change: function ($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function (o) {
-                            return o.selected
-                          })
-                          .map(function (o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.postBody,
-                          "receivingbankid",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
+                      _vm._l(_vm.bankList, function (bk) {
+                        return _c(
+                          "option",
+                          { key: bk.id, domProps: { value: bk.id } },
+                          [_vm._v(_vm._s(bk.bankname))]
                         )
-                      },
-                    },
-                  },
-                  _vm._l(_vm.chartofAccountList, function (coa) {
-                    return _c(
-                      "option",
-                      { key: coa.id, domProps: { value: coa.id } },
-                      [_vm._v(" " + _vm._s(coa.description) + " ")]
+                      }),
+                      0
                     )
-                  }),
-                  0
-                ),
+                  : _vm._e(),
               ]),
             ]),
           ]),
@@ -41998,252 +41456,6 @@ var render = function () {
               return _c("tr", [
                 _c("td", [_vm._v(_vm._s(fundrate.company))]),
                 _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(fundrate.stockName))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(fundrate.issuancebank))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(fundrate.voucher))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(fundrate.description))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(fundrate.amount))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(fundrate.date))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(fundrate.unit))]),
-                _vm._v(" "),
-                _c("td", [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-submit btn-primary",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function ($event) {
-                          return _vm.processRetrieve(fundrate)
-                        },
-                      },
-                    },
-                    [_vm._v("Edit")]
-                  ),
-                ]),
-              ])
-            }),
-            0
-          ),
-        ]
-      ),
-    ]),
-  ])
-}
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("Company")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Stock Name")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Registra")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Voucher")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Description")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Amount")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Date")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Unit")]),
-        _vm._v(" "),
-        _c("th"),
-      ]),
-    ])
-  },
-]
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/InvestRegister/ViewInvestmentCapitalReport.vue?vue&type=template&id=36569a69&":
-/*!********************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/InvestRegister/ViewInvestmentCapitalReport.vue?vue&type=template&id=36569a69& ***!
-  \********************************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function () {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "card-body" }, [
-      _c("div", { staticClass: "row" }, [
-        _c(
-          "div",
-          { staticClass: "col-12 col-md-4" },
-          [
-            _c("label", [_vm._v("Start Date")]),
-            _vm._v(" "),
-            _c("vuejsDatepicker", {
-              attrs: { "input-class": "form-control", name: "startDate" },
-              model: {
-                value: _vm.startDate,
-                callback: function ($$v) {
-                  _vm.startDate = $$v
-                },
-                expression: "startDate",
-              },
-            }),
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "col-12 col-md-4" },
-          [
-            _c("label", [_vm._v("End Date")]),
-            _vm._v(" "),
-            _c("vuejsDatepicker", {
-              attrs: { "input-class": "form-control", name: "endDate" },
-              model: {
-                value: _vm.endDate,
-                callback: function ($$v) {
-                  _vm.endDate = $$v
-                },
-                expression: "endDate",
-              },
-            }),
-          ],
-          1
-        ),
-      ]),
-      _vm._v(" "),
-      _c(
-        "table",
-        {
-          staticClass: "table table-striped",
-          staticStyle: { width: "100%" },
-          attrs: { id: "datatables-buttons" },
-        },
-        [
-          _vm._m(0),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.InvestList, function (fundrate) {
-              return _c("tr", [
-                _c("td", [_vm._v(_vm._s(fundrate.company))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(fundrate.issuancebank))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(fundrate.voucher))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(fundrate.description))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(fundrate.amount))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(fundrate.date))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(fundrate.unit))]),
-                _vm._v(" "),
-                _c("td", [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-submit btn-primary",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function ($event) {
-                          return _vm.processRetrieve(fundrate)
-                        },
-                      },
-                    },
-                    [_vm._v("Edit")]
-                  ),
-                ]),
-              ])
-            }),
-            0
-          ),
-        ]
-      ),
-    ]),
-  ])
-}
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("Company")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Registra")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Voucher")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Description")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Amount")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Date")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Unit")]),
-        _vm._v(" "),
-        _c("th"),
-      ]),
-    ])
-  },
-]
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/InvestRegister/ViewInvestmentReport.vue?vue&type=template&id=5cf9da57&":
-/*!*************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/InvestRegister/ViewInvestmentReport.vue?vue&type=template&id=5cf9da57& ***!
-  \*************************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function () {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "card-body" }, [
-      _c(
-        "table",
-        {
-          staticClass: "table table-striped",
-          staticStyle: { width: "100%" },
-          attrs: { id: "datatables-buttons" },
-        },
-        [
-          _vm._m(0),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.InvestList, function (fundrate) {
-              return _c("tr", [
                 _c("td", [_vm._v(_vm._s(fundrate.issuancebank))]),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(fundrate.voucher))]),
@@ -42254,17 +41466,7 @@ var render = function () {
                 _vm._v(" "),
                 _c("td", [_vm._v(" " + _vm._s(fundrate.date))]),
                 _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(fundrate.dueDate))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(" " + _vm._s(fundrate.investmentType))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(" " + _vm._s(fundrate.maturedamt))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(" " + _vm._s(fundrate.maturingdate))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(" " + _vm._s(fundrate.interest))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(" " + _vm._s(fundrate.tenure))]),
+                _c("td", [_vm._v(" " + _vm._s(fundrate.unit))]),
                 _vm._v(" "),
                 _c("td", [
                   _c(
@@ -42297,7 +41499,9 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", [_vm._v("Issuance Bank")]),
+        _c("th", [_vm._v("Company")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Registra")]),
         _vm._v(" "),
         _c("th", [_vm._v("Voucher")]),
         _vm._v(" "),
@@ -42307,17 +41511,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Date")]),
         _vm._v(" "),
-        _c("th", [_vm._v("DueDate")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("InvestmentType")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Matured Amt")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Matured Date")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("interest")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Tenure")]),
+        _c("th", [_vm._v("Unit")]),
         _vm._v(" "),
         _c("th"),
       ]),
@@ -53765,14 +52959,6 @@ var staticRenderFns = [
           [_vm._v("Personal Details")]
         ),
       ]),
-      _vm._v(" "),
-      _c("li", { staticClass: "nav-item" }, [
-        _c(
-          "a",
-          { staticClass: "nav-link", attrs: { href: "#validation-step-2" } },
-          [_vm._v("Beneficiary")]
-        ),
-      ]),
     ])
   },
 ]
@@ -55612,244 +54798,6 @@ var staticRenderFns = [
         _c("th", [_vm._v("School Type")]),
         _vm._v(" "),
         _c("th", [_vm._v("Class")]),
-      ]),
-    ])
-  },
-]
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/StockTable/CreateStockComponent.vue?vue&type=template&id=42c5382e&":
-/*!*********************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/StockTable/CreateStockComponent.vue?vue&type=template&id=42c5382e& ***!
-  \*********************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function () {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", [
-    _vm.errors
-      ? _c("div", { staticClass: "has-error" }, [
-          _vm._v(" " + _vm._s([_vm.errors])),
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.responseMessage
-      ? _c("div", { staticClass: "has-error" }, [
-          _vm._v(" " + _vm._s(_vm.responseMessage)),
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _c(
-      "form",
-      {
-        attrs: { action: "/BalanceSheet/CreateFinancial", method: "post" },
-        on: { submit: _vm.checkForm },
-      },
-      [
-        _c("div", { staticClass: "card-body" }, [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-12 col-xl-6" }, [
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { staticClass: "form-label" }, [
-                  _vm._v("Stock Name"),
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.postBody.stockname,
-                      expression: "postBody.stockname",
-                    },
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    type: "text",
-                    name: "stockname",
-                    required: "",
-                    readonly: _vm.submitorUpdate == "Update",
-                  },
-                  domProps: { value: _vm.postBody.stockname },
-                  on: {
-                    input: function ($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.postBody, "stockname", $event.target.value)
-                    },
-                  },
-                }),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-12 col-xl-6" }, [
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { staticClass: "form-label" }, [
-                  _vm._v("Description"),
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.postBody.description,
-                      expression: "postBody.description",
-                    },
-                  ],
-                  staticClass: "form-control",
-                  attrs: { name: "description", placeholder: "Description" },
-                  domProps: { value: _vm.postBody.description },
-                  on: {
-                    input: function ($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.postBody, "description", $event.target.value)
-                    },
-                  },
-                }),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-12 " }, [
-              _vm.canProcess
-                ? _c(
-                    "div",
-                    {
-                      staticClass: "btn-group mr-2 sw-btn-group-extra",
-                      attrs: { role: "group" },
-                    },
-                    [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-submit btn-primary",
-                          attrs: { type: "submit" },
-                          on: { click: _vm.checkForm },
-                        },
-                        [_vm._v(_vm._s(_vm.submitorUpdate))]
-                      ),
-                    ]
-                  )
-                : _vm._e(),
-            ]),
-          ]),
-        ]),
-      ]
-    ),
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/StockTable/ViewStockComponent.vue?vue&type=template&id=2e939a57&":
-/*!*******************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./wwwroot/Vue/components/StockTable/ViewStockComponent.vue?vue&type=template&id=2e939a57& ***!
-  \*******************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function () {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "card-body" }, [
-      _vm.responseMessage
-        ? _c("div", { staticClass: "has-error" }, [
-            _vm._v(" " + _vm._s(_vm.responseMessage)),
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      _c(
-        "table",
-        {
-          staticClass: "table table-striped",
-          staticStyle: { width: "100%" },
-          attrs: { id: "datatables-buttons" },
-        },
-        [
-          _vm._m(0),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.stockList, function (stock) {
-              return _c("tr", [
-                _c("td", [_vm._v(_vm._s(stock.stockname))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(stock.description))]),
-                _vm._v(" "),
-                _c("td", [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-submit btn-primary",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function ($event) {
-                          return _vm.processRetrieve(stock)
-                        },
-                      },
-                    },
-                    [_vm._v("Edit")]
-                  ),
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-submit btn-primary",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function ($event) {
-                          return _vm.processDelete(stock.id)
-                        },
-                      },
-                    },
-                    [_vm._v("Delete")]
-                  ),
-                ]),
-              ])
-            }),
-            0
-          ),
-        ]
-      ),
-    ]),
-  ])
-}
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("Name")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Description")]),
       ]),
     ])
   },
@@ -74667,8 +73615,6 @@ var map = {
 	"./components/InvestRegister/CreateInvestment.vue": "./wwwroot/Vue/components/InvestRegister/CreateInvestment.vue",
 	"./components/InvestRegister/ViewInvestment.vue": "./wwwroot/Vue/components/InvestRegister/ViewInvestment.vue",
 	"./components/InvestRegister/ViewInvestmentCapital.vue": "./wwwroot/Vue/components/InvestRegister/ViewInvestmentCapital.vue",
-	"./components/InvestRegister/ViewInvestmentCapitalReport.vue": "./wwwroot/Vue/components/InvestRegister/ViewInvestmentCapitalReport.vue",
-	"./components/InvestRegister/ViewInvestmentReport.vue": "./wwwroot/Vue/components/InvestRegister/ViewInvestmentReport.vue",
 	"./components/LoanDisc/CreateLoanDiscComponent.vue": "./wwwroot/Vue/components/LoanDisc/CreateLoanDiscComponent.vue",
 	"./components/LoanPerRank/CreateLoanPerrank.vue": "./wwwroot/Vue/components/LoanPerRank/CreateLoanPerrank.vue",
 	"./components/LoanPerRank/ViewLoanPerrank.vue": "./wwwroot/Vue/components/LoanPerRank/ViewLoanPerrank.vue",
@@ -74714,8 +73660,6 @@ var map = {
 	"./components/SchoolRecord/ViewSchoolRecord.vue": "./wwwroot/Vue/components/SchoolRecord/ViewSchoolRecord.vue",
 	"./components/SchoolReports/ClaimAndPaymentReport.vue": "./wwwroot/Vue/components/SchoolReports/ClaimAndPaymentReport.vue",
 	"./components/SchoolReports/StudentNominalRole.vue": "./wwwroot/Vue/components/SchoolReports/StudentNominalRole.vue",
-	"./components/StockTable/CreateStockComponent.vue": "./wwwroot/Vue/components/StockTable/CreateStockComponent.vue",
-	"./components/StockTable/ViewStockComponent.vue": "./wwwroot/Vue/components/StockTable/ViewStockComponent.vue",
 	"./components/StudentClaim/ClaimHistory.vue": "./wwwroot/Vue/components/StudentClaim/ClaimHistory.vue",
 	"./components/StudentClaim/ClaimPaymentReport.vue": "./wwwroot/Vue/components/StudentClaim/ClaimPaymentReport.vue",
 	"./components/StudentClaim/ClaimReimbursment.vue": "./wwwroot/Vue/components/StudentClaim/ClaimReimbursment.vue",
@@ -76872,144 +75816,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewInvestmentCapital_vue_vue_type_template_id_d5d0f656___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewInvestmentCapital_vue_vue_type_template_id_d5d0f656___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./wwwroot/Vue/components/InvestRegister/ViewInvestmentCapitalReport.vue":
-/*!*******************************************************************************!*\
-  !*** ./wwwroot/Vue/components/InvestRegister/ViewInvestmentCapitalReport.vue ***!
-  \*******************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _ViewInvestmentCapitalReport_vue_vue_type_template_id_36569a69___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ViewInvestmentCapitalReport.vue?vue&type=template&id=36569a69& */ "./wwwroot/Vue/components/InvestRegister/ViewInvestmentCapitalReport.vue?vue&type=template&id=36569a69&");
-/* harmony import */ var _ViewInvestmentCapitalReport_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ViewInvestmentCapitalReport.vue?vue&type=script&lang=js& */ "./wwwroot/Vue/components/InvestRegister/ViewInvestmentCapitalReport.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _ViewInvestmentCapitalReport_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _ViewInvestmentCapitalReport_vue_vue_type_template_id_36569a69___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _ViewInvestmentCapitalReport_vue_vue_type_template_id_36569a69___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "wwwroot/Vue/components/InvestRegister/ViewInvestmentCapitalReport.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./wwwroot/Vue/components/InvestRegister/ViewInvestmentCapitalReport.vue?vue&type=script&lang=js&":
-/*!********************************************************************************************************!*\
-  !*** ./wwwroot/Vue/components/InvestRegister/ViewInvestmentCapitalReport.vue?vue&type=script&lang=js& ***!
-  \********************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewInvestmentCapitalReport_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ViewInvestmentCapitalReport.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/InvestRegister/ViewInvestmentCapitalReport.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewInvestmentCapitalReport_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./wwwroot/Vue/components/InvestRegister/ViewInvestmentCapitalReport.vue?vue&type=template&id=36569a69&":
-/*!**************************************************************************************************************!*\
-  !*** ./wwwroot/Vue/components/InvestRegister/ViewInvestmentCapitalReport.vue?vue&type=template&id=36569a69& ***!
-  \**************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewInvestmentCapitalReport_vue_vue_type_template_id_36569a69___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./ViewInvestmentCapitalReport.vue?vue&type=template&id=36569a69& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/InvestRegister/ViewInvestmentCapitalReport.vue?vue&type=template&id=36569a69&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewInvestmentCapitalReport_vue_vue_type_template_id_36569a69___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewInvestmentCapitalReport_vue_vue_type_template_id_36569a69___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./wwwroot/Vue/components/InvestRegister/ViewInvestmentReport.vue":
-/*!************************************************************************!*\
-  !*** ./wwwroot/Vue/components/InvestRegister/ViewInvestmentReport.vue ***!
-  \************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _ViewInvestmentReport_vue_vue_type_template_id_5cf9da57___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ViewInvestmentReport.vue?vue&type=template&id=5cf9da57& */ "./wwwroot/Vue/components/InvestRegister/ViewInvestmentReport.vue?vue&type=template&id=5cf9da57&");
-/* harmony import */ var _ViewInvestmentReport_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ViewInvestmentReport.vue?vue&type=script&lang=js& */ "./wwwroot/Vue/components/InvestRegister/ViewInvestmentReport.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _ViewInvestmentReport_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _ViewInvestmentReport_vue_vue_type_template_id_5cf9da57___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _ViewInvestmentReport_vue_vue_type_template_id_5cf9da57___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "wwwroot/Vue/components/InvestRegister/ViewInvestmentReport.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./wwwroot/Vue/components/InvestRegister/ViewInvestmentReport.vue?vue&type=script&lang=js&":
-/*!*************************************************************************************************!*\
-  !*** ./wwwroot/Vue/components/InvestRegister/ViewInvestmentReport.vue?vue&type=script&lang=js& ***!
-  \*************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewInvestmentReport_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ViewInvestmentReport.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/InvestRegister/ViewInvestmentReport.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewInvestmentReport_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./wwwroot/Vue/components/InvestRegister/ViewInvestmentReport.vue?vue&type=template&id=5cf9da57&":
-/*!*******************************************************************************************************!*\
-  !*** ./wwwroot/Vue/components/InvestRegister/ViewInvestmentReport.vue?vue&type=template&id=5cf9da57& ***!
-  \*******************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewInvestmentReport_vue_vue_type_template_id_5cf9da57___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./ViewInvestmentReport.vue?vue&type=template&id=5cf9da57& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/InvestRegister/ViewInvestmentReport.vue?vue&type=template&id=5cf9da57&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewInvestmentReport_vue_vue_type_template_id_5cf9da57___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewInvestmentReport_vue_vue_type_template_id_5cf9da57___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -80282,144 +79088,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./wwwroot/Vue/components/StockTable/CreateStockComponent.vue":
-/*!********************************************************************!*\
-  !*** ./wwwroot/Vue/components/StockTable/CreateStockComponent.vue ***!
-  \********************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _CreateStockComponent_vue_vue_type_template_id_42c5382e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateStockComponent.vue?vue&type=template&id=42c5382e& */ "./wwwroot/Vue/components/StockTable/CreateStockComponent.vue?vue&type=template&id=42c5382e&");
-/* harmony import */ var _CreateStockComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateStockComponent.vue?vue&type=script&lang=js& */ "./wwwroot/Vue/components/StockTable/CreateStockComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _CreateStockComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _CreateStockComponent_vue_vue_type_template_id_42c5382e___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _CreateStockComponent_vue_vue_type_template_id_42c5382e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "wwwroot/Vue/components/StockTable/CreateStockComponent.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./wwwroot/Vue/components/StockTable/CreateStockComponent.vue?vue&type=script&lang=js&":
-/*!*********************************************************************************************!*\
-  !*** ./wwwroot/Vue/components/StockTable/CreateStockComponent.vue?vue&type=script&lang=js& ***!
-  \*********************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateStockComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./CreateStockComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/StockTable/CreateStockComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateStockComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./wwwroot/Vue/components/StockTable/CreateStockComponent.vue?vue&type=template&id=42c5382e&":
-/*!***************************************************************************************************!*\
-  !*** ./wwwroot/Vue/components/StockTable/CreateStockComponent.vue?vue&type=template&id=42c5382e& ***!
-  \***************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateStockComponent_vue_vue_type_template_id_42c5382e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./CreateStockComponent.vue?vue&type=template&id=42c5382e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/StockTable/CreateStockComponent.vue?vue&type=template&id=42c5382e&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateStockComponent_vue_vue_type_template_id_42c5382e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateStockComponent_vue_vue_type_template_id_42c5382e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./wwwroot/Vue/components/StockTable/ViewStockComponent.vue":
-/*!******************************************************************!*\
-  !*** ./wwwroot/Vue/components/StockTable/ViewStockComponent.vue ***!
-  \******************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _ViewStockComponent_vue_vue_type_template_id_2e939a57___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ViewStockComponent.vue?vue&type=template&id=2e939a57& */ "./wwwroot/Vue/components/StockTable/ViewStockComponent.vue?vue&type=template&id=2e939a57&");
-/* harmony import */ var _ViewStockComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ViewStockComponent.vue?vue&type=script&lang=js& */ "./wwwroot/Vue/components/StockTable/ViewStockComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _ViewStockComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _ViewStockComponent_vue_vue_type_template_id_2e939a57___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _ViewStockComponent_vue_vue_type_template_id_2e939a57___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "wwwroot/Vue/components/StockTable/ViewStockComponent.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./wwwroot/Vue/components/StockTable/ViewStockComponent.vue?vue&type=script&lang=js&":
-/*!*******************************************************************************************!*\
-  !*** ./wwwroot/Vue/components/StockTable/ViewStockComponent.vue?vue&type=script&lang=js& ***!
-  \*******************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewStockComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ViewStockComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/StockTable/ViewStockComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewStockComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./wwwroot/Vue/components/StockTable/ViewStockComponent.vue?vue&type=template&id=2e939a57&":
-/*!*************************************************************************************************!*\
-  !*** ./wwwroot/Vue/components/StockTable/ViewStockComponent.vue?vue&type=template&id=2e939a57& ***!
-  \*************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewStockComponent_vue_vue_type_template_id_2e939a57___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./ViewStockComponent.vue?vue&type=template&id=2e939a57& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./wwwroot/Vue/components/StockTable/ViewStockComponent.vue?vue&type=template&id=2e939a57&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewStockComponent_vue_vue_type_template_id_2e939a57___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewStockComponent_vue_vue_type_template_id_2e939a57___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
 /***/ "./wwwroot/Vue/components/StudentClaim/ClaimHistory.vue":
 /*!**************************************************************!*\
   !*** ./wwwroot/Vue/components/StudentClaim/ClaimHistory.vue ***!
@@ -81333,7 +80001,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_0__
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\Home\source\Repo\AccountingLedger\NavyAccountWeb\wwwroot\Vue\app.js */"./wwwroot/Vue/app.js");
+module.exports = __webpack_require__(/*! C:\Projects\NavyAccount\NavyAccountWeb\wwwroot\Vue\app.js */"./wwwroot/Vue/app.js");
 
 
 /***/ })

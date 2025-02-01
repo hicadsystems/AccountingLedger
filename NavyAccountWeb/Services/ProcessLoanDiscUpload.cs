@@ -5,6 +5,7 @@ using NavyAccountCore.Models;
 using NavyAccountWeb.IServices;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace NavyAccountWeb.Services
@@ -38,13 +39,17 @@ namespace NavyAccountWeb.Services
 
         public async Task<string> processUploadInThread()
         {
-            string message="";
+
+            try
+            {
+
+                string message="";
             List<pf_loandisc> list_loanregister = new List<pf_loandisc>();
             //fetch Persons ID
             foreach (var s in loanCaptures)
             {
                 
-                var getPersonId = unitOfWork.person.GetPersonBySVC_No(x => x.SVC_NO == s.svcno);
+                var getPersonId = unitOfWork.person.GetAllAsync().Where(x => x.SVC_NO == s.svcno).FirstOrDefault();
                 var getloanType = unitOfWork.loanType.GetLoanTypeByCode(x => x.Code == fundscode);
                 string account = getloanType.loanacct.Substring(0, 4) + "-" + getPersonId.SVC_NO;
                 string batch = s.batchno + "_" + getloanType.Description;
@@ -57,7 +62,7 @@ namespace NavyAccountWeb.Services
                     message = "batch not fund";
                     return message;
                 }
-                if (getcontrDisc != null)
+                if (getcontrDisc != null && getbatch!=null)
                 {
                     getbatch.extpay = s.amount;
                     unitOfWork.pf_loandisc.Update(getbatch);
@@ -85,7 +90,14 @@ namespace NavyAccountWeb.Services
 
             return message;
 
-    }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+        }
 
 
             public void processUploadInThreadContr()

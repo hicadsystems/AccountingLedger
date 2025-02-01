@@ -26,7 +26,6 @@ namespace NavyAccountCore.Core.Data
             FundType = new FundTypeRepo(context);
             actType = new AccountTypeRepository(context);
             balSheet = new BalanceSheetRepository(context);
-            stock=new StockRepository(context);
             mainAccount = new MainAccountRepository(context);
             accountChart = new ChartRepository(context);
             subtype = new SubTypeRepository(context);
@@ -124,7 +123,6 @@ namespace NavyAccountCore.Core.Data
         public IParentGuardianRecordRepository parent { get; }
         public IGuardianRecordRepository Guardian { get; }
 
-        public IStock stock { get; }
 
         public async Task<bool> Done()
         {

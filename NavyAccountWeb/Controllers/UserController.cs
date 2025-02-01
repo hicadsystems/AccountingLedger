@@ -104,10 +104,11 @@ namespace NavyAccountWeb.Controllers
             }.ToResponse(null, true));
         }
 
-        //[Route("/user/togglestatus/{id:int}")]
-        public async Task<IActionResult> ToggleStatus(int Id)
+        [Route("/user/togglestatus/{id}")]
+        [HttpGet]
+        public async Task<IActionResult> ToggleStatus(int id)
         {
-            var user = await userService.GetUserById(Id);
+            var user = await userService.GetUserById(id);
 
             user.IsActive = !user.IsActive;
 

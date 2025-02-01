@@ -39,7 +39,7 @@
                 <thead>
                     <tr>
                         <th>Contribution Amount</th>
-                        <!-- <th v-if="postBody.FundTypeID">Loan Amount</th> -->
+                        <th v-if="postBody.FundTypeID">Loan Amount</th>
                         <th>Amount Due</th>
 
                     </tr>
@@ -48,7 +48,7 @@
                     <tr v-for="discharges in claimlist">
                
                         <td v-if="discharges.totalContribution">{{discharges.totalContribution}}</td>
-                        <!-- <td v-if="discharges.amountReceived">{{ discharges.amountReceived}}</td> -->
+                        <td v-if="discharges.amountReceived">{{ discharges.amountReceived}}</td>
                         <td v-if="discharges.amountDue">{{ discharges.amountDue }}</td>
                         <td v-if="discharges.amountPaid>=0"><button type="button" class="btn btn-submit btn-primary" @click="processRetrieve(discharges)">Add Beneficiary</button></td>
                     </tr>

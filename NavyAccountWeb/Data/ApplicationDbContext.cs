@@ -29,7 +29,6 @@ namespace NavyAccountWeb.Data
 
         public DbSet<Beneficiary> Beneficiaries { get; set; }
         public DbSet<npf_balsheet> npf_Balsheets { get; set; }
-        public DbSet<npf_stock> npf_Stocks { get; set; }
         public DbSet<npf_chart> npf_Charts { get; set; }
         public DbSet<npf_history> npf_Histories { get; set; }
         public DbSet<npf_ledger> npf_Ledgers { get; set; }

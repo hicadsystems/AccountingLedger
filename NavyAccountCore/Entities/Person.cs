@@ -45,9 +45,9 @@ namespace NavyAccountCore.Core.Entities
         public Nullable<int> staffbranchid { get; set; }
         public Nullable<int> Departmentid { get; set; }
         public string MaidenName { get; set; }
-        public Nullable<int> Commandid { get; set; }
+        public string Command { get; set; }
         public string Nationality { get; set; }
-        public Nullable<int> MaritalStatusId { get; set; }
+        public Nullable<int> MaritalStatus { get; set; }
         public string PhotoPath { get; set; }
         public string FileName { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
@@ -87,4 +87,5 @@ namespace NavyAccountCore.Core.Entities
         public virtual ICollection<Beneficiary> Beneficiaries { get; set; }
         public virtual Rank Rank1 { get; set; }
     }
+
 }

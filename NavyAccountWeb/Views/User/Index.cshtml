@@ -58,11 +58,11 @@
                                         }
                                         @if (user.IsActive)
                                         {
-                                            <td><a type="button" class="btn btn-danger" asp-controller="User" asp-action="ToggleStatus" asp-route-id="@user.Id">Deactivate</a></td>
+                                            <td><a type="button" class="btn btn-danger" method="get" asp-controller="User" asp-action="ToggleStatus" asp-route-id="@user.Id">Deactivate</a></td>
                                         }
                                         else
                                         {
-                                            <td><a asp-controller="User" asp-action="ToggleStatus" asp-route-id="@user.Id" type="button" class="btn btn-primary">Activate</a></td>
+                                            <td><a asp-controller="User" asp-action="ToggleStatus" method="get" type="button" class="btn btn-primary" asp-route-id="@user.Id">Activate</a></td>
                                         }
                                     </tr>
 

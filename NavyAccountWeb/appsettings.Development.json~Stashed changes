@@ -1,8 +1,7 @@
 {
   "ConnectionStrings": {
     //"DefaultConnection": "Server =KAYNET\\SQLSERVER2019; Database = NavyAccount; integrated security=True; "
-    "DefaultConnection": "Server=HICAD-PC\\SQLSERVER2019; Database = NavyAccount; integrated security=True; User Id=sa; Password=passme;"
-
+    "DefaultConnection": "Server =DESKTOP-C3FGCR6\\SQLSERVER2919; Database = NavyAccount; integrated security=True; "
 
   },
   "ServerSettings": {

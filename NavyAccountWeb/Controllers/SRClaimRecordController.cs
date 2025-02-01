@@ -99,8 +99,8 @@ namespace NavyAccountWeb.Controllers
                     string REG_NUMBER = String.IsNullOrEmpty(worksheet.Cells[1, 1].ToString()) ? "" : worksheet.Cells[1, 1].Value.ToString().Trim();
                     string CLASS = String.IsNullOrEmpty(worksheet.Cells[1, 2].ToString()) ? "" : worksheet.Cells[1, 2].Value.ToString().Trim();
                     string SCHOOL = String.IsNullOrEmpty(worksheet.Cells[1, 3].ToString()) ? "" : worksheet.Cells[1, 3].Value.ToString().Trim();
-                    string TERM = String.IsNullOrEmpty(worksheet.Cells[1, 4].ToString()) ? "" : worksheet.Cells[1, 4].Value.ToString().Trim();
-                    string PERIOD = String.IsNullOrEmpty(worksheet.Cells[1, 5].ToString()) ? "" : worksheet.Cells[1, 5].Value.ToString().Trim();
+                    string SESSION = String.IsNullOrEmpty(worksheet.Cells[1, 4].ToString()) ? "" : worksheet.Cells[1, 4].Value.ToString().Trim();
+                    string TERM = String.IsNullOrEmpty(worksheet.Cells[1, 5].ToString()) ? "" : worksheet.Cells[1, 5].Value.ToString().Trim();
 
 
 
@@ -120,12 +120,8 @@ namespace NavyAccountWeb.Controllers
 
                         if (worksheet.Cells[1, 3].Value == null)
                             worksheet.Cells[1, 3].Value = "";
-                        if (worksheet.Cells[1, 4].Value == null)
-                            worksheet.Cells[1, 4].Value = "";
-                        if (worksheet.Cells[1, 5].Value == null)
-                            worksheet.Cells[1, 5].Value = "";
 
-
+                       
 
                         if (worksheet.Cells[row, 1].Value == null)
                             worksheet.Cells[row, 1].Value = "";
@@ -135,18 +131,14 @@ namespace NavyAccountWeb.Controllers
 
                         if (worksheet.Cells[row, 3].Value == null)
                             worksheet.Cells[row, 3].Value = "";
-                        if (worksheet.Cells[row, 4].Value == null)
-                            worksheet.Cells[row, 4].Value = "";
-                        if (worksheet.Cells[row, 5].Value == null)
-                            worksheet.Cells[row, 5].Value = "";
 
-
+                       
 
                         string reg_number = String.IsNullOrEmpty(worksheet.Cells[row, 1].Value.ToString()) ? "" : worksheet.Cells[row, 1].Value.ToString().Trim();
                         string class1 = String.IsNullOrEmpty(worksheet.Cells[row, 2].Value.ToString()) ? "" : worksheet.Cells[row, 2].Value.ToString().Trim();
                         string school = String.IsNullOrEmpty(worksheet.Cells[row, 3].Value.ToString()) ? "" : worksheet.Cells[row, 3].Value.ToString().Trim();
-                        string term = String.IsNullOrEmpty(worksheet.Cells[row, 4].Value.ToString()) ? "" : worksheet.Cells[row, 4].Value.ToString().Trim();
-                        string period = String.IsNullOrEmpty(worksheet.Cells[row, 5].Value.ToString()) ? "" : worksheet.Cells[row, 5].Value.ToString().Trim();
+                        string session = String.IsNullOrEmpty(worksheet.Cells[row, 4].Value.ToString()) ? "" : worksheet.Cells[row, 4].Value.ToString().Trim();
+                        string term = String.IsNullOrEmpty(worksheet.Cells[row, 5].Value.ToString()) ? "" : worksheet.Cells[row, 5].Value.ToString().Trim();
 
 
 
@@ -157,9 +149,8 @@ namespace NavyAccountWeb.Controllers
                                 Reg_Number = reg_number,
                                 Class = class1,
                                 School = school,
-                                Term= term,
-                                Period= period,
-                               
+                               Session=session,
+                               Term=term
                             });
 
                         }
@@ -170,8 +161,8 @@ namespace NavyAccountWeb.Controllers
                                 Reg_Number = reg_number,
                                 Class = class1,
                                 School = school,
-                                Term= term,
-                                Period= period,
+                                Session = session,
+                                Term = term
 
                             });
                         }

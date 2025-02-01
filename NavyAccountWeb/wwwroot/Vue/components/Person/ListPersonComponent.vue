@@ -106,7 +106,7 @@ export default {
             })
          },
           setValuePersonID: function(result) {
-            //   alert(result.value)
+              alert(result.value)
              axios
            .get(`/api/PersonAPI/getPersonByID2/${result.value}`)
            .then(response => {this.personelList = response.data;

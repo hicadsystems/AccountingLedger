@@ -21,8 +21,6 @@ namespace NavyAccountCore.Core.Entities
         public string unit { get; set; }
         public Nullable<int> IssuanceBankId { get; set; }
         public Nullable<int> receivingBankId { get; set; }
-        public Nullable<int> StockId { get; set; }
-        public string TransactionType { get; set; }
         public string Voucher { get; set; }
         public string Description { get; set; }
         public Nullable<decimal> Amount { get; set; }

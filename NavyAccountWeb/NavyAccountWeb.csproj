@@ -29,6 +29,8 @@
     <Compile Remove="Migrations\20200321123827_addedProportion.Designer.cs" />
     <Compile Remove="Migrations\20201009150549_addloantypetypereview.cs" />
     <Compile Remove="Migrations\20201009150549_addloantypetypereview.Designer.cs" />
+    <Compile Remove="Migrations\20250131155457_updateDatabase.cs" />
+    <Compile Remove="Migrations\20250131155457_updateDatabase.Designer.cs" />
   </ItemGroup>
 
 

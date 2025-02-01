@@ -125,14 +125,6 @@ namespace NavyAccountWeb.Controllers.Api.ReferenceTable
         {
             return services.GetAllInvestRegister2().ToList();
         }
-        [Route("getAllCapital/{startDate}/{endDate}")]
-        [HttpGet]
-        public List<InvestmentView> getAllcapital2(string startDate,string endDate)
-        {
-            return services.GetAllInvestRegister2()
-                .Where(x=>x.Date==Convert.ToDateTime(startDate) && x.Date == Convert.ToDateTime(endDate))
-                .ToList();
-        }
         [Route("createInvestCapitalMarket")]
         [HttpPost]
         public IActionResult createInvestCapitalMarket([FromBody] Pf_InvestRegister value)
@@ -179,8 +171,6 @@ namespace NavyAccountWeb.Controllers.Api.ReferenceTable
                 getbal.Voucher = value.Voucher;
                 getbal.chequeno = value.chequeno;
                 getbal.unit = value.unit;
-                getbal.StockId=value.StockId;
-                getbal.TransactionType= value.TransactionType;
 
                 services.UpdateInvestRegister(getbal);
                 return Ok(new { responseCode = 200, responseDescription = "Updated Successfully" });

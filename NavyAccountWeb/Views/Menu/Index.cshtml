@@ -91,7 +91,7 @@
                             <label for="code" class="control-label">
                                 Code
                             </label>
-                            <input type="text" id="code" name="code" required class="form-control">
+                            <input type="text" id="code" name="code"  class="form-control">
                         </div>
                     </div>
 
@@ -171,7 +171,6 @@
                 if (response.success) {
                     $("#id").val(response.data.menu.id)
                     $("#name").val(response.data.menu.name);
-                    $("#code").attr("readonly", "readonly")
                     $("#code").val(response.data.menu.code);
                     $("#description").val(response.data.menu.description)
                     $("#controller").val(response.data.menu.controller)

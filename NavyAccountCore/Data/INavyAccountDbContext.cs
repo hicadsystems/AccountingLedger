@@ -21,7 +21,6 @@ namespace NavyAccountCore.Core.Data
 
         DbSet<Beneficiary> Beneficiaries { get; set; }
         DbSet<npf_balsheet> npf_Balsheets { get; set; }
-        DbSet<npf_stock> npf_Stocks { get; set; }
         DbSet<npf_chart> npf_Charts { get; set; }
         DbSet<npf_history> npf_Histories { get; set; }
         DbSet<npf_ledger> npf_Ledgers { get; set; }

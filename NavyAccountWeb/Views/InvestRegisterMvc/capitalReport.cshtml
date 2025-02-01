@@ -13,14 +13,13 @@
         <table border="2" cellpadding="2" cellspacing="0" width="100%">
 
             <tr>
-                 <th>S/N</th>
                 <th>Investment Type</th>
-                <th>Date</th>
+                <th>MatureDate</th>
                 <th>Issuance Bank</th>
-                <th>Stock Name</th>
+                <th>Receiving Bank</th>
                 <th>Amount</th>
-                <th>Transaction Type</th>
-                <th>Unit</th>
+                <th>Interest</th>
+                <th>Tenure</th>
 
 
             </tr>
@@ -30,12 +29,12 @@
 
                     <td> @Html.DisplayFor(modelItem => a.Index)</td>
                     <td> @Html.DisplayFor(modelItem => a.Data.InvestmentType)</td>
-                    <td> @Html.DisplayFor(modelItem => a.Data.Date)</td>
+                    <td> @Html.DisplayFor(modelItem => a.Data.Maturingdate)</td>
                     <td> @Html.DisplayFor(modelItem => a.Data.issuancebank)</td>
-                    <td> @Html.DisplayFor(modelItem => a.Data.StockName)</td>
+                    <td> @Html.DisplayFor(modelItem => a.Data.receivingbank)</td>
                     <td> @string.Format("{0:n}", a.Data.Amount)</td>
-                    <td> @Html.DisplayFor(modelItem => a.Data.TransactionType)</td>
-                    <td> @Html.DisplayFor(modelItem => a.Data.unit)</td>
+                    <td> @Html.DisplayFor(modelItem => a.Data.interest)</td>
+                    <td> @Html.DisplayFor(modelItem => a.Data.Tenure)</td>
 
                 </tr>
             }

@@ -296,7 +296,7 @@ namespace NavyAccountWeb.Controllers
 
                 return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
             }
-            return View();
+            return RedirectToAction("studentupload");
         }
 
         // GET: SRStudentRecordController/Delete/5

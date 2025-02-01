@@ -289,7 +289,7 @@ namespace NavyAccountWeb.Controllers
         {
             var fundcode = HttpContext.Session.GetInt32("fundtypeid");
 
-            if ((loan.Status != "8") && (loan.Status != "9"))
+            if (loan.Status != "9")
             {
                 var listloan1 = loanRegisterService.getListofLoanRegisterByStatus(Convert.ToInt32(fundcode), loan.Status).Result;
                 return await generatePdf.GetPdf("Views/LoanRegister/LoanRegisterReportPage.cshtml", listloan1);

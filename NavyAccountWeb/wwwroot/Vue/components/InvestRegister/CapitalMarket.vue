@@ -25,31 +25,8 @@
                     <div class="col-12 col-xl-3">
                         <div class="form-group">
                             <label class="form-label">Registrar</label>
-                            <!-- <select class="form-control" v-model="postBody.IssuanceBankId" name="IssuanceBankId">
+                            <select class="form-control" v-model="postBody.IssuanceBankId" name="IssuanceBankId">
                                 <option v-for="bk in bankList" v-bind:value="bk.id" v-bind:key="bk.id">{{ bk.bankname }}</option>
-                            </select> -->
-                            <select class="form-control" v-model="postBody.IssuanceBankId" name="IssuanceBankId" required>
-                                    <option v-for="coa in chartofAccountList" v-bind:value="coa.id" v-bind:key="coa.id"> {{ coa.description }} </option>
-                                </select>
-                        </div>
-                    </div>
-
-                    <div class="col-12 col-xl-3">
-                        <div class="form-group">
-                            <label class="form-label">Stock</label>
-                            <select class="form-control" v-model="postBody.StockId" name="StockId" required>
-                                    <option v-for="coa in StockList" v-bind:value="coa.id" v-bind:key="coa.id"> {{ coa.description }} </option>
-                                </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12 col-xl-3">
-                        <div class="form-group">
-                            <label class="form-label">Transaction Type</label>
-                            <select class="form-control" v-model="postBody.transactionType" name="transactionType" required>
-                                    <option value="Buy">Buy</option>
-                                    <option value="Sell">Sell</option>
                             </select>
                         </div>
                     </div>
@@ -58,6 +35,16 @@
                         <div class="form-group">
                             <label class="form-label">Voucher</label>
                             <input class="form-control" name="voucher" v-model="postBody.voucher" placeholder="" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+
+                    <div class="col-12 col-xl-3">
+                        <div class="form-group">
+                            <label class="form-label">Remark</label>
+                            <textarea class="form-control" name="description" v-model="postBody.description" placeholder="" />
                         </div>
                     </div>
                     <div class="col-12 col-xl-3">
@@ -72,17 +59,13 @@
                             <input class="form-control" name="unit" v-model="postBody.unit" placeholder="" />
 
                         </div>
-                     </div>
+                    </div>
+
                 </div>
-                <div class="row">
-                    <div class="col-12 col-x1-6">
-                        <div class="form-group">
-                            <label class="form-label">Remark</label>
-                            <textarea class="form-control" name="description" v-model="postBody.description" placeholder=""/>
-                        </div>
-                    </div>
-                    
-                    </div>
+
+
+
+
                 <div class="row">
                     <div class="col-12 ">
                         <div class="btn-group mr-2 sw-btn-group-extra" v-if="canProcess" role="group"><button class="btn btn-submit btn-primary" v-on:click="checkForm" type="submit">{{submitorUpdate}}</button></div>
@@ -111,9 +94,7 @@
             canProcess: true,
             userList: null,
             bankList: null,
-            StockList: null,
             InvestTypeList: null,
-            chartofAccountList: null,
             readonly:true,
             postBody: {
                 companyid: '',
@@ -126,11 +107,9 @@
                 date: '',
                 duedate: '',
                 investmenttype:'',
-                transactionType:'',
                 chequeno: '',
                 maturedamt: 0,
-                unit:'',
-                StockId:''
+                unit:''
                 
             },
             invest: [
@@ -143,20 +122,10 @@
         axios
             .get('/api/Bank/getAllBanks')
               .then(response => (this.bankList = response.data)),
-              axios
-            .get('/api/Stock/getAllStocks')
-              .then(response => (this.StockList = response.data)),
            axios
             .get('/api/PfInvest/LoadAllPersonnel')
                   .then(response => (this.userList = response.data))
-          axios
-                .get('/api/ChartofAccount/getAllChartofAccounts')
-                .then(response => {
-
-                    this.chartofAccountList = response.data
-                    this.chartofAccountsStandBy = response.data
-
-                })
+             
      },
 
     watch:{
@@ -174,8 +143,6 @@
                 this.postBody.interest = this.$store.state.objectToUpdate.interest,
                 this.postBody.receivingbankid = this.$store.state.objectToUpdate.receivingbankid,
                 this.postBody.unit = this.$store.state.objectToUpdate.unit,
-                this.postBody.transactionType = this.$store.state.objectToUpdate.transactionType,
-                this.postBody.StockId = this.$store.state.objectToUpdate.stockId
                 this.postBody.Id = this.$store.state.objectToUpdate.id
                 this.submitorUpdate = 'Update';
 
@@ -207,10 +174,9 @@
         postPost() {
 
                 if(this.submitorUpdate == 'Submit'){
-                    alert(this.postBody);
                     axios.post(`/api/PfInvest/createInvestCapitalMarket`, this.postBody )
                         .then(response => {
-                          
+
                             this.responseMessage = response.data.responseDescription; this.canProcess = true;
 
                             if (response.data.responseCode == '200') {
@@ -229,8 +195,6 @@
                                 this.unit = '';
                                 this.interest = '';
                                 this.tenure = '';
-                                this.postBody.transactionType = '';
-                                this.postBody.stockId = '';
                             }
                         })
                         .catch(e => {
@@ -253,8 +217,6 @@
                                 this.postBody.investmenttype= '';
                                 this.postBody.closecode = '';
                                 this.postBody.chequeno = '';
-                                this.postBody.transactionType = '';
-                                this.postBody.stockId = '';
                                 this.unit = '';
                                 this.interest = '';
                                 this.tenure = '';
@@ -283,8 +245,6 @@
                     this.postBody.unit = objecttoedit.unit;
                     this.postBody.tenure = objecttoedit.tenure;
                     this.postBody.interest = objecttoedit.interest;
-                    this.postBody.transactionType = objecttoedit.transactionType;
-                    this.postBody.stockId = objecttoedit.stockId;
                 }
             }
         }

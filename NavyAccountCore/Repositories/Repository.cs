@@ -15,10 +15,11 @@ namespace NavyAccountCore.Core.Repositories
     public abstract class Repository<T> : IRepository<T> where T : class
     {
         private readonly INavyAccountDbContext context;
-
+       // protected readonly DbSet<T> _dbSet;
         public Repository(INavyAccountDbContext context)
         {
             this.context = context;
+           // _dbSet = context.Set<T>();
         }
 
         public async Task<int> Count(Expression<Func<T, bool>> predicate)
@@ -73,7 +74,10 @@ namespace NavyAccountCore.Core.Repositories
         {
             return await context.Instance.Set<T>().FindAsync(id);
         }
-
+        public IQueryable<T> GetAllAsync()
+        {
+            return context.Instance.Set<T>().AsNoTracking();
+        }
         public IEnumerable<T> GetByExpression(Expression<Func<T, bool>> predicate)
         {
             return context.Instance.Set<T>().Where(predicate);

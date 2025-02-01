@@ -18,7 +18,7 @@
             <form id="smartwizard-validation" class="wizard wizard-primary sw-main sw-theme-default" @submit="postPersonelAndBeneficiary" method="post" action="javascript:void(0)" novalidate="novalidate">
                 <ul class="nav nav-tabs step-anchor">
                     <li class="nav-item active"><a href="#validation-step-1" class="nav-link">Personal Details</a></li>
-                    <li class="nav-item"><a href="#validation-step-2" class="nav-link">Beneficiary</a></li>
+                    <!-- <li class="nav-item"><a href="#validation-step-2" class="nav-link">Beneficiary</a></li> -->
                     
                 </ul>
 
@@ -400,7 +400,7 @@
                
                 let uri = actionToPerform == 0 ? `/api/PersonAPI/createPerson` : `/api/PersonAPI/updatePerson`;
                 let message = actionToPerform == 0 ? `Created` : `Updated`;
-                alert(this.postBody.person.PersonID);
+               // alert(this.postBody.person.PersonID);
                 //alert(this.postBody.person);
               
                 axios.post(uri,this.postBody)

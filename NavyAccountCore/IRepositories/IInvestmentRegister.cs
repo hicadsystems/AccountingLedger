@@ -17,7 +17,5 @@ namespace NavyAccountCore.Core.IRepositories
         List<InvestmentView> GetInvestList2();
         Task<Pf_InvestRegister> GetInvesRegisterByUser(Expression<Func<Pf_InvestRegister, bool>> predicate);
         List<InvestmentView> GetALLInvestListOT();
-        List<InvestmentView> GetALLInvestListCapitalMk();
-        List<InvestmentView> GetALLInvestListCapitalMk(DateTime startdate, DateTime enddate);
     }
 }

@@ -53,10 +53,10 @@ export default {
             searchData: '',
             paymentList : null,
         canProcess : true,
-        postBody: {
-                studentid:0
+       // postBody: {
+          //      studentid:0
 
-        }
+      //  }
         };
         },
         mounted() {

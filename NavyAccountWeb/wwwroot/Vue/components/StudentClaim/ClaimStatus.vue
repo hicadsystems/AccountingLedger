@@ -102,12 +102,9 @@ data() {
     },
     methods: {
         setValueStudent: function(result) {
-            // alert(result.value);
-            this.studentid=result.value;
         Axios
        .get(`/api/StudentClaim/getclaimsummary/${result.value}`)
        .then(response => {this.cliamSummaryList = response.data;
-        // alert(response.data[0].studentid);
         this.studentid=response.data[0].studentid
         this.StudentName=response.data[0].studentName
         this.Reg_Number=response.data[0].reg_Number
