@@ -45,21 +45,22 @@ namespace NavyAccountWeb.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Loanrepayment(string batchNo,string svcno,int? pageNumber)
+        public async Task<IActionResult> Loanrepayment(string batchNo, int loantype, string svcno,int? pageNumber)
         {
             if (pageNumber == null)
             {
                 pageNumber = 1;
             }
+            var getloantype = context.Pf_loanType.ToList();
+
+            ViewBag.getloantype = getloantype;
             var loan = loanRegisterService.getListofLoanRegisterByBatchDrp().Result;
             ViewBag.batch = loan.OrderBy(x => x.LoanTypeID);
             var fundcode = HttpContext.Session.GetString("fundtypecode");
-            if(batchNo!=null)
-            HttpContext.Session.SetString("batchNo", batchNo);
-            ViewBag.getbatch = batchNo;
+            HttpContext.Session.SetInt32("loantype", loantype);
             int? loanid = 0;
              loanid = HttpContext.Session.GetInt32("deleted");
-            if (batchNo != null &&  loanid==0 && svcno==null)
+            if (loantype > 0 &&  loanid==0 && svcno==null)
             {
                 string dd = HttpContext.Session.GetString("fundtypecode").ToString();
                 string k = dd;
@@ -71,15 +72,19 @@ namespace NavyAccountWeb.Controllers
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
                         cmd.Parameters.Add(new SqlParameter("@globaluser", User.Identity.Name));
                         cmd.Parameters.Add(new SqlParameter("@fundcode", HttpContext.Session.GetString("fundtypecode")));
-                        cmd.Parameters.Add(new SqlParameter("@batchno", batchNo));
+                        cmd.Parameters.Add(new SqlParameter("@loanTypes", loantype));
 
                         await sqls.OpenAsync();
                         await cmd.ExecuteNonQueryAsync();
 
                         TempData["message"] = "Uploaded Successfully";
+
+                        var listloanrepay1 = loandiscService.GetAllbyFundcode(fundcode, loantype).OrderByDescending(x => x.principal).AsQueryable();
+                        var m1 = PaginatedList<LoandiscVM>.CreateAsync(listloanrepay1, (int)pageNumber, 10);
+                        return View(m1);
                     }
                 }
-                var listloanrepay = loandiscService.GetAllbyFundcode(fundcode,batchNo).OrderByDescending(x => x.principal).AsQueryable();
+                var listloanrepay = loandiscService.GetAllbyFundcode(fundcode,loantype).OrderByDescending(x => x.principal).AsQueryable();
                 var m = PaginatedList<LoandiscVM>.CreateAsync(listloanrepay, (int)pageNumber, 10);
                 return View(m);
             }
@@ -92,7 +97,7 @@ namespace NavyAccountWeb.Controllers
             }
             else
             {
-                var listloanrepay = loandiscService.GetAllbyFundcode(fundcode, batchNo).OrderByDescending(x => x.principal).AsQueryable();
+                var listloanrepay = loandiscService.GetAllbyFundcode(fundcode).OrderByDescending(x => x.principal).AsQueryable();
                 var m = PaginatedList<LoandiscVM>.CreateAsync(listloanrepay, (int)pageNumber, 10);
                 return View(m);
             }
@@ -136,7 +141,7 @@ namespace NavyAccountWeb.Controllers
                         TempData["message"] = "Uploaded Successfully";
                     }
                 }
-                var listloanrepay = loandiscService.GetAllbyFundcode(fundcode, loantype).OrderByDescending(x => x.principal).AsQueryable();
+                var listloanrepay = loandiscService.GetAllbyFundcode(fundcode, int.Parse(loantype)).OrderByDescending(x => x.principal).AsQueryable();
                 var m = PaginatedList<LoandiscVM>.CreateAsync(listloanrepay, (int)pageNumber, 10);
                 return View(m);
             }
@@ -149,7 +154,7 @@ namespace NavyAccountWeb.Controllers
             }
             else
             {
-                var listloanrepay = loandiscService.GetAllbyFundcode(fundcode, loantype).OrderByDescending(x => x.principal).AsQueryable();
+                var listloanrepay = loandiscService.GetAllbyFundcode(fundcode, int.Parse(loantype)).OrderByDescending(x => x.principal).AsQueryable();
                 var m = PaginatedList<LoandiscVM>.CreateAsync(listloanrepay, (int)pageNumber, 10);
                 return View(m);
             }
@@ -184,7 +189,7 @@ namespace NavyAccountWeb.Controllers
            
         }
         [HttpPost]
-        public async Task<IActionResult> LoanrepaymentPost(string batchNo)
+        public async Task<IActionResult> LoanrepaymentPost(int loantype)
         {
             string dd = HttpContext.Session.GetString("fundtypecode").ToString();
             string k = dd;
@@ -196,7 +201,7 @@ namespace NavyAccountWeb.Controllers
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.Parameters.Add(new SqlParameter("@globaluser", User.Identity.Name));
                     cmd.Parameters.Add(new SqlParameter("@fundcode", HttpContext.Session.GetString("fundtypecode")));
-                    cmd.Parameters.Add(new SqlParameter("@batchno", batchNo));
+                    cmd.Parameters.Add(new SqlParameter("@loantype", loantype));
 
                     await sqls.OpenAsync();
                     await cmd.ExecuteNonQueryAsync();
@@ -209,9 +214,9 @@ namespace NavyAccountWeb.Controllers
 
         }
         [HttpGet]
-        public async Task<IActionResult> variance(int? pageNumber, string batchNo)
+        public async Task<IActionResult> variance(int? pageNumber, int loantype)
         {
-            if (batchNo != null)
+            if (loantype >0)
             {
                 using (SqlConnection sqls = new SqlConnection(_connectionstring))
                 {
@@ -222,7 +227,7 @@ namespace NavyAccountWeb.Controllers
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
                         cmd.Parameters.Add(new SqlParameter("@globaluser", User.Identity.Name));
                         cmd.Parameters.Add(new SqlParameter("@fundcode", HttpContext.Session.GetString("fundtypecode")));
-                        cmd.Parameters.Add(new SqlParameter("@batchno2", batchNo));
+                        cmd.Parameters.Add(new SqlParameter("@loantype", loantype));
 
 
                         await sqls.OpenAsync();
@@ -233,15 +238,16 @@ namespace NavyAccountWeb.Controllers
                     TempData["message"] = "Uploaded Successfully";
                 }
             }
-            var loan = loandiscService.getListofLoandiscByBatchDrp().Result;
-            ViewBag.batch = loan.OrderBy(x => x.batchno);
-            ViewBag.getbatch = batchNo;
+            ViewBag.getType = HttpContext.Session.GetInt32("loantype");
+            var getloantype = context.Pf_loanType.Where(x => x.Id == HttpContext.Session.GetInt32("loantype")).ToList();
+
+            ViewBag.getloantype = getloantype;
             if (pageNumber == null)
             {
                 pageNumber = 1;
             }
             var fundcode = HttpContext.Session.GetString("fundtypecode");
-            var listloanrepay = loandiscService.GetAllbyFundcode(fundcode, batchNo).OrderByDescending(x => x.principal).AsQueryable();
+            var listloanrepay = loandiscService.GetAllbyFundcode(fundcode).OrderByDescending(x => x.principal).AsQueryable();
 
             var m = PaginatedList<LoandiscVM>.CreateAsync(listloanrepay, (int)pageNumber, 10);
             return View(m);
@@ -332,7 +338,7 @@ namespace NavyAccountWeb.Controllers
 
                     string svcno = String.IsNullOrEmpty(worksheet.Cells[1, 1].ToString()) ? "" : worksheet.Cells[1, 1].Value.ToString().Trim();
                     string amount = String.IsNullOrEmpty(worksheet.Cells[1, 2].ToString()) ? "" : worksheet.Cells[1, 2].Value.ToString().Trim();
-                    string batch = String.IsNullOrEmpty(worksheet.Cells[1, 3].ToString()) ? "" : worksheet.Cells[1, 3].Value.ToString().Trim();
+                    string loantype = String.IsNullOrEmpty(worksheet.Cells[1, 3].ToString()) ? "" : worksheet.Cells[1, 3].Value.ToString().Trim();
 
 
 
@@ -355,7 +361,7 @@ namespace NavyAccountWeb.Controllers
 
                         string svcnoVal = String.IsNullOrEmpty(worksheet.Cells[row, 1].Value.ToString()) ? "" : worksheet.Cells[row, 1].Value.ToString().Trim();
                         decimal amountVal = String.IsNullOrEmpty(worksheet.Cells[row, 2].Value.ToString()) ? 0 : Decimal.Parse(worksheet.Cells[row, 2].Value.ToString().Trim());
-                        string batchval = String.IsNullOrEmpty(worksheet.Cells[row, 3].Value.ToString()) ? "" : worksheet.Cells[row, 3].Value.ToString().Trim();
+                        string loantypeval = String.IsNullOrEmpty(worksheet.Cells[row, 3].Value.ToString()) ? "" : worksheet.Cells[row, 3].Value.ToString().Trim();
 
 
                         if (String.IsNullOrEmpty(worksheet.Cells[row, 1].Value.ToString()) ||
@@ -365,7 +371,7 @@ namespace NavyAccountWeb.Controllers
                             {
                                 svcno = svcnoVal,
                                 amount = amountVal,
-                                batchno=batchval
+                                loantype=loantypeval
 
                             });
 
@@ -377,7 +383,7 @@ namespace NavyAccountWeb.Controllers
                             {
                                 svcno = svcnoVal,
                                 amount = amountVal,
-                                batchno=batchval
+                                loantype=loantypeval
 
                             });
                         }
@@ -389,14 +395,14 @@ namespace NavyAccountWeb.Controllers
                     var proyear = context.npffundType.FirstOrDefault().processingYear;
                     var promonth = context.npffundType.FirstOrDefault().processingMonth;
                     var priod = proyear.ToString() +""+ promonth.ToString();
-                    var checkbatch = context.pf_loandisc.FirstOrDefault().batchno;
-                    if (checkbatch != batchNo)
-                    {
-                        TempData["message2"] = "Batch Mixmatch";
-                        return RedirectToAction("loadLoanDisc");
+                    //var checkbatch = context.pf_loandisc.FirstOrDefault(x=>x.loantype==loantype);
+                    //if (checkbatch != batchNo)
+                    //{
+                    //    TempData["message2"] = "Batch Mixmatch";
+                    //    return RedirectToAction("loadLoanDisc");
 
-                    }
-                    else if (priod.ToString() != processingperiod)
+                    //}
+                    if (priod.ToString() != processingperiod)
                     {
                         TempData["message2"] = "It Seems You Have Not Done Month End. Process Month End and Try Again";
                         return RedirectToAction("loadLoanDisc");
@@ -433,22 +439,27 @@ namespace NavyAccountWeb.Controllers
 
         public ActionResult UpdateRepayment()
         {
-            var loan = loandiscService.getListofLoandiscByBatchDrp().Result;
-            ViewBag.batch = loan.OrderBy(x => x.batchno);
+            //var loan = loandiscService.getListofLoandiscByBatchDrp().Result;
+            //ViewBag.batch = loan.OrderBy(x => x.batchno);
+
+            ViewBag.getType = HttpContext.Session.GetInt32("loantype");
+            var getloantype = context.Pf_loanType.Where(x=>x.Id== HttpContext.Session.GetInt32("loantype")).ToList();
+
+            ViewBag.getloantype = getloantype;
 
             var fundcode = HttpContext.Session.GetString("fundtypecode");
             var listloanrepay = loandiscService.GetAllbyFundcode(fundcode);
             return View(listloanrepay);
         }
         [HttpGet]
-        public async Task<IActionResult> Discrepancy(int? pageNumber, string batchNo)
+        public async Task<IActionResult> Discrepancy(int? pageNumber, int loantype)
         {
-            var loan = loandiscService.getListofLoandiscByBatchDrp().Result;
-            ViewBag.batch = loan.OrderBy(x =>x.batchno);
-            
-            ViewBag.getbatch = batchNo;
-          
-            if (batchNo != null) {
+            ViewBag.getType = HttpContext.Session.GetInt32("loantype");
+            var getloantype = context.Pf_loanType.Where(x => x.Id == HttpContext.Session.GetInt32("loantype")).ToList();
+
+            ViewBag.getloantype = getloantype;
+
+            if (loantype >0) {
                 using (SqlConnection sqls = new SqlConnection(_connectionstring))
                 {
                     using (SqlCommand cmd = new SqlCommand("npf_generate_Discrepancy", sqls))
@@ -457,7 +468,7 @@ namespace NavyAccountWeb.Controllers
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
                         cmd.Parameters.Add(new SqlParameter("@globaluser", User.Identity.Name));
                         cmd.Parameters.Add(new SqlParameter("@fundcode", HttpContext.Session.GetString("fundtypecode")));
-                        cmd.Parameters.Add(new SqlParameter("@batchno", batchNo));
+                        cmd.Parameters.Add(new SqlParameter("@loantype", loantype));
                         //push
                         await sqls.OpenAsync();
                         await cmd.ExecuteNonQueryAsync();
@@ -470,7 +481,7 @@ namespace NavyAccountWeb.Controllers
                 pageNumber = 1;
             }
             var fundcode = HttpContext.Session.GetString("fundtypecode");
-            var listloanrepay = loandiscService.GetAllbyFundcode(fundcode, batchNo).OrderByDescending(x => x.principal).AsQueryable();
+            var listloanrepay = loandiscService.GetAllbyFundcode(fundcode, loantype).OrderByDescending(x => x.principal).AsQueryable();
 
             var m = PaginatedList<LoandiscVM>.CreateAsync(listloanrepay, (int)pageNumber, 10);
             return View(m);
@@ -501,7 +512,7 @@ namespace NavyAccountWeb.Controllers
 
        
         [HttpPost]
-        public async Task<IActionResult> Loanledgerupdate(string batchno)
+        public async Task<IActionResult> Loanledgerupdate()
         {
             using (SqlConnection sqls = new SqlConnection(_connectionstring))
             {
@@ -511,7 +522,6 @@ namespace NavyAccountWeb.Controllers
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.Parameters.Add(new SqlParameter("@globaluser", User.Identity.Name));
                     cmd.Parameters.Add(new SqlParameter("@fundcode", HttpContext.Session.GetString("fundtypecode")));
-                    cmd.Parameters.Add(new SqlParameter("@batchnos", batchno));
 
                     await sqls.OpenAsync();
                    await cmd.ExecuteNonQueryAsync();
@@ -546,28 +556,35 @@ namespace NavyAccountWeb.Controllers
             return RedirectToAction("variance");
         }
 
-       
-
-
         [HttpGet]
-        public async Task<IActionResult> printloandisc(string batchNo)
+        public async Task<IActionResult> printloandisc(int loantype)
         {
             var fundcode = HttpContext.Session.GetString("fundtypecode");
-            var listloanrepay = loandiscService.GetAllbyFundcode(fundcode,batchNo).OrderByDescending(x => x.principal);
+            if (loantype > 0)
+            {
+                var listloanrepay = loandiscService.GetAllbyFundcode(fundcode, loantype).OrderByDescending(x => x.principal);
 
-            return await generatePdf.GetPdf("Views/LoanDisc/loanRepaymentReport.cshtml", listloanrepay);
+                return await generatePdf.GetPdf("Views/LoanDisc/loanRepaymentReport.cshtml", listloanrepay);
+            }
+            else
+            {
+                var listloanrepay = loandiscService.GetAllbyFundcode(fundcode).OrderByDescending(x => x.principal);
+
+                return await generatePdf.GetPdf("Views/LoanDisc/loanRepaymentReport.cshtml", listloanrepay);
+
+            }
         }
-        public async Task<IActionResult> printloandiscVariance(string batchNo)
+        public async Task<IActionResult> printloandiscVariance(int loantype)
         {
             var fundcode = HttpContext.Session.GetString("fundtypecode");
-            var listloanrepay = loandiscService.GetAllbyFundcode(fundcode, batchNo).OrderByDescending(x => x.principal);
+            var listloanrepay = loandiscService.GetAllbyFundcode(fundcode, loantype).OrderByDescending(x => x.principal);
 
             return await generatePdf.GetPdf("Views/LoanDisc/LoanVarianceReport.cshtml", listloanrepay);
         }
-        public async Task<IActionResult> printloandiscdiscrepancy(string batchNo)
+        public async Task<IActionResult> printloandiscdiscrepancy(int loantype)
         {
             var fundcode = HttpContext.Session.GetString("fundtypecode");
-            var listloanrepay = loandiscService.GetAllbyFundcode(fundcode, batchNo).OrderByDescending(x => x.principal);
+            var listloanrepay = loandiscService.GetAllbyFundcode(fundcode, loantype).OrderByDescending(x => x.principal);
             if (listloanrepay.Count()!=0)
             {
                 return await generatePdf.GetPdf("Views/LoanDisc/LoanDiscrepancyReport.cshtml", listloanrepay);

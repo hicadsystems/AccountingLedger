@@ -27,11 +27,11 @@ namespace NavyAccountCore.Core.Repositories
 
             return context.pf_loandisc.FirstOrDefault(predicate);
         }
-        public IEnumerable<LoandiscVM> Getbyfundcode(string fundcode,string batch)
+        public IEnumerable<LoandiscVM> Getbyfundcode(string fundcode,int loantype)
         {
              var pp= (from loandisc in context.pf_loandisc
                     join per in context.npf_Charts on loandisc.loanact equals per.acctcode
-                    where (loandisc.fundcode == fundcode && loandisc.batchno==batch)
+                    where (loandisc.fundcode == fundcode && loandisc.loantype== loantype.ToString())
                     select new LoandiscVM
                     {
                         count=0,
@@ -117,10 +117,10 @@ namespace NavyAccountCore.Core.Repositories
             }
             return d;
         }
-        public pf_loandisc GetloanDiscByBatch(string loanacct,string batchno)
+        public pf_loandisc GetloanDiscByBatch(string loanacct,string loantype)
         {
 
-            return context.pf_loandisc.Where(x=>x.batchno==batchno && x.loanact==loanacct).FirstOrDefault();
+            return context.pf_loandisc.Where(x=>x.loantype== loantype && x.loanact==loanacct).FirstOrDefault();
         }
         public async Task<List<pf_loandisc>> GetloanDiscByBatchdrp()
         {

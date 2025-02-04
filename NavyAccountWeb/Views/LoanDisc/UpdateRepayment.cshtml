@@ -21,7 +21,7 @@
                 <h5 class="card-title">Loan Update</h5>
             </div>
 
-            @TempData["messagedd"]
+            <h3  class="alert-success">@TempData["message"]</h3>
             <div class="card-body">
                 <div class="row">
                   
@@ -34,8 +34,8 @@
                             @Html.AntiForgeryToken()
                            <div class="col-md-8">
                                 <div class="form-group">
-                                    <label>Batch</label>
-                                    @Html.DropDownList("batchno", new SelectList(ViewBag.batch, "batchno", "batchno"),"", new { @class = "form-control" })
+                                    <label>Loan Type</label>
+                                    @Html.DropDownList("loantype", new SelectList(ViewBag.getloantype, "Id", "Description"), new { @class = "form-control" })
                                 </div>
                             </div>
 

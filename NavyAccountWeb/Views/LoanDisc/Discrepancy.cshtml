@@ -31,11 +31,10 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>Batch</label>
-                                    @Html.DropDownList("batchNo", new SelectList(ViewBag.batch, "batchno", "batchno"), new { @class = "form-control" })
-                                </div>
+                                     <label>Loan Type</label>
+                                    @Html.DropDownList("loantype", new SelectList(ViewBag.getloantype, "Id", "Description"), new { @class = "form-control" })
                             </div>
-
+                            </div>
                         </div>
                         <div class="form-group">
                             <input type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Generate Discrepancy" />

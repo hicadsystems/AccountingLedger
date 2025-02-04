@@ -62,13 +62,17 @@
                 {
                     @Html.AntiForgeryToken()
                     <div class="row">
-                        <div class="col-md-3">
+   @*                     <div class="col-md-3">
                             <div class="form-group">
 
                                 @Html.DropDownList("batchNo", new SelectList(ViewBag.batch, "batchNo", "batchNo"), "Select Batch No", new { @class = "form-control",@id="batch" })
                             </div>
-                        </div>
-
+                        </div>*@
+                         <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.DropDownList("loantype", new SelectList(ViewBag.getloantype, "Id", "Description"), "Select Loan Type", new { @class = "form-control" })
+                    </div>
+                </div>
 
 
 

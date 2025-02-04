@@ -22,6 +22,7 @@ namespace NavyAccountCore.Models
 
         public string groupcode { get; set; }
         public string batchno { get; set; }
+        public string loantype { get; set; }
 
     }
 }

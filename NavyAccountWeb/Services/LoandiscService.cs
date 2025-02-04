@@ -17,9 +17,9 @@ namespace NavyAccountWeb.Services
             this.unitOfWork = unitOfWork;
 
         }
-        public IEnumerable<LoandiscVM> GetAllbyFundcode(string fundcode, string batch)
+        public IEnumerable<LoandiscVM> GetAllbyFundcode(string fundcode, int loantype)
         {
-            return unitOfWork.pf_loandisc.Getbyfundcode(fundcode,batch);
+            return unitOfWork.pf_loandisc.Getbyfundcode(fundcode,loantype);
         }
         public IEnumerable<LoandiscVM> GetAllbyFundcode(string fundcode)
         {

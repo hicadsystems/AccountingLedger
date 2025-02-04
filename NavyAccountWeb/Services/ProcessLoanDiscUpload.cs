@@ -50,22 +50,32 @@ namespace NavyAccountWeb.Services
             {
                 
                 var getPersonId = unitOfWork.person.GetAllAsync().Where(x => x.SVC_NO == s.svcno).FirstOrDefault();
-                var getloanType = unitOfWork.loanType.GetLoanTypeByCode(x => x.Code == fundscode);
-                string account = getloanType.loanacct.Substring(0, 4) + "-" + getPersonId.SVC_NO;
-                string batch = s.batchno + "_" + getloanType.Description;
+                    if (getPersonId == null)
+                    {
+                        message = $"SERVICE NO {s.svcno} NOT REGISTERED";
+                        return message;
+                    }
+                var getloanType = unitOfWork.loanType.GetLoanTypeByCode(x => x.Description == s.loantype);
+                    if (getloanType == null)
+                    {
+                        message = $"loan type {s.loantype} not fund";
+                        return message;
+                    }
+                    string account = getloanType.loanacct.Substring(0, 4) + "-" + getPersonId.SVC_NO;
+                //string batch = s.batchno + "_" + getloanType.Description;
 
-                var getbatch = unitOfWork.pf_loandisc.GetloanDiscByBatch(account, batch);
+                //var getbatch = unitOfWork.pf_loandisc.GetloanDiscByBatch(account, getloanType.Id.ToString());
                 var getcontrDisc = unitOfWork.pf_loandisc.GetloanDiscByCode(x => x.loanact == account);
-                var getthebatch = unitOfWork.pf_loandisc.GetloanDiscByCode(x => x.batchno == batch);
+                var getthebatch = unitOfWork.pf_loandisc.GetloanDiscByCode(x => x.loantype == getloanType.Id.ToString());
                 if (getthebatch == null)
                 {
-                    message = "batch not fund";
+                    message = "loan type not fund";
                     return message;
                 }
-                if (getcontrDisc != null && getbatch!=null)
+                if (getcontrDisc != null)
                 {
-                    getbatch.extpay = s.amount;
-                    unitOfWork.pf_loandisc.Update(getbatch);
+                    getcontrDisc.extpay = s.amount;
+                    unitOfWork.pf_loandisc.Update(getcontrDisc);
                 }
                 else
                 {
