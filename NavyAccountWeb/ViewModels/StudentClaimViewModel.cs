@@ -40,5 +40,9 @@ namespace NavyAccountWeb.ViewModels
         public List<StudentClaimViewModel> claimRecord { get; set; }
         public List<StudentPayViewModel> paymentRecord { get; set; }
     }
-
+    public class ClaimValueViewModel
+    {
+        public decimal? ClaimAmount { get; set; }
+        
+    }
 }

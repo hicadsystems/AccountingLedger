@@ -11,7 +11,7 @@ namespace NavyAccountWeb.IServices
     public interface IStudentRecordService
     {
         Task<List<StudentRecordVM>> GetStudentList2(int iDisplayStart, int iDisplayLength);
-        Task<List<StudentReport>> GetStudentReport(StudentFilterModel value);
+        Task<List<StudentRecordVM>> GetStudentReport(StudentFilterModel value);
         Task<bool> AddStudent(sr_StudentRecord value);
         Task<bool> UpdateStudent(sr_StudentRecord value);
         void DeleteStudent(sr_StudentRecord value);
@@ -29,5 +29,6 @@ namespace NavyAccountWeb.IServices
         StudentRecordVM GetStudentListByID(int id);
         StudentRecordVM GetOldStudentListByID(int id);
         Task<List<StudentRecordVM>> GetStudentListOnClaim();
+        Task<List<StudentRecordVM>> GetStudentReporting(int schoolid);
     }
 }

@@ -37,22 +37,22 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
         }
         [Route("GetStudentClaim/{studentNo}")]
         [HttpGet]
-        public IActionResult Index(string studentNo)
+        public async Task<IActionResult> Index(int studentNo)
         {
-            decimal amount = 0M;
-            decimal amountDue = 0M;
+            decimal? amount = 0M;
+            decimal? amountDue = 0M;
             decimal amt = 0M;
             var stud = stdrecordService.GetStudentByid(Convert.ToInt32(studentNo)).Result;
             if (stud!=null)
             {
-                amount = recordService.GetAmountPerSchoolType(studentNo, out amt);
+                amount = await recordService.GetClaimValue(studentNo);
                 amountDue = amount;
             }
 
             sr_ClaimRecord val = new sr_ClaimRecord();
             val.id = stud.id;
             val.Transdate = DateTime.Now;
-            val.Amount = amountDue;
+            val.Amount = Convert.ToDecimal(amountDue);
             val.Reg_Number = stud.Reg_Number;
             val.CreatedBy = stud.Surname + " " + stud.FirstName + " " + stud.MiddleName;
             val.CreatedDate = DateTime.Now;

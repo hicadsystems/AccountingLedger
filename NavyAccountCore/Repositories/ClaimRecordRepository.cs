@@ -30,9 +30,9 @@ namespace NavyAccountCore.Repositories
         {
             var per = context.sr_StudentRecord.FirstOrDefault(x => x.id == int.Parse(studentNo));
              decimal amount = 0M;
-            if (per.SchoolCode == "Primary")
+            if (per.SchoolCode == "PRIMARY")
                 amount =Convert.ToDecimal(200000);
-            if (per.SchoolCode == "Secondary")
+            if (per.SchoolCode == "SECONDARY")
                 amount = Convert.ToDecimal(400000);
 
            decimal amount2 =  amount;

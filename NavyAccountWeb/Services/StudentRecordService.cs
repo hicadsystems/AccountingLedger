@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using NavyAccountCore.Core.Data;
 using NavyAccountCore.Entities;
+using NavyAccountCore.IRepositories;
 using NavyAccountCore.Models;
 using NavyAccountWeb.IServices;
 using System;
@@ -56,7 +57,7 @@ namespace NavyAccountWeb.Services
             var result = new List<StudentRecordVM>();
             var param = new DynamicParameters();
             result = dapper.GetAll<StudentRecordVM>("sr_GetAllStudent", param, commandType: System.Data.CommandType.StoredProcedure);
-            return  result.Where(x=>x.SchoolId==schoolid).Skip(iDisplayStart).Take(iDisplayLength).ToList();
+            return  result.Where(x=>x.SchoolId==schoolid && x.Status.Trim()=="ACTIVE").Skip(iDisplayStart).Take(iDisplayLength).ToList();
           //  return await _unitOfWork.student.getStudentList(iDisplayStart, iDisplayLength);
         }
         public async Task<List<StudentRecordVM>> GetStudentList2(int iDisplayStart, int iDisplayLength)
@@ -105,18 +106,22 @@ namespace NavyAccountWeb.Services
 
         public async Task<List<StudentRecordVM>> GetInactiveStudentList(int iDisplayStart, int iDisplayLength)
         {
-            return await _unitOfWork.student.GetInactiveStudentList(iDisplayStart, iDisplayLength);
+            var result = new List<StudentRecordVM>();
+            var param = new DynamicParameters();
+            result = dapper.GetAll<StudentRecordVM>("sr_GetAllStudent", param, commandType: System.Data.CommandType.StoredProcedure);
+            return  result.Where(x=> x.Status.Trim()=="INACTIVE").Skip(iDisplayStart).Take(iDisplayLength).ToList();
+
         }
         public async Task<List<StudentRecordVM>> GetStudentListOnClaim()
         {
             return await _unitOfWork.student.GetStudentListOnCliam();
         }
 
-        public async Task<List<StudentReport>> GetStudentReport(StudentFilterModel value)
+        public async Task<List<StudentRecordVM>> GetStudentReport(StudentFilterModel value)
         {
-            var result = new List<StudentReport>();
+            var result = new List<StudentRecordVM>();
             var param = new DynamicParameters();
-            result = dapper.GetAll<StudentReport>("sr_GetStudentNominalRoll", param, commandType: System.Data.CommandType.StoredProcedure);
+            result = dapper.GetAll<StudentRecordVM>("sr_GetStudentNominalRoll", param, commandType: System.Data.CommandType.StoredProcedure);
             if(value.sortby=="School")
             result = result.Where(x => ((value.SchoolId==0)|| (x.SchoolId == value.SchoolId)) 
                         && ((value.ClassId == 0) || (x.ClassId == value.ClassId))
@@ -143,6 +148,15 @@ namespace NavyAccountWeb.Services
                        && ((value.ParentalStatus == "0") || (x.ParentalStatus == value.ParentalStatus))
                        && ((value.Status == "0") || (x.Status == value.Status))).OrderBy(x => x.SchoolId).ToList();
 
+            return result;
+        }
+        public async Task<List<StudentRecordVM>> GetStudentReporting(int schoolid)
+        {
+            //var getlist = _studentRecordRepository.GetAllAsync().Where(x => x.SchoolId == schoolid);
+            var result = new List<StudentRecordVM>();
+            var param = new DynamicParameters();
+            param.Add("@schoolId", schoolid);
+            result = dapper.GetAll<StudentRecordVM>("sr_GetAllStudentBySchool", param, commandType: System.Data.CommandType.StoredProcedure);
             return result;
         }
     }

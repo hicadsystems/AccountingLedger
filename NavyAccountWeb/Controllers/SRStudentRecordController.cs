@@ -13,6 +13,9 @@ using MoreLinq;
 using System.Threading;
 using System.Threading.Tasks;
 using Wkhtmltopdf.NetCore;
+using NavyAccountWeb.IServices;
+using static NavyAccountWeb.Models.SchoolFilterModels;
+using Dapper;
 
 namespace NavyAccountWeb.Controllers
 {
@@ -21,11 +24,16 @@ namespace NavyAccountWeb.Controllers
         private readonly string _connectionstring;
         private readonly IGeneratePdf generatePdf;
         private readonly IUnitOfWork unitofWork;
+        private readonly IStudentRecordService _recordService;
+        private readonly IDapper _dapper;
         private readonly INavyAccountDbContext context;
-        public SRStudentRecordController(INavyAccountDbContext context,IGeneratePdf generatePdf, IConfiguration configuration, IUnitOfWork unitofWork)
+        public SRStudentRecordController(INavyAccountDbContext context,IGeneratePdf generatePdf, IConfiguration configuration,
+            IUnitOfWork unitofWork, IStudentRecordService recordService, IDapper dapper)
         {
             this.generatePdf = generatePdf;
             this.unitofWork = unitofWork;
+            _recordService = recordService;
+            _dapper = dapper;
             this.context = context;
             _connectionstring = configuration.GetConnectionString("DefaultConnection");
         }
@@ -319,5 +327,25 @@ namespace NavyAccountWeb.Controllers
                 return View();
             }
         }
+
+        [Route("SRStudentRecord/StudentRecordReport/{SchoolId}")]
+        public async Task<IActionResult> GetByCode(int SchoolId)
+        {
+            try
+            {
+                var result = new List<StudentRecordVM>();
+                var param = new DynamicParameters();
+                param.Add("@schoolId", SchoolId);
+                result = _dapper.GetAll<StudentRecordVM>("sr_GetAllStudentBySchool", param, commandType: System.Data.CommandType.StoredProcedure);          
+                return await generatePdf.GetPdf("Views/SRStudentRecord/StudentRecordReport.cshtml", result);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
     }
 }

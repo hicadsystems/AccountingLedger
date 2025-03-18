@@ -89,6 +89,8 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
             pn.ParentName = pers.ParentName;
             pn.GuardianName = pers.GuardianName;
             pn.ClassCategory = pers.ClassCategory;
+            pn.ExitReason = pers.ExitReason;
+            pn.ExitDate=pers.ExitDate;
 
             return Ok(new { responseCode = 200, pn });
         }
@@ -130,6 +132,8 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
             pn.ParentName = pers.ParentName;
             pn.GuardianName = pers.GuardianName;
             pn.ClassCategory = pers.ClassCategory;
+            pn.ExitReason = pers.ExitReason;
+            pn.ExitDate = pers.ExitDate;
 
             return Ok(new { responseCode = 200, pn });
         }
@@ -186,7 +190,7 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
         }
         [Route("getStudentNorminalRoll/{SchoolId}/{ClassId}/{Status}/{ParentalStatus}/{sortby}")]
         [HttpGet]
-        public async Task<IEnumerable<StudentReport>> GetStudentReport(int SchoolId,int ClassId,string Status,string ParentalStatus, string sortby)
+        public async Task<IEnumerable<StudentRecordVM>> GetStudentReport(int SchoolId,int ClassId,string Status,string ParentalStatus, string sortby)
         {
             StudentFilterModel value = new StudentFilterModel();
             value.SchoolId = SchoolId;
@@ -207,7 +211,7 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
         }
         [Route("getStudentNorminalRoll2/{SchoolId}/{ClassId}/{Status}/{ParentalStatus}/{sortby}")]
         [HttpGet]
-        public async Task<IEnumerable<StudentReport>> GetStudentReport2(StudentFilterModel value)
+        public async Task<IEnumerable<StudentRecordVM>> GetStudentReport2(StudentFilterModel value)
         {
             //StudentFilterModel value = new StudentFilterModel();
             //value.SchoolId = SchoolId;
@@ -254,7 +258,12 @@ namespace NavyAccountWeb.Controllers.Api.StudentInsurance
                 sch.Guardianid = pers.Guardianid;
                 sch.ClassId = pers.ClassId;
                 sch.SchoolId = pers.SchoolId;
-                sch.Status = pers.Status;
+                if (pers.ExitDate != null)
+                {
+                    sch.Status = pers.Status;
+                    sch.ExitDate = pers.ExitDate;
+                    sch.ExitReason = pers.ExitReason;
+                }
 
                 recordService.UpdateStudent(sch);
                 return Ok(new { respnseCode = 200, ResponseDescription = "Successfully Updated" });

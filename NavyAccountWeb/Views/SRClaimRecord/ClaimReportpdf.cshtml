@@ -3,6 +3,8 @@
 @{
     Layout = null;
     decimal total = 0M;
+    decimal totalClaim = 0M;
+    int serialNumber = 1;
 }
 
 <!DOCTYPE html>
@@ -13,28 +15,28 @@
     <title>ClaimPaymentReport</title>
 </head>
 <body style="width:1200px">
-    <h6 style="text-align:center">RETRICTED</h6>
+    <h6 style="text-align:center">RESTRICTED</h6>
     <h2 style="text-align:center">NIGERIAN NAVY DIRECTORATE OF NON-PUBLIC FUND</h2>
-    <h2 style="text-align:center">SCHOOL WALFARE SCHEME</h2>
-    Claim Payment Report: Produce On @DateTime.Now
+    <h2 style="text-align:center">SCHOOL WELFARE SCHEME</h2>
+    Claim Payment Report: Produced On @DateTime.Now
     <div class="card-body">
         <table border="2" cellpadding="2" cellspacing="0" width="100%">
             <tr>
-                <th>Reg number</th>
+                <th>S/N</th>
+                <th>Reg Number</th>
                 <th>Full Name</th>
-                <td>Sex</td>
-                <td>Age</td>
-                <th>School name</th>
+                <th>Sex</th>
+                <th>Age</th>
+                <th>School Name</th>
                 <th>School Type</th>
-                <td>Class</td>
+                <th>Class</th>
                 <th>Claim Amount</th>
                 <th>School Fee</th>
-
             </tr>
             @if (Model.distintrecord.Count == 0)
             {
                 <tr>
-                    <td colspan="12"><b>No Record Found</b></td>
+                    <td colspan="10"><b>No Record Found</b></td>
                 </tr>
             }
             else
@@ -42,13 +44,13 @@
                 @foreach (var a in Model.distintrecord)
                 {
                     <tr style="align-content:center">
-                        <td colspan="9" style="font-weight:bold">@a.Schoolname.ToUpper()</td>
-
+                        <td colspan="10" style="font-weight:bold">@a.Schoolname.ToUpper()</td>
                     </tr>
 
                     @foreach (var b in Model.allRecord.Where(x => x.Schoolname == a.Schoolname))
                     {
                         <tr>
+                            <td>@serialNumber</td>
                             <td>@b.Reg_Number</td>
                             <td>@b.Surname</td>
                             <td>@b.Sex</td>
@@ -58,24 +60,22 @@
                             <td>@a.ClassName</td>
                             <td>@Math.Round(b.ClaimAmount.Value, 2)</td>
                             <td>@Math.Round(b.FeeAmount.Value, 2)</td>
-
                         </tr>
-
-
+                        serialNumber++;
 
                         total += (decimal)b.FeeAmount;
-
+                        totalClaim += (decimal)b.ClaimAmount;
                     }
                     <tr>
                         <td colspan="8" style="font-weight:bold">Total</td>
+                        <td style="font-weight:bold">@Math.Round(totalClaim, 2)</td>
                         <td style="font-weight:bold">@Math.Round(total, 2)</td>
-
                     </tr>
                     total = 0;
                 }
             }
         </table>
-        <h6 style="text-align:center">RETRICTED</h6>
+        <h6 style="text-align:center">RESTRICTED</h6>
     </div>
 </body>
 </html>

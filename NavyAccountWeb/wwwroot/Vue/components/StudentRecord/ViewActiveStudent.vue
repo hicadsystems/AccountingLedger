@@ -20,7 +20,14 @@
                     </vuejsAutocomplete>
 
                 </div>
+                 
             </div>
+             <div class="col-12 col-xl-4">
+             <div class="form-group" >
+                    <br />
+                    <button class="btn btn-primary" v-on:click="generateReport" type="button">Print</button>
+                </div>
+             </div>
         </div>
     <div v-if="SchoolId">
         <table id="datatables-buttons" class="table table-striped" style="width:100%">
@@ -114,6 +121,9 @@ mounted () {
  },
    
  methods: {
+  generateReport() {
+                window.open(`/SRStudentRecord/StudentRecordReport/${this.SchoolId}`, "_blank"); 
+           },
     getstudents:function(SchoolId){
         if(SchoolId>0){
         axios

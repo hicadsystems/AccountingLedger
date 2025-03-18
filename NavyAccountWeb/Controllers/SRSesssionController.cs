@@ -37,7 +37,7 @@ namespace NavyAccountWeb.Controllers
                 TempData["returnMessage"] = ex.Message;
                 throw;
             }
-            return View("session");
+            return RedirectToAction("session");
         }
         [HttpPost]
         public IActionResult MigrateToTerm()
@@ -52,7 +52,7 @@ namespace NavyAccountWeb.Controllers
                 TempData["returnMessage"] = ex.Message;
                 throw;
             }
-            return View("term");
+            return RedirectToAction("term");
         }
     }
 }

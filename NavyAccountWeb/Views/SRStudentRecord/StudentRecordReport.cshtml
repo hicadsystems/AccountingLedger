@@ -1,0 +1,57 @@
+﻿@model List<NavyAccountCore.Models.StudentRecordVM>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>PaymentProposal</title>
+</head>
+<body>
+    <h6 style="text-align:center">RETRICTED</h6>
+    <h2 style="text-align:center">NIGERIAN NAVY DIRECTORATE OF NON-PUBLIC FUND</h2>
+    <h2 style="text-align:center">SCHOOL WALFARE SCHEME</h2>
+    Payment Proposal: Produce On @DateTime.Now
+    <div class="card-body">
+        <table border="2" cellpadding="2" cellspacing="0" width="100%">
+            <tr>
+                <th>Reg number</th>
+                <th>Full Name</th>
+                <th>School Name</th>
+                <th>Class Name</th>
+                <th>Sex</th>
+                <th>Parent</th>
+                <th>Phone Number</th>
+            </tr>
+            @if (Model == null)
+            {
+                <tr>
+                    <td colspan="12"><b>No Record Found</b></td>
+                </tr>
+            }
+            else
+            {
+
+                    @foreach (var b in Model)
+                    {
+                        <tr>
+                            <td>@b.Reg_Number</td>
+                            <td>@b.Surname @b.FirstName @b.MiddleName</td>
+                            <td>@b.Schoolname</td>
+                            <td>@b.ClassName</td>
+                            <td>@b.Sex</td>
+                            <td>@b.ParentName</td>
+                            <td>@b.PhoneNumber</td>
+                        </tr>
+
+                    }
+            }
+        </table>
+        <h6 style="text-align:center">RETRICTED</h6>
+    </div>
+</body>
+</html>

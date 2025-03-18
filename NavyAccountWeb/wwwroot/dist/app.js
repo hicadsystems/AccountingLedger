@@ -16107,6 +16107,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -16147,6 +16154,9 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   methods: {
+    generateReport: function generateReport() {
+      window.open("/SRStudentRecord/StudentRecordReport/".concat(this.SchoolId), "_blank");
+    },
     getstudents: function getstudents(SchoolId) {
       var _this2 = this;
 
@@ -57289,6 +57299,22 @@ var render = function () {
               ),
             ])
           : _vm._e(),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-12 col-xl-4" }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c("br"),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary",
+                attrs: { type: "button" },
+                on: { click: _vm.generateReport },
+              },
+              [_vm._v("Print")]
+            ),
+          ]),
+        ]),
       ]),
       _vm._v(" "),
       _vm.SchoolId

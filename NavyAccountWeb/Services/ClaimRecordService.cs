@@ -66,7 +66,15 @@ namespace NavyAccountWeb.Services
 
             return result;
         }
-        
+        public async Task<decimal?> GetClaimValue(int studentNo)
+        {
+            var result = new ClaimValueViewModel();
+            var param = new DynamicParameters();
+            param.Add("@studentid", studentNo);
+            result = dapper.Get<ClaimValueViewModel>("sr_GetClaimValue", param, commandType: System.Data.CommandType.StoredProcedure);
+
+            return result.ClaimAmount;
+        }
         public async Task<List<ClaimPaymentReport>> GetStudentCurrentClaim()
         {
             var result = new List<ClaimPaymentReport>();

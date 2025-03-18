@@ -38,7 +38,7 @@ namespace NavyAccountCore.Models
 
         public int studentid { get; set; }
         public string Reg_Number { set; get; }
-        public string StudentName { set; get; }
+        public string Studentname { set; get; }
         public string ClassName { set; get; }
         public int? ClassId { get; set; }
         public string SchoolName { set; get; }

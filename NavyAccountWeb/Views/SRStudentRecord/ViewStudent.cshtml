@@ -1,25 +1,28 @@
 ﻿
-@{ ViewData["Title"] = "ViewStudent";
-    Layout = "~/Views/Shared/_SchoolLayout.cshtml"; }
+@{ 
+    ViewData["Title"] = "ViewStudent";
+    Layout = "~/Views/Shared/_SchoolLayout.cshtml"; 
+}
 
 
 
 <div class="row">
     <div class="col-12">
         <div class="card">
-            <div class="card-header">
+           @* <div class="card-header">
                 <h5 class="card-title">Student List</h5>
                 @using (Html.BeginForm("printfund2", "FundType", FormMethod.Get))
                 {
-    <div class="col-4">
-        <div class="form-group">
-            <input type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Print" />
-        </div>
+                   <div class="col-4">
+                    <div class="form-group">
+                        <input type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Print" />
+                    </div>
 
-    </div>}
-            </div>
+                </div>
+                }
+            </div>*@
 
-            <view-active-student></view-active-student>
+           <view-active-student></view-active-student>
         </div>
     </div>
 </div>
