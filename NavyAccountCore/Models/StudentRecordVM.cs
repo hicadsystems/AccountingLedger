@@ -31,6 +31,8 @@ namespace NavyAccountCore.Models
         public string GuardianName { set; get; }
         public decimal? ClaimAmount { get; set; }
         public DateTime? ClaimDate { get; set; }
+        public string Session { set; get; }
+        public string Term { set; get; }
 
     }
     public class StudentReport

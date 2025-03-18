@@ -192,7 +192,6 @@ mounted () {
             })
         },
         printAsPdf:function(schoolId,classId,Status,ParentalStatus,sortby){
-            alert(schoolId); alert(classId);
             window.open(`/SRSchoolReport/PrintStudentByPdf/${schoolId}/${classId}/${Status}/${ParentalStatus}/${sortby}`)
         },
         printAsExcel:function(schoolId,classId,Status,ParentalStatus,sortby){
@@ -208,7 +207,6 @@ mounted () {
         })
      },
       setValueStudent: function(result) {
-          alert(result.value)
          axios
        .get(`/api/StudentRecord/getStudentByID/${result.value}`)
        .then(response => {this.studentList = response.data;

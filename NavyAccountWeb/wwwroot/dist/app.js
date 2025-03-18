@@ -14547,8 +14547,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     printAsPdf: function printAsPdf(schoolId, classId, Status, ParentalStatus, sortby) {
-      alert(schoolId);
-      alert(classId);
       window.open("/SRSchoolReport/PrintStudentByPdf/".concat(schoolId, "/").concat(classId, "/").concat(Status, "/").concat(ParentalStatus, "/").concat(sortby));
     },
     printAsExcel: function printAsExcel(schoolId, classId, Status, ParentalStatus, sortby) {
@@ -14566,7 +14564,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     setValueStudent: function setValueStudent(result) {
       var _this4 = this;
 
-      alert(result.value);
       axios.get("/api/StudentRecord/getStudentByID/".concat(result.value)).then(function (response) {
         _this4.studentList = response.data;
       });

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<NavyAccountCore.Models.StudentReport>
+﻿@model IEnumerable<NavyAccountCore.Models.StudentRecordVM>
 
 @{
     Layout = null;
@@ -20,7 +20,7 @@
     Claim Summary Report: Produce On @DateTime.Now
 <div class="card-body">
     <table border="2" cellpadding="2" cellspacing="0" width="100%">
-        <tr><td><h3>CLAIM  HISTORY</h3></td></tr>
+        <tr><h3>NOMINAL ROLL</h3></tr>
         <tr>
             <th>Reg number</th>
             <th>Full Name</th>
@@ -47,10 +47,10 @@
             {
             <tr>
                 <td>@b.Reg_Number</td>
-                <td>@b.Studentname</td>
+                <td>@b.FirstName @b.MiddleName @b.Surname</td>
                 <td>@b.Sex</td>
                 <td>@b.Age</td>
-                <td>@b.SchoolName</td>
+                <td>@b.Schoolname</td>
                 <td>@b.ClassName</td>
                 <td>@b.ParentName</td>
                 <td>@b.ParentalStatus</td>
