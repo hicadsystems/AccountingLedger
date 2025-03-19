@@ -336,9 +336,6 @@ namespace NavyAccountWeb.Controllers
             return await generatePdf.GetPdf("Views/BalsheetReport/SurplusDedificitReport.cshtml", result);
 
         }
-
-       
-
         public IActionResult balancesheetsandd() //balance sheet surplus and deficit
         {
             string fundTypeCode = HttpContext.Session.GetString("fundtypecode");
@@ -352,12 +349,6 @@ namespace NavyAccountWeb.Controllers
 
             return View(jk);
         }
-
-        
-
-
-
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> balancesheetsandd(AuditViewModel model)
@@ -383,8 +374,6 @@ namespace NavyAccountWeb.Controllers
             return await generatePdf.GetPdf("Views/BalsheetReport/BalsheetReport_surplusndeficit.cshtml", result);
 
         }
-
-        
 
         [HttpPost]
         [ValidateAntiForgeryToken]

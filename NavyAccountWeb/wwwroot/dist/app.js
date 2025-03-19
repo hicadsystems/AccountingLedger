@@ -14483,8 +14483,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         Status: '0',
         CommencementDate: null,
         ParentalStatus: '0',
-        ClassId: '0',
-        SchoolId: '0',
+        ClassId: 0,
+        SchoolId: 0,
         sortby: '0'
       }
     }, _defineProperty(_ref, "parentalStatusList", [{
