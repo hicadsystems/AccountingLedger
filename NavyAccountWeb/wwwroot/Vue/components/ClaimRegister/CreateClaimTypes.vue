@@ -130,8 +130,6 @@
 
         </div>
 
-    </div>
-
     <!-- END WRAPPER -->
 </template>
 
@@ -206,11 +204,10 @@ export default {
     },
      methods: {
 
-          assertMaxChars: function () {
-        if (this.acctno.length = this.maxLengthInCars) {
-            this.acctno = this.acctno.substring(0,this.maxLengthInCars);
-     
-         }
+          assertMaxChars() {
+      if (this.postBody.acctno.length > this.maxLengthInCars) {
+        this.postBody.acctno = this.postBody.acctno.substring(0, this.maxLengthInCars);
+      }
         },
          generateReport() {
                 window.open(`/ClaimRegister/finishClaimRequest/${this.postBody.PersonID}/${this.postBody.FundTypeID}`, "_blank"); 
@@ -240,7 +237,7 @@ export default {
         },
         postPost() {
             if (this.submitorUpdate == 'Update') {
-                    axios.post(`/ClaimRegister/CreateClaim`, this.postBody )
+                    axios.post(`api/ClaimRegister/CreateClaim`, this.postBody )
                         .then(response => {
                             this.responseMessage = response.data.responseDescription;
                             this.canProcess = true;

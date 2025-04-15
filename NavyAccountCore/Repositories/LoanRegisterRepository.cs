@@ -249,7 +249,7 @@ namespace NavyAccountCore.Core.Repositories
                               StatusId = statuss.Id,
                               svcno = pers.SVC_NO,
                               StatusAndDate = loanRegister.StatusAndStatusDate
-                          }).ToListAsync();
+                          }).OrderByDescending(x=>x.datecreated).ToListAsync();
         }
 
 

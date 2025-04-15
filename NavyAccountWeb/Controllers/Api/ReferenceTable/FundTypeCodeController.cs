@@ -24,7 +24,13 @@ namespace NavyAccountWeb.Controllers.Api.ReferenceTable
 
             return getF;
         }
-
+        [Route("getCurrentYear")]
+        [HttpGet]
+        public int GetCurrentYear()
+        {
+            var getF = fundTypeService.GetCurrentYear();
+            return getF;
+        }
 
         [Route("getFundTypeByCode/{fundTypeCode}")]
         [HttpGet]

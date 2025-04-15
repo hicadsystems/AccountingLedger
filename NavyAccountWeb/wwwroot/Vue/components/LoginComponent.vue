@@ -29,7 +29,7 @@
                     <input id="checkbox-signup" type="checkbox" class="filled-in chk-col-light-blue">
                     <label for="checkbox-signup"> Remember me </label>
                 </div>
-                <a href="/Home/ForgotPassword" id="to-recover" class="text-muted float-right"><i class="fa fa-lock m-r-5"></i> Forgot pwd?</a>
+                <a href="/Authentication/ForgotPassword" id="to-recover" class="text-muted float-right"><i class="fa fa-lock m-r-5"></i> Forgot pwd?</a>
             </div>
         </div>
         <div class="form-group text-center m-t-20">

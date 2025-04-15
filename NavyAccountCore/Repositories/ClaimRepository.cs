@@ -90,7 +90,8 @@ namespace NavyAccountCore.Core.Repositories
                         bank=bank.bankname,
                         Remark=claim.Remark,
                         designation="Civilian",
-                        batchno = claim.BatchNo
+                        batchno = claim.BatchNo,
+                       
 
                     }).ToList();
             }
@@ -110,8 +111,9 @@ namespace NavyAccountCore.Core.Repositories
                             bank = bank.bankname,
                             Remark = claim.Remark,
                             designation = "Civilian",
-                            batchno=claim.BatchNo
-
+                            batchno=claim.BatchNo,
+                             startdate = startdate,
+                            enddate = enddate,
 
                         }).ToList();
                 return dd.ToList();

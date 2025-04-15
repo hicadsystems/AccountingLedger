@@ -34,7 +34,11 @@ namespace NavyAccountWeb.Controllers
 
         
         public IActionResult Index()
-        { 
+        {
+            string fundTypeCode = HttpContext.Session.GetString("fundtypecode");
+            var p = fundService.GetFundTypeCodeByCode(fundTypeCode);
+            string ProcessYear = p.processingYear.ToString();
+
             return View();
         }
 
@@ -74,7 +78,7 @@ namespace NavyAccountWeb.Controllers
                 else
                 {
                    
-                    string wdoc2 = "Open" + fundTypeCode + frmForm;
+                    string wdoc2 = "Open" + fundTypeCode + frmForm+ "00";
                     //check npf_history
                     j = services.GenerateNpfHistory(wdoc2).OrderBy(x => x.code).ToList();
                     if(indicator == "Main Ledger")

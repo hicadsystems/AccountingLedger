@@ -1,0 +1,41 @@
+﻿<div class="header">
+    <h1 class="header-title">
+        Personnel Upload
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="Home/Index">Main</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Upload Personnel</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Personnel Upload</h5>
+            </div>
+
+            @TempData["message"]
+        <div class="card-body">
+
+            <a href="~/uploads/PersonnelSample.xlsx">Download Sample</a>
+            @using (Html.BeginForm("PersonnelUpload", "Person", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-group">
+                    <input type="file" name="formFile" class="form-control" required />
+                </div>
+                <div class="form-group">
+                    <input type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Upload" />
+                </div>
+            }
+
+        </div>
+
+
+
+        </div>
+    </div>
+</div>

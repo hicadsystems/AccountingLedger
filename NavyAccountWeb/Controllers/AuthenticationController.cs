@@ -10,7 +10,10 @@ using NavyAccountCore.Core.Data;
 using Microsoft.AspNetCore.Authorization;
 using NavyAccountCore.Core.Entities;
 using System;
-//using System.Collections.Generic;
+using NavyAccountWeb.Models;
+using NavyAccountWeb.Services;
+using Microsoft.AspNetCore.Identity;
+using System.Net;
 
 
 namespace NavyAccountWeb.Controllers
@@ -20,15 +23,20 @@ namespace NavyAccountWeb.Controllers
         private readonly INavyAccountDbContext context;
         private readonly IAuthenticationService authenticationService;
         private readonly IUserService userService;
-        
+        private readonly IMailService mailService;
+        private readonly UserManager<User> userManager;
         private readonly IFundTypeCodeService fundtypecodeService;
         private readonly IUnitOfWork unitOfWork;
 
-        public AuthenticationController(INavyAccountDbContext context,IUnitOfWork unitOfWork ,IFundTypeCodeService fundtypecodeService,IAuthenticationService authenticationService, IUserService userService) :base(userService)
+        public AuthenticationController(INavyAccountDbContext context, IUnitOfWork unitOfWork
+            , IFundTypeCodeService fundtypecodeService, IAuthenticationService authenticationService,
+            IUserService userService, IMailService mailService, UserManager<User> userManager) : base(userService)
         {
             this.userService = userService;
+            this.mailService = mailService;
+            this.userManager = userManager;
             this.authenticationService = authenticationService;
-            
+
             this.fundtypecodeService = fundtypecodeService;
             this.unitOfWork = unitOfWork;
             this.context = context;
@@ -39,33 +47,33 @@ namespace NavyAccountWeb.Controllers
         {
             try
             {
-            var auth = await authenticationService.SignInUserAsync(login.UserName, login.Password, "false");
-            
-            if (!auth.Success)
-            {
-                TempData["ErrorMessage"] = auth.Message;
-                return new RedirectResult(RefererUrl());
-            }
-            //set session for fundtype
-            //var roleo = context.UserRoles.Find(auth.Data.UserName).RoleId;
+                var auth = await authenticationService.SignInUserAsync(login.UserName, login.Password, "false");
 
-            var getfundtypecode = unitOfWork.fundTypeCode.Getfundtypebycode(x => x.Code == ""+login.fundtype);
-            int fundid = getfundtypecode.Id;
-            string fundcode = getfundtypecode.Code;
-            string discription = getfundtypecode.Description;
+                if (!auth.Success)
+                {
+                    TempData["ErrorMessage"] = auth.Message;
+                    return new RedirectResult(RefererUrl());
+                }
+                //set session for fundtype
+                //var roleo = context.UserRoles.Find(auth.Data.UserName).RoleId;
 
-
-
-            //var getfundtype= fundtypeService.GetFundTypeById(login.fundtype).Result;
-            HttpContext.Session.SetString("fundtypedescription", discription);
-            HttpContext.Session.SetString("fundtypecode", fundcode);
-            HttpContext.Session.SetInt32("fundtypeid", fundid);
-
-            HttpContext.Session.SetInt32("processingYear", getfundtypecode.processingYear);
-            HttpContext.Session.SetInt32("processingMonth", getfundtypecode.processingMonth);
+                var getfundtypecode = unitOfWork.fundTypeCode.Getfundtypebycode(x => x.Code == "" + login.fundtype);
+                int fundid = getfundtypecode.Id;
+                string fundcode = getfundtypecode.Code;
+                string discription = getfundtypecode.Description;
 
 
-            return RedirectToAction("Index", "Home");
+
+                //var getfundtype= fundtypeService.GetFundTypeById(login.fundtype).Result;
+                HttpContext.Session.SetString("fundtypedescription", discription);
+                HttpContext.Session.SetString("fundtypecode", fundcode);
+                HttpContext.Session.SetInt32("fundtypeid", fundid);
+
+                HttpContext.Session.SetInt32("processingYear", getfundtypecode.processingYear);
+                HttpContext.Session.SetInt32("processingMonth", getfundtypecode.processingMonth);
+
+
+                return RedirectToAction("Index", "Home");
 
             }
             catch (Exception ex)
@@ -75,51 +83,99 @@ namespace NavyAccountWeb.Controllers
             }
         }
 
-        //public async Task<IActionResult> ClientLogin(LoginViewModel login)
-        //{
-        //    var auth = await authenticationService.SignInUserAsync(login.EmailAddress, login.Password, "true");
 
-        //    if (auth.Success)
-        //    {
-        //        var user = await userService.GetUserRolesDevices(auth.Data.Id);              
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ForgotPassword(string email)
+        {
 
-        //        var response = new ClientResponse
-        //        {
-        //            User = user
-        //        };
-        //        return Ok(response.ToResponse());
-        //    }
+           
 
-        //    return NotFound(auth);
-        //}
+            try
+            {
+                var user = await userManager.FindByEmailAsync(email);
+                if (user == null)
+                {
+                    return View("ForgotPasswordConfirmation");
+                }
+                var code = await userManager.GeneratePasswordResetTokenAsync(user);
+                var encodedCode = WebUtility.UrlEncode(code); // Ensure safe URL encoding
+                var callbackUrl = Url.Action("ResetPassword", "Authentication", new { userId = user.Id, code = encodedCode }, protocol: HttpContext.Request.Scheme);
 
-        //[HttpPost]
-        //[AllowAnonymous]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var user = await authenticationService.(model.Email);
-        //        if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
-        //        {
-        //            // Don't reveal that the user does not exist or is not confirmed
-        //            return View("ForgotPasswordConfirmation");
-        //        }
+                var mail = new MailClass
+                {
+                    bodyText = $@"
+                        Please reset your password by clicking the button below:  
+                        {callbackUrl}",
+                fromName = "NN-DNPF",
+                    to = user.Email,
+                    subject = "Password Reset Verification",
+                    code = code
+                };
 
-        //        // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713
-        //        // Send an email with this link
-        //        var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-        //        var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
-        //        await _emailSender.SendEmailAsync(model.Email, "Reset Password",
-        //           $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
-        //        return View("ForgotPasswordConfirmation");
-        //    }
+                mailService.SendEmailTermii(mail);
+            }
+            catch (Exception ex)
+            {
+                // Log error (consider using ILogger)
+                ModelState.AddModelError("", "There was an error sending the password reset email. Please try again later.");
+                return View();
+            }
 
-        //    // If we got this far, something failed, redisplay form
-        //    return View(model);
-        //}
-        
+            return View("ForgotPasswordConfirmation");
+        }
+
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+        public IActionResult ForgotPasswordConfirmation()
+        {
+            return View();
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ResetPassword(string userId, string code)
+        {
+            if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(code))
+            {
+                return BadRequest("Invalid password reset request.");
+            }
+
+            var model = new ResetPasswordDataModel { UserId = userId, Code = code };
+            return View(model);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResetPassword(ResetPasswordDataModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await userManager.FindByIdAsync(model.UserId);
+            if (user == null)
+            {
+                return View("ResetPasswordConfirmation");
+            }
+            var decodedToken = WebUtility.UrlDecode(model.Code);
+            var result = await userManager.ResetPasswordAsync(user, decodedToken, model.NewPassword);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index","Home");
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+
+            return View(model);
+        }
 
         public async Task<IActionResult> Logout()
         {

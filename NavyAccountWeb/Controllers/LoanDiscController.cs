@@ -291,7 +291,7 @@ namespace NavyAccountWeb.Controllers
             return View(con);
         }
         [HttpPost]
-        public async Task<IActionResult> loanDiscUpload(IFormFile formFile, CancellationToken cancellationToken,string loanacct,string batchNo)
+        public async Task<IActionResult> loanDiscUpload(IFormFile formFile, CancellationToken cancellationToken,string loanacct)
         {
 
             if (formFile == null || formFile.Length <= 0)
@@ -331,14 +331,14 @@ namespace NavyAccountWeb.Controllers
                     if (worksheet.Cells[1, 2].Value == null)
                         worksheet.Cells[1, 2].Value = "";
 
-                    if (worksheet.Cells[1, 3].Value == null)
-                        worksheet.Cells[1, 3].Value = "";
+                    //if (worksheet.Cells[1, 3].Value == null)
+                    //    worksheet.Cells[1, 3].Value = "";
 
 
 
                     string svcno = String.IsNullOrEmpty(worksheet.Cells[1, 1].ToString()) ? "" : worksheet.Cells[1, 1].Value.ToString().Trim();
                     string amount = String.IsNullOrEmpty(worksheet.Cells[1, 2].ToString()) ? "" : worksheet.Cells[1, 2].Value.ToString().Trim();
-                    string loantype = String.IsNullOrEmpty(worksheet.Cells[1, 3].ToString()) ? "" : worksheet.Cells[1, 3].Value.ToString().Trim();
+                   // string loantype = String.IsNullOrEmpty(worksheet.Cells[1, 3].ToString()) ? "" : worksheet.Cells[1, 3].Value.ToString().Trim();
 
 
 
@@ -354,14 +354,14 @@ namespace NavyAccountWeb.Controllers
                         if (worksheet.Cells[row, 2].Value == null)
                             worksheet.Cells[row, 2].Value = "";
 
-                        if (worksheet.Cells[row, 3].Value == null)
-                            worksheet.Cells[row, 3].Value = "";
+                        //if (worksheet.Cells[row, 3].Value == null)
+                        //    worksheet.Cells[row, 3].Value = "";
 
 
 
                         string svcnoVal = String.IsNullOrEmpty(worksheet.Cells[row, 1].Value.ToString()) ? "" : worksheet.Cells[row, 1].Value.ToString().Trim();
                         decimal amountVal = String.IsNullOrEmpty(worksheet.Cells[row, 2].Value.ToString()) ? 0 : Decimal.Parse(worksheet.Cells[row, 2].Value.ToString().Trim());
-                        string loantypeval = String.IsNullOrEmpty(worksheet.Cells[row, 3].Value.ToString()) ? "" : worksheet.Cells[row, 3].Value.ToString().Trim();
+                        //string loantypeval = String.IsNullOrEmpty(worksheet.Cells[row, 3].Value.ToString()) ? "" : worksheet.Cells[row, 3].Value.ToString().Trim();
 
 
                         if (String.IsNullOrEmpty(worksheet.Cells[row, 1].Value.ToString()) ||
@@ -371,7 +371,7 @@ namespace NavyAccountWeb.Controllers
                             {
                                 svcno = svcnoVal,
                                 amount = amountVal,
-                                loantype=loantypeval
+                                loantype=loanacct
 
                             });
 
@@ -383,7 +383,7 @@ namespace NavyAccountWeb.Controllers
                             {
                                 svcno = svcnoVal,
                                 amount = amountVal,
-                                loantype=loantypeval
+                                loantype=loanacct
 
                             });
                         }
@@ -409,9 +409,26 @@ namespace NavyAccountWeb.Controllers
                     }
                     else
                     {
-                        ProcesLoanDiscUpload procesUpload2 = new ProcesLoanDiscUpload(listapplication, unitofWork, fundTypeId, fundTypeCode, user, processingperiod, loanacct, batchNo);
-                        await procesUpload2.processUploadInThread();
-                        TempData["message2"] = "Uploaded Successfully";
+                        ProcesLoanDiscUpload procesUpload2 = new ProcesLoanDiscUpload(listapplication, unitofWork, fundTypeId, fundTypeCode, user, processingperiod, loanacct);
+                        var result=await procesUpload2.ProcessUploadInThread();
+                        if (result.Errors.Count() > 0)
+                        {
+                            var stream2 = new MemoryStream();
+
+                            using (var package2 = new ExcelPackage(stream2))
+                            {
+                                var workSheet = package2.Workbook.Worksheets.Add("Sheet2");
+                                workSheet.Cells.LoadFromCollection(result.Errors, true);
+                                package2.Save();
+                            }
+                            stream2.Position = 0;
+                            string excelName = $"UserList-{DateTime.Now.ToString("yyyyMMddHHmmssfff")}.xlsx";
+
+                            //return File(stream, "application/octet-stream", excelName);  
+                            return File(stream2, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
+
+                        }
+                        TempData["message2"] = result.Success;
                     }
                 }
 
@@ -442,8 +459,8 @@ namespace NavyAccountWeb.Controllers
             //var loan = loandiscService.getListofLoandiscByBatchDrp().Result;
             //ViewBag.batch = loan.OrderBy(x => x.batchno);
 
-            ViewBag.getType = HttpContext.Session.GetInt32("loantype");
-            var getloantype = context.Pf_loanType.Where(x=>x.Id== HttpContext.Session.GetInt32("loantype")).ToList();
+            //ViewBag.getType = HttpContext.Session.GetInt32("loantype");
+            var getloantype = context.Pf_loanType.ToList();
 
             ViewBag.getloantype = getloantype;
 
@@ -455,7 +472,8 @@ namespace NavyAccountWeb.Controllers
         public async Task<IActionResult> Discrepancy(int? pageNumber, int loantype)
         {
             ViewBag.getType = HttpContext.Session.GetInt32("loantype");
-            var getloantype = context.Pf_loanType.Where(x => x.Id == HttpContext.Session.GetInt32("loantype")).ToList();
+            var lt = HttpContext.Session.GetInt32("loantype");
+            var getloantype = context.Pf_loanType.ToList();
 
             ViewBag.getloantype = getloantype;
 

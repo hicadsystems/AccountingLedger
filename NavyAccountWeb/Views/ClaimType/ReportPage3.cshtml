@@ -12,6 +12,13 @@
 
     <h3></h3>
     <span style="float:right;position:relative;top:-25px;"><b>Produced on:</b>@DateTime.Now.ToShortDateString()</span>
+    @if (Model != null && Model.Any())
+    {
+        var firstItem = Model.First();
+        <span class="date-range">
+            <b>Period:</b> @firstItem.startdate.ToShortDateString() - @firstItem.enddate.ToShortDateString()
+        </span>
+    }
     <table border="2" cellpadding="2" cellspacing="0" width="100%">
         <tr>
             <th>Account Name</th>

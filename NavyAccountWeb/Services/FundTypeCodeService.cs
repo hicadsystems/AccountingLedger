@@ -32,6 +32,11 @@ namespace NavyAccountWeb.Services
             return unitOfWork.fundTypeCode.Getfundtypebycode(x => x.Code == fundtypecode);
 
         }
+        public int GetCurrentYear()
+        {
+           var fun= unitOfWork.fundTypeCode.Getfundtypebycode(x=>x.Code=="10").processingYear;
+           return fun;
+        }
         public IEnumerable<npf_fundType> GetFundTypes()
         {
             return unitOfWork.fundTypeCode.All();

@@ -60,7 +60,8 @@ namespace NavyAccountCore.Models
         public string batchno { get; set; }
         public DateTime statusdate { get; set; }
         public DateTime appdate { get; set; }
-
+        public DateTime startdate { get; set; }
+        public DateTime enddate { get; set; }
 
 
     }

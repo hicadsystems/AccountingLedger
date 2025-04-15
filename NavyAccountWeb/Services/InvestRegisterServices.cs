@@ -20,8 +20,15 @@ namespace NavyAccountWeb.Services
         }
         public async Task<bool> AddInvestRegister(Pf_InvestRegister register)
         {
-            unitOfWork.register.Create(register);
-            return await unitOfWork.Done();
+            try
+            {
+                unitOfWork.register.Create(register);
+                return await unitOfWork.Done();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         public IEnumerable<InvestmentView> GetAllInvestRegister()

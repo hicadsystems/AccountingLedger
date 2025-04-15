@@ -59,7 +59,7 @@
                     <tr>
                         <th>Account</th>
                         <th>Name</th>
-                        <th>Loan Pay</th>
+                        <th>Generated Pay</th>
                         <th>Exact Pay</th>
                         <th>Difference</th>
                         <th></th>
@@ -82,14 +82,14 @@
                 }
                 @{
                     var prevDisabled = !Model.PreviousPage ? "disabled" : "";
-                    var nextDisabled = !Model.Nextpage ? "disabled" : "";
+                   var nextDisabled = !Model.Nextpage ? "disabled" : "";
                 }
 
                 <a asp-action="Discrepancy"
-                   asp-route-pageNumber="@(Model.PageIndex-1)" asp-route-batchNo="@ViewBag.getbatch"
+                   asp-route-pageNumber="@(Model.PageIndex-1)" asp-route-loantype="@ViewBag.getloantype"
                    class="btn btn-default  @prevDisabled">previous</a>
 
-                <a asp-action="Discrepancy" asp-route-pageNumber="@(Model.PageIndex+1)" asp-route-batchNo="@ViewBag.getbatch" class="btn btn-default  @nextDisabled">next</a>
+                <a asp-action="Discrepancy" asp-route-pageNumber="@(Model.PageIndex+1)" asp-route-loantype=1 class="btn btn-default  @nextDisabled">next</a>
 
             </div>
 

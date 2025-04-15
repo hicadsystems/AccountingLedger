@@ -145,8 +145,9 @@ namespace NavyAccountCore.Core.Repositories
                               bank = bk.bankname,
                               rank = rk.Description,
                               grandsuvaltotal=Math.Round(navip.AmountDue+(navip.AmountDue*navip.interest/100),2),
-                              batchno=navip.BatchNo
-
+                              batchno=navip.BatchNo,
+                              startdate=startdate,
+                              enddate=enddate
 
                           }).ToList();
             return result;

@@ -57,6 +57,7 @@ namespace NavyAccountCore.Core.Data
         IClaimRecordRepository schclaim { get; }
         IParentGuardianRecordRepository parent { get; }
         IGuardianRecordRepository Guardian { get; }
+        IStock stock { get; }
         Task<bool> Done();
     }    
 }

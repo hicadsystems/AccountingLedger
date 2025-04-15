@@ -26,13 +26,20 @@
                 @using (Html.BeginForm("Index", "MonthEndProcessing", FormMethod.Post))
                 {
                     @Html.AntiForgeryToken()
-
-                    <div class="form-group">
-                        <input type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Month End" />
+                    <div class="row">
+                        <div class="col-md-4">
+                            <input type="text" value="@ViewBag.month" id="" name="" class="form-control" />
+                        </div>
                     </div>
-                }
+                    <br />
+                    <div class="row">
+                        <div class="form-group">
+                            <input type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Month End" />
+                        </div>
+                    </div>
+                        }
 
-            </div>
+                    </div>
 
 
 

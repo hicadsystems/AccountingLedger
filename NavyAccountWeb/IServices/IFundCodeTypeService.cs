@@ -16,6 +16,7 @@ namespace NavyAccountWeb.IServices
         Task<npf_fundType> GetFundTypeByID(int fundtypeid);
         Task<bool> AddFundTypeCode(npf_fundType pf_Fund);
         Task<bool> UpdateFundType(npf_fundType pf_Fund);
+        int GetCurrentYear();
 
     }
 }

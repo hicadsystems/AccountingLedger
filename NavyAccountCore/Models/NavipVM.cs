@@ -89,7 +89,8 @@ namespace NavyAccountCore.Models
         public string remark { get; set; }
         public string batchno { get; set; }
         
-
+        public DateTime startdate { get; set; }
+        public DateTime enddate { get; set; }
 
 
     }

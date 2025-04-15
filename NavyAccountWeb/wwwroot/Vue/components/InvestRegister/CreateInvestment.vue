@@ -106,7 +106,22 @@
                         </div>
                     </div>
                 </div>
-
+     <div class="row">
+             <div class="col-12 col-xl-3">
+                        <div class="form-group">
+                            <label class="form-label">Stock</label>
+                            <select class="form-control" v-model="postBody.StockId" name="StockId">
+                                <option v-for="sk in stockList" v-bind:value="sk.id" v-bind:key="sk.id">{{ sk.description }}</option>
+                            </select>
+                        </div>
+                    </div>
+                     <div class="col-12 col-xl-3">
+                        <div class="form-group">
+                            <label class="form-label">Transaction Type</label>
+                            <input class="form-control" name="TransactionType" v-model="postBody.TransactionType" placeholder="" />
+                        </div>
+                    </div>
+        </div>
                 <div class="row">
                     <div class="col-12 ">
                         <div class="btn-group mr-2 sw-btn-group-extra" v-if="canProcess" role="group"><button class="btn btn-submit btn-primary" v-on:click="checkForm" type="submit">{{submitorUpdate}}</button></div>
@@ -135,10 +150,11 @@
             canProcess: true,
             userList: null,
             bankList: null,
+             stockList: null,
             InvestTypeList: null,
             readonly:true,
             postBody: {
-              
+              StockId:'',
                 IssuanceBankId: '',
                 receivingbankid: '',
                 interest: '',
@@ -151,7 +167,8 @@
                 duedate: '',
                 investmenttype:'',
                 chequeno: '',
-                maturedamt: 0
+                maturedamt: 0,
+                TransactionType:''
                 
             },
             invest: [
@@ -162,6 +179,9 @@
         },
       mounted () {
         axios
+            .get('/api/Stock/getAllStocks')
+              .then(response => (this.stockList= response.data)),
+              axios
             .get('/api/Bank/getAllBanks')
               .then(response => (this.bankList = response.data)),
            axios
@@ -180,6 +200,7 @@
                 this.postBody.date = this.$store.state.objectToUpdate.date,
                 this.postBody.duedate = this.$store.state.objectToUpdate.dueDate,
                 this.postBody.InvestmentType = this.$store.state.objectToUpdate.investmentType,
+                 this.postBody.TransactionType = this.$store.state.objectToUpdate.TransactionType,
                 this.postBody.chequeno = this.$store.state.objectToUpdate.chequeno,
                 this.postBody.maturedamt = this.$store.state.objectToUpdate.maturedamt,
                 this.postBody.tenure = this.$store.state.objectToUpdate.tenure,
@@ -237,6 +258,8 @@
                                 this.maturingdate = '';
                                 this.interest = '';
                                 this.tenure = '';
+                                this.TransactionType='';
+                                this.StockId='';
                             }
                         })
                         .catch(e => {
@@ -266,6 +289,8 @@
                                 this.maturingdate = '';
                                 this.interest = '';
                                 this.tenure = '';
+                                this.TransactionType='';
+                                this.StockId='';
                             }
                         })
                         .catch(e => {
@@ -288,6 +313,7 @@
                     this.postBody.date = objecttoedit.date;
                     this.postBody.duedate = objecttoedit.duedate;
                     this.postBody.investmenttype = objecttoedit.investmenttype;
+                    this.postBody.TransactionType = objecttoedit.TransactionType;
                     this.postBody.closecode = objecttoedit.closecode;
                     this.postBody.chequeno = objecttoedit.chequeno;
                     this.postBody.maturedamt = objecttoedit.maturedamt;

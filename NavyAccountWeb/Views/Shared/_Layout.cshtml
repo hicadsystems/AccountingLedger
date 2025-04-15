@@ -9,10 +9,12 @@
 @inject IUserService userService
 
 @{
+	var user = new User();
 	var model = await UserManager.GetUserAsync(User);
-
-	var user = await userService.GetUserWithRolesAndMenus(model.Id);
-
+	if (model != null)
+	{
+		 user = await userService.GetUserWithRolesAndMenus(model.Id);
+	}
 
 }
 <partial name="_Header" model="user" />

@@ -429,6 +429,11 @@ export default {
             checkForm: function (e) {
             if (this.postBody.PersonID) {
               e.preventDefault();
+
+              if (this.postBody.acctno.length > 10) {
+                this.errors = "Account number must not be more than 10 digits.";
+                return;
+              }
               this.canProcess = false;
               this.postPost();
           }
@@ -448,7 +453,10 @@ export default {
                             this.canProcess = true;
                             if (response.data.responseCode == '200') {
 
-                                   
+                                 this.resetPostBody(); 
+                                 setTimeout(() => {
+                                        location.reload();
+                                    }, 2000); 
                             }
                         })
                         .catch(e => {
@@ -457,6 +465,56 @@ export default {
                 }
              }
          
-        }
+        },
+        resetPostBody() {
+  this.postBody = {
+    Batch: '',
+    acctno: '',
+    beneficiary: '',
+    bank: 0,
+    title: 0,
+    PersonID: 0,
+    prmdate01: '',
+    prmdate02: '',
+    prmdate03: '',
+    prmdate04: '',
+    prmdate05: '',
+    prmdate06: '',
+    prmdate07: '',
+    prmdate08: '',
+    prmdate09: '',
+    prmdate10: '',
+    prmdate11: '',
+    prmdate12: '',
+    prmdate13: '',
+    prmdate14: '',
+    prmdate15: '',
+    prmdate16: '',
+    prmdate17: '',
+    rank01: 'OS',
+    rank02: 'SM',
+    rank03: 'AB',
+    rank04: 'LS',
+    rank05: 'PO',
+    rank06: 'WO',
+    rank07: 'MWO',
+    rank08: 'NWO',
+    rank09: 'S/LT',
+    rank10: 'LT',
+    rank11: 'LT/CDR',
+    rank12: 'CDR',
+    rank13: 'CAPT',
+    rank14: 'CDRE',
+    rank15: 'R/ADM',
+    rank16: 'ADM',
+    rank17: 'V/ADM',
+  };
+
+  this.responseMessage = '';
+  this.errors = null;
+  this.wantshow = false;
+  this.pList = null;
+}
+
 };
 </script>

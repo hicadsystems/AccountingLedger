@@ -122,7 +122,6 @@ export default {
         },
         postData(){
             if(this.submitorUpdate=='Submit'){
-                alert('i am here');
             Axios.post(`/api/SchoolRecord/AddSchool`,this.postBody)
             .then(response=>{
                 this.responseMessage=response.data.responseDescription;

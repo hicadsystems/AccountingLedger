@@ -60,7 +60,7 @@ namespace NavyAccountWeb.Data
         public DbSet<npf_LoanTypeReview> npf_loantypereview { get; set; }
         public DbSet<npf_loanstatus> npf_loanstatus { get; set; }
         public DbQuery<V_TRIALBALANCE> V_TRIALBALANCEs { get; set; }
-
+        public DbSet<npf_Stocks> npf_Stocks { get; set; }
         public DbSet<sr_ClaimRecord> sr_ClaimRecord { get; set; }
         public DbSet<sr_GuardianRecord> sr_GuardianRecord { get; set; }
         public DbSet<sr_ParentRecord> sr_ParentRecord { get; set; }
@@ -74,6 +74,7 @@ namespace NavyAccountWeb.Data
         public DbSet<sr_state> sr_state{ get; set; }
         public DbSet<sr_lga> sr_lga { get; set; }
         public DbSet<sr_Defaulter> sr_Defaulter { get; set; }
+       
 
 
         protected override void OnModelCreating(ModelBuilder builder)

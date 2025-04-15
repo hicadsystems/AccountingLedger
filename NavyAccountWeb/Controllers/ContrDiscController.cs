@@ -402,7 +402,7 @@ namespace NavyAccountWeb.Controllers
                     }
 
 
-                    ProcesLoanDiscUpload procesUpload2 = new ProcesLoanDiscUpload(listapplication, unitofWork, fundTypeId, fundTypeCode, user, processingperiod, Contraccount,batchNo);
+                    ProcesLoanDiscUpload procesUpload2 = new ProcesLoanDiscUpload(listapplication, unitofWork, fundTypeId, fundTypeCode, user, processingperiod, Contraccount);
                     procesUpload2.processUploadInThreadContr();
                     TempData["message"] = "Uploaded Successfully";
 

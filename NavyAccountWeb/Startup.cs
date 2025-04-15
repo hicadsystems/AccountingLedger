@@ -55,15 +55,20 @@ namespace NavyAccountWeb
 
             services.AddIdentity<User, Role>(options =>
             {
-                options.Password.RequiredLength = 8;
+                options.Password.RequiredLength = 4;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireDigit = false;
                 options.User.RequireUniqueEmail = true;
                 options.SignIn.RequireConfirmedEmail = false;
-            }).AddEntityFrameworkStores<ApplicationDbContext>();
+            }).AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
 
+            services.Configure<DataProtectionTokenProviderOptions>(opt =>
+            {
+                opt.TokenLifespan = TimeSpan.FromHours(3);
+            });
 
             services.AddWkhtmltopdf("wkhtmltopdf");
             services.AddAutoMapper(typeof(Startup));
@@ -113,6 +118,10 @@ namespace NavyAccountWeb
             services.AddScoped<IClaimTypeServices, ClaimTypeServices>();
             services.AddScoped <INavipService, NavipService>();
             services.AddScoped<ILoantypeReviewService, LoantypeReviewService>();
+            services.AddScoped<IMailService, MailService>();
+            services.AddScoped<IEmailSenderService, EmailSenderService>();
+            services.AddScoped<IStockService, StockService>();
+            services.AddScoped<IStock, StockRepository>();
 
 
 

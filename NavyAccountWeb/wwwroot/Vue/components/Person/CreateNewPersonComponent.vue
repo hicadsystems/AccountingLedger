@@ -15,7 +15,7 @@
         </div>
 
         <div class="col-12">
-            <form id="smartwizard-validation" class="wizard wizard-primary sw-main sw-theme-default" @submit="postPersonelAndBeneficiary" method="post" action="javascript:void(0)" novalidate="novalidate">
+            <form  class="wizard wizard-primary sw-main sw-theme-default" @submit="postPersonelAndBeneficiary" method="post" action="javascript:void(0)" novalidate="novalidate">
                 <ul class="nav nav-tabs step-anchor">
                     <li class="nav-item active"><a href="#validation-step-1" class="nav-link">Personal Details</a></li>
                     <!-- <li class="nav-item"><a href="#validation-step-2" class="nav-link">Beneficiary</a></li> -->
@@ -110,179 +110,17 @@
                             </div>
 
                         </div>
-                      
-                        
+                        <div class="form-row">
+
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-4">
+                                    <button class="btn btn-submit btn-primary"   type="submit">{{submitorUpdate}}</button>
+                            </div>
+                   </div>
                     </div>
                    
-                    <!-- <div id="validation-step-2" class="tab-pane step-content">
-                        <h2>Beneficiary 1</h2>
-                        <input type="hidden" v-model="postBody.bene.id" />
-                        <div class="form-row">
-                            <div class="col-sm-4">
-                                <label>FirstName</label>
-                                <input class="form-control" name="FirstName" v-model="postBody.bene.FirstName" placeholder="" />
-
-                            </div>
-                            <div class="col-sm-4">
-                                <label>LastName</label>
-                                <input class="form-control" name="LastName" v-model="postBody.bene.LastName" placeholder="" />
-
-                            </div>
-                            <div class="col-sm-4">
-                                <label>Relationship</label>
-                                <select class="form-control" v-model="postBody.bene.RelationshipId" name="rank" required>
-                                    <option v-for="ge in relationship" v-bind:value="ge.value" v-bind:key="ge.value"> {{ ge.text }} </option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-row">
-
-
-                            <div class="col-sm-4">
-                                <label>Mobile Number</label>
-                                <input class="form-control" name="FirstName" v-model="postBody.bene.MobileNumber" placeholder="" />
-
-                            </div>
-
-                            <div class="col-sm-4">
-                                <label>Email</label>
-                                <input class="form-control" name="EmailAddress" v-model="postBody.bene.EmailAddress" placeholder="" />
-
-                            </div>
-                            <div class="col-sm-4">
-                                <label>Date Of Birth</label>
-                                <vuejsDatepicker v-model="postBody.bene.dateofbirth" input-class="form-control" name="dateofbbene"></vuejsDatepicker>
-
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="col-sm-4">
-                                <label>Proportion</label>
-                                <input class="form-control" name="Proportion" v-model="postBody.bene.Proportion" placeholder="" />
-                            </div>
-
-                            <div class="col-sm-4">
-                                <label>Full address</label>
-                                <input class="form-control" name="FullAddress" v-model="postBody.bene.FullAddress" placeholder="" />
-                            </div>
-                            <div class="col-sm-4">
-                                <button v-if="addbene22" class="btn btn-submit btn-primary" v-on:click="addBeneTwo" type="button">Add More Beneficiary</button>
-                             </div>
-                            </div>
-
-                            <div v-if="addbene2">
-                                <h2>Beneficiary 2</h2>
-                                <input type="hidden" v-model="postBody.bene2.id" />
-                                <div class="form-row">
-                                    <div class="col-sm-4">
-                                        <label>FirstName</label>
-                                        <input class="form-control" name="FirstName" v-model="postBody.bene2.FirstName" placeholder="" />
-
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <label>LastName</label>
-                                        <input class="form-control" name="LastName" v-model="postBody.bene2.LastName" placeholder="" />
-
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <label>Relationship</label>
-                                        <select class="form-control" v-model="postBody.bene2.RelationshipId" name="rank" required>
-                                            <option v-for="ge in relationship" v-bind:value="ge.value" v-bind:key="ge.value"> {{ ge.text }} </option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-
-
-                                    <div class="col-sm-4">
-                                        <label>Mobile Number</label>
-                                        <input class="form-control" name="FirstName" v-model="postBody.bene2.MobileNumber" placeholder="" />
-
-                                    </div>
-
-                                    <div class="col-sm-4">
-                                        <label>Email</label>
-                                        <input class="form-control" name="EmailAddress" v-model="postBody.bene2.EmailAddress" placeholder="" />
-
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <label>Date Of Birth</label>
-                                        <vuejsDatepicker v-model="postBody.bene2.dateofbirth" input-class="form-control" name="bene2dateofbirth"></vuejsDatepicker>
-                                    </div>
-                                </div>
-
-                                <div class="form-row">
-                                    <div class="col-sm-4">
-                                        <label>Proportion</label>
-                                        <input class="form-control" name="Proportion" v-model="postBody.bene2.Proportion" placeholder="" />
-                                    </div>
-
-                                    <div class="col-sm-4">
-                                        <label>Full address</label>
-                                        <input class="form-control" name="FullAddress" v-model="postBody.bene2.FullAddress" placeholder="" />
-                                    </div>
-                                </div><br />
-                                <button v-if="addbene33" class="btn btn-submit btn-primary" v-on:click="addBeneThree" type="button">Add More Beneficiary</button>
-                            </div>
-
-                            <div v-if="addbene3">
-                                <h2>Beneficiary 3</h2>
-                                <input type="hidden" v-model="postBody.bene3.id" />
-                                <div class="form-row">
-                                    <div class="col-sm-4">
-                                        <label>FirstName</label>
-                                        <input class="form-control" name="FirstName" v-model="postBody.bene3.FirstName" placeholder="" />
-
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <label>LastName</label>
-                                        <input class="form-control" name="LastName" v-model="postBody.bene3.LastName" placeholder="" />
-
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <label>Relationship</label>
-                                        <select class="form-control" v-model="postBody.bene3.RelationshipId" name="rank" required>
-                                            <option v-for="ge in relationship" v-bind:value="ge.value" v-bind:key="ge.value"> {{ ge.text }} </option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-
-
-                                    <div class="col-sm-4">
-                                        <label>Mobile Number</label>
-                                        <input class="form-control" name="FirstName" v-model="postBody.bene3.MobileNumber" placeholder="" />
-
-                                    </div>
-
-                                    <div class="col-sm-4">
-                                        <label>Email</label>
-                                        <input class="form-control" name="EmailAddress" v-model="postBody.bene3.EmailAddress" placeholder="" />
-
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <label>Date Of Birth</label>
-                                        <vuejsDatepicker v-model="postBody.bene3.dateofbirth" input-class="form-control" name="bene3dateofbirth"></vuejsDatepicker>
-                                    </div>
-                                </div>
-
-                                <div class="form-row">
-                                    <div class="col-sm-4">
-                                        <label>Proportion</label>
-                                        <input class="form-control" name="Proportion" v-model="postBody.bene3.Proportion" placeholder="" />
-                                    </div>
-
-                                    <div class="col-sm-4">
-                                        <label>Full address</label>
-                                        <input class="form-control" name="FullAddress" v-model="postBody.bene3.FullAddress" placeholder="" />
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div> -->
-
-
+                  
                 </div>
             </form>
         </div>
@@ -316,6 +154,7 @@
                 addbene22: true,
                 addbene3: false,
                 addbene33: true,
+                submitorUpdate:'Submit',
                 responseMessage: '',
                 objectToClear: {},
                 postBody: {
@@ -339,33 +178,7 @@
                         GSMNumber:''
                         
                     },
-                    // bene: {
-                    //     FirstName: '',
-                    //     LastName: '',
-                    //     RelationshipId: '',
-                    //     MobileNumber: '',
-                    //     EmailAddress: '',
-                    //     Proportion: '',
-                    //     dateofbirth: ''
-                    // },
-                    // bene2: {
-                    //     FirstName: '',
-                    //     LastName: '',
-                    //     RelationshipId: '',
-                    //     MobileNumber: '',
-                    //     EmailAddress: '',
-                    //     Proportion: '',
-                    //     dateofbirth: ''
-                    // },
-                    // bene3: {
-                    //     FirstName: '',
-                    //     LastName: '',
-                    //     RelationshipId: '',
-                    //     MobileNumber: '',
-                    //     EmailAddress: '',
-                    //     Proportion: '',
-                    //     dateofbirth: ''
-                    // }
+
                 },
                 
                 gender: [
@@ -385,14 +198,6 @@
         },
 
         methods: {
-            // addBeneTwo() {
-            //     this.addbene2 = true;
-            //     this.addbene22 = false;
-            // },
-            // addBeneThree() {
-            //     this.addbene3 = true;
-            //     this.addbene33 = false;
-            // },
             postPersonelAndBeneficiary() {
                 this.addOrEdit(this.persontoeditid)
             },
@@ -425,40 +230,9 @@
                                     accountno: '',
 
                                 },
-                                // bene: {
-                                //     FirstName: '',
-                                //     LastName: '',
-                                //     RelationshipId: '',
-                                //     MobileNumber: '',
-                                //     EmailAddress: '',
-                                //     Proportion: '',
-                                //     dateofbirth: '',FullAddress:'',
-                                //     Id:0
-                                // },
-                                // bene2: {
-                                //     FirstName: '',
-                                //     LastName: '',
-                                //     RelationshipId: '',
-                                //     MobileNumber: '',
-                                //     EmailAddress: '',
-                                //     Proportion: '',
-                                //     dateofbirth: '',FullAddress:'',
-                                //     Id:0
-                                // },
-                                // bene3: {
-                                //     FirstName: '',
-                                //     LastName: '',
-                                //     RelationshipId: '',
-                                //     MobileNumber: '',
-                                //     EmailAddress: '',
-                                //     Proportion: '',
-                                //     dateofbirth: '',
-                                //     FullAddress:'',
-                                //     Id:0
-                                // }
                             };
                             alert(`Successfully ${message}`);
-                            
+                            window.location.href = 'ViewPerson';
                         }
                         else {
                             alert('An error Occured, '+response.data.responseDescription)
@@ -487,7 +261,6 @@
                 axios
                     .get(`/api/PersonAPI/getPersonByID/${this.persontoeditid}`)
                     .then(response => {
-                        alert(response.data.rankid);
                         this.postBody.person.SVC_NO = response.data.svC_NO
                         this.postBody.person.PersonID = response.data.personID
                         this.postBody.person.rank = response.data.rankid
@@ -505,42 +278,7 @@
                         this.postBody.person.accountno = response.data.accountno
                        
                     })
-                   // [{"id":0,eNumber":null,"emailAddress":"hicad@hicad.com","placeOfWork":null,"nextofkinType":null,"isActive":true,"createdDate":"2020-03-07T13:55:47.4199588","createdBy":"hicad@hicad.com","modifiedDate":"2020-03-07T13:55:47.4201679","modifiedBy":"hicad@hicad.com","person":null},{"id":0,"personID":13,"firstName":"rewr","lastName":null,"relationshipId":"Mother","dateofbirth":"2020-03-23T12:55:00","fullAddress":"tetetetete","mobileNumber":"08064487564","homeNumber":null,"emailAddress":"hicad@hicad.com","placeOfWork":null,"nextofkinType":null,"isActive":true,"createdDate":"2020-03-07T13:55:47.4896898","createdBy":"hicad@hicad.com","modifiedDate":"2020-03-07T13:55:47.4896925","modifiedBy":"hicad@hicad.com","person":null},{"id":0,"personID":13,"firstName":"rewrbene3","lastName":null,"relationshipId":"Mother","dateofbirth":"2020-03-16T12:55:00","fullAddress":"tetetetete","mobileNumber":"08064487564","homeNumber":null,"emailAddress":"hicad@hicad.com","placeOfWork":null,"nextofkinType":null,"isActive":true,"createdDate":"2020-03-07T13:55:47.7151256","createdBy":"hicad@hicad.com","modifiedDate":"2020-03-07T13:55:47.7151273","modifiedBy":"hicad@hicad.com","person":null}]
-                    //  axios
-                    // .get(`/api/Beneficiary/getAllBeneficiaries/${this.persontoeditid}`)
-                    // .then(response => {
-                    //     this.postBody.bene.Id = response.data[0].id
-                    //     this.postBody.bene.FirstName = response.data[0].firstName
-                    //     this.postBody.bene.LastName = response.data[0].lastName
-                    //     this.postBody.bene.RelationshipId = response.data[0].relationshipId
-                    //     this.postBody.bene.dateofbirth = response.data[0].dateofbirth
-                    //     this.postBody.bene.MobileNumber = response.data[0].mobileNumber
-                    //     this.postBody.bene.FullAddress = response.data[0].fullAddress
-                    //     this.postBody.bene.EmailAddress = response.data[0].emailAddress
-
-
-
-                    //      this.postBody.bene2.Id = response.data[1].id
-                    //     this.postBody.bene2.FirstName = response.data[1].firstName
-                    //     this.postBody.bene2.LastName = response.data[1].lastName
-                    //     this.postBody.bene2.RelationshipId = response.data[1].relationshipId
-                    //     this.postBody.bene2.dateofbirth = response.data[1].dateofbirth
-                    //     this.postBody.bene2.MobileNumber = response.data[1].mobileNumber
-                    //     this.postBody.bene2.FullAddress = response.data[1].fullAddress
-                    //     this.postBody.bene2.EmailAddress = response.data[1].emailAddress
-
-
-
-                    //      this.postBody.bene3.Id = response.data[2].id
-                    //     this.postBody.bene3.FirstName = response.data[2].firstName
-                    //     this.postBody.bene3.LastName = response.data[2].lastName
-                    //     this.postBody.bene3.RelationshipId = response.data[2].relationshipId
-                    //     this.postBody.bene3.dateofbirth = response.data[2].dateofbirth
-                    //     this.postBody.bene3.MobileNumber = response.data[2].mobileNumber
-                    //     this.postBody.bene3.FullAddress = response.data[2].fullAddress
-                    //     this.postBody.bene3.EmailAddress = response.data[2].emailAddress
-                       
-                    // })
+                  
             }
 
         }

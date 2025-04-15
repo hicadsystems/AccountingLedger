@@ -64,6 +64,7 @@ namespace NavyAccountCore.Core.Data
             schclaim = new ClaimRecordRepository(context);
             parent = new ParentGuardianRecordRepository(context);
             Guardian = new GuardianRecordRepository(context);
+            stock = new StockRepository(context);
 
 
 
@@ -123,6 +124,7 @@ namespace NavyAccountCore.Core.Data
         public IParentGuardianRecordRepository parent { get; }
         public IGuardianRecordRepository Guardian { get; }
 
+        public IStock stock { get; }
 
         public async Task<bool> Done()
         {

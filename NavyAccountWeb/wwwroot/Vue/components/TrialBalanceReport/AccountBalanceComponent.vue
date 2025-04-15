@@ -85,7 +85,11 @@ export default {
         axios
             .get('/TrialbalanceReport/GetMainAct')
             .then(response => (this.mainacctList = response.data))
-       
+         axios
+            .get('/api/FundType/getCurrentYear')
+            .then(response => (this.year = response.data))
+
+            alert(this.year);
      },
      methods: {
          processReport:function(){

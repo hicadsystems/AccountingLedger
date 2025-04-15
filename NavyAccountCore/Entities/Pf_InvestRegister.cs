@@ -32,6 +32,8 @@ namespace NavyAccountCore.Core.Entities
         public string closecode { get; set; }
         public string interest { get; set; }
         public string chequeno { get; set; }
+        public Nullable<int> StockId { get; set; }
+        public string TransactionType { get; set; }
         public Nullable<decimal> maturedamt { get; set; }
         public Nullable<System.DateTime> datecreated { get; set; }
         public string createdby { get; set; }

@@ -1,0 +1,51 @@
+﻿<div class="header">
+    <h1 class="header-title">
+        Change Svc
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="Home/Index">Main</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Upload Change Svc</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Upload Change Svc </h5>
+            </div>
+
+                    <create-stock-component></create-stock-component>
+
+           </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+                
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Stock List</h5>
+                    @using (Html.BeginForm("printstock", "Stock", FormMethod.Get))
+                    {
+                        <div class="col-4">
+                            <div class="form-group">
+                                <input type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Print" />
+                            </div>
+
+                        </div>
+
+                    }
+                </div>
+                        <view-stock-component></view-stock-component>
+                </div>
+        </div>
+    </div>
+       
+

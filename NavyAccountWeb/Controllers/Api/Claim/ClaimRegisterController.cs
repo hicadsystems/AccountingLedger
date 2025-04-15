@@ -34,7 +34,7 @@ namespace NavyAccountWeb.Controllers.Api.Claim
 
         //api/ClaimRegister/CreateClaim
         [Route("CreateClaim")]
-        [HttpPut]
+        [HttpPost]
         public async Task<IActionResult> CreateClaim([FromBody] Npf_ClaimRegister value)
         {
             try

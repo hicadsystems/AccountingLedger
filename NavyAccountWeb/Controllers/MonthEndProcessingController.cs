@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using NavyAccountCore.Core.AuditService;
+using NavyAccountCore.Core.IRepositories;
+using NavyAccountWeb.IServices;
 
 namespace NavyAccountWeb.Controllers
 {
@@ -14,14 +16,16 @@ namespace NavyAccountWeb.Controllers
     public class MonthEndProcessingController : Controller
     {
         private readonly string _connectionstring;
-        public MonthEndProcessingController(IConfiguration configuration)
+        private readonly IFundTypeCodeService _fundTypeCode;
+
+        public MonthEndProcessingController(IConfiguration configuration, IFundTypeCodeService fundTypeCode)
         {
             _connectionstring = configuration.GetConnectionString("DefaultConnection");
-
+            _fundTypeCode = fundTypeCode;
         }
         public ActionResult monthend()
         {
-
+            ViewBag.month = _fundTypeCode.GetFundTypes().FirstOrDefault().processingMonth;
             return View();
         }
         [HttpPost]
@@ -48,7 +52,8 @@ namespace NavyAccountWeb.Controllers
 
         public ActionResult Yearend()
         {
-           
+            ViewBag.month = _fundTypeCode.GetFundTypes().FirstOrDefault().processingYear;
+
             return View();
 
         }

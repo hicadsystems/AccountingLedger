@@ -11,12 +11,14 @@ namespace NavyAccountWeb.Controllers
     {
         private readonly IFundTypeService fundtypeService;
         private readonly IGeneratePdf generatePdf;
-        public FundTypeController(IGeneratePdf generatePdf, IFundTypeService fundtypeService)
+        private readonly IStockService stockService;
+        public FundTypeController(IGeneratePdf generatePdf, IFundTypeService fundtypeService, IStockService stockService)
         {
             this.fundtypeService = fundtypeService;
             this.generatePdf = generatePdf;
+            this.stockService = stockService;
         }
-
+        
 
         [HttpGet]
         public ActionResult ViewFundType()
