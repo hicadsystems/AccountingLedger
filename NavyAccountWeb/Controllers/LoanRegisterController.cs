@@ -235,12 +235,30 @@ namespace NavyAccountWeb.Controllers
                         string userp = User.Identity.Name;
 
                         ProcesUpload procesUpload2 = new ProcesUpload(listapplication, unitofWork, fundTypeId, fundTypeCode, userp, "");
-                        await procesUpload2.processUploadInThread();
-                        TempData["message"] = "Uploaded Successfully";
+                       var result= await procesUpload2.processUploadInThread();
+                        if (result.Errors.Count() > 0)
+                        {
+                            var stream2 = new MemoryStream();
 
+                            using (var package2 = new ExcelPackage(stream2))
+                            {
+                                var workSheet = package2.Workbook.Worksheets.Add("Sheet2");
+                                workSheet.Cells.LoadFromCollection(result.Errors, true);
+                                package2.Save();
+                            }
+                            stream2.Position = 0;
+                            string excelName = $"UserList-{DateTime.Now.ToString("yyyyMMddHHmmssfff")}.xlsx";
+
+                            //return File(stream, "application/octet-stream", excelName);  
+                            return File(stream2, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
+
+                        }
+                        TempData["message2"] = result.Success;
                     }
 
-                }
+                  }
+
+                
                 if (listapplicationofrecordnotavailable.Count > 0)
                 {
 
