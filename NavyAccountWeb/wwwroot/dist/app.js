@@ -6140,17 +6140,51 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      InvestList: null
+      InvestList: [],
+      fromDate: null,
+      toDate: null,
+      submitorUpdate2: 'Print'
     };
+  },
+  computed: {
+    filteredList: function filteredList() {
+      var _this = this;
+
+      return this.InvestList.filter(function (item) {
+        var itemDate = new Date(item.date);
+        var from = _this.fromDate ? new Date(_this.fromDate) : null;
+        var to = _this.toDate ? new Date(_this.toDate) : null;
+        if (from && itemDate < from) return false;
+        if (to && itemDate > to) return false;
+        return true;
+      });
+    }
   },
   created: function created() {
     this.$store.state.objectToUpdate = null;
   },
   watch: {
-    '$store.state.objectToUpdate': function $storeStateObjectToUpdate(newVal, oldVal) {
+    '$store.state.objectToUpdate': function $storeStateObjectToUpdate() {
       this.getAllInvestment();
     }
   },
@@ -6162,10 +6196,10 @@ __webpack_require__.r(__webpack_exports__);
       this.$store.state.objectToUpdate = invest;
     },
     getAllInvestment: function getAllInvestment() {
-      var _this = this;
+      var _this2 = this;
 
       axios.get('/api/PfInvest/getAllRegister').then(function (response) {
-        return _this.InvestList = response.data;
+        _this2.InvestList = response.data;
       });
     }
   }
@@ -6227,10 +6261,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      InvestList: null
+      InvestList: null,
+      submitorUpdate2: 'Print'
     };
   },
   created: function created() {
@@ -8597,6 +8640,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['fundcodeid', 'statusdef', 'isapplication'],
   data: function data() {
@@ -8662,6 +8706,19 @@ __webpack_require__.r(__webpack_exports__);
       return this.loanStatusList.filter(function (x) {
         return x.id == statusid;
       })[0].description;
+    },
+    processDelete: function processDelete(id) {
+      var _this5 = this;
+
+      alert(id);
+      axios.post("/api/LoanRegister/RemoveLoan/".concat(id)).then(function (response) {
+        if (response.data.responseCode == '200') {
+          alert("successfully deleted");
+          window.location.reload();
+
+          _this5.getallloan2();
+        }
+      });
     }
   }
 });
@@ -41758,12 +41815,105 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "card-body" }, [
+  return _c("div", { staticClass: "p-3" }, [
+    _c("div", { staticClass: "row mb-4" }, [
+      _c("div", { staticClass: "col" }, [
+        _c("label", { staticClass: "form-label" }, [_vm._v("From Date:")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.fromDate,
+              expression: "fromDate",
+            },
+          ],
+          staticClass: "form-control",
+          attrs: { type: "date" },
+          domProps: { value: _vm.fromDate },
+          on: {
+            input: function ($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.fromDate = $event.target.value
+            },
+          },
+        }),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col" }, [
+        _c("label", { staticClass: "form-label" }, [_vm._v("To Date:")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.toDate,
+              expression: "toDate",
+            },
+          ],
+          staticClass: "form-control",
+          attrs: { type: "date" },
+          domProps: { value: _vm.toDate },
+          on: {
+            input: function ($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.toDate = $event.target.value
+            },
+          },
+        }),
+      ]),
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "row",
+        staticStyle: { position: "relative", top: "-10px" },
+      },
+      [
+        _c("div", { staticClass: "col-4" }, [
+          _c("div", { staticClass: "col-6" }, [
+            _c(
+              "div",
+              {
+                staticClass: "btn-group mr-2 sw-btn-group-extra",
+                attrs: { role: "group" },
+              },
+              [
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-submit btn-primary",
+                    attrs: {
+                      href:
+                        "/InvestRegisterMvc/InvestmentMoneyReport?startdate=" +
+                        this.fromDate +
+                        "&enddate=" +
+                        this.toDate,
+                      target: "_blank",
+                      type: "button",
+                    },
+                  },
+                  [_vm._v(_vm._s(_vm.submitorUpdate2))]
+                ),
+              ]
+            ),
+          ]),
+        ]),
+      ]
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "card-body p-3" }, [
       _c(
         "table",
         {
-          staticClass: "table table-striped",
+          staticClass: "table table-striped table-bordered",
           staticStyle: { width: "100%" },
           attrs: { id: "datatables-buttons" },
         },
@@ -41772,35 +41922,35 @@ var render = function () {
           _vm._v(" "),
           _c(
             "tbody",
-            _vm._l(_vm.InvestList, function (fundrate) {
-              return _c("tr", [
+            _vm._l(_vm.filteredList, function (fundrate) {
+              return _c("tr", { key: fundrate.voucher }, [
                 _c("td", [_vm._v(_vm._s(fundrate.issuancebank))]),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(fundrate.voucher))]),
                 _vm._v(" "),
-                _c("td", [_vm._v(" " + _vm._s(fundrate.description))]),
+                _c("td", [_vm._v(_vm._s(fundrate.description))]),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(fundrate.amount))]),
                 _vm._v(" "),
-                _c("td", [_vm._v(" " + _vm._s(fundrate.date))]),
+                _c("td", [_vm._v(_vm._s(fundrate.date))]),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(fundrate.dueDate))]),
                 _vm._v(" "),
-                _c("td", [_vm._v(" " + _vm._s(fundrate.investmentType))]),
+                _c("td", [_vm._v(_vm._s(fundrate.investmentType))]),
                 _vm._v(" "),
-                _c("td", [_vm._v(" " + _vm._s(fundrate.maturedamt))]),
+                _c("td", [_vm._v(_vm._s(fundrate.maturedamt))]),
                 _vm._v(" "),
-                _c("td", [_vm._v(" " + _vm._s(fundrate.maturingdate))]),
+                _c("td", [_vm._v(_vm._s(fundrate.maturingdate))]),
                 _vm._v(" "),
-                _c("td", [_vm._v(" " + _vm._s(fundrate.interest))]),
+                _c("td", [_vm._v(_vm._s(fundrate.interest))]),
                 _vm._v(" "),
-                _c("td", [_vm._v(" " + _vm._s(fundrate.tenure))]),
+                _c("td", [_vm._v(_vm._s(fundrate.tenure))]),
                 _vm._v(" "),
                 _c("td", [
                   _c(
                     "button",
                     {
-                      staticClass: "btn btn-submit btn-primary",
+                      staticClass: "btn btn-sm btn-primary",
                       attrs: { type: "button" },
                       on: {
                         click: function ($event) {
@@ -41808,7 +41958,7 @@ var render = function () {
                         },
                       },
                     },
-                    [_vm._v("Edit")]
+                    [_vm._v("\n              Edit\n            ")]
                   ),
                 ]),
               ])
@@ -41845,7 +41995,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Matured Date")]),
         _vm._v(" "),
-        _c("th", [_vm._v("interest")]),
+        _c("th", [_vm._v("Interest")]),
         _vm._v(" "),
         _c("th", [_vm._v("Tenure")]),
         _vm._v(" "),
@@ -41877,6 +42027,41 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "card-body" }, [
+      _c(
+        "div",
+        {
+          staticClass: "row",
+          staticStyle: { position: "relative", top: "-10px" },
+        },
+        [
+          _c("div", { staticClass: "col-4" }, [
+            _c("div", { staticClass: "col-6" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "btn-group mr-2 sw-btn-group-extra",
+                  attrs: { role: "group" },
+                },
+                [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-submit btn-primary",
+                      attrs: {
+                        href: "/InvestRegisterMvc/InvestmentCapital",
+                        target: "_blank",
+                        type: "button",
+                      },
+                    },
+                    [_vm._v(_vm._s(_vm.submitorUpdate2))]
+                  ),
+                ]
+              ),
+            ]),
+          ]),
+        ]
+      ),
+      _vm._v(" "),
       _c(
         "table",
         {
@@ -46217,6 +46402,22 @@ var render = function () {
                       },
                     },
                     [_vm._v("Update")]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-submit btn-primary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function ($event) {
+                          return _vm.processDelete(loanReg.id)
+                        },
+                      },
+                    },
+                    [_vm._v("Delete")]
                   ),
                 ]),
               ])

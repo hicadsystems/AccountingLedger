@@ -37,10 +37,10 @@ namespace NavyAccountCore.Core.Repositories
         
         public List<InvestmentView> GetInvestListOST(DateTime startdate, DateTime enddate)
         {
-            return (from p in context.pf_InvestRegisters
+             var pp= (from p in context.pf_InvestRegisters
                     join r in context.py_Banks on p.IssuanceBankId equals r.Id
                     where p.InvestmentType == "Money Market"
-                        && (p.Maturingdate >= startdate && p.Maturingdate<=enddate)
+                        && (p.Maturingdate >= startdate || p.Maturingdate<=enddate)
                     select new InvestmentView
                     {
                         Id = p.Id,
@@ -62,7 +62,7 @@ namespace NavyAccountCore.Core.Repositories
                         datecreated = p.datecreated,
                         createdby = p.createdby
                     }).ToList();
-
+            return pp;
         }
         public List<InvestmentView> GetInvestList()
         {
@@ -126,7 +126,7 @@ namespace NavyAccountCore.Core.Repositories
         }
         public List<InvestmentView> GetInvestList2()
         {
-            return  (from p in context.pf_InvestRegisters
+           var cap= (from p in context.pf_InvestRegisters
                           join r in context.py_Banks on p.IssuanceBankId equals r.Id
                           where p.InvestmentType=="Capital Market"
 
@@ -151,6 +151,7 @@ namespace NavyAccountCore.Core.Repositories
                               datecreated = p.datecreated,
                               createdby = p.createdby
                           }).ToList();
+            return cap;
 
         }
 

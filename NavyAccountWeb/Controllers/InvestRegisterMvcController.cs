@@ -54,6 +54,7 @@ namespace NavyAccountWeb.Controllers
             var oustandinglist = services.GetAllInvestRegisterOST(startdate, enddate);
             return await generatePdf.GetPdf("Views/InvestRegisterMvc/InvestmentMoneyReport.cshtml", oustandinglist);
         }
+        [Route("Investment/InvestmentMoneyAll")]
         public async Task<IActionResult> InvestmentMoney()
         {
             var money = services.GetAllInvestRegister();

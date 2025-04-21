@@ -599,10 +599,10 @@ namespace NavyAccountWeb.Controllers
 
             return await generatePdf.GetPdf("Views/LoanDisc/LoanVarianceReport.cshtml", listloanrepay);
         }
-        public async Task<IActionResult> printloandiscdiscrepancy(int loantype)
+        public async Task<IActionResult> printloandiscdiscrepancy()
         {
             var fundcode = HttpContext.Session.GetString("fundtypecode");
-            var listloanrepay = loandiscService.GetAllbyFundcode(fundcode, loantype).OrderByDescending(x => x.principal);
+            var listloanrepay = loandiscService.GetAllbyFundcode(fundcode).OrderByDescending(x => x.principal);
             if (listloanrepay.Count()!=0)
             {
                 return await generatePdf.GetPdf("Views/LoanDisc/LoanDiscrepancyReport.cshtml", listloanrepay);

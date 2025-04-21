@@ -120,6 +120,27 @@ namespace NavyAccountWeb.Controllers.Api.Transaction
             }
             //return Ok(new { responseCode = 200, responseDescription = "Updated Successfully" });
         }
+        [Route("RemoveLoan/{id}")]
+        [HttpPost]
+        public async Task<IActionResult> RemoveLoan(int id)
+        {
+            using (SqlConnection sqls = new SqlConnection(_connectionstring))
+            {
+                using (SqlCommand cmd = new SqlCommand("npf_remove_loan", sqls))
+                {
+                    cmd.CommandTimeout = 1200;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@id", id));
+
+                    await sqls.OpenAsync();
+                    await cmd.ExecuteNonQueryAsync();
+
+                    return Ok(new { responseCode = 200, responseDescription = "Deleted Successfully" });
+                }
+
+            }
+            //return Ok(new { responseCode = 200, responseDescription = "Updated Successfully" });
+        }
         [Route("getAllLoanRegisterByRangeStatus/{id}/{statusid}")]
         [HttpGet]
         public IEnumerable<LoanRegisterViewModel> getListofLoanRegisterBTNByStatus(int id, string statusid)

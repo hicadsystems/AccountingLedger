@@ -28,6 +28,7 @@
                         <td>{{ loanReg.statusAndDate }}</td>
                         <td>{{ retrieveStatus(loanReg.statusId) }}</td>
                         <td><button type="button" class="btn btn-submit btn-primary" @click="processRetrieve(loanReg)">Update</button></td>
+                        <td><button type="button" class="btn btn-submit btn-primary" @click="processDelete(loanReg.id)">Delete</button></td>
                     </tr>
                 </tbody>
 
@@ -100,7 +101,18 @@ export default {
          },
          retrieveStatus: function (statusid) {
              return this.loanStatusList.filter(x => x.id == statusid)[0].description;
-         }
+         }, processDelete: function (id) {
+            alert(id);
+                axios.post(`/api/LoanRegister/RemoveLoan/${id}`)
+                 .then(response => {
+                     if (response.data.responseCode == '200') {
+                         alert("successfully deleted");
+                         window.location.reload();
+                         this.getallloan2();
+                     }
+                 })
+
+            }
 
     }
     

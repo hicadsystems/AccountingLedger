@@ -3,6 +3,14 @@
     <div>
 
         <div class="card-body">
+             <div class="row" style="position:relative;top:-10px;">
+                    <div class="col-4">
+                        <div class="col-6">
+                            <div class="btn-group mr-2 sw-btn-group-extra" role="group">
+                              <a class="btn btn-submit btn-primary" :href="'/InvestRegisterMvc/InvestmentCapital'" target="_blank" type="button">{{submitorUpdate2}}</a></div>
+                        </div>
+                    </div>
+                </div>
             <table id="datatables-buttons" class="table table-striped" style="width:100%">
                 <thead>
                     <tr>
@@ -48,7 +56,8 @@ export default {
 
             data() {
                 return {
-                InvestList:null
+                InvestList:null,
+                submitorUpdate2:'Print',
                 };
             },
         created() {
