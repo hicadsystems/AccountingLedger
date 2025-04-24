@@ -21,20 +21,24 @@ namespace NavyAccountWeb.Services
         {
             var getAc = await unitOfWork.accountHistory.GetAccountHistoryList(refno, accountcode);
             List<AccountHistoryViewModel> llA = new List<AccountHistoryViewModel>();
+
             foreach (var e in getAc)
             {
                 llA.Add(new AccountHistoryViewModel()
                 {
-
                     documentno = e.docno,
                     creditAmount = (decimal)e.cramt,
                     debitAmount = (decimal)e.dbamt,
-                    dateoftransaction = "" + e.docdate,
+                    dateoftransaction = e.docdate.ToString(),
                     remarks = e.remarks
                 });
             }
-            return llA;
+
+            return llA
+                .OrderBy(x => x.dateoftransaction)
+                .ToList();
         }
+
 
         public List<int> getYearForReport()
         {
